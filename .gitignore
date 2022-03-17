@@ -38,3 +38,8 @@ testem.log
 .DS_Store
 Thumbs.db
 notes.txt
+
+.turbo
+build/**
+dist/**
+.next/**
