@@ -2,11 +2,22 @@
   "name": "sharingan",
   "version": "1.0.0",
   "license": "MIT",
-  "scripts": {},
-  "private": false,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --no-cache --parallel --continue",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "16.11.26",
-    "typescript": "4.6.2"
+    "prettier": "^2.6.0",
+    "turbo": "^1.1.6"
   }
 }
