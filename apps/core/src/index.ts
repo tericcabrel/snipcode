@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import { sortNumbers } from "@sharingan/utils";
 
 dotenv.config();
 
@@ -16,5 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
+  console.log(sortNumbers(([67, 80, 4, 11, 90, 54, 22])));
+
   console.log(`Application started on URL ${HOST}:${PORT} 🎉`);
 });
