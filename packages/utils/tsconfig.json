@@ -5,23 +5,18 @@
     "lib": ["dom"],
     "outDir": "./dist",
     "strict": true,
-    "noImplicitAny": false,
-    "strictPropertyInitialization": false,
+    "noImplicitAny": true,
+    "strictPropertyInitialization": true,
     "baseUrl": "./",
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "declaration": true,
     "composite": true
   },
   "include": [
-    "./src/**/*",
+    "./**/*"
   ],
   "exclude": [
     "node_modules"
-  ],
-  "references": [
-    {
-      "path": "../../packages/utils"
-    }
   ]
 }

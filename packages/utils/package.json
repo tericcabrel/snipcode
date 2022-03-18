@@ -1,0 +1,18 @@
+{
+  "name": "@sharingan/utils",
+  "version": "1.0.0",
+  "description": "Sharingan utilities functions",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.180",
+    "typescript": "^4.6.2"
+  }
+}
