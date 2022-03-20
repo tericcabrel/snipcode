@@ -45,6 +45,7 @@
     "database": {},
     "frontend": {},
     "lib": {},
+    "packages": {},
     "settings": {},
     "turbo": {},
     "utils": {},
