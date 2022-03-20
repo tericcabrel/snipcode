@@ -12,8 +12,9 @@
   },
   "private": true,
   "workspaces": [
-    "packages/*",
-    "apps/*"
+    "packages/utils",
+    "apps/core",
+    "apps/web"
   ],
   "husky": {
     "hooks": {
@@ -24,6 +25,14 @@
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-sort-destructure-keys": "^1.4.0",
+    "eslint-plugin-sort-keys-fix": "^1.1.2",
+    "eslint-plugin-typescript-sort-keys": "^2.1.0",
     "husky": "^7.0.4",
     "prettier": "^2.6.0",
     "turbo": "^1.1.6"

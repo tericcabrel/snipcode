@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint src index.ts"
   },
   "dependencies": {
     "lodash": "^4.17.21"

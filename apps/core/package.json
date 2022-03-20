@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts"
+    "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts",
+    "lint": "eslint src"
   },
   "dependencies": {
     "dotenv": "^16.0.0",

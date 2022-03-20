@@ -1,17 +1,9 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
     "lib": ["dom"],
     "outDir": "./dist",
-    "strict": true,
-    "noImplicitAny": false,
-    "strictPropertyInitialization": false,
-    "baseUrl": "./",
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "composite": true
+    "composite": true,
   },
   "include": [
     "./src/**/*",
