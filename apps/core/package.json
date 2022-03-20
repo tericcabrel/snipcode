@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf .turbo dist",
     "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts",
     "lint": "eslint src"
   },
