@@ -1,21 +1,14 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
     "lib": ["dom"],
     "outDir": "./dist",
-    "strict": true,
-    "noImplicitAny": true,
-    "strictPropertyInitialization": true,
-    "baseUrl": "./",
-    "esModuleInterop": true,
-    "moduleResolution": "node",
     "declaration": true,
     "composite": true
   },
-  "include": [
-    "./**/*"
-  ],
+  "include": ["./src/common/sort.ts", "index.ts"],
   "exclude": [
     "node_modules"
   ]

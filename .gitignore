@@ -43,3 +43,4 @@ notes.txt
 build/**
 dist/**
 .next/**
+eslintcache
