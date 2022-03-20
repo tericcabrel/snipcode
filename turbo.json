@@ -13,6 +13,9 @@
     "lint": {
       "outputs": []
     },
+    "clean": {
+      "outputs": []
+    },
     "dev": {
       "cache": false
     }

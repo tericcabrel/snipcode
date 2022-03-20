@@ -4,8 +4,8 @@ import { sortNumbers } from '@sharingan/utils';
 
 dotenv.config();
 
-const HOST = process.env.HOST || 'http://localhost';
-const PORT = parseInt(process.env.PORT || '4500');
+const HOST = process.env.HOST ?? 'http://localhost';
+const PORT = parseInt(process.env.PORT ?? '7501');
 
 const app = express();
 
