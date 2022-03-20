@@ -1,34 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sharingan Core
 
-## Getting Started
+This is the frontend of Sharingan. It holds the website landing page, the web application and the blog pages
 
-First, run the development server:
+## Tech Stack
+* Next.js
+* Tailwind CSS
 
+## Prerequisites
+Make sure you have this tools installed before running the project
+* Node.js 14+
+* NPM or Yarn
+
+## Packages dependencies
+We use Yarn workspace to create packages we can share with others applications.
+These packages are located in the folder `packages` so, you can find yourself needing to change
+code inside one or many packages to implement a feature. Here are the packages used in the core backend application:
+
+* common
+
+## Set up the project
+Delete the existing folders output from build commands
+```shell
+yarn clean
+```
+Install node modules
+````shell
+yarn install
+````
+Create configuration file from the template
+```shell
+cp .env.template .env.local
+
+# Edit configuration to match your local environment and save
+nano .env.local
+```
+| Variable | Description                                                         |
+|----------|---------------------------------------------------------------------|
+| APP_ENV  | Environment where the application is running (default: development) |                     |
+
+
+Start Application
 ```bash
-npm run dev
-# or
 yarn dev
 ```
+The application will be launched by [Nodemon](https://nodemon.com).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:7501](http://localhost:7501) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Running tests
+Run the command below to run all the tests
+```shell
+yarn test
+```
+To run a specific test file, append the filename after the command
+```shell
+yarn test home.test.ts
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/index.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Lint the project
+ESLint and Prettier are used to normalize the code style across the project.
+Linting the code make sure there is no error
+```shell
+yarn lint
+```
