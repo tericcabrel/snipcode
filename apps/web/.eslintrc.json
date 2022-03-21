@@ -46,5 +46,5 @@
       }
     }
   ],
-  "ignorePatterns": ["jest.config.js", "__mocks__"]
+  "ignorePatterns": ["jest.config.js", "__mocks__", "next.config.js"]
 }

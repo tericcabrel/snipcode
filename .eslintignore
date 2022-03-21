@@ -7,3 +7,4 @@ dist
 .next
 .turbo
 coverage
+env.d.ts
