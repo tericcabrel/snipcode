@@ -4,8 +4,8 @@ import { sortNumbers } from '@sharingan/utils';
 
 dotenv.config();
 
-const HOST = process.env.HOST ?? 'http://localhost';
-const PORT = parseInt(process.env.PORT ?? '7501');
+const { HOST, PORT } = process.env;
+const SERVER_PORT = parseInt(PORT ?? '7501');
 
 const app = express();
 
@@ -16,8 +16,8 @@ app.get('/', (_req, res) => {
   return res.json({ message: 'Hello World!' });
 });
 
-app.listen(PORT, () => {
+app.listen(SERVER_PORT, () => {
   console.log(sortNumbers([67, 80, 4, 11, 90, 54, 22]));
 
-  console.log(`Application started on URL ${HOST}:${PORT} 🎉`);
+  console.log(`Application started on URL ${HOST}:${SERVER_PORT} 🎉`);
 });
