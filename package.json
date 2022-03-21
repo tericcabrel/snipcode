@@ -14,7 +14,8 @@
   "workspaces": [
     "packages/utils",
     "apps/core",
-    "apps/web"
+    "apps/web",
+    "functions/kyubi"
   ],
   "husky": {
     "hooks": {
