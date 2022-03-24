@@ -1,4 +1,5 @@
 export type EnvironmentVariables = {
+  ENABLE_INTROSPECTION: string;
   HOST: string;
   PORT: string;
 };
