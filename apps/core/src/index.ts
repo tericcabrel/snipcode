@@ -1,23 +1,14 @@
-import express from 'express';
-import dotenv from 'dotenv';
+import { ApolloServer } from 'apollo-server';
+import typeDefs from './resources/newsletter/schema';
+import { resolvers } from './resources/newsletter/resolvers';
 import { sortNumbers } from '@sharingan/utils';
+import { env } from "./configs/env";
 
-dotenv.config();
+const server = new ApolloServer({ healthCheckPath: '/health', introspection: env.ENABLE_INTROSPECTION, resolvers, typeDefs });
 
-const { HOST, PORT } = process.env;
-const SERVER_PORT = parseInt(PORT ?? '7501');
+console.log(sortNumbers([67, 80, 4, 11, 90, 54, 22]));
 
-const app = express();
+void server.listen({ port: env.PORT }).then(({ url }) => {
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-app.get('/', (_req, res) => {
-  return res.json({ message: 'Hello World!' });
-});
-
-app.listen(SERVER_PORT, () => {
-  console.log(sortNumbers([67, 80, 4, 11, 90, 54, 22]));
-
-  console.log(`Application started on URL ${HOST}:${SERVER_PORT} 🎉`);
+  console.log(`🚀  Server ready at ${url}graphql`);
 });
