@@ -23,6 +23,9 @@ module.exports = {
     'prefer-const': 'warn',
     'no-use-before-define': 'warn',
     'max-len': ['warn', 120],
+    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/class-name-casing': 'off',
     '@typescript-eslint/ban-ts-comment': [
       'warn',
       {
@@ -52,5 +55,17 @@ module.exports = {
     'newline-after-var': ['warn', 'always'],
     curly: 'warn',
     'sort-keys-fix/sort-keys-fix': 'warn',
+    '@typescript-eslint/prefer-ts-expect-error': 'error',
+    'new-cap': 'off',
+    'no-console': 'off',
+    'no-else-return': 'error',
+    'no-eval': 'error',
+    'no-undef': 'error',
+    'no-mixed-operators': 'off',
+    'no-nested-ternary': 'error',
+    'no-param-reassign': 'error',
+    'no-underscore-dangle': 'off',
+    'no-unused-vars': 'off',
+    'ods-use-this': 'off',
   },
 };
