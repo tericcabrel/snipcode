@@ -18,6 +18,9 @@
       "path": "./packages/utils"
     },
     {
+      "path": "./packages/logger"
+    },
+    {
       "path": "./apps/core"
     }
   ]
