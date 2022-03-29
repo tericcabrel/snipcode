@@ -1,15 +1,26 @@
 import { ApolloServer } from 'apollo-server';
-import typeDefs from './resources/newsletter/schema';
+import { loadSchemaSync } from '@graphql-tools/load';
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { addResolversToSchema } from '@graphql-tools/schema';
+
 import { resolvers } from './resources/newsletter/resolvers';
 import { sortNumbers } from '@sharingan/utils';
 import { env } from './configs/env';
 import { logger } from './configs/logger';
 
+const schema = loadSchemaSync('**/*.graphql', {
+  loaders: [new GraphQLFileLoader()],
+});
+
+const schemaWithResolvers = addResolversToSchema({
+  resolvers,
+  schema,
+});
+
 const server = new ApolloServer({
   healthCheckPath: '/health',
   introspection: env.ENABLE_INTROSPECTION,
-  resolvers,
-  typeDefs,
+  schema: schemaWithResolvers,
 });
 
 console.log(sortNumbers([67, 80, 4, 11, 90, 54, 22]));
