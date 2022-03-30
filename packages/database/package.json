@@ -12,7 +12,14 @@
     "test": "jest",
     "db:dev": "pscale connect sharingan dev --port 3311",
     "db:shadow": "pscale connect sharingan shadow --port 3312",
-    "db:deploy:create": "pscale deploy-request create sharingan dev"
+    "db:deploy:create": "pscale deploy-request create sharingan dev",
+    "db:generate": "prisma generate  --schema=./prisma/schema.prisma",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:reset:dev": "prisma migrate reset --skip-seed",
+    "db:reset:dev:seed": "prisma migrate reset",
+    "db:view": "prisma studio",
+    "db:format": "prisma format",
+    "db:seed": "prisma db seed"
   },
   "dependencies": {
     "@prisma/client": "^3.11.1"
