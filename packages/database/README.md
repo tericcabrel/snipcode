@@ -1,6 +1,6 @@
-# Sharingan Common
+# Sharingan Database
 
-This package holds utilities functions that can be used in the Backend or Frontend application
+This package contains all the entities and data access layer that can be used in the Backend or Lambda functions
 
 ## Tech Stack
 * Node.js
@@ -21,7 +21,7 @@ Install node modules
 yarn install
 ````
 
-Build the package to generate types declaration required to provide autocompletion while using the functions in the core or web applications
+Build the package to generate types declaration required to provide autocompletion while using the functions in the core or Lambda functions
 ```bash
 yarn build
 ```
