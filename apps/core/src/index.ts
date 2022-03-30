@@ -3,8 +3,8 @@ import { loadSchemaSync } from '@graphql-tools/load';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { addResolversToSchema } from '@graphql-tools/schema';
 
-import { resolvers } from './resources/newsletter/resolvers';
 import { sortNumbers } from '@sharingan/utils';
+import { resolvers } from './resources/newsletter/resolvers';
 import { env } from './configs/env';
 import { logger } from './configs/logger';
 
