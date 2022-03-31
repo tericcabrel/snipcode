@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Role {
-  id          String   @id @default(cuid())
+  id          String   @id @db.VarChar(50)
   name        String   @unique @db.VarChar(50)
   level       Int      @db.Int
   description String?  @db.VarChar(200)
@@ -26,16 +26,16 @@ model Role {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
+  id            String    @id @db.VarChar(50)
+  email         String    @unique @db.VarChar(100)
   username      String?   @db.VarChar(30)
   firstName     String?   @db.VarChar(50) @map("first_name")
   lastName      String?   @db.VarChar(50) @map("last_name")
   password      String?   @db.VarChar(100)
   timezone      String?   @db.VarChar(50)
-  isEnabled     Boolean   @default(true) @map("is_enabled") @db.TinyInt
-  pictureUrl    String?   @db.VarChar(255) @map("pciture_url")
-  roleId        String    @map("role_id")
+  isEnabled     Boolean   @default(false) @map("is_enabled") @db.TinyInt
+  pictureUrl    String?   @db.VarChar(255) @map("picture_url")
+  roleId        String    @map("role_id") @unique @db.VarChar(50)
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   role          Role      @relation(fields: [roleId], references: [id], onDelete: Restrict)
