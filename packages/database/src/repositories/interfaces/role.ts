@@ -1,7 +1,8 @@
 import BaseRepository from './_base';
+import Role, { RoleName } from '../../entities/role';
 
-type RoleRepositoryInterface<Entity> = {
-  findByName: (name: string) => Promise<Entity | null>;
-} & BaseRepository<Entity>;
+type RoleRepositoryInterface = {
+  findByName: (name: RoleName) => Promise<Role | null>;
+} & BaseRepository<Role>;
 
 export default RoleRepositoryInterface;
