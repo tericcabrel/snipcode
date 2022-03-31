@@ -13,9 +13,14 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
+enum RoleName {
+  user
+  admin
+}
+
 model Role {
   id          String   @id @db.VarChar(50)
-  name        String   @unique @db.VarChar(50)
+  name        RoleName @unique
   level       Int      @db.Int
   description String?  @db.VarChar(200)
   createdAt   DateTime @default(now()) @map("created_at")
@@ -28,7 +33,7 @@ model Role {
 model User {
   id            String    @id @db.VarChar(50)
   email         String    @unique @db.VarChar(100)
-  username      String?   @db.VarChar(30)
+  username      String?   @db.VarChar(50)
   firstName     String?   @db.VarChar(50) @map("first_name")
   lastName      String?   @db.VarChar(50) @map("last_name")
   password      String?   @db.VarChar(100)
@@ -40,5 +45,6 @@ model User {
   updatedAt     DateTime  @updatedAt @map("updated_at")
   role          Role      @relation(fields: [roleId], references: [id], onDelete: Restrict)
 
+  @@index([username])
   @@map("users")
 }
