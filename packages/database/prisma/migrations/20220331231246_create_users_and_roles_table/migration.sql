@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE `roles` (
     `id` VARCHAR(50) NOT NULL,
-    `name` VARCHAR(50) NOT NULL,
+    `name` ENUM('user', 'admin') NOT NULL,
     `level` INTEGER NOT NULL,
     `description` VARCHAR(200) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -15,7 +15,7 @@ CREATE TABLE `roles` (
 CREATE TABLE `users` (
     `id` VARCHAR(50) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
-    `username` VARCHAR(30) NULL,
+    `username` VARCHAR(50) NULL,
     `first_name` VARCHAR(50) NULL,
     `last_name` VARCHAR(50) NULL,
     `password` VARCHAR(100) NULL,
@@ -28,5 +28,6 @@ CREATE TABLE `users` (
 
     UNIQUE INDEX `users_email_key`(`email`),
     UNIQUE INDEX `users_role_id_key`(`role_id`),
+    INDEX `users_username_idx`(`username`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
