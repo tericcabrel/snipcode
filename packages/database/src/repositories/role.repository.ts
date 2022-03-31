@@ -1,8 +1,8 @@
 import RoleRepositoryInterface from './interfaces/role';
-import Role from '../entities/role';
+import Role, { RoleName } from '../entities/role';
 import prisma from '../prisma';
 
-export default class RoleRepository implements RoleRepositoryInterface<Role> {
+export default class RoleRepository implements RoleRepositoryInterface {
   create(item: Role): Promise<Role> {
     return prisma.role.create({
       data: {
@@ -30,7 +30,7 @@ export default class RoleRepository implements RoleRepositoryInterface<Role> {
     return prisma.role.findUnique({ where: { id } });
   }
 
-  findByName(name: string): Promise<Role | null> {
+  findByName(name: RoleName): Promise<Role | null> {
     return prisma.role.findUnique({ where: { name } });
   }
 

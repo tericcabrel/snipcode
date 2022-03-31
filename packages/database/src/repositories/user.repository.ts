@@ -2,7 +2,7 @@ import UserRepositoryInterface from './interfaces/user';
 import User from '../entities/user';
 import prisma from '../prisma';
 
-export default class UserRepository implements UserRepositoryInterface<User> {
+export default class UserRepository implements UserRepositoryInterface {
   create(user: User): Promise<User> {
     return prisma.user.create({
       data: {

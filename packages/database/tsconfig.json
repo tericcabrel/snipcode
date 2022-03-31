@@ -10,7 +10,7 @@
     "composite": true,
     "sourceMap": true,
   },
-  "include": ["./src/**/*", "./tests/**/*", "index.ts", "node_modules/.prisma/client"],
+  "include": ["./src/**/*", "./tests/**/*", "index.ts"],
   "exclude": [
     "node_modules"
   ]
