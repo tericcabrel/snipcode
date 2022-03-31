@@ -22,7 +22,8 @@
     "db:seed": "prisma db seed"
   },
   "dependencies": {
-    "@prisma/client": "^3.11.1"
+    "@prisma/client": "^3.11.1",
+    "cuid": "^2.1.8"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
