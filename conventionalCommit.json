@@ -43,6 +43,7 @@
     "cli": {},
     "core": {},
     "database": {},
+    "domain": {},
     "frontend": {},
     "lib": {},
     "packages": {},
