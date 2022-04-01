@@ -22,6 +22,9 @@
       "path": "./packages/logger"
     },
     {
+      "path": "./packages/database"
+    },
+    {
       "path": "./apps/core"
     }
   ]

@@ -12,6 +12,8 @@
   },
   "private": true,
   "workspaces": [
+    "packages/database",
+    "packages/domain",
     "packages/logger",
     "packages/utils",
     "apps/core",

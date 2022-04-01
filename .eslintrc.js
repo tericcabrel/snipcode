@@ -8,7 +8,7 @@ module.exports = {
     sourceType: 'module',
     project: "tsconfig.json",
   },
-  // ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: ['commitlint.config.js', '.prettierrc.js'],
   env: {
     es6: true,
     node: true,
