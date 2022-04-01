@@ -1,6 +1,6 @@
 import cuid, { isCuid } from 'cuid';
 
-const newId = () => cuid();
-const isValidId = (id: string) => isCuid(id);
+const generate = () => cuid();
+const isValid = (id: string) => isCuid(id);
 
-export { newId, isValidId };
+export default { generate, isValid };

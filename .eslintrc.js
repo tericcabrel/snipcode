@@ -12,6 +12,8 @@ module.exports = {
   env: {
     es6: true,
     node: true,
+    jest: true,
+    commonjs: true
   },
   rules: {
     'no-var': 'warn',
