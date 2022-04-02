@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
   extends: ['plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended', 'plugin:typescript-sort-keys/recommended'],
-  plugins: ['sort-destructure-keys', 'sort-keys-fix', 'typescript-sort-keys'],
+  plugins: ['sort-destructure-keys', 'sort-keys-fix', 'typescript-sort-keys', 'import'],
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
@@ -25,6 +25,12 @@ module.exports = {
     'prefer-const': 'warn',
     'no-use-before-define': 'warn',
     'max-len': ['warn', 120],
+    'import/order': 'error',
+    'import/newline-after-import': ['error', { count: 1 }],
+    'sort-imports': ['error',  {
+      'ignoreCase': true,
+      'ignoreDeclarationSort': true
+    }],
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/class-name-casing': 'off',
