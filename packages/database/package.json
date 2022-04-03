@@ -9,7 +9,8 @@
     "build": "tsc --project tsconfig.prod.json",
     "clean": "rm -rf .turbo dist",
     "lint": "eslint src index.ts",
-    "test": "jest",
+    "test": "DEBUG=testcontainers* jest",
+    "test:verbose": "DEBUG=testcontainers* jest",
     "db:dev": "pscale connect sharingan dev --port 3311",
     "db:shadow": "pscale connect sharingan shadow --port 3312",
     "db:deploy:create": "pscale deploy-request create sharingan dev",
@@ -27,7 +28,9 @@
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
+    "dotenv": "^16.0.0",
     "jest": "^27.5.1",
+    "testcontainers": "^8.6.1",
     "prisma": "^3.11.1",
     "ts-jest": "^27.1.3",
     "typescript": "^4.6.2"

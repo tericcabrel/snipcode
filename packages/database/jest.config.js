@@ -7,5 +7,6 @@ module.exports = {
   maxWorkers: 1,
   snapshotFormat: {
     "printBasicPrototype": false
-  }
+  },
+  setupFilesAfterEnv: ['./tests/setup/databaseTestSetup.ts'],
 };
