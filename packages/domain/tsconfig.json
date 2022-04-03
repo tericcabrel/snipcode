@@ -9,6 +9,7 @@
     "composite": true,
     "sourceMap": true,
   },
+  "files": ["env.d.ts"],
   "include": ["./src/**/*", "./tests/**/*", "index.ts"],
   "exclude": [
     "node_modules"
@@ -16,6 +17,9 @@
   "references": [
     {
       "path": "../../packages/database"
+    },
+    {
+      "path": "../../packages/utils"
     }
   ]
 }
