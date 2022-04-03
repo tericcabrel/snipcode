@@ -1,6 +1,5 @@
 import * as bcrypt from 'bcryptjs';
 import { dbId, User } from '@sharingan/database';
-import { getEnv } from '@sharingan/utils';
 
 export default class CreateUserDto {
   private enabled = false;
@@ -16,13 +15,15 @@ export default class CreateUserDto {
     private _username: string | null,
   ) {}
 
+  get email(): string {
+    return this._email;
+  }
+
   set isEnabled(value: boolean) {
     this.enabled = value;
   }
 
   toUser(): User {
-    const passwordSalt = getEnv('PASSWORD_SALT');
-
     return {
       createdAt: new Date(),
       email: this._email,
@@ -30,7 +31,7 @@ export default class CreateUserDto {
       id: dbId.generate(),
       isEnabled: this.enabled,
       lastName: this._lastName,
-      password: bcrypt.hashSync(this._rawPassword, passwordSalt),
+      password: bcrypt.hashSync(this._rawPassword, 12),
       pictureUrl: this._pictureUrl,
       roleId: this._roleId,
       timezone: this._timezone,

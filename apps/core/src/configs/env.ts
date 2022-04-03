@@ -1,14 +1,15 @@
 import dotenv from 'dotenv';
+import { getEnv } from '@sharingan/utils';
 import { AppEnvironmentVariables } from '../types/common';
 
 dotenv.config();
 
-const { ENABLE_INTROSPECTION, HOST, NODE_ENV, PORT } = process.env;
-
 export const env: AppEnvironmentVariables = {
-  ENABLE_INTROSPECTION: ENABLE_INTROSPECTION === 'true',
-  HOST,
-  IS_DEV: NODE_ENV !== 'production',
-  IS_PROD: NODE_ENV === 'production',
-  PORT: parseInt(PORT ?? '7501', 10),
+  ADMIN_PASSWORD: getEnv('ADMIN_PASSWORD'),
+  DATABASE_URL: getEnv('DATABASE_URL'),
+  ENABLE_INTROSPECTION: getEnv('ENABLE_INTROSPECTION') === 'true',
+  HOST: getEnv('HOST'),
+  IS_DEV: getEnv('NODE_ENV') !== 'production',
+  IS_PROD: getEnv('NODE_ENV') === 'production',
+  PORT: parseInt(getEnv('PORT') ?? '7501', 10),
 };

@@ -5,6 +5,7 @@ import { addResolversToSchema } from '@graphql-tools/schema';
 import { env } from './configs/env';
 import { logger } from './configs/logger';
 import { resolvers } from './resources/newsletter/resolvers';
+import { loadData } from './utils/db/loader';
 
 const schema = loadSchemaSync('**/*.graphql', {
   loaders: [new GraphQLFileLoader()],
@@ -21,6 +22,8 @@ const server = new ApolloServer({
   schema: schemaWithResolvers,
 });
 
-void server.listen({ port: env.PORT }).then(({ url }) => {
+void server.listen({ port: env.PORT }).then(async ({ url }) => {
+  await loadData();
+
   logger.info(`🚀  Server ready at ${url}graphql`);
 });

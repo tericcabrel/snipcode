@@ -16,6 +16,7 @@
     "@graphql-tools/load": "^7.5.5",
     "@graphql-tools/schema": "^8.3.5",
     "@sharingan/logger": "1.0.0",
+    "@sharingan/domain": "1.0.0",
     "@sharingan/utils": "1.0.0",
     "apollo-server": "^3.6.6",
     "dotenv": "^16.0.0",

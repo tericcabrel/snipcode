@@ -1,4 +1,6 @@
 export type EnvironmentVariables = {
+  ADMIN_PASSWORD: string;
+  DATABASE_URL: string;
   ENABLE_INTROSPECTION: string;
   HOST: string;
   PORT: string;
@@ -6,7 +8,7 @@ export type EnvironmentVariables = {
 
 declare global {
   namespace NodeJS {
-    interface ProcessEnv extends EnvironmentVariables {}
+    type ProcessEnv = EnvironmentVariables;
   }
 }
 

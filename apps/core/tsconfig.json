@@ -17,6 +17,12 @@
   "references": [
     {
       "path": "../../packages/utils"
+    },
+    {
+      "path": "../../packages/logger"
+    },
+    {
+      "path": "../../packages/domain"
     }
   ]
 }
