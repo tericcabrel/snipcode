@@ -45,5 +45,13 @@ export default class UserService {
     );
 
     userAdminDto.isEnabled = true;
+
+    const userAdmin = await this._userRepository.findByEmail(userAdminDto.email);
+
+    if (userAdmin) {
+      return;
+    }
+
+    await this._userRepository.create(userAdminDto.toUser());
   }
 }

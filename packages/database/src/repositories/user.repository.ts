@@ -1,6 +1,6 @@
-import UserRepositoryInterface from './interfaces/user';
 import User from '../entities/user';
 import prisma from '../prisma';
+import UserRepositoryInterface from './interfaces/user';
 
 export default class UserRepository implements UserRepositoryInterface {
   create(user: User): Promise<User> {
@@ -11,9 +11,10 @@ export default class UserRepository implements UserRepositoryInterface {
         id: user.id,
         isEnabled: user.isEnabled,
         lastName: user.lastName,
+        password: user.password,
         pictureUrl: user.pictureUrl,
         roleId: user.roleId,
-        updatedAt: new Date(),
+        timezone: user.timezone,
         username: user.username,
       },
     });
