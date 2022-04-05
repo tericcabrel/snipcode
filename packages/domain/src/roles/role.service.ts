@@ -28,4 +28,8 @@ export default class RoleService {
   async findByName(name: RoleName): Promise<Role | null> {
     return this.roleRepository.findByName(name);
   }
+
+  async findAll(): Promise<Role[]> {
+    return this.roleRepository.findAll();
+  }
 }

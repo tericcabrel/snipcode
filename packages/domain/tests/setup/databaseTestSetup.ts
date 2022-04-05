@@ -15,6 +15,7 @@ const databaseUser = 'root';
 const databasePassword = getEnv('MYSQL_ROOT_PASSWORD');
 const databaseName = getEnv('MYSQL_DATABASE');
 const databasePort = getEnv('MYSQL_PORT');
+const isRunningLocally = Boolean(process.env.IS_LOCAL);
 
 beforeAll(async () => {
   if (!process.env.TEST_WITH_DB) {
@@ -23,13 +24,15 @@ beforeAll(async () => {
 
   const databaseURL = `mysql://${databaseUser}:${databasePassword}@localhost:${databasePort}/${databaseName}`;
 
-  const prismaSchemaPath = `${path.resolve(__dirname, '../../../database/prisma')}/schema.test.prisma`;
+  console.log('is', isRunningLocally);
 
-  console.log('Path => ', prismaSchemaPath);
+  if (!isRunningLocally) {
+    const prismaSchemaPath = `${path.resolve(__dirname, '../../../database/prisma')}/schema.test.prisma`;
 
-  const command = `DATABASE_URL=${databaseURL} npx prisma migrate dev --schema=${prismaSchemaPath}`;
+    const command = `DATABASE_URL=${databaseURL} npx prisma migrate dev --schema=${prismaSchemaPath}`;
 
-  execSync(command);
+    execSync(command);
+  }
 
   global.prisma = new PrismaClient({ datasources: { db: { url: databaseURL } } });
   prismaClient = global.prisma;
