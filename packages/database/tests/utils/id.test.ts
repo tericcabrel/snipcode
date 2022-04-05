@@ -1,4 +1,4 @@
-import { dbId } from '../../../index';
+import { dbId } from '../../index';
 
 describe('Test Database ID generator', () => {
   test('generate a valid id', () => {

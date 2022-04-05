@@ -1,41 +1,31 @@
 // This file is executed once in the worker before executing each test file.
 import * as path from 'path';
 import { execSync } from 'child_process';
-import { MySqlContainer, StartedMySqlContainer } from 'testcontainers';
 import dotenv from 'dotenv';
 import { getEnv } from '@sharingan/utils';
-import { PrismaClient } from '../../index';
+import { PrismaClient } from '@sharingan/database';
 
-jest.setTimeout(60000);
+jest.setTimeout(10000);
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env.test') });
+dotenv.config();
 
-let runningContainer: StartedMySqlContainer;
 let prismaClient: PrismaClient;
 
 const databaseUser = 'root';
 const databasePassword = getEnv('MYSQL_ROOT_PASSWORD');
 const databaseName = getEnv('MYSQL_DATABASE');
-const databasePort = 3306;
+const databasePort = getEnv('MYSQL_PORT');
 
 beforeAll(async () => {
   if (!process.env.TEST_WITH_DB) {
     return;
   }
 
-  const container = new MySqlContainer('mysql:8.0');
-
-  runningContainer = await container
-    .withExposedPorts(databasePort)
-    .withRootPassword(databasePassword)
-    .withDatabase(databaseName)
-    .start();
-
-  const runningPort = runningContainer.getMappedPort(databasePort);
-
-  const databaseURL = `mysql://${databaseUser}:${databasePassword}@localhost:${runningPort}/${databaseName}`;
+  const databaseURL = `mysql://${databaseUser}:${databasePassword}@localhost:${databasePort}/${databaseName}`;
 
   const prismaSchemaPath = `${path.resolve(__dirname, '../../../database/prisma')}/schema.test.prisma`;
+
+  console.log('Path => ', prismaSchemaPath);
 
   const command = `DATABASE_URL=${databaseURL} npx prisma migrate dev --schema=${prismaSchemaPath}`;
 
@@ -53,9 +43,4 @@ afterAll(async () => {
   }
 
   await prismaClient.$disconnect();
-
-  if (runningContainer) {
-    console.log('STOPPING CONTAINER....');
-    await runningContainer.stop();
-  }
 });

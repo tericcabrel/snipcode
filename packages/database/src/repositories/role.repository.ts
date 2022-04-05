@@ -1,6 +1,6 @@
-import RoleRepositoryInterface from './interfaces/role';
 import Role, { RoleName } from '../entities/role';
 import prisma from '../prisma';
+import RoleRepositoryInterface from './interfaces/role';
 
 export default class RoleRepository implements RoleRepositoryInterface {
   create(item: Role): Promise<Role> {

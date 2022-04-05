@@ -9,7 +9,9 @@
     "build": "tsc --project tsconfig.prod.json",
     "clean": "rm -rf .turbo dist",
     "lint": "eslint src index.ts",
-    "test": "jest"
+    "db:test": "docker run -d --rm -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=sharingan --name mysqldb -p 3313:3306 mysql:8.0",
+    "test": "jest",
+    "test:db": "TEST_WITH_DB=true jest"
   },
   "dependencies": {
     "@sharingan/database": "1.0.0",
