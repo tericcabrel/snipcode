@@ -3,7 +3,7 @@ export type EnvironmentVariables = {
   MYSQL_DATABASE: string;
   MYSQL_ROOT_PASSWORD: string;
   NODE_ENV: string;
-  SHADOW_DATABASE_URL: string;
+  TEST_WITH_DB: string;
 };
 
 declare global {

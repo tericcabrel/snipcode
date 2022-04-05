@@ -19,6 +19,10 @@ const databaseName = getEnv('MYSQL_DATABASE');
 const databasePort = 3306;
 
 beforeAll(async () => {
+  if (!process.env.TEST_WITH_DB) {
+    return;
+  }
+
   const container = new MySqlContainer('mysql:8.0');
 
   runningContainer = await container
@@ -31,27 +35,23 @@ beforeAll(async () => {
 
   const databaseURL = `mysql://${databaseUser}:${databasePassword}@localhost:${runningPort}/${databaseName}`;
 
-  const prismaSchemaPath = `${path.resolve(__dirname, '../../../database/prisma')}/schema.prisma`;
-
-  console.log('URL', databaseURL);
-  console.log('Path => ', prismaSchemaPath);
+  const prismaSchemaPath = `${path.resolve(__dirname, '../../../database/prisma')}/schema.test.prisma`;
 
   const command = `DATABASE_URL=${databaseURL} npx prisma migrate dev --schema=${prismaSchemaPath}`;
 
-  //console.log('command => ', command);
-
-  execSync('yarn db:shadow');
   execSync(command);
 
   global.prisma = new PrismaClient({ datasources: { db: { url: databaseURL } } });
   prismaClient = global.prisma;
 
   await prismaClient.$connect();
-
-  // await Promise.all(yearGroupsInput.map((input) => yearGroupService.findOrCreate(input)));
 });
 
 afterAll(async () => {
+  if (!process.env.TEST_WITH_DB) {
+    return;
+  }
+
   await prismaClient.$disconnect();
 
   if (runningContainer) {
