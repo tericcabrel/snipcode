@@ -15,7 +15,7 @@ const databaseUser = 'root';
 const databasePassword = getEnv('MYSQL_ROOT_PASSWORD');
 const databaseName = getEnv('MYSQL_DATABASE');
 const databasePort = getEnv('MYSQL_PORT');
-const isRunningLocally = Boolean(process.env.IS_LOCAL);
+const isRunningLocally = process.env.IS_LOCAL === 'true';
 
 beforeAll(async () => {
   if (!process.env.TEST_WITH_DB) {
@@ -23,8 +23,6 @@ beforeAll(async () => {
   }
 
   const databaseURL = `mysql://${databaseUser}:${databasePassword}@localhost:${databasePort}/${databaseName}`;
-
-  console.log('is', isRunningLocally);
 
   if (!isRunningLocally) {
     const prismaSchemaPath = `${path.resolve(__dirname, '../../../database/prisma')}/schema.test.prisma`;

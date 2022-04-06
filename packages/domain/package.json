@@ -10,7 +10,8 @@
     "clean": "rm -rf .turbo dist",
     "lint": "eslint src index.ts",
     "db:test": "docker run -d --rm -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=sharingan --name mysqldb -p 3313:3306 mysql:8.0",
-    "test": "jest",
+    "test": "TEST_WITH_DB=true IS_LOCAL=false jest",
+    "test:unit": "jest",
     "test:db": "TEST_WITH_DB=true jest",
     "test:db:local": "TEST_WITH_DB=true IS_LOCAL=true jest"
   },
