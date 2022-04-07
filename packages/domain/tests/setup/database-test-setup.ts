@@ -3,13 +3,9 @@ import * as path from 'path';
 import { execSync } from 'child_process';
 import dotenv from 'dotenv';
 import { getEnv } from '@sharingan/utils';
-import { PrismaClient } from '@sharingan/database';
 
 jest.setTimeout(10000);
-
 dotenv.config();
-
-let prismaClient: PrismaClient;
 
 const databaseUser = 'root';
 const databasePassword = getEnv('MYSQL_ROOT_PASSWORD');
@@ -18,6 +14,7 @@ const databasePort = getEnv('MYSQL_PORT');
 const isRunningLocally = process.env.IS_LOCAL === 'true';
 
 beforeAll(async () => {
+  console.log('Testing ');
   if (!process.env.TEST_WITH_DB) {
     return;
   }
@@ -31,17 +28,10 @@ beforeAll(async () => {
 
     execSync(command);
   }
-
-  global.prisma = new PrismaClient({ datasources: { db: { url: databaseURL } } });
-  prismaClient = global.prisma;
-
-  await prismaClient.$connect();
 });
 
 afterAll(async () => {
   if (!process.env.TEST_WITH_DB) {
     return;
   }
-
-  await prismaClient.$disconnect();
 });

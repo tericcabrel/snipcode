@@ -8,5 +8,5 @@ module.exports = {
   snapshotFormat: {
     "printBasicPrototype": false
   },
-  setupFilesAfterEnv: ['./tests/setup/databaseTestSetup.ts'],
+  setupFilesAfterEnv: ['./tests/setup/database-test-setup.ts'],
 };

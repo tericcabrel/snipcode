@@ -37,11 +37,11 @@ export default class UserService {
       'teco@sharingan.dev',
       'Eric',
       'Teco',
-      adminPassword,
       role.id,
       null,
-      'UTC',
+      'Europe/Paris',
       'teco',
+      adminPassword,
     );
 
     userAdminDto.isEnabled = true;
@@ -53,5 +53,19 @@ export default class UserService {
     }
 
     await this._userRepository.create(userAdminDto.toUser());
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return this._userRepository.findByEmail(email);
+  }
+
+  async findAll(): Promise<User[]> {
+    return this._userRepository.findAll();
+  }
+
+  async deleteMany(ids: string[]): Promise<void> {
+    const promises = ids.map((id) => this._userRepository.delete(id));
+
+    await Promise.all(promises);
   }
 }
