@@ -13,7 +13,6 @@
     "db:test:stop": "docker container kill sharingandb",
     "test": "TEST_WITH_DB=true IS_LOCAL=false jest",
     "test:unit": "jest",
-    "test:db": "TEST_WITH_DB=true jest",
     "test:db:local": "TEST_WITH_DB=true IS_LOCAL=true jest"
   },
   "dependencies": {

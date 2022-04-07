@@ -4,7 +4,6 @@ import { execSync } from 'child_process';
 import dotenv from 'dotenv';
 import { getEnv } from '@sharingan/utils';
 
-jest.setTimeout(10000);
 dotenv.config();
 
 const databaseUser = 'root';
@@ -13,8 +12,11 @@ const databaseName = getEnv('MYSQL_DATABASE');
 const databasePort = getEnv('MYSQL_PORT');
 const isRunningLocally = process.env.IS_LOCAL === 'true';
 
-beforeAll(async () => {
-  console.log('Testing ');
+/*
+ * This file is executed by Jest before running any tests.
+ * We drop the database and re-create it from migrations every time.
+ */
+export default async () => {
   if (!process.env.TEST_WITH_DB) {
     return;
   }
@@ -28,10 +30,4 @@ beforeAll(async () => {
 
     execSync(command);
   }
-});
-
-afterAll(async () => {
-  if (!process.env.TEST_WITH_DB) {
-    return;
-  }
-});
+};
