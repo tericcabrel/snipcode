@@ -8,5 +8,7 @@ describe('Test Role service', () => {
 
     expect(allRoles).toHaveLength(2);
     expect(allRoles.every((role) => ['admin', 'user'].includes(role.name))).toBe(true);
+
+    await roleService.deleteMany(allRoles.map((role) => role.id));
   });
 });

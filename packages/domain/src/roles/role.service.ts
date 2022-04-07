@@ -32,4 +32,10 @@ export default class RoleService {
   async findAll(): Promise<Role[]> {
     return this.roleRepository.findAll();
   }
+
+  async deleteMany(ids: string[]): Promise<void> {
+    const promises = ids.map((id) => this.roleRepository.delete(id));
+
+    await Promise.all(promises);
+  }
 }
