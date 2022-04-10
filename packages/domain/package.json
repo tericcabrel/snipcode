@@ -19,6 +19,7 @@
   "dependencies": {
     "@sharingan/database": "1.0.0",
     "@sharingan/utils": "1.0.0",
+    "axios": "^0.26.1",
     "bcryptjs": "^2.4.3"
   },
   "devDependencies": {
