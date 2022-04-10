@@ -1,5 +1,6 @@
 export type EnvironmentVariables = {
   DATABASE_URL: string;
+  NODE_ENV: string;
 };
 
 declare global {

@@ -51,8 +51,12 @@ class BaseLogger {
   }
 
   private logMessage(message: any): string {
-    // @ts-ignore
-    return isObject(message) ? (message.stack ? message.stack : JSON.stringify(message, null, 2)) : message.toString();
+    if (isObject(message)) {
+      // @ts-expect-error Property 'stack' does not exist on type 'object'.
+      return 'stack' in message ? message.stack : JSON.stringify(message, undefined, '2');
+    }
+
+    return message.toString();
   }
 
   private customFormat() {
