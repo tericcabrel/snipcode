@@ -1,5 +1,5 @@
-import BaseRepository from './_base';
 import User from '../../entities/user';
+import BaseRepository from './_base';
 
 type UserRepositoryInterface = {
   findByEmail: (email: string) => Promise<User | null>;

@@ -49,6 +49,17 @@ yarn db:migrate:dev
 yarn db:seed
 ```
 
+### Generate a database migration
+To generate a database migration, we run the command below:
+```shell
+yarn db:migrate:dev --name <migration-name>
+```
+Once done, make a copy of the file `prisma/schema.prisma` to `prisma/schema.test.prisma`.
+
+Open the copied file and remove the line `shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")`.
+
+This action is required to make the test executions easier in the package **domain (packages/domain)**.
+
 ### Others Prisma commands
 - Reset the database without seeding: `db:reset:dev`
 - Reset the database with seeding: `db:reset:dev:seed`
