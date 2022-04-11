@@ -1,4 +1,4 @@
-import { ApolloError } from 'apollo-server';
+import { ApolloError } from 'apollo-server-express';
 import { newsletterService } from '@sharingan/domain';
 import { MutationResolvers } from '../../../types/graphql';
 import { logger } from '../../../configs/logger';
