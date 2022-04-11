@@ -6,6 +6,7 @@ export type EnvironmentVariables = {
   ENABLE_INTROSPECTION: string;
   HOST: string;
   PORT: string;
+  REQUEST_TIMEOUT: string;
 };
 
 declare global {

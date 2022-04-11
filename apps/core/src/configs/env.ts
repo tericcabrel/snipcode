@@ -13,5 +13,6 @@ export const env: AppEnvironmentVariables = {
   HOST: getEnv('HOST'),
   IS_DEV: getEnv('NODE_ENV') !== 'production',
   IS_PROD: getEnv('NODE_ENV') === 'production',
-  PORT: parseInt(getEnv('PORT') ?? '7501', 10),
+  PORT: parseInt(getEnv('PORT'), 10),
+  REQUEST_TIMEOUT: parseInt(getEnv('REQUEST_TIMEOUT'), 10),
 };
