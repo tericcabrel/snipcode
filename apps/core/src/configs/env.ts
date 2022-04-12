@@ -10,6 +10,8 @@ export const env: AppEnvironmentVariables = {
   CONVERTKIT_FORM_ID: getEnv('CONVERTKIT_FORM_ID'),
   DATABASE_URL: getEnv('DATABASE_URL'),
   ENABLE_INTROSPECTION: getEnv('ENABLE_INTROSPECTION') === 'true',
+  GITHUB_CLIENT_ID: getEnv('GITHUB_CLIENT_ID'),
+  GITHUB_CLIENT_SECRET: getEnv('GITHUB_CLIENT_SECRET'),
   HOST: getEnv('HOST'),
   IS_DEV: getEnv('NODE_ENV') !== 'production',
   IS_PROD: getEnv('NODE_ENV') === 'production',
