@@ -3,7 +3,7 @@ import BaseRepository from './_base';
 
 type UserRepositoryInterface = {
   findByEmail: (email: string) => Promise<User | null>;
-  updatePassword: (id: string, newPassword: string) => Promise<User>;
+  findByToken: (token: string) => Promise<User | null>;
 } & BaseRepository<User>;
 
 export default UserRepositoryInterface;

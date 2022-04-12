@@ -1,5 +1,3 @@
-import * as bcrypt from 'bcryptjs';
-import { getEnv } from '@sharingan/utils';
 import { Role, User, UserRepository } from '@sharingan/database';
 import CreateUserDto from './dtos/create-user-dto';
 
@@ -10,38 +8,17 @@ export default class UserService {
     return this._userRepository.create(createUserDto.toUser());
   }
 
-  async isPasswordMatch(rawPassword: string, hashedPassword: string): Promise<boolean> {
-    return bcrypt.compare(rawPassword, hashedPassword);
-  }
-
-  async login(username: string, password: string): Promise<User> {
-    const user = await this._userRepository.findByEmail(username);
-
-    if (!user) {
-      throw new Error('User not found.');
-    }
-
-    const isValid = await this.isPasswordMatch(password, user.password ?? '');
-
-    if (!isValid) {
-      throw new Error("password doesn't match.");
-    }
-
-    return user;
-  }
-
   async loadAdminUsers(role: Role): Promise<void> {
-    const adminPassword = getEnv('ADMIN_PASSWORD');
-
     const userAdminDto = new CreateUserDto(
       'teco@sharingan.dev',
       'Eric',
       'Teco',
       role.id,
+      '<access_token>',
+      'github',
       null,
       'Europe/Paris',
       'teco',
-      adminPassword,
     );
 
     userAdminDto.isEnabled = true;
@@ -67,5 +44,9 @@ export default class UserService {
     const promises = ids.map((id) => this._userRepository.delete(id));
 
     await Promise.all(promises);
+  }
+
+  async findByToken(token: string): Promise<User | null> {
+    return this._userRepository.findByToken(token);
   }
 }
