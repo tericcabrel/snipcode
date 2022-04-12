@@ -6,12 +6,13 @@ export default class UserRepository implements UserRepositoryInterface {
   create(user: User): Promise<User> {
     return prisma.user.create({
       data: {
+        accessToken: user.accessToken,
         email: user.email,
         firstName: user.firstName,
         id: user.id,
         isEnabled: user.isEnabled,
         lastName: user.lastName,
-        password: user.password,
+        oauthProvider: user.oauthProvider,
         pictureUrl: user.pictureUrl,
         roleId: user.roleId,
         timezone: user.timezone,
@@ -56,12 +57,7 @@ export default class UserRepository implements UserRepositoryInterface {
     });
   }
 
-  updatePassword(id: string, newPassword: string): Promise<User> {
-    return prisma.user.update({
-      data: {
-        password: newPassword,
-      },
-      where: { id },
-    });
+  findByToken(token: string): Promise<User | null> {
+    return prisma.user.findUnique({ where: { accessToken: token } });
   }
 }

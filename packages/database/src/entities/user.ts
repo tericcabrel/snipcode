@@ -1,3 +1,4 @@
-import { User } from '@prisma/client';
+import { OauthProvider, User } from '@prisma/client';
 
+export { OauthProvider };
 export default User;
