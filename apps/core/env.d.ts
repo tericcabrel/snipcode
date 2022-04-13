@@ -8,6 +8,7 @@ export type EnvironmentVariables = {
   GITHUB_CLIENT_SECRET: string;
   HOST: string;
   PORT: string;
+  REDIS_URL: string;
   REQUEST_TIMEOUT: string;
 };
 

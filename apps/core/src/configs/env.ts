@@ -16,5 +16,6 @@ export const env: AppEnvironmentVariables = {
   IS_DEV: getEnv('NODE_ENV') !== 'production',
   IS_PROD: getEnv('NODE_ENV') === 'production',
   PORT: parseInt(getEnv('PORT'), 10),
+  REDIS_URL: getEnv('REDIS_URL'),
   REQUEST_TIMEOUT: parseInt(getEnv('REQUEST_TIMEOUT'), 10),
 };

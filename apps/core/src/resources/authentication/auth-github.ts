@@ -39,7 +39,8 @@ export const authGithub = async (req: Request, res: Response) => {
   const userExist = await userService.findByEmail(email);
 
   if (userExist) {
-    // TODO with access token as http only cookie
+    req.session.id = userExist.id;
+
     return res.redirect('http://localhost:7500/auth/success');
   }
 
@@ -53,10 +54,11 @@ export const authGithub = async (req: Request, res: Response) => {
 
   const createUserDto = new CreateUserDto(email, name, '', roleUser.id, accessToken, 'github', avatar_url, null, login);
 
-  await userService.create(createUserDto);
+  const createdUser = await userService.create(createUserDto);
 
   // TODO create root folder
 
-  // TODO with access token as http only cookie
+  req.session.id = createdUser.id;
+
   return res.redirect('http://localhost:7500/auth/success');
 };
