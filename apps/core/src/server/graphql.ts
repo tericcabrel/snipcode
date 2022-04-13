@@ -7,6 +7,7 @@ import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { addResolversToSchema } from '@graphql-tools/schema';
 import { resolvers } from '../resources/newsletter/resolvers';
 import { env } from '../configs/env';
+import { AppContext } from '../types/common';
 
 export const startGraphqlServer = async (app: Application, httpServer: Server) => {
   const schema = loadSchemaSync('**/*.graphql', {
@@ -19,7 +20,10 @@ export const startGraphqlServer = async (app: Application, httpServer: Server) =
   });
 
   const server = new ApolloServer({
-    // healthCheckPath: '/health',
+    context: ({ req, res }): AppContext => ({
+      req,
+      res,
+    }),
     introspection: env.ENABLE_INTROSPECTION,
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }), // graceful shutdown
