@@ -1,10 +1,11 @@
 import type { NextPage } from 'next';
+import PublicLayout from '@/components/layout/public/public-layout';
 
 const AuthErrorPage: NextPage = () => {
   return (
-    <div>
+    <PublicLayout>
       <h1>Auth Error !</h1>
-    </div>
+    </PublicLayout>
   );
 };
 
