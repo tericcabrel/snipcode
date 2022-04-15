@@ -17,8 +17,6 @@ export const startServer = async () => {
 
   const graphqlServer = await startGraphqlServer(app, httpServer);
 
-  setupRestEndpoints(app);
-
   const RedisStore = connectRedis(session);
   const redisClient = new Redis(env.REDIS_URL);
 
@@ -42,6 +40,8 @@ export const startServer = async () => {
       }),
     }),
   );
+
+  setupRestEndpoints(app);
 
   httpServer
     .listen(env.PORT, async () => {

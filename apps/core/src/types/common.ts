@@ -14,6 +14,6 @@ export type AppEnvironmentVariables = Omit<
 };
 
 export type AppContext = {
-  req: Request & { session: Session };
+  req: Request & { session: Session & { userId?: string } };
   res: Response;
 };
