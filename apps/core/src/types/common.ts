@@ -1,5 +1,6 @@
 import { Session } from 'express-session';
 import { Request, Response } from 'express';
+import { Query, Send } from 'express-serve-static-core';
 import { EnvironmentVariables } from '../../env';
 
 export type AppEnvironmentVariables = Omit<
@@ -23,4 +24,25 @@ declare module 'express-session' {
   interface SessionData {
     userId: string;
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export interface ExpressRequestBody<T> extends Express.Request {
+  body: T;
+}
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export interface ExpressRequestQuery<T extends Query> extends Express.Request {
+  query: T;
+}
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export interface ExpressRequest<T extends Query, U> extends Express.Request {
+  body: U;
+  query: T;
+}
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export interface ExpressResponse<ResBody> extends Express.Response {
+  json: Send<ResBody, this>;
 }

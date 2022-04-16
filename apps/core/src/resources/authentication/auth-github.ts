@@ -1,13 +1,14 @@
 import axios from 'axios';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { CreateUserDto, roleService, userService } from '@sharingan/domain';
-import { env } from '../../configs/env';
 import { GitHubUserResponse } from '../../types/auth';
+import { ExpressRequestQuery } from '../../types/common';
+import { env } from '../../configs/env';
 import { logger } from '../../configs/logger';
 
-export const authGithub = async (req: Request, res: Response) => {
+export const authGithub = async (req: ExpressRequestQuery<{ code: string }>, res: Response) => {
   try {
-    const requestToken = req.query.code as string;
+    const requestToken = req.query.code;
 
     const authQueryObject = {
       client_id: env.GITHUB_CLIENT_ID,
