@@ -17,3 +17,10 @@ export type AppContext = {
   req: Request & { session: Session & { userId?: string } };
   res: Response;
 };
+
+declare module 'express-session' {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+  interface SessionData {
+    userId: string;
+  }
+}
