@@ -1,12 +1,13 @@
 import { AxiosRequestConfig } from 'axios';
 import { Response } from 'express';
 import { User } from '@sharingan/database';
-import { CreateUserDto, roleService, userService } from '@sharingan/domain';
+import { CreateUserDto, roleService, UpdateUserDto, userService } from '@sharingan/domain';
 import { GitHubUserResponse } from '../../types/auth';
 import { ExpressRequestQuery } from '../../types/common';
 import { env } from '../../configs/env';
 import { logger } from '../../configs/logger';
 import httpClient from '../../configs/http-client';
+import { ROLE_USER_NOT_FOUND } from '../../utils/constants';
 
 const GITHUB_AUTH_URL = 'https://github.com/login/oauth/access_token';
 const GITHUB_API_USER_PROFILE_URL = 'https://api.github.com/user';
@@ -42,9 +43,35 @@ const retrieveGitHubUserData = async (accessToken: string) => {
 const createUserFromGitHubInfo = async (data: GitHubUserResponse, roleId: string): Promise<User> => {
   const { avatar_url, email, login, name } = data;
 
-  const createUserDto = new CreateUserDto(email, name, '', roleId, '', 'github', avatar_url, null, login);
+  const createUserDto = new CreateUserDto({
+    email,
+    name,
+    oauthProvider: 'github',
+    pictureUrl: avatar_url,
+    roleId,
+    timezone: null,
+    username: login,
+  });
+
+  createUserDto.isEnabled = true;
 
   return userService.create(createUserDto);
+};
+
+const updateUserFromGitHubInfo = async (user: User, data: GitHubUserResponse): Promise<User> => {
+  const { avatar_url, email, login, name } = data;
+
+  const updateUserDto = new UpdateUserDto({
+    email,
+    name,
+    oauthProvider: 'github',
+    pictureUrl: avatar_url,
+    roleId: user.roleId,
+    timezone: user.timezone,
+    username: login,
+  });
+
+  return userService.update(user.id, updateUserDto);
 };
 
 export const authenticateWithGitHub = async (req: ExpressRequestQuery<{ code: string }>, res: Response) => {
@@ -62,13 +89,15 @@ export const authenticateWithGitHub = async (req: ExpressRequestQuery<{ code: st
     if (userExist) {
       req.session.userId = userExist.id;
 
+      await updateUserFromGitHubInfo(userExist, userResponse.data);
+
       return res.redirect(env.WEB_AUTH_SUCCESS_URL);
     }
 
     const roleUser = await roleService.findByName('user');
 
     if (!roleUser) {
-      logger.error('Auth: Role user not found');
+      logger.error(`Auth: ${ROLE_USER_NOT_FOUND}`);
 
       return res.redirect(env.WEB_AUTH_ERROR_URL);
     }

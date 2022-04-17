@@ -7,13 +7,13 @@ const formatAuthenticatedUserResult = (data?: AuthenticatedUserQuery): Authentic
     return;
   }
 
-  const { email, firstName, id, isEnabled, lastName, pictureUrl, role, username } = data.authenticatedUser;
+  const { email, id, isEnabled, name, pictureUrl, role, username } = data.authenticatedUser;
 
   return {
     email,
     id,
     isEnabled,
-    name: `${firstName} ${lastName ?? ''}`,
+    name,
     pictureUrl: pictureUrl ?? null,
     role: role.name,
     username: username ?? null,

@@ -1,5 +1,6 @@
 import { Role, User, UserRepository } from '@sharingan/database';
 import CreateUserDto from './dtos/create-user-dto';
+import UpdateUserDto from './dtos/update-user-dto';
 
 export default class UserService {
   constructor(private _userRepository: UserRepository) {}
@@ -8,18 +9,20 @@ export default class UserService {
     return this._userRepository.create(createUserDto.toUser());
   }
 
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    return this._userRepository.update(id, updateUserDto.toUser());
+  }
+
   async loadAdminUsers(role: Role): Promise<void> {
-    const userAdminDto = new CreateUserDto(
-      'teco@sharingan.dev',
-      'Eric',
-      'Teco',
-      role.id,
-      '<access_token>',
-      'github',
-      null,
-      'Europe/Paris',
-      'teco',
-    );
+    const userAdminDto = new CreateUserDto({
+      email: 'teco@sharingan.dev',
+      name: 'Eric Teco',
+      oauthProvider: 'github',
+      pictureUrl: null,
+      roleId: role.id,
+      timezone: 'Europe/Paris',
+      username: 'teco',
+    });
 
     userAdminDto.isEnabled = true;
 
@@ -44,10 +47,6 @@ export default class UserService {
     const promises = ids.map((id) => this._userRepository.delete(id));
 
     await Promise.all(promises);
-  }
-
-  async findByToken(token: string): Promise<User | null> {
-    return this._userRepository.findByToken(token);
   }
 
   async findById(id: string): Promise<User | null> {

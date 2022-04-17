@@ -60,13 +60,11 @@ export const RoleName = {
 export type RoleName = typeof RoleName[keyof typeof RoleName];
 export type User = {
   __typename?: 'User';
-  accessToken?: Maybe<Scalars['String']>;
   createdAt: Scalars['Date'];
   email: Scalars['String'];
-  firstName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   isEnabled: Scalars['Boolean'];
-  lastName?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   oauthProvider?: Maybe<OauthProvider>;
   pictureUrl?: Maybe<Scalars['String']>;
   role: Role;
@@ -83,4 +81,4 @@ export type LogoutUserMutation = { __typename?: 'Mutation', logoutUser: boolean 
 export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AuthenticatedUserQuery = { __typename?: 'Query', authenticatedUser?: { __typename: 'User', id: string, email: string, firstName?: string | null, lastName?: string | null, isEnabled: boolean, pictureUrl?: string | null, username?: string | null, role: { __typename: 'Role', name: RoleName } } | null };
+export type AuthenticatedUserQuery = { __typename?: 'Query', authenticatedUser?: { __typename: 'User', id: string, email: string, isEnabled: boolean, name: string, pictureUrl?: string | null, username?: string | null, role: { __typename: 'Role', name: RoleName } } | null };
