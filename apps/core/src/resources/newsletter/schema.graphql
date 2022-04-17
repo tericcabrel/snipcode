@@ -5,7 +5,3 @@ type Result {
 type Mutation {
   subscribeToNewsletter(email: String!): Result!
 }
-
-type Query {
-  hello: String!
-}

@@ -1,0 +1,37 @@
+scalar Date
+
+enum RoleName {
+  user
+  admin
+}
+
+enum OauthProvider {
+  github
+  stackoverflow
+  twitter
+}
+
+type Role {
+  id: ID!
+  name: RoleName!
+  level: Int!
+  description: String
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type User {
+  id: ID!
+  email: String!
+  username: String
+  firstName: String
+  lastName: String
+  timezone: String
+  isEnabled: Boolean
+  pictureUrl: String
+  role: Role!
+  oauthProvider: OauthProvider
+  accessToken: String
+  createdAt: Date!
+  updatedAt: Date!
+}

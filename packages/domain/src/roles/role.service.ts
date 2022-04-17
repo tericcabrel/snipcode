@@ -29,6 +29,10 @@ export default class RoleService {
     return this.roleRepository.findByName(name);
   }
 
+  async findById(id: string): Promise<Role | null> {
+    return this.roleRepository.findById(id);
+  }
+
   async findAll(): Promise<Role[]> {
     return this.roleRepository.findAll();
   }
