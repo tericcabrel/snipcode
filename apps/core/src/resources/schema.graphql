@@ -27,7 +27,7 @@ type User {
   firstName: String
   lastName: String
   timezone: String
-  isEnabled: Boolean
+  isEnabled: Boolean!
   pictureUrl: String
   role: Role!
   oauthProvider: OauthProvider

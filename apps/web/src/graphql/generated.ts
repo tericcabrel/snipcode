@@ -64,7 +64,7 @@ export type User = {
   email: Scalars['String'];
   firstName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  isEnabled?: Maybe<Scalars['Boolean']>;
+  isEnabled: Scalars['Boolean'];
   lastName?: Maybe<Scalars['String']>;
   oauthProvider?: Maybe<OauthProvider>;
   pictureUrl?: Maybe<Scalars['String']>;
@@ -77,4 +77,4 @@ export type User = {
 export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AuthenticatedUserQuery = { __typename?: 'Query', me?: { __typename: 'User', id: string, email: string, firstName?: string | null, lastName?: string | null, isEnabled?: boolean | null, pictureUrl?: string | null, username?: string | null, role: { __typename: 'Role', name: RoleName } } | null };
+export type AuthenticatedUserQuery = { __typename?: 'Query', me?: { __typename: 'User', id: string, email: string, firstName?: string | null, lastName?: string | null, isEnabled: boolean, pictureUrl?: string | null, username?: string | null, role: { __typename: 'Role', name: RoleName } } | null };

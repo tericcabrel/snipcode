@@ -20,6 +20,6 @@ const meDocument = gql`
   }
 `;
 
-export const useAuthenticatedUser = () => {
+export const useAuthenticatedUserQuery = () => {
   return useQuery<AuthenticatedUserQuery, AuthenticatedUserQueryVariables>(meDocument, {});
 };

@@ -43,7 +43,6 @@ export const OauthProvider = {
 export type OauthProvider = typeof OauthProvider[keyof typeof OauthProvider];
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
   me?: Maybe<User>;
 };
 
@@ -75,7 +74,7 @@ export type User = {
   email: Scalars['String'];
   firstName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  isEnabled?: Maybe<Scalars['Boolean']>;
+  isEnabled: Scalars['Boolean'];
   lastName?: Maybe<Scalars['String']>;
   oauthProvider?: Maybe<OauthProvider>;
   pictureUrl?: Maybe<Scalars['String']>;
@@ -184,7 +183,6 @@ export type MutationResolvers<ContextType = AppContext, ParentType extends Resol
 };
 
 export type QueryResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
 };
 
@@ -209,7 +207,7 @@ export type UserResolvers<ContextType = AppContext, ParentType extends Resolvers
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  isEnabled?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  isEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   oauthProvider?: Resolver<Maybe<ResolversTypes['OauthProvider']>, ParentType, ContextType>;
   pictureUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
