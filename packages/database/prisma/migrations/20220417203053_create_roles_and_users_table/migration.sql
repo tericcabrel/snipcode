@@ -16,18 +16,17 @@ CREATE TABLE `users` (
     `id` VARCHAR(50) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
     `username` VARCHAR(50) NULL,
-    `first_name` VARCHAR(50) NULL,
-    `last_name` VARCHAR(50) NULL,
-    `password` VARCHAR(100) NULL,
+    `name` VARCHAR(50) NOT NULL,
     `timezone` VARCHAR(50) NULL,
     `is_enabled` BOOLEAN NOT NULL DEFAULT false,
     `picture_url` VARCHAR(255) NULL,
     `role_id` VARCHAR(50) NOT NULL,
+    `oauthProvider` ENUM('github', 'google', 'stackoverflow') NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `users_email_key`(`email`),
-    UNIQUE INDEX `users_role_id_key`(`role_id`),
     INDEX `users_username_idx`(`username`),
+    INDEX `users_role_id_idx`(`role_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

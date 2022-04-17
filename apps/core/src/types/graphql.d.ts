@@ -70,13 +70,11 @@ export const RoleName = {
 export type RoleName = typeof RoleName[keyof typeof RoleName];
 export type User = {
   __typename?: 'User';
-  accessToken?: Maybe<Scalars['String']>;
   createdAt: Scalars['Date'];
   email: Scalars['String'];
-  firstName?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   isEnabled: Scalars['Boolean'];
-  lastName?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   oauthProvider?: Maybe<OauthProvider>;
   pictureUrl?: Maybe<Scalars['String']>;
   role: Role;
@@ -204,13 +202,11 @@ export type RoleResolvers<ContextType = AppContext, ParentType extends Resolvers
 };
 
 export type UserResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  accessToken?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   oauthProvider?: Resolver<Maybe<ResolversTypes['OauthProvider']>, ParentType, ContextType>;
   pictureUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   role?: Resolver<ResolversTypes['Role'], ParentType, ContextType>;

@@ -24,14 +24,12 @@ type User {
   id: ID!
   email: String!
   username: String
-  firstName: String
-  lastName: String
+  name: String!
   timezone: String
   isEnabled: Boolean!
   pictureUrl: String
   role: Role!
   oauthProvider: OauthProvider
-  accessToken: String
   createdAt: Date!
   updatedAt: Date!
 }

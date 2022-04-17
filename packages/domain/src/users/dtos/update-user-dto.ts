@@ -10,7 +10,7 @@ type ConstructorArgs = {
   username: string | null;
 };
 
-export default class CreateUserDto {
+export default class UpdateUserDto {
   private enabled = false;
 
   constructor(private _args: ConstructorArgs) {}

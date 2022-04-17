@@ -7,9 +7,8 @@ const queryDocument = gql`
       __typename
       id
       email
-      firstName
-      lastName
       isEnabled
+      name
       pictureUrl
       username
       role {
