@@ -11,4 +11,9 @@ export const resolvers: Resolvers = {
   Query: {
     me,
   },
+  User: {
+    role: (user, _args, context) => {
+      return context.db.role.findById(user.roleId);
+    },
+  },
 };

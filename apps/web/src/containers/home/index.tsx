@@ -1,8 +1,11 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import PublicLayout from '@/components/layout/public/public-layout';
+import { useAuthenticatedUser } from '@/graphql/queries/users/authenticated-user';
 
 const Home = () => {
+  useAuthenticatedUser();
+
   return (
     <PublicLayout>
       <div className="container">
