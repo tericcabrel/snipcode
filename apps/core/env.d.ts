@@ -10,6 +10,8 @@ export type EnvironmentVariables = {
   PORT: string;
   REDIS_URL: string;
   REQUEST_TIMEOUT: string;
+  WEB_AUTH_ERROR_URL: string;
+  WEB_AUTH_SUCCESS_URL: string;
 };
 
 declare global {
