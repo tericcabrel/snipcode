@@ -1,8 +1,8 @@
 import { Resolvers } from '../types/graphql';
 import { dateScalar } from './types/date';
 import { subscribeToNewsletter } from './newsletter/mutations/subscribe';
-import { me } from './users/queries/me';
 import { logoutUser } from './users/mutations/logout-user';
+import { authenticatedUser } from './users/queries/authenticated-user';
 
 export const resolvers: Resolvers = {
   Date: dateScalar,
@@ -11,7 +11,7 @@ export const resolvers: Resolvers = {
     subscribeToNewsletter,
   },
   Query: {
-    me,
+    authenticatedUser,
   },
   User: {
     role: (user, _args, context) => {

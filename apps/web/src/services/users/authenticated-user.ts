@@ -3,11 +3,11 @@ import { AuthenticatedUserQuery } from '@/graphql/generated';
 import { AuthenticatedUser } from '@/typings/queries';
 
 const formatAuthenticatedUserResult = (data?: AuthenticatedUserQuery): AuthenticatedUser | undefined => {
-  if (!data?.me) {
+  if (!data?.authenticatedUser) {
     return;
   }
 
-  const { email, firstName, id, isEnabled, lastName, pictureUrl, role, username } = data.me;
+  const { email, firstName, id, isEnabled, lastName, pictureUrl, role, username } = data.authenticatedUser;
 
   return {
     email,

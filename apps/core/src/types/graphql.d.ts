@@ -44,7 +44,7 @@ export const OauthProvider = {
 export type OauthProvider = typeof OauthProvider[keyof typeof OauthProvider];
 export type Query = {
   __typename?: 'Query';
-  me?: Maybe<User>;
+  authenticatedUser?: Maybe<User>;
 };
 
 export type Result = {
@@ -185,7 +185,7 @@ export type MutationResolvers<ContextType = AppContext, ParentType extends Resol
 };
 
 export type QueryResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  authenticatedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
 };
 
 export type ResultResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result']> = {

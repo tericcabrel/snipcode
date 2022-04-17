@@ -1,9 +1,9 @@
 import { gql, useQuery } from '@apollo/client';
 import { AuthenticatedUserQuery, AuthenticatedUserQueryVariables } from '@/graphql/generated';
 
-const meDocument = gql`
+const queryDocument = gql`
   query authenticatedUser {
-    me {
+    authenticatedUser {
       __typename
       id
       email
@@ -21,5 +21,5 @@ const meDocument = gql`
 `;
 
 export const useAuthenticatedUserQuery = () => {
-  return useQuery<AuthenticatedUserQuery, AuthenticatedUserQueryVariables>(meDocument, {});
+  return useQuery<AuthenticatedUserQuery, AuthenticatedUserQueryVariables>(queryDocument, {});
 };

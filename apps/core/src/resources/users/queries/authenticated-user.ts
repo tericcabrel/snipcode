@@ -1,6 +1,6 @@
 import { QueryResolvers } from '../../../types/graphql';
 
-export const me: QueryResolvers['me'] = async (_parent, _args, context) => {
+export const authenticatedUser: QueryResolvers['authenticatedUser'] = async (_parent, _args, context) => {
   const { userId } = context.req.session;
 
   if (!userId) {

@@ -1,12 +1,12 @@
 import { gql, useMutation } from '@apollo/client';
 import { LogoutUserMutation, LogoutUserMutationVariables } from '@/graphql/generated';
 
-const logoutUserDocument = gql`
+const mutationDocument = gql`
   mutation logoutUser {
     logoutUser
   }
 `;
 
 export const useLogoutUserMutation = () => {
-  return useMutation<LogoutUserMutation, LogoutUserMutationVariables>(logoutUserDocument, {});
+  return useMutation<LogoutUserMutation, LogoutUserMutationVariables>(mutationDocument, {});
 };
