@@ -16,6 +16,7 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  logoutUser: Scalars['Boolean'];
   subscribeToNewsletter: Result;
 };
 
@@ -73,6 +74,11 @@ export type User = {
   updatedAt: Scalars['Date'];
   username?: Maybe<Scalars['String']>;
 };
+
+export type LogoutUserMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutUserMutation = { __typename?: 'Mutation', logoutUser: boolean };
 
 export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never; }>;
 

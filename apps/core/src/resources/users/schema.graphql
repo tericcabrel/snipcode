@@ -1,3 +1,7 @@
 type Query {
   me: User
 }
+
+type Mutation {
+  logoutUser: Boolean!
+}
