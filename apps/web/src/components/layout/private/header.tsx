@@ -2,6 +2,7 @@ import { useState } from 'react';
 import router from 'next/router';
 import { AuthenticatedUser } from '@/typings/queries';
 import ProfileMenu from '@/components/layout/private/profile-menu';
+import { useLogoutUser } from '@/services/users/logout-user';
 
 type Props = {
   user: AuthenticatedUser;
@@ -9,13 +10,14 @@ type Props = {
 
 const PrivateHeader = ({ user }: Props) => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [logoutUserMutation] = useLogoutUser();
 
   const toggleProfileMenuOpen = () => {
     setIsProfileMenuOpen((prevValue) => !prevValue);
   };
 
   const logout = async () => {
-    // sign out mutation
+    await logoutUserMutation();
 
     await router.push('/');
   };

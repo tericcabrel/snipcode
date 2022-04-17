@@ -1,4 +1,4 @@
-import { useAuthenticatedUserQuery } from '@/graphql/queries/users/authenticated-user';
+import { useAuthenticatedUserQuery } from '@/graphql/users/queries/authenticated-user';
 import { AuthenticatedUserQuery } from '@/graphql/generated';
 import { AuthenticatedUser } from '@/typings/queries';
 

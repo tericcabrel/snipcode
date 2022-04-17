@@ -26,6 +26,7 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  logoutUser: Scalars['Boolean'];
   subscribeToNewsletter: Result;
 };
 
@@ -179,6 +180,7 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  logoutUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   subscribeToNewsletter?: Resolver<ResolversTypes['Result'], ParentType, ContextType, RequireFields<MutationSubscribeToNewsletterArgs, 'email'>>;
 };
 
