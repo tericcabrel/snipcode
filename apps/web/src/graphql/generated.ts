@@ -34,7 +34,7 @@ export const OauthProvider = {
 export type OauthProvider = typeof OauthProvider[keyof typeof OauthProvider];
 export type Query = {
   __typename?: 'Query';
-  me?: Maybe<User>;
+  authenticatedUser?: Maybe<User>;
 };
 
 export type Result = {
@@ -83,4 +83,4 @@ export type LogoutUserMutation = { __typename?: 'Mutation', logoutUser: boolean 
 export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AuthenticatedUserQuery = { __typename?: 'Query', me?: { __typename: 'User', id: string, email: string, firstName?: string | null, lastName?: string | null, isEnabled: boolean, pictureUrl?: string | null, username?: string | null, role: { __typename: 'Role', name: RoleName } } | null };
+export type AuthenticatedUserQuery = { __typename?: 'Query', authenticatedUser?: { __typename: 'User', id: string, email: string, firstName?: string | null, lastName?: string | null, isEnabled: boolean, pictureUrl?: string | null, username?: string | null, role: { __typename: 'Role', name: RoleName } } | null };
