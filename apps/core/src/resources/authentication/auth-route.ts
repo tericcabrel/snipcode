@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { authGithub } from './auth-github';
+import { authenticateWithGitHub } from './auth-github';
 
 const authenticationRoute = () => {
   const router = Router();
 
-  router.get('/auth/github/callback', authGithub);
+  router.get('/auth/github/callback', authenticateWithGitHub);
 
   return router;
 };

@@ -1,6 +1,6 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import { authenticationRoute } from '../resources/authentication';
+import { authenticationRoute } from '../resources/authentication/auth-route';
 import { notFoundMiddleware } from './middleware/not-found-middleware';
 import { errorHandlerMiddleware } from './middleware/error-middleware';
 
