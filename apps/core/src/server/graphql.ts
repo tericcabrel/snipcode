@@ -5,7 +5,8 @@ import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { loadSchemaSync } from '@graphql-tools/load';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { addResolversToSchema } from '@graphql-tools/schema';
-import { resolvers } from '../resources/newsletter/resolvers';
+import { newsletterService, roleService, userService } from '@sharingan/domain';
+import { resolvers } from '../resources/resolvers';
 import { env } from '../configs/env';
 import { AppContext } from '../types/common';
 
@@ -21,6 +22,11 @@ export const startGraphqlServer = async (app: Application, httpServer: Server) =
 
   const server = new ApolloServer({
     context: ({ req, res }): AppContext => ({
+      db: {
+        newsletter: newsletterService,
+        role: roleService,
+        user: userService,
+      },
       req,
       res,
     }),

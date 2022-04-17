@@ -1,11 +1,10 @@
 import { ApolloError } from 'apollo-server-express';
-import { newsletterService } from '@sharingan/domain';
 import { MutationResolvers } from '../../../types/graphql';
 import { logger } from '../../../configs/logger';
 
-export const subscribeToNewsletter: MutationResolvers['subscribeToNewsletter'] = async (_parent, args) => {
+export const subscribeToNewsletter: MutationResolvers['subscribeToNewsletter'] = async (_parent, args, context) => {
   try {
-    await newsletterService.subscribe(args.email);
+    await context.db.newsletter.subscribe(args.email);
   } catch (err) {
     logger.error(err);
 

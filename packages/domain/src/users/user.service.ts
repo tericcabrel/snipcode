@@ -49,4 +49,8 @@ export default class UserService {
   async findByToken(token: string): Promise<User | null> {
     return this._userRepository.findByToken(token);
   }
+
+  async findById(id: string): Promise<User | null> {
+    return this._userRepository.findById(id);
+  }
 }

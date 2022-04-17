@@ -10,3 +10,4 @@ const userService = new UserService(new UserRepository());
 const newsletterService = new NewsletterService();
 
 export { newsletterService, roleService, userService, CreateRoleDto, CreateUserDto };
+export type { NewsletterService, RoleService, UserService };

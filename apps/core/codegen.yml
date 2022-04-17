@@ -4,6 +4,12 @@ documents: null
 generates:
   src/types/graphql.d.ts:
     config:
+      enumsAsConst: true
+      scalars:
+        Date: Date
+      mappers:
+        Role: models#Role
+        User: models#User
       customResolverFn: |
         (
           parent: TParent,
