@@ -11,21 +11,16 @@ import { loadData } from './utils/db/loader';
 import { COOKIE_NAME } from './utils/constants';
 
 export const startServer = async () => {
-  const app = express();
-
-  const httpServer = http.createServer(app);
-
-  const graphqlServer = await startGraphqlServer(app, httpServer);
+  const expressApplication = express();
 
   const RedisStore = connectRedis(session);
   const redisClient = new Redis(env.REDIS_URL);
 
-  app.use(
+  expressApplication.use(
     session({
       cookie: {
-        // 1 year
         httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 365,
+        maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
         sameSite: 'lax', // csrf
         secure: env.IS_PROD, // Only works on https
       },
@@ -41,7 +36,11 @@ export const startServer = async () => {
     }),
   );
 
-  setupRestEndpoints(app);
+  const httpServer = http.createServer(expressApplication);
+
+  const graphqlServer = await startGraphqlServer(expressApplication, httpServer);
+
+  setupRestEndpoints(expressApplication);
 
   httpServer
     .listen(env.PORT, async () => {
@@ -49,7 +48,7 @@ export const startServer = async () => {
 
       logger.info(`🚀 Server ready at ${env.HOST}:${env.PORT}${graphqlServer.graphqlPath}`);
     })
-    .setTimeout(2000);
+    .setTimeout(10000);
 
   return { graphqlServer, httpServer };
 };

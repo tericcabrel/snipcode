@@ -1,9 +1,10 @@
 overwrite: true
 schema: "http://localhost:7501/graphql"
-documents: "src/graphql/**/*.graphql"
+documents: "src/graphql/**/*.ts"
 generates:
-  src/graphql/generated.tsx:
+  src/graphql/generated.ts:
+    config:
+      enumsAsConst: true
     plugins:
       - "typescript"
       - "typescript-operations"
-      - "typescript-react-apollo"

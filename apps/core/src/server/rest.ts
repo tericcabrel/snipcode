@@ -1,5 +1,4 @@
 import express, { Application } from 'express';
-import cors from 'cors';
 import { authenticationRoute } from '../resources/authentication/auth-route';
 import { notFoundMiddleware } from './middleware/not-found-middleware';
 import { errorHandlerMiddleware } from './middleware/error-middleware';
@@ -9,8 +8,8 @@ export const setupRestEndpoints = (app: Application) => {
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
-  app.use(cors());
 
+  // Allow express to handle cookie and session on a reverse proxy
   app.set('trust proxy', true);
 
   app.use('/', router);

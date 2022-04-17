@@ -5,3 +5,5 @@ export const COOKIE_NAME = 'shguid';
 export const INVALID_DATE_TYPE_CODE = 'INVALID_TYPE';
 export const INVALID_DATE_TYPE_MESSAGE = 'The date format must be YYYY-MM-DD';
 export const DATE_REGEX = /^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/;
+
+export const CORS_APOLLO_STUDIO_URL = 'https://studio.apollographql.com';
