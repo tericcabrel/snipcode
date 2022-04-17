@@ -18,6 +18,7 @@ export const env: AppEnvironmentVariables = {
   PORT: parseInt(getEnv('PORT'), 10),
   REDIS_URL: getEnv('REDIS_URL'),
   REQUEST_TIMEOUT: parseInt(getEnv('REQUEST_TIMEOUT'), 10),
+  SESSION_SECRET: getEnv('SESSION_SECRET'),
   WEB_APP_URL: getEnv('WEB_APP_URL'),
   WEB_AUTH_ERROR_URL: getEnv('WEB_AUTH_ERROR_URL'),
   WEB_AUTH_SUCCESS_URL: getEnv('WEB_AUTH_SUCCESS_URL'),
