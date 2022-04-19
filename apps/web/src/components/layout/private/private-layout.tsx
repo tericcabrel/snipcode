@@ -13,6 +13,8 @@ type Props = {
 const PrivateLayout = ({ children }: Props) => {
   const { data, isLoading } = useAuthenticatedUser();
 
+  console.log(data);
+
   if (isLoading) {
     return <Loader scope="page" />;
   }
