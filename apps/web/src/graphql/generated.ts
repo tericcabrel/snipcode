@@ -73,6 +73,13 @@ export type User = {
   username?: Maybe<Scalars['String']>;
 };
 
+export type SubscribeNewsletterMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type SubscribeNewsletterMutation = { __typename?: 'Mutation', subscribeToNewsletter: { __typename?: 'Result', message: string } };
+
 export type LogoutUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 
