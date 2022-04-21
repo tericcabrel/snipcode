@@ -19,13 +19,12 @@ const ProfileMenu = ({ closeModal, handleLogout }: Props) => {
       data-testid="account-menu-list"
     >
       <li className="flex">
-        <a
+        <button
           className="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md"
-          href="#"
           onClick={handleLogout}
         >
           <span>Log out</span>
-        </a>
+        </button>
       </li>
     </ul>
   );
