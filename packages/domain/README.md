@@ -39,7 +39,7 @@ Start the Docker database
 ```shell
 yarn db:test
 ```
-Stop the Docker database
+If you want to stop the Docker database
 ```shell
 yarn db:test:stop
 ```

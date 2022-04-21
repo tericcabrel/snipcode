@@ -17,11 +17,14 @@ const isRunningLocally = process.env.IS_LOCAL === 'true';
  * We drop the database and re-create it from migrations every time.
  */
 export default async () => {
+  console.log('process.env.TEST_WITH_DB', process.env.TEST_WITH_DB);
+  console.log('isRunningLocally', isRunningLocally);
+
   if (!process.env.TEST_WITH_DB) {
     return;
   }
 
-  const databaseURL = `mysql://${databaseUser}:${databasePassword}@localhost:${databasePort}/${databaseName}`;
+  const databaseURL = `mysql://${databaseUser}:${databasePassword}@127.0.0.1:${databasePort}/${databaseName}`;
 
   if (!isRunningLocally) {
     const prismaSchemaPath = `${path.resolve(__dirname, '../../../database/prisma')}/schema.test.prisma`;

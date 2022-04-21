@@ -10,7 +10,10 @@ env:
   MYSQL_ROOT_PASSWORD: root
   MYSQL_DATABASE: test
   MYSQL_PORT: 3306
+  DATABASE_URL: mysql://root:root@127:0:0:1:3306/test
   ADMIN_PASSWORD: admin_password
+  CONVERTKIT_API_KEY: api_key
+  CONVERTKIT_FORM_ID: form_id
 
 jobs:
   build:
@@ -19,16 +22,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Node 14
+      - name: Set up Node 16
         uses: actions/setup-node@v2
         with:
           node-version: '16'
 
-      - name: Install global dependencies
+      - name: Install projects dependencies
         uses: bahmutov/npm-install@v1
 
-      - run: yarn lint
-      - run: yarn build
+      - name: Lint the projects
+        run: yarn lint
+
+      - name: Build the projects
+        run: yarn build
 
       - name: Start MySQL server
         run: sudo systemctl start mysql.service
