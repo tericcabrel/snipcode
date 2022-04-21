@@ -14,6 +14,15 @@ export default class NewsletterService {
     this.initClient();
   }
 
+  subscribe(email: string) {
+    const inputBody: SubscribeInput = {
+      api_key: this.apiKey,
+      email,
+    };
+
+    return this.httpClient.post<SubscribeData>(`forms/${this.formId}/subscribe`, inputBody);
+  }
+
   private initClient() {
     this.httpClient = axios.create({
       baseURL: 'https://api.convertkit.com/v3',
@@ -22,14 +31,5 @@ export default class NewsletterService {
     this.httpClient.defaults.headers.common['Accept'] = 'application/json';
     this.httpClient.defaults.headers.common['Content-Type'] = 'application/json';
     this.httpClient.defaults.timeout = 10000;
-  }
-
-  subscribe(email: string) {
-    const inputBody: SubscribeInput = {
-      api_key: this.apiKey,
-      email,
-    };
-
-    return this.httpClient.post<SubscribeData>(`forms/${this.formId}/subscribe`, inputBody);
   }
 }

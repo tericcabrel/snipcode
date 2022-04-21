@@ -1,0 +1,37 @@
+name: Sharingan
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '*'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '*'
+env:
+  MYSQL_ROOT_PASSWORD: root
+  MYSQL_DATABASE: test
+  MYSQL_PORT: 3306
+  ADMIN_PASSWORD: admin_password
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install global dependencies
+        uses: bahmutov/npm-install@v1
+
+      - run: yarn lint
+      - run: yarn build
+
+      - name: Start MySQL server
+        run: sudo systemctl start mysql.service
+      - run: yarn test
