@@ -17,9 +17,6 @@ const isRunningLocally = process.env.IS_LOCAL === 'true';
  * We drop the database and re-create it from migrations every time.
  */
 export default async () => {
-  console.log('process.env.TEST_WITH_DB', process.env.TEST_WITH_DB);
-  console.log('isRunningLocally', isRunningLocally);
-
   if (!process.env.TEST_WITH_DB) {
     return;
   }
