@@ -1,4 +1,6 @@
-module.exports = {
+import type { Config } from '@jest/types';
+
+const config: Config.InitialOptions = {
   roots: ['.'],
   preset: 'ts-jest',
   testMatch: ['**/?(*.)+(spec|test).[jt]s'],
@@ -9,3 +11,5 @@ module.exports = {
     "printBasicPrototype": false
   }
 };
+
+export default config;

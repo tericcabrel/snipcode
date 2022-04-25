@@ -1,4 +1,4 @@
 module.exports = {
   "rules": {},
-  ignorePatterns: ["jest.config.js"]
+  ignorePatterns: ["jest.config.ts"]
 }
