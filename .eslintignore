@@ -8,3 +8,4 @@ dist
 coverage
 env.d.ts
 **/*.d.ts
+commitlint.config.ts
