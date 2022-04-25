@@ -47,7 +47,7 @@
     }
   ],
   "ignorePatterns": [
-    "jest.config.js",
+    "jest.config.ts",
     "__mocks__",
     "next.config.js",
     "tailwind.config.js",
