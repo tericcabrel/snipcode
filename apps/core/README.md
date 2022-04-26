@@ -1,6 +1,6 @@
 # Sharingan Core
 
-This is the core backend of Sharingan. All the business logics behind this application are implemented here. 
+This is the core backend of Sharingan. All the business logic behind this application is implemented here. 
 
 ## Tech Stack
 * Node.js

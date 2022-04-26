@@ -8,7 +8,10 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "clean": "turbo run clean",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "cache:login": "turbo login",
+    "cache:link": "turbo link",
+    "cache:disable": "turbo unlink"
   },
   "private": true,
   "workspaces": [
