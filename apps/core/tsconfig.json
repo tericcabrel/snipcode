@@ -12,7 +12,7 @@
     "./src/**/*", "./tests/**/*"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules", ".turbo"
   ],
   "references": [
     {
