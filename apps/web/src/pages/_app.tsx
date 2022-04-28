@@ -1,16 +1,11 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  credentials: 'include',
-  uri: process.env.NEXT_PUBLIC_SERVER_URL,
-});
+import { ApolloProvider } from '@apollo/client';
+import apolloClient from '@/utils/apollo';
 
 const SharinganApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={apolloClient}>
       <Component {...pageProps} />
     </ApolloProvider>
   );
