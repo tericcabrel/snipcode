@@ -46,8 +46,28 @@ model User {
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   role          Role      @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  folders       Folder[]
 
   @@index([username])
   @@index([roleId])
   @@map("users")
+}
+
+model Folder {
+  id            String    @id @db.VarChar(50)
+  userId        String    @map("user_id") @db.VarChar(50)
+  parentId      String?   @map("parent_id")
+  name          String    @db.VarChar(255)
+  isFavorite    Boolean   @default(false) @map("is_favorite") @db.TinyInt
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  user          User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  parent        Folder?   @relation(name: "parent_folder", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  subFolders    Folder[]  @relation("parent_folder")
+
+  @@index([name])
+  @@index([isFavorite])
+  @@index([userId])
+  @@index([parentId])
+  @@map("folders")
 }
