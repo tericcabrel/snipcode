@@ -10,7 +10,7 @@ const client = new ApolloClient({
 
 const SharinganApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={client}>
       <Component {...pageProps} />
     </ApolloProvider>
   );
