@@ -19,7 +19,7 @@
         "aspects": ["invalidHref", "preferButton"]
       }
     ],
-    "@next/next/no-html-link-for-pages": ["error", "webapp/"]
+    "@next/next/no-html-link-for-pages": ["error", "."]
   },
   "overrides": [
     {
@@ -42,7 +42,14 @@
             "avoidEscape": true
           }
         ],
-        "max-len": ["warn", 120]
+        "max-len": ["warn",
+          {
+            "code": 120,
+            "ignorePattern": "/className=\".+\"/gm",
+            "ignoreTemplateLiterals": true,
+            "ignoreStrings": true,
+            "ignoreComments": true
+          }]
       }
     }
   ],
