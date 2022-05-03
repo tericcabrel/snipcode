@@ -20,6 +20,11 @@ enum OauthProvider {
   stackoverflow
 }
 
+enum SnippetVisibility {
+  public
+  private
+}
+
 model Role {
   id          String   @id @db.VarChar(50)
   name        RoleName @unique
@@ -33,20 +38,65 @@ model Role {
 }
 
 model User {
-  id            String    @id @db.VarChar(50)
-  email         String    @unique @db.VarChar(100)
-  username      String?   @db.VarChar(50)
-  name          String    @db.VarChar(50) @map("name")
-  timezone      String?   @db.VarChar(50)
-  isEnabled     Boolean   @default(false) @map("is_enabled") @db.TinyInt
-  pictureUrl    String?   @db.VarChar(255) @map("picture_url")
-  roleId        String    @map("role_id") @db.VarChar(50)
+  id            String        @id @db.VarChar(50)
+  email         String        @unique @db.VarChar(100)
+  username      String?       @db.VarChar(50)
+  name          String        @map("name") @db.VarChar(50)
+  timezone      String?       @db.VarChar(50)
+  isEnabled     Boolean       @default(false) @map("is_enabled") @db.TinyInt
+  pictureUrl    String?       @map("picture_url") @db.VarChar(255)
+  roleId        String        @map("role_id") @db.VarChar(50)
   oauthProvider OauthProvider
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-  role          Role      @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  role          Role          @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  folders       Folder[]
+  snippets      Snippet[]
 
   @@index([username])
   @@index([roleId])
   @@map("users")
+}
+
+model Folder {
+  id         String    @id @db.VarChar(50)
+  userId     String    @map("user_id") @db.VarChar(50)
+  parentId   String?   @map("parent_id")
+  name       String    @db.VarChar(255)
+  isFavorite Boolean   @default(false) @map("is_favorite") @db.TinyInt
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  user       User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  parent     Folder?   @relation(name: "parent_folder", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  subFolders Folder[]  @relation("parent_folder")
+  snippets   Snippet[]
+
+  @@index([name])
+  @@index([isFavorite])
+  @@index([userId])
+  @@index([parentId])
+  @@map("folders")
+}
+
+model Snippet {
+  id          String            @id @db.VarChar(50)
+  userId      String            @map("user_id") @db.VarChar(50)
+  folderId    String            @map("folder_id")
+  name        String            @db.VarChar(255)
+  content     String            @db.Text
+  language    String            @db.VarChar(20)
+  size        Int               @default(0) @db.Int
+  visibility  SnippetVisibility @default(public)
+  description String?           @db.Text
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+  user        User              @relation(fields: [userId], references: [id], onDelete: Restrict)
+  folder      Folder            @relation(fields: [folderId], references: [id], onDelete: Restrict)
+
+  @@index([name])
+  @@index([userId])
+  @@index([folderId])
+  @@index([language])
+  @@index([visibility])
+  @@map("snippets")
 }
