@@ -1,13 +1,20 @@
 import { AxiosRequestConfig } from 'axios';
 import { Response } from 'express';
 import { User } from '@sharingan/database';
-import { CreateUserDto, roleService, UpdateUserDto, userService } from '@sharingan/domain';
-import { GitHubUserResponse } from '../../types/auth';
-import { ExpressRequestQuery } from '../../types/common';
-import { env } from '../../configs/env';
-import { logger } from '../../configs/logger';
-import httpClient from '../../configs/http-client';
-import { ROLE_USER_NOT_FOUND } from '../../utils/constants';
+import {
+  CreateUserDto,
+  CreateUserRootFolderDto,
+  folderService,
+  roleService,
+  UpdateUserDto,
+  userService,
+} from '@sharingan/domain';
+import { GitHubUserResponse } from '../../../types/auth';
+import { ExpressRequestQuery } from '../../../types/common';
+import { env } from '../../../configs/env';
+import { logger } from '../../../configs/logger';
+import httpClient from '../../../configs/http-client';
+import { ROLE_USER_NOT_FOUND } from '../../../utils/constants';
 
 const GITHUB_AUTH_URL = 'https://github.com/login/oauth/access_token';
 const GITHUB_API_USER_PROFILE_URL = 'https://api.github.com/user';
@@ -104,7 +111,9 @@ export const authenticateWithGitHub = async (req: ExpressRequestQuery<{ code: st
 
     const createdUser = await createUserFromGitHubInfo(userResponse.data, roleUser.id);
 
-    // TODO create root folder
+    const createUserRootFolderDto = new CreateUserRootFolderDto(createdUser.id);
+
+    await folderService.createUserRootFolder(createUserRootFolderDto);
 
     req.session.userId = createdUser.id;
 
