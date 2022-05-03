@@ -1,7 +1,7 @@
 import { Session } from 'express-session';
 import { Request, Response } from 'express';
 import { Query, Send } from 'express-serve-static-core';
-import { NewsletterService, RoleService, UserService } from '@sharingan/domain';
+import { FolderService, NewsletterService, RoleService, SnippetService, UserService } from '@sharingan/domain';
 import { EnvironmentVariables } from '../../env';
 
 export type AppEnvironmentVariables = Omit<
@@ -17,8 +17,10 @@ export type AppEnvironmentVariables = Omit<
 
 export type AppContext = {
   db: {
+    folder: FolderService;
     newsletter: NewsletterService;
     role: RoleService;
+    snippet: SnippetService;
     user: UserService;
   };
   req: Request & { session: Session & { userId?: string } };
