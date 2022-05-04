@@ -36,6 +36,7 @@ export type Folder = {
   isFavorite: Scalars['Boolean'];
   name: Scalars['String'];
   parent?: Maybe<Folder>;
+  subFolders: Array<Folder>;
   updatedAt: Scalars['Date'];
   user: User;
 };
@@ -43,7 +44,6 @@ export type Folder = {
 export type Mutation = {
   __typename?: 'Mutation';
   createFolder: Folder;
-  login: Scalars['Boolean'];
   logoutUser: Scalars['Boolean'];
   subscribeToNewsletter: Result;
 };
@@ -68,6 +68,12 @@ export type OauthProvider = typeof OauthProvider[keyof typeof OauthProvider];
 export type Query = {
   __typename?: 'Query';
   authenticatedUser?: Maybe<User>;
+  listFolders: Array<Folder>;
+};
+
+
+export type QueryListFoldersArgs = {
+  folderId?: InputMaybe<Scalars['String']>;
 };
 
 export type Result = {
@@ -211,6 +217,7 @@ export type FolderResolvers<ContextType = AppContext, ParentType extends Resolve
   isFavorite?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   parent?: Resolver<Maybe<ResolversTypes['Folder']>, ParentType, ContextType>;
+  subFolders?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -218,13 +225,13 @@ export type FolderResolvers<ContextType = AppContext, ParentType extends Resolve
 
 export type MutationResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createFolder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType, RequireFields<MutationCreateFolderArgs, 'input'>>;
-  login?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   logoutUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   subscribeToNewsletter?: Resolver<ResolversTypes['Result'], ParentType, ContextType, RequireFields<MutationSubscribeToNewsletterArgs, 'email'>>;
 };
 
 export type QueryResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   authenticatedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  listFolders?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType, Partial<QueryListFoldersArgs>>;
 };
 
 export type ResultResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result']> = {

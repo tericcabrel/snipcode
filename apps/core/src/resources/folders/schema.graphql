@@ -10,3 +10,7 @@ input CreateFolderInput {
 type Mutation {
   createFolder(input: CreateFolderInput!): Folder!
 }
+
+type Query {
+  listFolders(folderId: String): [Folder!]!
+}

@@ -3,6 +3,7 @@ import BaseRepository from './_base';
 
 type FolderRepositoryInterface = {
   findByUser: (userId: string) => Promise<Folder[]>;
+  findSubFolders: (folderId: string) => Promise<Folder[]>;
 } & BaseRepository<Folder>;
 
 export default FolderRepositoryInterface;

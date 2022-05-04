@@ -43,4 +43,5 @@ type Folder {
   updatedAt: Date!
   user: User!
   parent: Folder
+  subFolders: [Folder!]!
 }
