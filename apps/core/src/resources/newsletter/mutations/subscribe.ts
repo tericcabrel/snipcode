@@ -1,6 +1,8 @@
 import { ApolloError } from 'apollo-server-express';
 import { MutationResolvers } from '../../../types/graphql';
 import { logger } from '../../../configs/logger';
+import { NEWSLETTER_SUBSCRIBE_SUCCESS } from '../../../utils/constants';
+import { NEWSLETTER_SUBSCRIBE_FAILED_CODE, NEWSLETTER_SUBSCRIBE_FAILED_MESSAGE } from '../../../utils/errors';
 
 export const subscribeToNewsletter: MutationResolvers['subscribeToNewsletter'] = async (_parent, args, context) => {
   try {
@@ -8,8 +10,8 @@ export const subscribeToNewsletter: MutationResolvers['subscribeToNewsletter'] =
   } catch (err) {
     logger.error(err);
 
-    throw new ApolloError('NEWSLETTER_SUBSCRIBE_FAILED', 'Failed to subscribe to the newsletter.');
+    throw new ApolloError(NEWSLETTER_SUBSCRIBE_FAILED_CODE, NEWSLETTER_SUBSCRIBE_FAILED_MESSAGE);
   }
 
-  return { message: 'Subscribed to the newsletter successfully' };
+  return { message: NEWSLETTER_SUBSCRIBE_SUCCESS };
 };

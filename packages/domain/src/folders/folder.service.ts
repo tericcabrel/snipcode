@@ -16,4 +16,8 @@ export default class FolderService {
   async findUserFolders(userId: string): Promise<Folder[]> {
     return this.folderRepository.findByUser(userId);
   }
+
+  async findById(id: string): Promise<Folder | null> {
+    return this.folderRepository.findById(id);
+  }
 }

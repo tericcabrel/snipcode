@@ -1,0 +1,2 @@
+export const NEWSLETTER_SUBSCRIBE_FAILED_CODE = 'NEWSLETTER_SUBSCRIBE_FAILED';
+export const NEWSLETTER_SUBSCRIBE_FAILED_MESSAGE = 'Failed to subscribe to the newsletter.';
