@@ -1,3 +1,3 @@
-import { Role, User } from '@sharingan/database';
+import { Folder, Role, Snippet, User } from '@sharingan/database';
 
-export type { User, Role };
+export type { User, Role, Folder, Snippet };

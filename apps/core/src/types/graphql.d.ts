@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { Role, User } from 'models';
+import { Role, User, Folder, Snippet } from 'models';
 import { AppContext } from './common';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -24,10 +24,32 @@ export type Scalars = {
   Date: Date;
 };
 
+export type CreateFolderInput = {
+  name: Scalars['String'];
+  parentId: Scalars['String'];
+};
+
+export type Folder = {
+  __typename?: 'Folder';
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  isFavorite: Scalars['Boolean'];
+  name: Scalars['String'];
+  parent?: Maybe<Folder>;
+  updatedAt: Scalars['Date'];
+  user: User;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createFolder: Folder;
   logoutUser: Scalars['Boolean'];
   subscribeToNewsletter: Result;
+};
+
+
+export type MutationCreateFolderArgs = {
+  input: CreateFolderInput;
 };
 
 
@@ -72,6 +94,7 @@ export type User = {
   __typename?: 'User';
   createdAt: Scalars['Date'];
   email: Scalars['String'];
+  folders: Array<Folder>;
   id: Scalars['ID'];
   isEnabled: Scalars['Boolean'];
   name: Scalars['String'];
@@ -146,7 +169,9 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  CreateFolderInput: CreateFolderInput;
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  Folder: ResolverTypeWrapper<Folder>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -162,7 +187,9 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
+  CreateFolderInput: CreateFolderInput;
   Date: Scalars['Date'];
+  Folder: Folder;
   ID: Scalars['ID'];
   Int: Scalars['Int'];
   Mutation: {};
@@ -177,7 +204,19 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
+export type FolderResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Folder'] = ResolversParentTypes['Folder']> = {
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  isFavorite?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  parent?: Resolver<Maybe<ResolversTypes['Folder']>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createFolder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType, RequireFields<MutationCreateFolderArgs, 'input'>>;
   logoutUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   subscribeToNewsletter?: Resolver<ResolversTypes['Result'], ParentType, ContextType, RequireFields<MutationSubscribeToNewsletterArgs, 'email'>>;
 };
@@ -204,6 +243,7 @@ export type RoleResolvers<ContextType = AppContext, ParentType extends Resolvers
 export type UserResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  folders?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   isEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -218,6 +258,7 @@ export type UserResolvers<ContextType = AppContext, ParentType extends Resolvers
 
 export type Resolvers<ContextType = AppContext> = {
   Date?: GraphQLScalarType;
+  Folder?: FolderResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Result?: ResultResolvers<ContextType>;

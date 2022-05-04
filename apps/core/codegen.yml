@@ -10,6 +10,8 @@ generates:
       mappers:
         Role: models#Role
         User: models#User
+        Folder: models#Folder
+        Snippet: models#Snippet
       customResolverFn: |
         (
           parent: TParent,

@@ -1,0 +1,12 @@
+type Result {
+  message: String!
+}
+
+input CreateFolderInput {
+  parentId: String!
+  name: String!
+}
+
+type Mutation {
+  createFolder(input: CreateFolderInput!): Folder!
+}
