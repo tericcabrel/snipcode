@@ -93,7 +93,7 @@ const HomePage: NextPage = () => {
 
             <div className="hidden lg:flex lg:items-center lg:justify-center lg:space-x-10">
               <a
-                href="/"
+                href={`https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`}
                 title=""
                 className="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
               >
