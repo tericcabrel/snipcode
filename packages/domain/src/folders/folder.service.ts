@@ -32,4 +32,10 @@ export default class FolderService {
   async findSubFolders(folderId: string): Promise<Folder[]> {
     return this.folderRepository.findSubFolders(folderId);
   }
+
+  async isFolderExistInParentFolder(parentFolderId: string, folderName: string): Promise<boolean> {
+    const folders = await this.findSubFolders(parentFolderId);
+
+    return folders.some((folder) => folder.name.toLowerCase() === folderName.trim().toLowerCase());
+  }
 }
