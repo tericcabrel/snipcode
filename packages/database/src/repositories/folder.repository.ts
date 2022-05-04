@@ -44,4 +44,8 @@ export default class FolderRepository implements FolderRepositoryInterface {
   findByUser(userId: string): Promise<Folder[]> {
     return prisma.folder.findMany({ orderBy: { name: 'asc' }, where: { userId } });
   }
+
+  findSubFolders(folderId: string): Promise<Folder[]> {
+    return prisma.folder.findMany({ where: { parentId: folderId } });
+  }
 }

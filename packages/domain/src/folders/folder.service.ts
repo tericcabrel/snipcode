@@ -20,4 +20,16 @@ export default class FolderService {
   async findById(id: string): Promise<Folder | null> {
     return this.folderRepository.findById(id);
   }
+
+  async findUserRootFolder(userId: string): Promise<Folder | null> {
+    const folders = await this.findUserFolders(userId);
+
+    const rootFolder = folders.find((folder) => folder.parentId === null);
+
+    return rootFolder ?? null;
+  }
+
+  async findSubFolders(folderId: string): Promise<Folder[]> {
+    return this.folderRepository.findSubFolders(folderId);
+  }
 }

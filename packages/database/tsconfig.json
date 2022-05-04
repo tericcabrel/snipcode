@@ -4,7 +4,6 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "lib": ["dom"],
     "outDir": "./dist",
     "declaration": true,
     "composite": true,
