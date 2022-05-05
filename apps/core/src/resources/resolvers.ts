@@ -1,4 +1,5 @@
 import { Resolvers } from '../types/graphql';
+import { deleteFolders } from './folders/mutations/deleteFolders';
 import { listFolders } from './folders/queries/list-folders';
 import { dateScalar } from './types/date';
 import { createFolder } from './folders/mutations/createFolder';
@@ -21,6 +22,7 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     createFolder,
+    deleteFolders,
     logoutUser,
     subscribeToNewsletter,
   },

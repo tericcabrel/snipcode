@@ -44,6 +44,7 @@ export type Folder = {
 export type Mutation = {
   __typename?: 'Mutation';
   createFolder: Folder;
+  deleteFolders: Scalars['Boolean'];
   logoutUser: Scalars['Boolean'];
   subscribeToNewsletter: Result;
 };
@@ -51,6 +52,11 @@ export type Mutation = {
 
 export type MutationCreateFolderArgs = {
   input: CreateFolderInput;
+};
+
+
+export type MutationDeleteFoldersArgs = {
+  folderIds: Array<Scalars['String']>;
 };
 
 
@@ -225,6 +231,7 @@ export type FolderResolvers<ContextType = AppContext, ParentType extends Resolve
 
 export type MutationResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createFolder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType, RequireFields<MutationCreateFolderArgs, 'input'>>;
+  deleteFolders?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteFoldersArgs, 'folderIds'>>;
   logoutUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   subscribeToNewsletter?: Resolver<ResolversTypes['Result'], ParentType, ContextType, RequireFields<MutationSubscribeToNewsletterArgs, 'email'>>;
 };
