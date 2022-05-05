@@ -48,4 +48,24 @@ export default class FolderRepository implements FolderRepositoryInterface {
   findSubFolders(folderId: string): Promise<Folder[]> {
     return prisma.folder.findMany({ where: { parentId: folderId } });
   }
+
+  async bulkDelete(ids: string[]): Promise<void> {
+    await prisma.folder.deleteMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+  }
+
+  findFolders(folderIds: string[]): Promise<Folder[]> {
+    return prisma.folder.findMany({
+      where: {
+        id: {
+          in: folderIds,
+        },
+      },
+    });
+  }
 }

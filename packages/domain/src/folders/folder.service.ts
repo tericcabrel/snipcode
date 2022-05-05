@@ -38,4 +38,12 @@ export default class FolderService {
 
     return folders.some((folder) => folder.name.toLowerCase() === folderName.trim().toLowerCase());
   }
+
+  async deleteMany(folderIds: string[]): Promise<void> {
+    return this.folderRepository.bulkDelete(folderIds);
+  }
+
+  findFolders(folderIds: string[]): Promise<Folder[]> {
+    return this.folderRepository.findFolders(folderIds);
+  }
 }

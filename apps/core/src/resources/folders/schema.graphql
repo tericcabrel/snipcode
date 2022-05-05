@@ -9,6 +9,7 @@ input CreateFolderInput {
 
 type Mutation {
   createFolder(input: CreateFolderInput!): Folder!
+  deleteFolders(folderIds: [String!]!): Boolean!
 }
 
 type Query {
