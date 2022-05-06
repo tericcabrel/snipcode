@@ -93,6 +93,7 @@ export type Query = {
   allSnippets: Array<Snippet>;
   authenticatedUser?: Maybe<User>;
   listFolders: Array<Folder>;
+  mySnippets: Array<Snippet>;
 };
 
 
@@ -296,6 +297,7 @@ export type QueryResolvers<ContextType = AppContext, ParentType extends Resolver
   allSnippets?: Resolver<Array<ResolversTypes['Snippet']>, ParentType, ContextType>;
   authenticatedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   listFolders?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType, Partial<QueryListFoldersArgs>>;
+  mySnippets?: Resolver<Array<ResolversTypes['Snippet']>, ParentType, ContextType>;
 };
 
 export type ResultResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result']> = {

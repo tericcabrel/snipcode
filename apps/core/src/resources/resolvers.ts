@@ -4,6 +4,7 @@ import { listFolders } from './folders/queries/list-folders';
 import { createSnippet } from './snippets/mutations/createSnippet';
 import { createFolder } from './folders/mutations/createFolder';
 import { subscribeToNewsletter } from './newsletter/mutations/subscribe';
+import { mySnippets } from './snippets/queries/mySnippets';
 import { logoutUser } from './users/mutations/logout-user';
 import { authenticatedUser } from './users/queries/authenticated-user';
 import { deleteFolders } from './folders/mutations/deleteFolders';
@@ -33,6 +34,7 @@ export const resolvers: Resolvers = {
     allSnippets,
     authenticatedUser,
     listFolders,
+    mySnippets,
   },
   Snippet: {
     folder: (snippet, _args, context) => {
