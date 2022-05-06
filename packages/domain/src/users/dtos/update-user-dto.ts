@@ -1,6 +1,6 @@
 import { dbId, OauthProvider, User } from '@sharingan/database';
 
-type ConstructorArgs = {
+type Input = {
   email: string;
   name: string;
   oauthProvider: OauthProvider;
@@ -13,10 +13,10 @@ type ConstructorArgs = {
 export default class UpdateUserDto {
   private enabled = false;
 
-  constructor(private _args: ConstructorArgs) {}
+  constructor(private _input: Input) {}
 
   get email(): string {
-    return this._args.email;
+    return this._input.email;
   }
 
   set isEnabled(value: boolean) {
@@ -26,16 +26,16 @@ export default class UpdateUserDto {
   toUser(): User {
     return {
       createdAt: new Date(),
-      email: this._args.email,
+      email: this._input.email,
       id: dbId.generate(),
       isEnabled: this.enabled,
-      name: this._args.name,
-      oauthProvider: this._args.oauthProvider,
-      pictureUrl: this._args.pictureUrl,
-      roleId: this._args.roleId,
-      timezone: this._args.timezone,
+      name: this._input.name,
+      oauthProvider: this._input.oauthProvider,
+      pictureUrl: this._input.pictureUrl,
+      roleId: this._input.roleId,
+      timezone: this._input.timezone,
       updatedAt: new Date(),
-      username: this._args.username,
+      username: this._input.username,
     };
   }
 }

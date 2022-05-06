@@ -9,8 +9,12 @@ export default class RoleService {
   }
 
   async loadRoles(): Promise<void> {
-    const roleAdminDto = new CreateRoleDto('admin', 200, 'can do everything in the application');
-    const roleUserDto = new CreateRoleDto('user', 100, "can't do everything");
+    const roleAdminDto = new CreateRoleDto({
+      description: 'can do everything in the application',
+      level: 200,
+      name: 'admin',
+    });
+    const roleUserDto = new CreateRoleDto({ description: "can't do everything", level: 100, name: 'user' });
 
     const promises = [roleAdminDto, roleUserDto].map(async (roleDto) => {
       const role = await this.roleRepository.findByName(roleDto.name);

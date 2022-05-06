@@ -1,33 +1,35 @@
 import { dbId, Snippet, SnippetVisibility } from '@sharingan/database';
 
+type Input = {
+  content: string;
+  description: string | null;
+  folderId: string;
+  language: string;
+  name: string;
+  userId: string;
+  visibility: SnippetVisibility;
+};
+
 export default class CreateSnippetDto {
-  constructor(
-    private _name: string,
-    private _userId: string,
-    private _folderId: string,
-    private _language: string,
-    private _content: string,
-    private _visibility: SnippetVisibility,
-    private _description: string | null,
-  ) {}
+  constructor(private _input: Input) {}
 
   private getContentSize(): number {
-    return this._content.length;
+    return this._input.content.length;
   }
 
   toSnippet(): Snippet {
     return {
-      content: this._content,
+      content: this._input.content,
       createdAt: new Date(),
-      description: this._description,
-      folderId: this._folderId,
+      description: this._input.description,
+      folderId: this._input.folderId,
       id: dbId.generate(),
-      language: this._language,
-      name: this._name,
+      language: this._input.language,
+      name: this._input.name,
       size: this.getContentSize(),
       updatedAt: new Date(),
-      userId: this._userId,
-      visibility: this._visibility,
+      userId: this._input.userId,
+      visibility: this._input.visibility,
     };
   }
 }

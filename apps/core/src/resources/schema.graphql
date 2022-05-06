@@ -11,6 +11,11 @@ enum OauthProvider {
   twitter
 }
 
+enum SnippetVisibility {
+  public
+  private
+}
+
 type Role {
   id: ID!
   name: RoleName!
@@ -44,4 +49,18 @@ type Folder {
   user: User!
   parent: Folder
   subFolders: [Folder!]!
+}
+
+type Snippet {
+  id: ID!
+  name: String!
+  content: String!
+  language: String!
+  size: Int!
+  visibility: SnippetVisibility!
+  description: String
+  createdAt: Date!
+  updatedAt: Date!
+  folder: Folder!
+  user: User!
 }
