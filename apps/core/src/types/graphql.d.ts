@@ -29,6 +29,17 @@ export type CreateFolderInput = {
   parentId: Scalars['String'];
 };
 
+export type CreateSnippetInput = {
+  __typename?: 'CreateSnippetInput';
+  content: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  folderId: Scalars['String'];
+  language: Scalars['String'];
+  name: Scalars['String'];
+  size: Scalars['Int'];
+  visibility: SnippetVisibility;
+};
+
 export type Folder = {
   __typename?: 'Folder';
   createdAt: Scalars['Date'];
@@ -44,6 +55,7 @@ export type Folder = {
 export type Mutation = {
   __typename?: 'Mutation';
   createFolder: Folder;
+  createSnippet: Folder;
   deleteFolders: Scalars['Boolean'];
   logoutUser: Scalars['Boolean'];
   subscribeToNewsletter: Result;
@@ -52,6 +64,11 @@ export type Mutation = {
 
 export type MutationCreateFolderArgs = {
   input: CreateFolderInput;
+};
+
+
+export type MutationCreateSnippetArgs = {
+  input: CreateSnippetInput;
 };
 
 
@@ -73,6 +90,7 @@ export const OauthProvider = {
 export type OauthProvider = typeof OauthProvider[keyof typeof OauthProvider];
 export type Query = {
   __typename?: 'Query';
+  allSnippets: Array<Snippet>;
   authenticatedUser?: Maybe<User>;
   listFolders: Array<Folder>;
 };
@@ -103,6 +121,27 @@ export const RoleName = {
 } as const;
 
 export type RoleName = typeof RoleName[keyof typeof RoleName];
+export type Snippet = {
+  __typename?: 'Snippet';
+  content: Scalars['String'];
+  createdAt: Scalars['Date'];
+  description?: Maybe<Scalars['String']>;
+  folder: Folder;
+  id: Scalars['ID'];
+  language: Scalars['String'];
+  name: Scalars['String'];
+  size: Scalars['Int'];
+  updatedAt: Scalars['Date'];
+  user: User;
+  visibility: SnippetVisibility;
+};
+
+export const SnippetVisibility = {
+  Private: 'private',
+  Public: 'public'
+} as const;
+
+export type SnippetVisibility = typeof SnippetVisibility[keyof typeof SnippetVisibility];
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['Date'];
@@ -183,6 +222,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   CreateFolderInput: CreateFolderInput;
+  CreateSnippetInput: ResolverTypeWrapper<CreateSnippetInput>;
   Date: ResolverTypeWrapper<Scalars['Date']>;
   Folder: ResolverTypeWrapper<Folder>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
@@ -193,6 +233,8 @@ export type ResolversTypes = {
   Result: ResolverTypeWrapper<Result>;
   Role: ResolverTypeWrapper<Role>;
   RoleName: RoleName;
+  Snippet: ResolverTypeWrapper<Snippet>;
+  SnippetVisibility: SnippetVisibility;
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
 };
@@ -201,6 +243,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   CreateFolderInput: CreateFolderInput;
+  CreateSnippetInput: CreateSnippetInput;
   Date: Scalars['Date'];
   Folder: Folder;
   ID: Scalars['ID'];
@@ -209,8 +252,20 @@ export type ResolversParentTypes = {
   Query: {};
   Result: Result;
   Role: Role;
+  Snippet: Snippet;
   String: Scalars['String'];
   User: User;
+};
+
+export type CreateSnippetInputResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['CreateSnippetInput'] = ResolversParentTypes['CreateSnippetInput']> = {
+  content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  folderId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  language?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  visibility?: Resolver<ResolversTypes['SnippetVisibility'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
@@ -231,12 +286,14 @@ export type FolderResolvers<ContextType = AppContext, ParentType extends Resolve
 
 export type MutationResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createFolder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType, RequireFields<MutationCreateFolderArgs, 'input'>>;
+  createSnippet?: Resolver<ResolversTypes['Folder'], ParentType, ContextType, RequireFields<MutationCreateSnippetArgs, 'input'>>;
   deleteFolders?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteFoldersArgs, 'folderIds'>>;
   logoutUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   subscribeToNewsletter?: Resolver<ResolversTypes['Result'], ParentType, ContextType, RequireFields<MutationSubscribeToNewsletterArgs, 'email'>>;
 };
 
 export type QueryResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  allSnippets?: Resolver<Array<ResolversTypes['Snippet']>, ParentType, ContextType>;
   authenticatedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   listFolders?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType, Partial<QueryListFoldersArgs>>;
 };
@@ -253,6 +310,21 @@ export type RoleResolvers<ContextType = AppContext, ParentType extends Resolvers
   level?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['RoleName'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SnippetResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Snippet'] = ResolversParentTypes['Snippet']> = {
+  content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  folder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  language?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  visibility?: Resolver<ResolversTypes['SnippetVisibility'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -273,12 +345,14 @@ export type UserResolvers<ContextType = AppContext, ParentType extends Resolvers
 };
 
 export type Resolvers<ContextType = AppContext> = {
+  CreateSnippetInput?: CreateSnippetInputResolvers<ContextType>;
   Date?: GraphQLScalarType;
   Folder?: FolderResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Result?: ResultResolvers<ContextType>;
   Role?: RoleResolvers<ContextType>;
+  Snippet?: SnippetResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 

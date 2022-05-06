@@ -1,27 +1,33 @@
 import { dbId, Role, RoleName } from '@sharingan/database';
 
+type Input = {
+  description: string | null;
+  level: number;
+  name: RoleName;
+};
+
 export default class CreateRoleDto {
-  constructor(private _name: RoleName, private _level: number, private _description: string | null) {}
+  constructor(private _input: Input) {}
 
   get name(): RoleName {
-    return this._name;
+    return this._input.name;
   }
 
   get level(): number {
-    return this._level;
+    return this._input.level;
   }
 
   get description(): string | null {
-    return this._description;
+    return this._input.description;
   }
 
   toRole(): Role {
     return {
       createdAt: new Date(),
-      description: this._description,
+      description: this._input.description,
       id: dbId.generate(),
-      level: this._level,
-      name: this._name,
+      level: this._input.level,
+      name: this._input.name,
       updatedAt: new Date(),
     };
   }
