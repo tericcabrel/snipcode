@@ -38,7 +38,10 @@ export const resolvers: Resolvers = {
   },
   Snippet: {
     folder: (snippet, _args, context) => {
-      return context.db.folder.findById(snippet.id);
+      return context.db.folder.findById(snippet.folderId);
+    },
+    user: (snippet, _args, context) => {
+      return context.db.user.findById(snippet.userId);
     },
   },
   User: {

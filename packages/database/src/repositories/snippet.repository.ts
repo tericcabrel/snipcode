@@ -51,7 +51,7 @@ export default class SnippetRepository implements SnippetRepositoryInterface {
   }
 
   findByUser(userId: string): Promise<Snippet[]> {
-    return prisma.snippet.findMany({ orderBy: { name: 'asc' }, where: { userId } });
+    return prisma.snippet.findMany({ orderBy: { createdAt: 'desc' }, where: { userId } });
   }
 
   findByFolder(folderId: string, visibility?: SnippetVisibility): Promise<Snippet[]> {

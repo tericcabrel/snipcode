@@ -1,15 +1,14 @@
-type CreateSnippetInput {
+input CreateSnippetInput {
   folderId: String!
   name: String!
   content: String!
   language: String!
-  size: Int!
   visibility: SnippetVisibility!
   description: String
 }
 
 type Mutation {
-  createSnippet(input: CreateSnippetInput!): Folder!
+  createSnippet(input: CreateSnippetInput!): Snippet!
 }
 
 type Query {
