@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
-import { authenticationRoute } from '../resources/authentication/auth-route';
+import { authenticationRoute } from '../resources/authentication/routes';
+import { rendererRoute } from '../resources/snippets/renderer/routes';
 import { notFoundMiddleware } from './middleware/not-found-middleware';
 import { errorHandlerMiddleware } from './middleware/error-middleware';
 
@@ -14,6 +15,7 @@ export const setupRestEndpoints = (app: Application) => {
 
   app.use('/', router);
   app.use('/', authenticationRoute());
+  app.use('/', rendererRoute());
 
   app.use(notFoundMiddleware);
 

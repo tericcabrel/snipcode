@@ -40,6 +40,11 @@ export interface ExpressRequestBody<T> extends Express.Request {
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export interface ExpressRequestParams<T extends { id: string }> extends Express.Request {
+  params: T;
+}
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export interface ExpressRequestQuery<T extends Query> extends Express.Request {
   query: T;
 }

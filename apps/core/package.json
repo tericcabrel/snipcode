@@ -28,7 +28,8 @@
     "express": "^4.17.3",
     "express-session": "^1.17.2",
     "graphql": "^16.3.0",
-    "ioredis": "^5.0.4"
+    "ioredis": "^5.0.4",
+    "shiki": "^0.10.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.6.2",
