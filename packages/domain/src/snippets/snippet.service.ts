@@ -8,6 +8,10 @@ export default class SnippetService {
     return this._snippetRepository.create(createSnippetDto.toSnippet());
   }
 
+  async findById(id: string): Promise<Snippet | null> {
+    return this._snippetRepository.findById(id);
+  }
+
   async findByUser(userId: string): Promise<Snippet[]> {
     return this._snippetRepository.findByUser(userId);
   }
