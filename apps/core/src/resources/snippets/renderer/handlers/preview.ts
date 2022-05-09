@@ -1,5 +1,6 @@
-import { Response } from 'express';
 import { snippetService } from '@sharingan/domain';
+import { Response } from 'express';
+
 import { ExpressRequestParams } from '../../../../types/common';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -31,6 +32,10 @@ const generateHtmlPreview = (code: string, title: string) => `
           counter-reset: step;
           counter-increment: step 0;
         }
+        code .line {
+          width: 100%;
+          display: inline-block;
+        }
         code .line::before {
           content: counter(step);
           counter-increment: step;
@@ -39,6 +44,18 @@ const generateHtmlPreview = (code: string, title: string) => `
           display: inline-block;
           text-align: right;
           color: rgba(115,138,148,.4)
+        }
+        code .line-delete {
+          background-color: rgba(229,83,75,0.15);
+        }
+        code .line-add {
+          background-color: rgba(87,171,90,0.3);
+        }
+        code .line-focus {
+          background-color: #475569;
+        }
+        code .line-blur {
+          filter: blur(4px);
         }
     </style>
 </head>
@@ -75,7 +92,7 @@ export const previewSnippet = async (req: ExpressRequestParams<{ id: string }>, 
     lineOptions: [
       { classes: ['line-add'], line: 1 },
       { classes: ['line-delete'], line: 3 },
-      { classes: ['line-focus'], line: 4 },
+      { classes: ['line-focus'], line: 5 },
       { classes: ['line-blur'], line: 7 },
       { classes: ['line-blur'], line: 8 },
       { classes: ['line-blur'], line: 9 },
