@@ -1,4 +1,5 @@
 import { ApolloError } from 'apollo-server-express';
+
 import { AppContext } from '../types/common';
 import { NOT_AUTHENTICATED_CODE, NOT_AUTHENTICATED_MESSAGE } from '../utils/errors';
 import { env } from './env';

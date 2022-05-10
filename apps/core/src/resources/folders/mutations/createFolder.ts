@@ -1,5 +1,6 @@
 import { CreateFolderDto } from '@sharingan/domain';
 import { ApolloError } from 'apollo-server-express';
+
 import { getAuthenticatedUser } from '../../../configs/authentication';
 import { MutationResolvers } from '../../../types/graphql';
 import { FOLDER_ALREADY_EXIST_CODE, FOLDER_ALREADY_EXIST_MESSAGE } from '../../../utils/errors';

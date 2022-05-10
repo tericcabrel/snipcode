@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { INTERNAL_SERVER_ERROR } from '../../utils/constants';
+
 import { logger } from '../../configs/logger';
+import { INTERNAL_SERVER_ERROR } from '../../utils/constants';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const errorHandlerMiddleware = (error: unknown, _req: Request, res: Response, _next: NextFunction) => {

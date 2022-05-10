@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { logger } from './logger';
 
 const client = axios.create();

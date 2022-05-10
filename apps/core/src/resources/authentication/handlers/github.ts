@@ -1,19 +1,20 @@
-import { AxiosRequestConfig } from 'axios';
-import { Response } from 'express';
 import { User } from '@sharingan/database';
 import {
   CreateUserDto,
   CreateUserRootFolderDto,
+  UpdateUserDto,
   folderService,
   roleService,
-  UpdateUserDto,
   userService,
 } from '@sharingan/domain';
+import { AxiosRequestConfig } from 'axios';
+import { Response } from 'express';
+
+import { env } from '../../../configs/env';
+import httpClient from '../../../configs/http-client';
+import { logger } from '../../../configs/logger';
 import { GitHubUserResponse } from '../../../types/auth';
 import { ExpressRequestQuery } from '../../../types/common';
-import { env } from '../../../configs/env';
-import { logger } from '../../../configs/logger';
-import httpClient from '../../../configs/http-client';
 import { ROLE_USER_NOT_FOUND } from '../../../utils/constants';
 
 const GITHUB_AUTH_URL = 'https://github.com/login/oauth/access_token';

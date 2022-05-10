@@ -1,6 +1,7 @@
 import { ApolloError } from 'apollo-server-express';
-import { MutationResolvers } from '../../../types/graphql';
+
 import { logger } from '../../../configs/logger';
+import { MutationResolvers } from '../../../types/graphql';
 import { NEWSLETTER_SUBSCRIBE_SUCCESS } from '../../../utils/constants';
 import { NEWSLETTER_SUBSCRIBE_FAILED_CODE, NEWSLETTER_SUBSCRIBE_FAILED_MESSAGE } from '../../../utils/errors';
 

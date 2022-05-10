@@ -1,4 +1,5 @@
 import { CreateSnippetDto } from '@sharingan/domain';
+
 import { getAuthenticatedUser } from '../../../configs/authentication';
 import { MutationResolvers } from '../../../types/graphql';
 

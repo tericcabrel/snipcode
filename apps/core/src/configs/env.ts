@@ -1,5 +1,6 @@
-import dotenv from 'dotenv';
 import { getEnv } from '@sharingan/utils';
+import dotenv from 'dotenv';
+
 import { AppEnvironmentVariables } from '../types/common';
 
 dotenv.config();

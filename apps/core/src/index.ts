@@ -1,11 +1,13 @@
 import http from 'http';
+
 import express from 'express';
+
 import { env } from './configs/env';
 import { logger } from './configs/logger';
 import { startGraphqlServer } from './server/graphql';
 import { setupRestEndpoints } from './server/rest';
-import { loadData } from './utils/db/loader';
 import { setupApplicationSession } from './server/session';
+import { loadData } from './utils/db/loader';
 
 export const startServer = async () => {
   const expressApplication = express();
