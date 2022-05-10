@@ -1,7 +1,8 @@
-import { Application } from 'express';
 import connectRedis from 'connect-redis';
+import { Application } from 'express';
 import session from 'express-session';
 import Redis from 'ioredis';
+
 import { env } from '../configs/env';
 import { COOKIE_NAME } from '../utils/constants';
 

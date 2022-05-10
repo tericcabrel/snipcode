@@ -1,4 +1,5 @@
 import path from 'path';
+
 import { fileLogger } from '@sharingan/logger';
 
 fileLogger.init({

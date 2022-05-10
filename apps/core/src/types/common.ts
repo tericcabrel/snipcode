@@ -1,7 +1,8 @@
-import { Session } from 'express-session';
+import { FolderService, NewsletterService, RoleService, SnippetService, UserService } from '@sharingan/domain';
 import { Request, Response } from 'express';
 import { Query, Send } from 'express-serve-static-core';
-import { FolderService, NewsletterService, RoleService, SnippetService, UserService } from '@sharingan/domain';
+import { Session } from 'express-session';
+
 import { EnvironmentVariables } from '../../env';
 
 export type AppEnvironmentVariables = Omit<

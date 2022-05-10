@@ -1,14 +1,16 @@
 import { Server } from 'http';
-import { Application } from 'express';
-import { ApolloServer } from 'apollo-server-express';
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
-import { loadSchemaSync } from '@graphql-tools/load';
+
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { loadSchemaSync } from '@graphql-tools/load';
 import { addResolversToSchema } from '@graphql-tools/schema';
 import { folderService, newsletterService, roleService, snippetService, userService } from '@sharingan/domain';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import { ApolloServer } from 'apollo-server-express';
+import { Application } from 'express';
+
+import { env } from '../configs/env';
 import { resolvers } from '../resources/resolvers';
 import { AppContext } from '../types/common';
-import { env } from '../configs/env';
 import { CORS_APOLLO_STUDIO_URL } from '../utils/constants';
 
 export const startGraphqlServer = async (expressApplication: Application, httpServer: Server) => {

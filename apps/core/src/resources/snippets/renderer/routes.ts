@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import { previewSnippet } from './handlers/preview';
 
 const rendererRoute = () => {
