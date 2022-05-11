@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import { authenticateWithGitHub } from './handlers/github';
 
 const authenticationRoute = () => {

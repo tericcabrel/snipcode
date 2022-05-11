@@ -1,5 +1,6 @@
-import { GraphQLScalarType, Kind } from 'graphql';
 import { ApolloError } from 'apollo-server-express';
+import { GraphQLScalarType, Kind } from 'graphql';
+
 import { DATE_REGEX, INVALID_DATE_TYPE_CODE, INVALID_DATE_TYPE_MESSAGE } from '../../utils/constants';
 
 export const dateScalar = new GraphQLScalarType({

@@ -1,4 +1,5 @@
 import { Snippet, SnippetRepository } from '@sharingan/database';
+
 import CreateSnippetDto from './dtos/create-snippet-dto';
 
 export default class SnippetService {
@@ -26,5 +27,11 @@ export default class SnippetService {
 
   async delete(id: string): Promise<void> {
     await this._snippetRepository.delete(id);
+  }
+
+  async isSnippetExistInFolder(folderId: string, snippetName: string): Promise<boolean> {
+    const snippets = await this.findByFolder(folderId);
+
+    return snippets.some(({ name }) => name.toLowerCase() === snippetName.toLowerCase());
   }
 }
