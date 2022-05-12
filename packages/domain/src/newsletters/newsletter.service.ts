@@ -1,5 +1,6 @@
-import axios, { AxiosInstance } from 'axios';
 import { getEnv } from '@sharingan/utils';
+import axios, { AxiosInstance } from 'axios';
+
 import { SubscribeData, SubscribeInput } from './types';
 
 export default class NewsletterService {

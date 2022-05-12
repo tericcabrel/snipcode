@@ -1,4 +1,4 @@
-import { dbId, Folder } from '@sharingan/database';
+import { Folder, dbId } from '@sharingan/database';
 
 export default class CreateUserRootFolderDto {
   constructor(private _userId: string) {}

@@ -1,6 +1,7 @@
-import { createLogger, format, Logger, transports } from 'winston';
-import { isObject } from 'lodash';
 import * as Sentry from '@sentry/node';
+import { isObject } from 'lodash';
+import { Logger, createLogger, format, transports } from 'winston';
+
 import { LoggerInitOptions } from './types';
 
 const { combine, printf, timestamp }: typeof format = format;

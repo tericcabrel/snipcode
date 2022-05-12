@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
+
 import LogoIcon from '@/components/icons/logo';
 
 const HomePage: NextPage = () => {

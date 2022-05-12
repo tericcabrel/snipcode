@@ -1,4 +1,4 @@
-import { dbId, OauthProvider, User } from '@sharingan/database';
+import { OauthProvider, User, dbId } from '@sharingan/database';
 
 type Input = {
   email: string;

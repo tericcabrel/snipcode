@@ -1,7 +1,9 @@
 import fs from 'fs';
+
 import WinstonFileRotation from 'winston-daily-rotate-file';
-import { FileLoggerInitOptions } from './types';
+
 import BaseLogger from './base-logger';
+import { FileLoggerInitOptions } from './types';
 
 class FileLogger extends BaseLogger {
   public init(options: FileLoggerInitOptions) {

@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+
 import PublicLayout from '@/components/layout/public/public-layout';
 
 const AuthErrorPage: NextPage = () => {
