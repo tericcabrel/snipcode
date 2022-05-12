@@ -1,4 +1,5 @@
 import { Role, RoleName, RoleRepository } from '@sharingan/database';
+
 import CreateRoleDto from './dtos/create-role-dto';
 
 export default class RoleService {

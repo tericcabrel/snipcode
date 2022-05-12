@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
+
 import PublicLayout from '@/components/layout/public/public-layout';
 
 const AuthSuccessPage: NextPage = () => {

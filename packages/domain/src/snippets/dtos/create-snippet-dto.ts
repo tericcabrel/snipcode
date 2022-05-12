@@ -1,4 +1,4 @@
-import { dbId, Snippet, SnippetVisibility } from '@sharingan/database';
+import { Snippet, SnippetVisibility, dbId } from '@sharingan/database';
 
 type Input = {
   content: string;
@@ -12,10 +12,6 @@ type Input = {
 
 export default class CreateSnippetDto {
   constructor(private _input: Input) {}
-
-  private getContentSize(): number {
-    return this._input.content.length;
-  }
 
   toSnippet(): Snippet {
     return {
@@ -31,5 +27,9 @@ export default class CreateSnippetDto {
       userId: this._input.userId,
       visibility: this._input.visibility,
     };
+  }
+
+  private getContentSize(): number {
+    return this._input.content.length;
   }
 }

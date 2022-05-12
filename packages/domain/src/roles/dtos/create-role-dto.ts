@@ -1,4 +1,4 @@
-import { dbId, Role, RoleName } from '@sharingan/database';
+import { Role, RoleName, dbId } from '@sharingan/database';
 
 type Input = {
   description: string | null;

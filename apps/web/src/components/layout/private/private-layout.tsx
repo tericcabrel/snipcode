@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 
+import { Loader } from '@/components/common/loader';
+import { Redirect } from '@/components/common/redirect';
 import PrivateHeader from '@/components/layout/private/header';
 import PublicFooter from '@/components/layout/public/footer';
-import { Redirect } from '@/components/common/redirect';
-import { Loader } from '@/components/common/loader';
 import { useAuthenticatedUser } from '@/services/users/authenticated-user';
 
 type Props = {

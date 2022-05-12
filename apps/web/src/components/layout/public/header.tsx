@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import LogoIcon from '@/components/icons/logo';
+
 import GithubIcon from '@/components/icons/github';
+import LogoIcon from '@/components/icons/logo';
 
 const PublicHeader = () => {
   return (

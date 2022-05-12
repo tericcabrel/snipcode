@@ -1,13 +1,13 @@
-import prisma, { PrismaClient } from './src/prisma';
-import dbId from './src/utils/id';
-import User, { OauthProvider } from './src/entities/user';
-import Role, { RoleName } from './src/entities/role';
 import Folder from './src/entities/folder';
+import Role, { RoleName } from './src/entities/role';
 import Snippet, { SnippetVisibility } from './src/entities/snippet';
-import RoleRepository from './src/repositories/role.repository';
-import UserRepository from './src/repositories/user.repository';
+import User, { OauthProvider } from './src/entities/user';
+import prisma, { PrismaClient } from './src/prisma';
 import FolderRepository from './src/repositories/folder.repository';
+import RoleRepository from './src/repositories/role.repository';
 import SnippetRepository from './src/repositories/snippet.repository';
+import UserRepository from './src/repositories/user.repository';
+import dbId from './src/utils/id';
 
 export { prisma as dbClient, PrismaClient };
 export { dbId };

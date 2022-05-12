@@ -1,8 +1,9 @@
-import { useState } from 'react';
 import router from 'next/router';
-import { AuthenticatedUser } from '@/typings/queries';
+import { useState } from 'react';
+
 import ProfileMenu from '@/components/layout/private/profile-menu';
 import { useLogoutUser } from '@/services/users/logout-user';
+import { AuthenticatedUser } from '@/typings/queries';
 
 type Props = {
   user: AuthenticatedUser;
