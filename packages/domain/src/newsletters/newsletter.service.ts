@@ -1,4 +1,4 @@
-import { getEnv } from '@sharingan/utils';
+import SharinganError, { getEnv } from '@sharingan/utils';
 import axios, { AxiosInstance } from 'axios';
 
 import { SubscribeData, SubscribeInput } from './types';
@@ -15,13 +15,18 @@ export default class NewsletterService {
     this.initClient();
   }
 
-  subscribe(email: string) {
+  async subscribe(email: string) {
     const inputBody: SubscribeInput = {
       api_key: this.apiKey,
       email,
     };
 
-    return this.httpClient.post<SubscribeData>(`forms/${this.formId}/subscribe`, inputBody);
+    try {
+      await this.httpClient.post<SubscribeData>(`forms/${this.formId}/subscribe`, inputBody);
+    } catch (err: any) {
+      // TODO find a way to log the error
+      throw new SharinganError(err.message, 'NEWSLETTER_SUBSCRIBE_FAILED');
+    }
   }
 
   private initClient() {

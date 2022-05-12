@@ -1,7 +1,8 @@
-import { ApolloError } from 'apollo-server-express';
+import { errors } from '@sharingan/utils';
 
 import { AppContext } from '../types/common';
-import { NOT_AUTHENTICATED_CODE, NOT_AUTHENTICATED_MESSAGE } from '../utils/errors';
+import { NOT_AUTHENTICATED_CODE } from '../utils/constants';
+import AppError from '../utils/errors/app-error';
 import { env } from './env';
 
 export const getAuthenticatedUser = (context: AppContext): string => {
@@ -12,7 +13,7 @@ export const getAuthenticatedUser = (context: AppContext): string => {
   const { userId } = context.req.session;
 
   if (!userId) {
-    throw new ApolloError(NOT_AUTHENTICATED_MESSAGE, NOT_AUTHENTICATED_CODE);
+    throw new AppError(errors.NOT_AUTHENTICATED_MESSAGE, NOT_AUTHENTICATED_CODE);
   }
 
   return userId;
