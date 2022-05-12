@@ -1,12 +1,12 @@
 import { getAuthenticatedUser } from '../../../configs/authentication';
 import { MutationResolvers } from '../../../types/graphql';
-import AppError from '../../../utils/app-error';
 import {
   CANT_DELETE_ROOT_FOLDER_CODE,
   CANT_DELETE_ROOT_FOLDER_MESSAGE,
   FOLDERS_DONT_BELONG_TO_USER_CODE,
   FOLDERS_DONT_BELONG_TO_USER_MESSAGE,
 } from '../../../utils/errors';
+import AppError from '../../../utils/errors/app-error';
 import { isFoldersBelongToUser, isFoldersContainRoot } from '../utils/folders';
 
 export const deleteFolders: MutationResolvers['deleteFolders'] = async (_parent, args, context) => {
