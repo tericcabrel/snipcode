@@ -1,4 +1,4 @@
-import { Folder } from '../../../types/models';
+import { Folder } from '@sharingan/database';
 
 export const isFoldersBelongToUser = (folders: Folder[], userId: string): boolean => {
   return folders.every((folder) => folder.userId === userId);

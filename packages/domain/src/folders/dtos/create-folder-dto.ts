@@ -2,12 +2,20 @@ import { Folder, dbId } from '@sharingan/database';
 
 type Input = {
   name: string;
-  parentId: string | null;
+  parentId: string;
   userId: string;
 };
 
 export default class CreateFolderDto {
   constructor(private _input: Input) {}
+
+  get name(): string {
+    return this._input.name;
+  }
+
+  get parentFolderId(): string {
+    return this._input.parentId;
+  }
 
   toFolder(): Folder {
     return {
