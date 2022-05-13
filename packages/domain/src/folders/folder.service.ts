@@ -1,7 +1,9 @@
 import { Folder, FolderRepository } from '@sharingan/database';
+import SharinganError, { errors } from '@sharingan/utils';
 
 import CreateFolderDto from './dtos/create-folder-dto';
 import CreateUserRootFolderDto from './dtos/create-user-root-folder-dto';
+import { isFoldersBelongToUser, isFoldersContainRoot } from './utils/folders';
 
 export default class FolderService {
   constructor(private folderRepository: FolderRepository) {}
@@ -11,6 +13,12 @@ export default class FolderService {
   }
 
   async create(createFolderDto: CreateFolderDto): Promise<Folder> {
+    const isFolderExist = await this.isFolderExistInParentFolder(createFolderDto.parentFolderId, createFolderDto.name);
+
+    if (isFolderExist) {
+      throw new SharinganError(errors.FOLDER_ALREADY_EXIST(createFolderDto.name), 'FOLDER_ALREADY_EXIST');
+    }
+
     return this.folderRepository.create(createFolderDto.toFolder());
   }
 
@@ -40,7 +48,19 @@ export default class FolderService {
     return folders.some((folder) => folder.name.toLowerCase() === folderName.trim().toLowerCase());
   }
 
-  async deleteMany(folderIds: string[]): Promise<void> {
+  async deleteMany(folderIds: string[], userId: string): Promise<void> {
+    const foldersToDelete = await this.findFolders(folderIds);
+
+    if (!isFoldersBelongToUser(foldersToDelete, userId)) {
+      throw new SharinganError(errors.FOLDERS_DONT_BELONG_TO_USER, 'FOLDERS_DONT_BELONG_TO_USER');
+    }
+
+    if (isFoldersContainRoot(foldersToDelete)) {
+      throw new SharinganError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER');
+    }
+
+    // TODO Delete snippets
+
     return this.folderRepository.bulkDelete(folderIds);
   }
 
