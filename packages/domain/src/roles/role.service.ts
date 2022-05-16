@@ -1,9 +1,9 @@
-import { Role, RoleName, RoleRepository } from '@sharingan/database';
+import { Role, RoleName, RoleRepositoryInterface } from '@sharingan/database';
 
 import CreateRoleDto from './dtos/create-role-dto';
 
 export default class RoleService {
-  constructor(private roleRepository: RoleRepository) {}
+  constructor(private roleRepository: RoleRepositoryInterface) {}
 
   async create(createRoleDto: CreateRoleDto): Promise<Role> {
     return this.roleRepository.create(createRoleDto.toRole());

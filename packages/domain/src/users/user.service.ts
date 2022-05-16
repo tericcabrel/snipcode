@@ -1,10 +1,10 @@
-import { Role, User, UserRepository } from '@sharingan/database';
+import { Role, User, UserRepositoryInterface } from '@sharingan/database';
 
 import CreateUserDto from './dtos/create-user-dto';
 import UpdateUserDto from './dtos/update-user-dto';
 
 export default class UserService {
-  constructor(private _userRepository: UserRepository) {}
+  constructor(private _userRepository: UserRepositoryInterface) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     return this._userRepository.create(createUserDto.toUser());

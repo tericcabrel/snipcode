@@ -1,10 +1,10 @@
-import { Snippet, SnippetRepository } from '@sharingan/database';
+import { Snippet, SnippetRepositoryInterface } from '@sharingan/database';
 import SharinganError, { errors } from '@sharingan/utils';
 
 import CreateSnippetDto from './dtos/create-snippet-dto';
 
 export default class SnippetService {
-  constructor(private _snippetRepository: SnippetRepository) {}
+  constructor(private _snippetRepository: SnippetRepositoryInterface) {}
 
   async create(createSnippetDto: CreateSnippetDto): Promise<Snippet> {
     const isSnippetExist = await this.isSnippetExistInFolder(createSnippetDto.folderId, createSnippetDto.name);
