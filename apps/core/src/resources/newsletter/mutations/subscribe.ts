@@ -6,11 +6,11 @@ import { throwApplicationError } from '../../../utils/errors/throw-error';
 export const subscribeToNewsletter: MutationResolvers['subscribeToNewsletter'] = async (_parent, args, context) => {
   try {
     await context.db.newsletter.subscribe(args.email);
+
+    return { message: NEWSLETTER_SUBSCRIBE_SUCCESS };
   } catch (err: any) {
     logger.error(err);
 
-    throwApplicationError(err);
+    return throwApplicationError(err);
   }
-
-  return { message: NEWSLETTER_SUBSCRIBE_SUCCESS };
 };

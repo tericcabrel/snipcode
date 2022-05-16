@@ -13,6 +13,14 @@ type Input = {
 export default class CreateSnippetDto {
   constructor(private _input: Input) {}
 
+  get folderId(): string {
+    return this._input.folderId;
+  }
+
+  get name(): string {
+    return this._input.name;
+  }
+
   toSnippet(): Snippet {
     return {
       content: this._input.content,
