@@ -1,4 +1,4 @@
-import { Folder, FolderRepository } from '@sharingan/database';
+import { Folder, FolderRepositoryInterface } from '@sharingan/database';
 import SharinganError, { errors } from '@sharingan/utils';
 
 import CreateFolderDto from './dtos/create-folder-dto';
@@ -6,7 +6,7 @@ import CreateUserRootFolderDto from './dtos/create-user-root-folder-dto';
 import { isFoldersBelongToUser, isFoldersContainRoot } from './utils/folders';
 
 export default class FolderService {
-  constructor(private folderRepository: FolderRepository) {}
+  constructor(private folderRepository: FolderRepositoryInterface) {}
 
   async createUserRootFolder(dto: CreateUserRootFolderDto): Promise<void> {
     await this.folderRepository.create(dto.toFolder());

@@ -61,7 +61,7 @@
       ],
       "allowSeparatedGroups": true
     }],
-
+    "import/no-relative-packages": "error",
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/class-name-casing": "off",
