@@ -7,6 +7,7 @@ import {
   roleService,
   userService,
 } from '@sharingan/domain';
+import { errors } from '@sharingan/utils';
 import { AxiosRequestConfig } from 'axios';
 import { Response } from 'express';
 
@@ -15,7 +16,6 @@ import httpClient from '../../../configs/http-client';
 import { logger } from '../../../configs/logger';
 import { GitHubUserResponse } from '../../../types/auth';
 import { ExpressRequestQuery } from '../../../types/common';
-import { ROLE_USER_NOT_FOUND } from '../../../utils/constants';
 
 const GITHUB_AUTH_URL = 'https://github.com/login/oauth/access_token';
 const GITHUB_API_USER_PROFILE_URL = 'https://api.github.com/user';
@@ -105,7 +105,7 @@ export const authenticateWithGitHub = async (req: ExpressRequestQuery<{ code: st
     const roleUser = await roleService.findByName('user');
 
     if (!roleUser) {
-      logger.error(`Auth: ${ROLE_USER_NOT_FOUND}`);
+      logger.error(`Auth: ${errors.ROLE_USER_NOT_FOUND}`);
 
       return res.redirect(env.WEB_AUTH_ERROR_URL);
     }
