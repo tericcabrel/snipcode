@@ -1,4 +1,5 @@
 import { Snippet, SnippetRepository } from '@sharingan/database';
+import SharinganError, { errors } from '@sharingan/utils';
 
 import CreateSnippetDto from './dtos/create-snippet-dto';
 
@@ -6,6 +7,12 @@ export default class SnippetService {
   constructor(private _snippetRepository: SnippetRepository) {}
 
   async create(createSnippetDto: CreateSnippetDto): Promise<Snippet> {
+    const isSnippetExist = await this.isSnippetExistInFolder(createSnippetDto.folderId, createSnippetDto.name);
+
+    if (isSnippetExist) {
+      throw new SharinganError(errors.SNIPPET_ALREADY_EXIST(createSnippetDto.name), 'SNIPPET_ALREADY_EXIST');
+    }
+
     return this._snippetRepository.create(createSnippetDto.toSnippet());
   }
 
