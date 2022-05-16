@@ -1,7 +1,8 @@
+import { errors } from '@sharingan/utils';
 import { ApolloError } from 'apollo-server-express';
 import { GraphQLScalarType, Kind } from 'graphql';
 
-import { DATE_REGEX, INVALID_DATE_TYPE_CODE, INVALID_DATE_TYPE_MESSAGE } from '../../utils/constants';
+import { DATE_REGEX } from '../../utils/constants';
 
 export const dateScalar = new GraphQLScalarType({
   description: 'Date custom scalar type',
@@ -9,13 +10,13 @@ export const dateScalar = new GraphQLScalarType({
   parseLiteral(ast) {
     if (ast.kind === Kind.STRING) {
       if (!DATE_REGEX.test(ast.value)) {
-        throw new ApolloError(INVALID_DATE_TYPE_MESSAGE, INVALID_DATE_TYPE_CODE);
+        throw new ApolloError(errors.INVALID_DATE_TYPE, 'INVALID_DATE_TYPE');
       }
 
       return new Date(`${ast.value}T01:00:00`);
     }
 
-    throw new ApolloError(INVALID_DATE_TYPE_MESSAGE, INVALID_DATE_TYPE_CODE);
+    throw new ApolloError(errors.INVALID_DATE_TYPE, 'INVALID_DATE_TYPE');
   },
   parseValue(value: unknown) {
     return new Date(value as string); // Convert incoming integer to Date

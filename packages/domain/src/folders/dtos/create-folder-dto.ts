@@ -17,6 +17,10 @@ export default class CreateFolderDto {
     return this._input.parentId;
   }
 
+  get user(): string {
+    return this._input.userId;
+  }
+
   toFolder(): Folder {
     return {
       createdAt: new Date(),

@@ -13,7 +13,11 @@ export default class FolderService {
   }
 
   async create(createFolderDto: CreateFolderDto): Promise<Folder> {
-    const isFolderExist = await this.isFolderExistInParentFolder(createFolderDto.parentFolderId, createFolderDto.name);
+    const isFolderExist = await this.isFolderExistInParentFolder(
+      createFolderDto.parentFolderId,
+      createFolderDto.name,
+      createFolderDto.user,
+    );
 
     if (isFolderExist) {
       throw new SharinganError(errors.FOLDER_ALREADY_EXIST(createFolderDto.name), 'FOLDER_ALREADY_EXIST');
@@ -38,18 +42,22 @@ export default class FolderService {
     return rootFolder ?? null;
   }
 
-  async findSubFolders(folderId: string): Promise<Folder[]> {
-    return this.folderRepository.findSubFolders(folderId);
-  }
+  async findSubFolders(userId: string, folderId?: string | null): Promise<Folder[]> {
+    if (folderId) {
+      return this.folderRepository.findSubFolders(folderId, userId);
+    }
 
-  async isFolderExistInParentFolder(parentFolderId: string, folderName: string): Promise<boolean> {
-    const folders = await this.findSubFolders(parentFolderId);
+    const rootFolder = await this.findUserRootFolder(userId);
 
-    return folders.some((folder) => folder.name.toLowerCase() === folderName.trim().toLowerCase());
+    if (!rootFolder) {
+      return [];
+    }
+
+    return this.folderRepository.findSubFolders(rootFolder.id, userId);
   }
 
   async deleteMany(folderIds: string[], userId: string): Promise<void> {
-    const foldersToDelete = await this.findFolders(folderIds);
+    const foldersToDelete = await this.folderRepository.findFolders(folderIds, userId);
 
     if (!isFoldersBelongToUser(foldersToDelete, userId)) {
       throw new SharinganError(errors.FOLDERS_DONT_BELONG_TO_USER, 'FOLDERS_DONT_BELONG_TO_USER');
@@ -64,7 +72,13 @@ export default class FolderService {
     return this.folderRepository.bulkDelete(folderIds);
   }
 
-  findFolders(folderIds: string[]): Promise<Folder[]> {
-    return this.folderRepository.findFolders(folderIds);
+  private async isFolderExistInParentFolder(
+    parentFolderId: string,
+    folderName: string,
+    userId: string,
+  ): Promise<boolean> {
+    const folders = await this.findSubFolders(parentFolderId, userId);
+
+    return folders.some((folder) => folder.name.toLowerCase() === folderName.trim().toLowerCase());
   }
 }

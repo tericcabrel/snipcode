@@ -7,3 +7,4 @@ export const SNIPPET_ALREADY_EXIST = (snippetName: string) => `A snippet named "
 export const INTERNAL_SERVER_ERROR = 'Internal server error';
 export const INVALID_DATE_TYPE_CODE = 'INVALID_TYPE';
 export const INVALID_DATE_TYPE = 'The date format must be YYYY-MM-DD';
+export const ROLE_USER_NOT_FOUND = 'Role user not found';
