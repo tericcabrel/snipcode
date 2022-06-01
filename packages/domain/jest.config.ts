@@ -12,6 +12,21 @@ const config: Config.InitialOptions = {
   },
   globalSetup: './tests/setup/global-setup.ts',
   setupFilesAfterEnv: ['./tests/setup/test-setup.ts'],
+  coverageDirectory: 'coverage',
+  collectCoverage: false, // When set to true, coverage is performed even if coverage flag isn't provided
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/index.ts',
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 60,
+      functions: 60,
+      lines: 60,
+      statements: 60,
+    },
+  },
+  coverageReporters: ['json', 'lcov', 'text', 'text-summary'],
 };
 
 export default config;
