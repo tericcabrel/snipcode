@@ -1,3 +1,5 @@
+import { Role } from '@sharingan/database';
+
 import { CreateRoleDto } from '../../../../index';
 
 describe('Test Create Role DTO', () => {
@@ -10,11 +12,13 @@ describe('Test Create Role DTO', () => {
 
     const role = dto.toRole();
 
-    expect(role).toMatchObject({
+    expect(role).toMatchObject<Role>({
+      createdAt: expect.any(Date),
       description: 'description admin',
       id: expect.any(String),
       level: 100,
       name: 'admin',
+      updatedAt: expect.any(Date),
     });
   });
 });
