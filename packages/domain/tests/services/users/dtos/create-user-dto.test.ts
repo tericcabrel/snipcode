@@ -1,4 +1,5 @@
 import { User } from '@sharingan/database';
+
 import { CreateUserDto } from '../../../../index';
 
 describe('Test Create User DTO', () => {
