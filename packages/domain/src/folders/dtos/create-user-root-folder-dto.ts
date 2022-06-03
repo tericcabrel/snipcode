@@ -1,12 +1,16 @@
 import { Folder, dbId } from '@sharingan/database';
 
 export default class CreateUserRootFolderDto {
-  constructor(private _userId: string) {}
+  private readonly folderId: string;
+
+  constructor(private _userId: string) {
+    this.folderId = dbId.generate();
+  }
 
   toFolder(): Folder {
     return {
       createdAt: new Date(),
-      id: dbId.generate(),
+      id: this.folderId,
       isFavorite: false,
       name: `__${this._userId}__`,
       parentId: null,

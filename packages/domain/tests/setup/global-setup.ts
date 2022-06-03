@@ -1,8 +1,9 @@
 // This file is executed once in the worker before executing each test file.
-import * as path from 'path';
 import { execSync } from 'child_process';
-import dotenv from 'dotenv';
+import * as path from 'path';
+
 import { getEnv } from '@sharingan/utils';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
