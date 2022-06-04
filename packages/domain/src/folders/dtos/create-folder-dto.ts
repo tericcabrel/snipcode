@@ -7,7 +7,11 @@ type Input = {
 };
 
 export default class CreateFolderDto {
-  constructor(private _input: Input) {}
+  private readonly folderId: string;
+
+  constructor(private _input: Input) {
+    this.folderId = dbId.generate();
+  }
 
   get name(): string {
     return this._input.name;
@@ -24,7 +28,7 @@ export default class CreateFolderDto {
   toFolder(): Folder {
     return {
       createdAt: new Date(),
-      id: dbId.generate(),
+      id: this.folderId,
       isFavorite: false,
       name: this._input.name,
       parentId: this._input.parentId,

@@ -8,8 +8,8 @@ import { isFoldersBelongToUser, isFoldersContainRoot } from './utils/folders';
 export default class FolderService {
   constructor(private folderRepository: FolderRepositoryInterface) {}
 
-  async createUserRootFolder(dto: CreateUserRootFolderDto): Promise<void> {
-    await this.folderRepository.create(dto.toFolder());
+  async createUserRootFolder(dto: CreateUserRootFolderDto): Promise<Folder> {
+    return this.folderRepository.create(dto.toFolder());
   }
 
   async create(createFolderDto: CreateFolderDto): Promise<Folder> {
@@ -77,7 +77,7 @@ export default class FolderService {
     folderName: string,
     userId: string,
   ): Promise<boolean> {
-    const folders = await this.findSubFolders(parentFolderId, userId);
+    const folders = await this.findSubFolders(userId, parentFolderId);
 
     return folders.some((folder) => folder.name.toLowerCase() === folderName.trim().toLowerCase());
   }
