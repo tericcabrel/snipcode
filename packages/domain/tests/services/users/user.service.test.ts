@@ -1,5 +1,5 @@
 import { roleService, userService } from '../../../index';
-import { cleanRoles, cleanUsers } from '../../setup/test-utils';
+import { cleanTestRoles, cleanTestUsers } from '../../setup/test-utils';
 
 describe('Test User service', () => {
   beforeAll(async () => {
@@ -17,7 +17,7 @@ describe('Test User service', () => {
   });
 
   afterAll(async () => {
-    await cleanUsers();
-    await cleanRoles();
+    await cleanTestUsers();
+    await cleanTestRoles();
   });
 });

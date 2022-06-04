@@ -1,11 +1,19 @@
 import { randEmail, randFullName, randImg, randTimeZone, randUserName } from '@ngneat/falso';
-import { FolderRepository, Role, RoleName, RoleRepository, User, UserRepository } from '@sharingan/database';
+import { Folder, FolderRepository, Role, RoleName, RoleRepository, User, UserRepository } from '@sharingan/database';
 
 import { CreateUserDto } from '../../index';
+import CreateFolderDto from '../../src/folders/dtos/create-folder-dto';
+import CreateUserRootFolderDto from '../../src/folders/dtos/create-user-root-folder-dto';
 
 const userRepository = new UserRepository();
 const roleRepository = new RoleRepository();
 const folderRepository = new FolderRepository();
+
+type CreateManyTestFoldersArgs = {
+  folderNames: string[];
+  parentId: string;
+  userId: string;
+};
 
 export const cleanTestRoles = async () => {
   const allRoles = await roleRepository.findAll();
@@ -49,10 +57,39 @@ export const deleteTestUser = async (user: User): Promise<void> => {
   return userRepository.delete(user.id);
 };
 
-export const deleteTestFolderById = async (folderId?: string): Promise<void> => {
-  if (!folderId) {
-    return;
-  }
+export const deleteTestFoldersById = async (folderIds: Array<string | undefined>): Promise<void[]> => {
+  const promises = folderIds.map((folderId) => {
+    if (!folderId) {
+      return;
+    }
 
-  return folderRepository.delete(folderId);
+    return folderRepository.delete(folderId);
+  });
+
+  return Promise.all(promises);
+};
+
+export const createUserWithRootFolder = async (): Promise<[User, Folder]> => {
+  const user = await createTestUser();
+  const rootFolder = await folderRepository.create(new CreateUserRootFolderDto(user.id).toFolder());
+
+  return [user, rootFolder];
+};
+
+export const createManyTestFolders = async ({
+  folderNames,
+  parentId,
+  userId,
+}: CreateManyTestFoldersArgs): Promise<Folder[]> => {
+  const promises = folderNames.map((name) => {
+    const createFolderDto = new CreateFolderDto({
+      name,
+      parentId,
+      userId,
+    });
+
+    return folderRepository.create(createFolderDto.toFolder());
+  });
+
+  return Promise.all(promises);
 };

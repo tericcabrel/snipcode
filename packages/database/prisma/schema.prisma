@@ -76,6 +76,7 @@ model Folder {
   @@index([isFavorite])
   @@index([userId])
   @@index([parentId])
+  @@unique([userId, parentId, name], name: "folder_name_unique_constraint")
   @@map("folders")
 }
 
