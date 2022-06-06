@@ -13,11 +13,11 @@ export default class FolderService {
   }
 
   async create(createFolderDto: CreateFolderDto): Promise<Folder> {
-    const isFolderExist = await this.isFolderExistInParentFolder(
-      createFolderDto.parentFolderId,
-      createFolderDto.name,
-      createFolderDto.user,
-    );
+    const isFolderExist = await this.isFolderExistInParentFolder({
+      folderName: createFolderDto.name,
+      parentFolderId: createFolderDto.parentFolderId,
+      userId: createFolderDto.user,
+    });
 
     if (isFolderExist) {
       throw new SharinganError(errors.FOLDER_ALREADY_EXIST(createFolderDto.name), 'FOLDER_ALREADY_EXIST');
@@ -34,12 +34,16 @@ export default class FolderService {
     return this.folderRepository.findById(id);
   }
 
-  async findUserRootFolder(userId: string): Promise<Folder | null> {
+  async findUserRootFolder(userId: string): Promise<Folder> {
     const folders = await this.findUserFolders(userId);
 
     const rootFolder = folders.find((folder) => folder.parentId === null);
 
-    return rootFolder ?? null;
+    if (!rootFolder) {
+      throw new SharinganError(errors.USER_ROOT_FOLDER_NOT_FOUND(userId), 'USER_ROOT_FOLDER_NOT_FOUND');
+    }
+
+    return rootFolder;
   }
 
   async findSubFolders(userId: string, folderId?: string | null): Promise<Folder[]> {
@@ -72,13 +76,13 @@ export default class FolderService {
     return this.folderRepository.bulkDelete(folderIds);
   }
 
-  private async isFolderExistInParentFolder(
-    parentFolderId: string,
-    folderName: string,
-    userId: string,
-  ): Promise<boolean> {
-    const folders = await this.findSubFolders(userId, parentFolderId);
+  private async isFolderExistInParentFolder(args: {
+    folderName: string;
+    parentFolderId: string;
+    userId: string;
+  }): Promise<boolean> {
+    const folders = await this.findSubFolders(args.userId, args.parentFolderId);
 
-    return folders.some((folder) => folder.name.toLowerCase() === folderName.trim().toLowerCase());
+    return folders.some((folder) => folder.name.toLowerCase() === args.folderName.trim().toLowerCase());
   }
 }

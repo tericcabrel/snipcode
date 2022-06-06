@@ -84,4 +84,106 @@ describe('Test Folder service', () => {
     await deleteTestFoldersById([firstFolder.id, secondFolder.id, rootFolder.id]);
     await deleteTestUser(user);
   });
+
+  it("should find the user's root folder", async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+
+    const [firstFolder, secondFolder] = await createManyTestFolders({
+      folderNames: ['My gist', 'Blogs'],
+      parentId: rootFolder.id,
+      userId: user.id,
+    });
+
+    // WHEN
+    const userRootFolder = await folderService.findUserRootFolder(user.id);
+
+    // THEN
+    expect(userRootFolder?.name).toEqual(`__${user.id}__`);
+
+    await deleteTestFoldersById([firstFolder.id, secondFolder.id, rootFolder.id]);
+    await deleteTestUser(user);
+  });
+
+  it("should not find the user's root folder", async () => {
+    // GIVEN
+    const user = await createTestUser();
+
+    // WHEN
+    // THEN
+    await expect(() => folderService.findUserRootFolder(user.id)).rejects.toThrow(
+      new SharinganError(errors.USER_ROOT_FOLDER_NOT_FOUND(user.id), 'USER_ROOT_FOLDER_NOT_FOUND'),
+    );
+
+    await deleteTestUser(user);
+  });
+
+  it('should find sub folders of the root user folder', async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+
+    const [firstFolder, secondFolder] = await createManyTestFolders({
+      folderNames: ['My gist', 'Blogs'],
+      parentId: rootFolder.id,
+      userId: user.id,
+    });
+
+    const [post1Folder, post2folder] = await createManyTestFolders({
+      folderNames: ['post1', 'post2'],
+      parentId: secondFolder.id,
+      userId: user.id,
+    });
+
+    // WHEN
+    const userRootFolders1 = await folderService.findSubFolders(user.id);
+    const userRootFolders2 = await folderService.findSubFolders(user.id, rootFolder.id);
+
+    // THEN
+    expect(userRootFolders1).toHaveLength(2);
+    expect(userRootFolders1).toEqual(userRootFolders2);
+
+    await deleteTestFoldersById([post1Folder.id, post2folder.id, firstFolder.id, secondFolder.id, rootFolder.id]);
+    await deleteTestUser(user);
+  });
+
+  it('should find the sub folders of a folder', async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+
+    const [firstFolder, secondFolder] = await createManyTestFolders({
+      folderNames: ['My gist', 'Blogs'],
+      parentId: rootFolder.id,
+      userId: user.id,
+    });
+
+    const [javaFolder, nodeFolder] = await createManyTestFolders({
+      folderNames: ['java', 'node.js'],
+      parentId: firstFolder.id,
+      userId: user.id,
+    });
+
+    const [post1Folder, post2folder] = await createManyTestFolders({
+      folderNames: ['post1', 'post2'],
+      parentId: secondFolder.id,
+      userId: user.id,
+    });
+
+    // WHEN
+    const subFolders = await folderService.findSubFolders(user.id, firstFolder.id);
+
+    // THEN
+    expect(subFolders).toHaveLength(2);
+    expect(subFolders.map((folder) => folder.name)).toEqual(['java', 'node.js']);
+
+    await deleteTestFoldersById([
+      javaFolder.id,
+      nodeFolder.id,
+      post1Folder.id,
+      post2folder.id,
+      firstFolder.id,
+      secondFolder.id,
+      rootFolder.id,
+    ]);
+    await deleteTestUser(user);
+  });
 });
