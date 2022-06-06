@@ -67,19 +67,17 @@ const createUserFromGitHubInfo = async (data: GitHubUserResponse, roleId: string
 };
 
 const updateUserFromGitHubInfo = async (user: User, data: GitHubUserResponse): Promise<User> => {
-  const { avatar_url, email, login, name } = data;
+  const { avatar_url, name } = data;
 
   const updateUserDto = new UpdateUserDto({
-    email,
     name,
     oauthProvider: 'github',
     pictureUrl: avatar_url,
     roleId: user.roleId,
     timezone: user.timezone,
-    username: login,
   });
 
-  return userService.update(user.id, updateUserDto);
+  return userService.update(user, updateUserDto);
 };
 
 export const authenticateWithGitHub = async (req: ExpressRequestQuery<{ code: string }>, res: Response) => {

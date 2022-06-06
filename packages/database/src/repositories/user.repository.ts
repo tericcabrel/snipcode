@@ -42,13 +42,12 @@ export default class UserRepository implements UserRepositoryInterface {
   update(id: string, user: User): Promise<User> {
     return prisma.user.update({
       data: {
-        email: user.email,
         isEnabled: user.isEnabled,
         name: user.name,
         pictureUrl: user.pictureUrl,
         roleId: user.roleId,
+        timezone: user.timezone,
         updatedAt: new Date(),
-        username: user.username,
       },
       where: { id },
     });

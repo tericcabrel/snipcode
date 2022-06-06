@@ -10,8 +10,8 @@ export default class UserService {
     return this._userRepository.create(createUserDto.toUser());
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    return this._userRepository.update(id, updateUserDto.toUser());
+  async update(currentUser: User, updateUserDto: UpdateUserDto): Promise<User> {
+    return this._userRepository.update(currentUser.id, updateUserDto.toUser(currentUser));
   }
 
   async loadAdminUsers(role: Role): Promise<void> {
