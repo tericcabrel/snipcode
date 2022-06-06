@@ -73,7 +73,7 @@ export default class FolderService {
 
     // TODO Delete snippets
 
-    return this.folderRepository.bulkDelete(folderIds);
+    return this.folderRepository.bulkDelete(foldersToDelete.map((folder) => folder.id));
   }
 
   private async isFolderExistInParentFolder(args: {
