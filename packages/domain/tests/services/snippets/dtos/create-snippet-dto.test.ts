@@ -1,0 +1,40 @@
+import { Snippet } from '@sharingan/database';
+
+import CreateSnippetDto from '../../../../src/snippets/dtos/create-snippet-dto';
+import { generateTestId } from '../../../setup/test-utils';
+
+describe('Test Create Snippet DTO', () => {
+  it('should return a valid snippet', () => {
+    const folderId = generateTestId();
+    const userId = generateTestId();
+
+    // GIVEN
+    const dto = new CreateSnippetDto({
+      content: 'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n};',
+      description: 'Basic react component',
+      folderId,
+      language: 'tsx',
+      name: 'app.tsx',
+      userId,
+      visibility: 'public',
+    });
+
+    // WHEN
+    const folder = dto.toSnippet();
+
+    // THEN
+    expect(folder).toMatchObject<Snippet>({
+      content: 'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n};',
+      createdAt: expect.any(Date),
+      description: 'Basic react component',
+      folderId,
+      id: expect.any(String),
+      language: 'tsx',
+      name: 'app.tsx',
+      size: expect.any(Number),
+      updatedAt: expect.any(Date),
+      userId,
+      visibility: 'public',
+    });
+  });
+});
