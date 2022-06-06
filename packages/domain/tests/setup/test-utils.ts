@@ -5,6 +5,9 @@ import {
   Role,
   RoleName,
   RoleRepository,
+  Snippet,
+  SnippetRepository,
+  SnippetVisibility,
   User,
   UserRepository,
   dbId,
@@ -18,6 +21,7 @@ import CreateSnippetDto from '../../src/snippets/dtos/create-snippet-dto';
 const userRepository = new UserRepository();
 const roleRepository = new RoleRepository();
 const folderRepository = new FolderRepository();
+const snippetRepository = new SnippetRepository();
 
 type CreateManyTestFoldersArgs = {
   folderNames: string[];
@@ -71,6 +75,18 @@ export const deleteTestUser = async (user: User): Promise<void> => {
   return userRepository.delete(user.id);
 };
 
+export const deleteTestUsersById = async (userIds: Array<string | undefined>): Promise<void[]> => {
+  const promises = userIds.map((userId) => {
+    if (!userId) {
+      return;
+    }
+
+    return userRepository.delete(userId);
+  });
+
+  return Promise.all(promises);
+};
+
 export const deleteTestFoldersById = async (folderIds: Array<string | undefined>): Promise<void[]> => {
   const promises = folderIds.map((folderId) => {
     if (!folderId) {
@@ -118,7 +134,9 @@ export const createTestFolderDto = (args?: { parentId?: string; userId?: string 
   });
 };
 
-export const createTestSnippetDto = (args: { folderId?: string; userId?: string } | undefined) => {
+export const createTestSnippetDto = (
+  args: { folderId?: string; name?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
+) => {
   const languages = ['java', 'js', 'ts', 'c', 'c++', 'python', 'go', 'php', 'csharp'];
   const extensions = ['java', 'js', 'ts', 'c', 'cpp', 'py', 'go', 'php', 'cs'];
 
@@ -129,8 +147,28 @@ export const createTestSnippetDto = (args: { folderId?: string; userId?: string 
     description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
     folderId: args?.folderId ?? generateTestId(),
     language: languages[index],
-    name: `${randWord()}.${extensions[index]}`,
+    name: args?.name ?? `${randWord()}.${extensions[index]}`,
     userId: args?.userId ?? generateTestId(),
-    visibility: 'public',
+    visibility: args?.visibility ?? 'public',
   });
+};
+
+export const deleteTestSnippetsById = async (snippetIds: Array<string | undefined>): Promise<void[]> => {
+  const promises = snippetIds.map((snippetId) => {
+    if (!snippetId) {
+      return;
+    }
+
+    return snippetRepository.delete(snippetId);
+  });
+
+  return Promise.all(promises);
+};
+
+export const createTestSnippet = async (
+  args: { folderId?: string; name?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
+): Promise<Snippet> => {
+  const createSnippetDto = createTestSnippetDto(args);
+
+  return snippetRepository.create(createSnippetDto.toSnippet());
 };

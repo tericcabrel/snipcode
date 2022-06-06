@@ -11,7 +11,11 @@ type Input = {
 };
 
 export default class CreateSnippetDto {
-  constructor(private _input: Input) {}
+  private readonly snippetId: string;
+
+  constructor(private _input: Input) {
+    this.snippetId = dbId.generate();
+  }
 
   get folderId(): string {
     return this._input.folderId;
@@ -27,7 +31,7 @@ export default class CreateSnippetDto {
       createdAt: new Date(),
       description: this._input.description,
       folderId: this._input.folderId,
-      id: dbId.generate(),
+      id: this.snippetId,
       language: this._input.language,
       name: this._input.name,
       size: this.getContentSize(),
