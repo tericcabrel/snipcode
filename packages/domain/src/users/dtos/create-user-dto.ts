@@ -11,9 +11,12 @@ type Input = {
 };
 
 export default class CreateUserDto {
+  private readonly userId: string;
   private enabled = false;
 
-  constructor(private _input: Input) {}
+  constructor(private _input: Input) {
+    this.userId = dbId.generate();
+  }
 
   get email(): string {
     return this._input.email;
@@ -27,7 +30,7 @@ export default class CreateUserDto {
     return {
       createdAt: new Date(),
       email: this._input.email,
-      id: dbId.generate(),
+      id: this.userId,
       isEnabled: this.enabled,
       name: this._input.name,
       oauthProvider: this._input.oauthProvider,

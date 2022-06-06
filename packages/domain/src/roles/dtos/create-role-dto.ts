@@ -7,7 +7,11 @@ type Input = {
 };
 
 export default class CreateRoleDto {
-  constructor(private _input: Input) {}
+  private readonly roleId: string;
+
+  constructor(private _input: Input) {
+    this.roleId = dbId.generate();
+  }
 
   get name(): RoleName {
     return this._input.name;
@@ -25,7 +29,7 @@ export default class CreateRoleDto {
     return {
       createdAt: new Date(),
       description: this._input.description,
-      id: dbId.generate(),
+      id: this.roleId,
       level: this._input.level,
       name: this._input.name,
       updatedAt: new Date(),
