@@ -1,4 +1,4 @@
-import { randEmail, randFullName, randImg, randTimeZone, randUserName, randWord } from '@ngneat/falso';
+import { randEmail, randFullName, randImg, randNumber, randTimeZone, randUserName, randWord } from '@ngneat/falso';
 import {
   Folder,
   FolderRepository,
@@ -13,6 +13,7 @@ import {
 import { CreateUserDto } from '../../index';
 import CreateFolderDto from '../../src/folders/dtos/create-folder-dto';
 import CreateUserRootFolderDto from '../../src/folders/dtos/create-user-root-folder-dto';
+import CreateSnippetDto from '../../src/snippets/dtos/create-snippet-dto';
 
 const userRepository = new UserRepository();
 const roleRepository = new RoleRepository();
@@ -114,5 +115,22 @@ export const createTestFolderDto = (args?: { parentId?: string; userId?: string 
     name: randWord(),
     parentId: args?.parentId ?? generateTestId(),
     userId: args?.userId ?? generateTestId(),
+  });
+};
+
+export const createTestSnippetDto = (args: { folderId?: string; userId?: string } | undefined) => {
+  const languages = ['java', 'js', 'ts', 'c', 'c++', 'python', 'go', 'php', 'csharp'];
+  const extensions = ['java', 'js', 'ts', 'c', 'cpp', 'py', 'go', 'php', 'cs'];
+
+  const index = randNumber({ max: languages.length - 1, min: 0 });
+
+  return new CreateSnippetDto({
+    content: randWord({ length: randNumber({ max: 30, min: 5 }) }).join('\n'),
+    description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
+    folderId: args?.folderId ?? generateTestId(),
+    language: languages[index],
+    name: `${randWord()}.${extensions[index]}`,
+    userId: args?.userId ?? generateTestId(),
+    visibility: 'public',
   });
 };
