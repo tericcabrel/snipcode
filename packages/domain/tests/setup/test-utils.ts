@@ -1,5 +1,14 @@
-import { randEmail, randFullName, randImg, randTimeZone, randUserName } from '@ngneat/falso';
-import { Folder, FolderRepository, Role, RoleName, RoleRepository, User, UserRepository } from '@sharingan/database';
+import { randEmail, randFullName, randImg, randTimeZone, randUserName, randWord } from '@ngneat/falso';
+import {
+  Folder,
+  FolderRepository,
+  Role,
+  RoleName,
+  RoleRepository,
+  User,
+  UserRepository,
+  dbId,
+} from '@sharingan/database';
 
 import { CreateUserDto } from '../../index';
 import CreateFolderDto from '../../src/folders/dtos/create-folder-dto';
@@ -92,4 +101,14 @@ export const createManyTestFolders = async ({
   });
 
   return Promise.all(promises);
+};
+
+export const generateTestId = () => dbId.generate();
+
+export const createTestFolderDto = (args?: { parentId?: string; userId?: string }) => {
+  return new CreateFolderDto({
+    name: randWord(),
+    parentId: args?.parentId ?? generateTestId(),
+    userId: args?.userId ?? generateTestId(),
+  });
 };

@@ -122,7 +122,7 @@ describe('Test Folder service', () => {
     // GIVEN
     const [user, rootFolder] = await createUserWithRootFolder();
 
-    const [firstFolder, secondFolder] = await createManyTestFolders({
+    const [gistFolder, blogsFolder] = await createManyTestFolders({
       folderNames: ['My gist', 'Blogs'],
       parentId: rootFolder.id,
       userId: user.id,
@@ -130,7 +130,7 @@ describe('Test Folder service', () => {
 
     const [post1Folder, post2folder] = await createManyTestFolders({
       folderNames: ['post1', 'post2'],
-      parentId: secondFolder.id,
+      parentId: blogsFolder.id,
       userId: user.id,
     });
 
@@ -142,7 +142,7 @@ describe('Test Folder service', () => {
     expect(userRootFolders1).toHaveLength(2);
     expect(userRootFolders1).toEqual(userRootFolders2);
 
-    await deleteTestFoldersById([post1Folder.id, post2folder.id, firstFolder.id, secondFolder.id, rootFolder.id]);
+    await deleteTestFoldersById([post1Folder.id, post2folder.id, gistFolder.id, blogsFolder.id, rootFolder.id]);
     await deleteTestUser(user);
   });
 
@@ -185,5 +185,81 @@ describe('Test Folder service', () => {
       rootFolder.id,
     ]);
     await deleteTestUser(user);
+  });
+
+  it('should delete folders belonging to the user', async () => {
+    // GIVEN
+    const [user1, rootFolder1] = await createUserWithRootFolder();
+    const [myGistFolder, blogsFolder] = await createManyTestFolders({
+      folderNames: ['My gist', 'Blogs'],
+      parentId: rootFolder1.id,
+      userId: user1.id,
+    });
+
+    const [user2, rootFolder2] = await createUserWithRootFolder();
+    const [projectFolder, snippetFolder] = await createManyTestFolders({
+      folderNames: ['project', 'snippet'],
+      parentId: rootFolder2.id,
+      userId: user2.id,
+    });
+
+    // WHEN
+    await folderService.deleteMany([myGistFolder.id, blogsFolder.id], user1.id);
+    const subFolders = await folderService.findSubFolders(user1.id);
+
+    // THEN
+    expect(subFolders).toHaveLength(0);
+
+    await deleteTestFoldersById([
+      projectFolder.id,
+      snippetFolder.id,
+      myGistFolder.id,
+      blogsFolder.id,
+      rootFolder1.id,
+      rootFolder2.id,
+    ]);
+    await deleteTestUser(user1);
+    await deleteTestUser(user2);
+  });
+
+  it('should delete folders belonging to the user - validation check', async () => {
+    // GIVEN
+    const [user1, rootFolder1] = await createUserWithRootFolder();
+    const [myGistFolder, blogsFolder] = await createManyTestFolders({
+      folderNames: ['My gist', 'Blogs'],
+      parentId: rootFolder1.id,
+      userId: user1.id,
+    });
+
+    const [user2, rootFolder2] = await createUserWithRootFolder();
+    const [projectFolder, snippetFolder] = await createManyTestFolders({
+      folderNames: ['project', 'snippet'],
+      parentId: rootFolder2.id,
+      userId: user2.id,
+    });
+
+    // WHEN
+    await folderService.deleteMany([myGistFolder.id, projectFolder.id], user1.id);
+
+    // THEN
+    const user1SubFolders = await folderService.findSubFolders(user1.id);
+    const user2SubFolders = await folderService.findSubFolders(user2.id);
+
+    expect(user1SubFolders).toHaveLength(1);
+    expect(user1SubFolders.map((folder) => folder.name)).toEqual(['Blogs']);
+
+    expect(user2SubFolders).toHaveLength(2);
+    expect(user2SubFolders.map((folder) => folder.name)).toEqual(['project', 'snippet']);
+
+    await deleteTestFoldersById([
+      projectFolder.id,
+      snippetFolder.id,
+      myGistFolder.id,
+      blogsFolder.id,
+      rootFolder1.id,
+      rootFolder2.id,
+    ]);
+    await deleteTestUser(user1);
+    await deleteTestUser(user2);
   });
 });
