@@ -46,18 +46,22 @@ const findRole = async (name: RoleName): Promise<Role> => {
   return role;
 };
 
-export const createTestUser = async (roleName: RoleName = 'user'): Promise<User> => {
-  const role = await findRole(roleName);
-
-  const createUserDto = new CreateUserDto({
+export const createTestUserDto = (roleId: string): CreateUserDto => {
+  return new CreateUserDto({
     email: randEmail(),
     name: randFullName(),
     oauthProvider: 'github',
     pictureUrl: randImg({ category: 'people' }),
-    roleId: role.id,
+    roleId,
     timezone: randTimeZone(),
     username: randUserName(),
   });
+};
+
+export const createTestUser = async (roleName: RoleName = 'user'): Promise<User> => {
+  const role = await findRole(roleName);
+
+  const createUserDto = createTestUserDto(role.id);
 
   return userRepository.create(createUserDto.toUser());
 };
@@ -103,9 +107,9 @@ export const createManyTestFolders = async ({
   return Promise.all(promises);
 };
 
-export const generateTestId = () => dbId.generate();
+export const generateTestId = (): string => dbId.generate();
 
-export const createTestFolderDto = (args?: { parentId?: string; userId?: string }) => {
+export const createTestFolderDto = (args?: { parentId?: string; userId?: string }): CreateFolderDto => {
   return new CreateFolderDto({
     name: randWord(),
     parentId: args?.parentId ?? generateTestId(),
