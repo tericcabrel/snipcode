@@ -2,6 +2,7 @@ import { randEmail, randFullName, randImg, randNumber, randTimeZone, randUserNam
 import {
   Folder,
   FolderRepository,
+  OauthProvider,
   Role,
   RoleName,
   RoleRepository,
@@ -17,6 +18,7 @@ import { CreateUserDto } from '../../index';
 import CreateFolderDto from '../../src/folders/dtos/create-folder-dto';
 import CreateUserRootFolderDto from '../../src/folders/dtos/create-user-root-folder-dto';
 import CreateSnippetDto from '../../src/snippets/dtos/create-snippet-dto';
+import UpdateUserDto from '../../src/users/dtos/update-user-dto';
 
 const userRepository = new UserRepository();
 const roleRepository = new RoleRepository();
@@ -29,19 +31,7 @@ type CreateManyTestFoldersArgs = {
   userId: string;
 };
 
-export const cleanTestRoles = async () => {
-  const allRoles = await roleRepository.findAll();
-
-  await Promise.all(allRoles.map((role) => roleRepository.delete(role.id)));
-};
-
-export const cleanTestUsers = async () => {
-  const allUsers = await userRepository.findAll();
-
-  await Promise.all(allUsers.map((user) => userRepository.delete(user.id)));
-};
-
-const findRole = async (name: RoleName): Promise<Role> => {
+export const findTestRole = async (name: RoleName): Promise<Role> => {
   const role = await roleRepository.findByName(name);
 
   if (!role) {
@@ -64,15 +54,11 @@ export const createTestUserDto = (roleId: string): CreateUserDto => {
 };
 
 export const createTestUser = async (roleName: RoleName = 'user'): Promise<User> => {
-  const role = await findRole(roleName);
+  const role = await findTestRole(roleName);
 
   const createUserDto = createTestUserDto(role.id);
 
   return userRepository.create(createUserDto.toUser());
-};
-
-export const deleteTestUser = async (user: User): Promise<void> => {
-  return userRepository.delete(user.id);
 };
 
 export const deleteTestUsersById = async (userIds: Array<string | undefined>): Promise<void[]> => {
@@ -171,4 +157,17 @@ export const createTestSnippet = async (
   const createSnippetDto = createTestSnippetDto(args);
 
   return snippetRepository.create(createSnippetDto.toSnippet());
+};
+
+export const updateTestUserDto = (roleId: string): UpdateUserDto => {
+  const providers: OauthProvider[] = ['google', 'github', 'stackoverflow'];
+  const index = randNumber({ max: 2, min: 0 });
+
+  return new UpdateUserDto({
+    name: randFullName(),
+    oauthProvider: providers[index],
+    pictureUrl: randImg({ category: 'arch' }),
+    roleId,
+    timezone: randTimeZone(),
+  });
 };

@@ -8,7 +8,7 @@ import {
   createTestUser,
   createUserWithRootFolder,
   deleteTestFoldersById,
-  deleteTestUser,
+  deleteTestUsersById,
 } from '../../setup/test-utils';
 
 describe('Test Folder service', () => {
@@ -29,7 +29,7 @@ describe('Test Folder service', () => {
     expect(expectedFolder?.id).toEqual(creatUserRootFolderDto.toFolder().id);
 
     await deleteTestFoldersById([expectedFolder?.id]);
-    await deleteTestUser(user);
+    await deleteTestUsersById([user.id]);
   });
 
   it('should create folder for the specified user', async () => {
@@ -56,7 +56,7 @@ describe('Test Folder service', () => {
 
     await deleteTestFoldersById([expectedFolder.id]);
     await deleteTestFoldersById([rootFolder.id]);
-    await deleteTestUser(user);
+    await deleteTestUsersById([user.id]);
   });
 
   it('should not create the folder cause it already exists', async () => {
@@ -82,7 +82,7 @@ describe('Test Folder service', () => {
     );
 
     await deleteTestFoldersById([firstFolder.id, secondFolder.id, rootFolder.id]);
-    await deleteTestUser(user);
+    await deleteTestUsersById([user.id]);
   });
 
   it("should find the user's root folder", async () => {
@@ -102,7 +102,7 @@ describe('Test Folder service', () => {
     expect(userRootFolder?.name).toEqual(`__${user.id}__`);
 
     await deleteTestFoldersById([firstFolder.id, secondFolder.id, rootFolder.id]);
-    await deleteTestUser(user);
+    await deleteTestUsersById([user.id]);
   });
 
   it("should not find the user's root folder", async () => {
@@ -115,7 +115,7 @@ describe('Test Folder service', () => {
       new SharinganError(errors.USER_ROOT_FOLDER_NOT_FOUND(user.id), 'USER_ROOT_FOLDER_NOT_FOUND'),
     );
 
-    await deleteTestUser(user);
+    await deleteTestUsersById([user.id]);
   });
 
   it('should find sub folders of the root user folder', async () => {
@@ -143,7 +143,7 @@ describe('Test Folder service', () => {
     expect(userRootFolders1).toEqual(userRootFolders2);
 
     await deleteTestFoldersById([post1Folder.id, post2folder.id, gistFolder.id, blogsFolder.id, rootFolder.id]);
-    await deleteTestUser(user);
+    await deleteTestUsersById([user.id]);
   });
 
   it('should find the sub folders of a folder', async () => {
@@ -184,7 +184,7 @@ describe('Test Folder service', () => {
       secondFolder.id,
       rootFolder.id,
     ]);
-    await deleteTestUser(user);
+    await deleteTestUsersById([user.id]);
   });
 
   it('should delete folders belonging to the user', async () => {
@@ -218,8 +218,8 @@ describe('Test Folder service', () => {
       rootFolder1.id,
       rootFolder2.id,
     ]);
-    await deleteTestUser(user1);
-    await deleteTestUser(user2);
+    await deleteTestUsersById([user1.id]);
+    await deleteTestUsersById([user2.id]);
   });
 
   it('should delete folders belonging to the user - validation check', async () => {
@@ -259,7 +259,7 @@ describe('Test Folder service', () => {
       rootFolder1.id,
       rootFolder2.id,
     ]);
-    await deleteTestUser(user1);
-    await deleteTestUser(user2);
+    await deleteTestUsersById([user1.id]);
+    await deleteTestUsersById([user2.id]);
   });
 });
