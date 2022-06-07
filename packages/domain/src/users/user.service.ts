@@ -40,16 +40,6 @@ export default class UserService {
     return this._userRepository.findByEmail(email);
   }
 
-  async findAll(): Promise<User[]> {
-    return this._userRepository.findAll();
-  }
-
-  async deleteMany(ids: string[]): Promise<void> {
-    const promises = ids.map((id) => this._userRepository.delete(id));
-
-    await Promise.all(promises);
-  }
-
   async findById(id: string): Promise<User | null> {
     return this._userRepository.findById(id);
   }

@@ -53,10 +53,6 @@ export default class FolderService {
 
     const rootFolder = await this.findUserRootFolder(userId);
 
-    if (!rootFolder) {
-      return [];
-    }
-
     return this.folderRepository.findSubFolders(rootFolder.id, userId);
   }
 

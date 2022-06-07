@@ -5,10 +5,6 @@ import CreateRoleDto from './dtos/create-role-dto';
 export default class RoleService {
   constructor(private roleRepository: RoleRepositoryInterface) {}
 
-  async create(createRoleDto: CreateRoleDto): Promise<Role> {
-    return this.roleRepository.create(createRoleDto.toRole());
-  }
-
   async loadRoles(): Promise<void> {
     const roleAdminDto = new CreateRoleDto({
       description: 'can do everything in the application',
@@ -21,7 +17,7 @@ export default class RoleService {
       const role = await this.roleRepository.findByName(roleDto.name);
 
       if (!role) {
-        return this.create(roleDto);
+        return this.roleRepository.create(roleDto.toRole());
       }
 
       return null;
@@ -40,11 +36,5 @@ export default class RoleService {
 
   async findAll(): Promise<Role[]> {
     return this.roleRepository.findAll();
-  }
-
-  async deleteMany(ids: string[]): Promise<void> {
-    const promises = ids.map((id) => this.roleRepository.delete(id));
-
-    await Promise.all(promises);
   }
 }
