@@ -14,10 +14,10 @@ describe('Test Create Role DTO', () => {
 
     expect(role).toMatchObject<Role>({
       createdAt: expect.any(Date),
-      description: 'description admin',
+      description: dto.description,
       id: expect.any(String),
-      level: 100,
-      name: 'admin',
+      level: dto.level,
+      name: dto.name,
       updatedAt: expect.any(Date),
     });
   });
