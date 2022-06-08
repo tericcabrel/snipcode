@@ -52,6 +52,7 @@ model User {
   role          Role          @relation(fields: [roleId], references: [id], onDelete: Restrict)
   folders       Folder[]
   snippets      Snippet[]
+  sessions      Session[]
 
   @@index([username])
   @@index([roleId])
@@ -100,4 +101,15 @@ model Snippet {
   @@index([language])
   @@index([visibility])
   @@map("snippets")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  token        String   @unique
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
 }
