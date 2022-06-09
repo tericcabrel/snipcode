@@ -8,7 +8,6 @@ import {
 } from '@sharingan/domain';
 import { Request, Response } from 'express';
 import { Query, Send } from 'express-serve-static-core';
-import { Session } from 'express-session';
 
 import { EnvironmentVariables } from '../../env';
 
@@ -34,18 +33,9 @@ export type AppContext = {
     snippet: SnippetService;
     user: UserService;
   };
-  req: Request & { session: Session & { userId?: string } };
+  req: Request & { session: { userId?: string } };
   res: Response;
 };
-
-declare module 'express' {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-  interface Request {
-    session: {
-      userId: string;
-    };
-  }
-}
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export interface ExpressRequestBody<T> extends Express.Request {

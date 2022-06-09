@@ -40,7 +40,7 @@ export const startGraphqlServer = async (expressApplication: Application, httpSe
         snippet: snippetService,
         user: userService,
       },
-      req,
+      req: Object.assign(req, { session: {} }),
       res,
     }),
     introspection: env.ENABLE_INTROSPECTION,

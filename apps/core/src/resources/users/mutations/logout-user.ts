@@ -1,14 +1,10 @@
+import { getAuthenticatedUser } from '../../../configs/authentication';
 import { MutationResolvers } from '../../../types/graphql';
-import { COOKIE_NAME } from '../../../utils/constants';
 
 export const logoutUser: MutationResolvers['logoutUser'] = async (_parent, _args, context) => {
-  const { req, res } = context;
+  const userId = getAuthenticatedUser(context);
 
-  res.clearCookie(COOKIE_NAME);
+  await context.db.session.delete(userId);
 
-  return new Promise((resolve) => {
-    req.session.destroy((err) => {
-      return resolve(!err);
-    });
-  });
+  return true;
 };
