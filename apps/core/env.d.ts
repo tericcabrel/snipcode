@@ -1,5 +1,6 @@
 export type EnvironmentVariables = {
   ADMIN_PASSWORD: string;
+  AUTH_ENABLED: string;
   CONVERTKIT_API_KEY: string;
   CONVERTKIT_FORM_ID: string;
   DATABASE_URL: string;
@@ -10,6 +11,7 @@ export type EnvironmentVariables = {
   PORT: string;
   REDIS_URL: string;
   REQUEST_TIMEOUT: string;
+  SESSION_LIFETIME: string;
   SESSION_SECRET: string;
   WEB_APP_URL: string;
   WEB_AUTH_ERROR_URL: string;

@@ -16,6 +16,7 @@ import httpClient from '../../../configs/http-client';
 import { logger } from '../../../configs/logger';
 import { GitHubUserResponse } from '../../../types/auth';
 import { ExpressRequestQuery } from '../../../types/common';
+import { authSuccessURL, createUserSession } from '../../../utils/auth/session';
 
 const GITHUB_AUTH_URL = 'https://github.com/login/oauth/access_token';
 const GITHUB_API_USER_PROFILE_URL = 'https://api.github.com/user';
@@ -93,11 +94,11 @@ export const authenticateWithGitHub = async (req: ExpressRequestQuery<{ code: st
     const userExist = await userService.findByEmail(userResponse.data.email);
 
     if (userExist) {
-      req.session.userId = userExist.id;
+      const session = await createUserSession(userExist.id);
 
       await updateUserFromGitHubInfo(userExist, userResponse.data);
 
-      return res.redirect(env.WEB_AUTH_SUCCESS_URL);
+      return res.redirect(authSuccessURL(session.token));
     }
 
     const roleUser = await roleService.findByName('user');
@@ -114,9 +115,9 @@ export const authenticateWithGitHub = async (req: ExpressRequestQuery<{ code: st
 
     await folderService.createUserRootFolder(createUserRootFolderDto);
 
-    req.session.userId = createdUser.id;
+    const session = await createUserSession(createdUser.id);
 
-    return res.redirect(env.WEB_AUTH_SUCCESS_URL);
+    return res.redirect(authSuccessURL(session.token));
   } catch (e: any) {
     logger.error(e);
 

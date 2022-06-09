@@ -9,7 +9,7 @@ export default class SessionRepository implements SessionRepositoryInterface {
         expires: item.expires,
         id: item.id,
         token: item.token,
-        userId: item.id,
+        userId: item.userId,
       },
     });
   }

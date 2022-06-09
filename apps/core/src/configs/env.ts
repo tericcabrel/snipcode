@@ -7,6 +7,7 @@ dotenv.config();
 
 export const env: AppEnvironmentVariables = {
   ADMIN_PASSWORD: getEnv('ADMIN_PASSWORD'),
+  AUTH_ENABLED: getEnv('AUTH_ENABLED') === 'true',
   CONVERTKIT_API_KEY: getEnv('CONVERTKIT_API_KEY'),
   CONVERTKIT_FORM_ID: getEnv('CONVERTKIT_FORM_ID'),
   DATABASE_URL: getEnv('DATABASE_URL'),
@@ -19,6 +20,7 @@ export const env: AppEnvironmentVariables = {
   PORT: parseInt(getEnv('PORT'), 10),
   REDIS_URL: getEnv('REDIS_URL'),
   REQUEST_TIMEOUT: parseInt(getEnv('REQUEST_TIMEOUT'), 10),
+  SESSION_LIFETIME: parseInt(getEnv('SESSION_LIFETIME'), 10),
   SESSION_SECRET: getEnv('SESSION_SECRET'),
   WEB_APP_URL: getEnv('WEB_APP_URL'),
   WEB_AUTH_ERROR_URL: getEnv('WEB_AUTH_ERROR_URL'),

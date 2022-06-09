@@ -1,4 +1,11 @@
-import { FolderService, NewsletterService, RoleService, SnippetService, UserService } from '@sharingan/domain';
+import {
+  FolderService,
+  NewsletterService,
+  RoleService,
+  SessionService,
+  SnippetService,
+  UserService,
+} from '@sharingan/domain';
 import { Request, Response } from 'express';
 import { Query, Send } from 'express-serve-static-core';
 import { Session } from 'express-session';
@@ -7,13 +14,15 @@ import { EnvironmentVariables } from '../../env';
 
 export type AppEnvironmentVariables = Omit<
   EnvironmentVariables,
-  'ENABLE_INTROSPECTION' | 'PORT' | 'REQUEST_TIMEOUT'
+  'ENABLE_INTROSPECTION' | 'PORT' | 'REQUEST_TIMEOUT' | 'SESSION_LIFETIME' | 'AUTH_ENABLED'
 > & {
+  AUTH_ENABLED: boolean;
   ENABLE_INTROSPECTION: boolean;
   IS_DEV: boolean;
   IS_PROD: boolean;
   PORT: number;
   REQUEST_TIMEOUT: number;
+  SESSION_LIFETIME: number;
 };
 
 export type AppContext = {
@@ -21,6 +30,7 @@ export type AppContext = {
     folder: FolderService;
     newsletter: NewsletterService;
     role: RoleService;
+    session: SessionService;
     snippet: SnippetService;
     user: UserService;
   };
@@ -28,10 +38,12 @@ export type AppContext = {
   res: Response;
 };
 
-declare module 'express-session' {
+declare module 'express' {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-  interface SessionData {
-    userId: string;
+  interface Request {
+    session: {
+      userId: string;
+    };
   }
 }
 
