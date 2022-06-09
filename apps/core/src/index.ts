@@ -6,13 +6,10 @@ import { env } from './configs/env';
 import { logger } from './configs/logger';
 import { startGraphqlServer } from './server/graphql';
 import { setupRestEndpoints } from './server/rest';
-import { setupApplicationSession } from './server/session';
 import { loadData } from './utils/db/data-init';
 
 export const startServer = async () => {
   const expressApplication = express();
-
-  setupApplicationSession(expressApplication);
 
   const httpServer = http.createServer(expressApplication);
 
