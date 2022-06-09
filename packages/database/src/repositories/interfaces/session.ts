@@ -2,7 +2,7 @@ import Session from '../../entities/session';
 import BaseRepository from './_base';
 
 type SessionRepositoryInterface = {
-  findByToken: (token: string) => Promise<Session | null>;
-} & Pick<BaseRepository<Session>, 'create' | 'delete'>;
+  deleteUserSessions: (userId: string) => Promise<void>;
+} & Pick<BaseRepository<Session>, 'create'>;
 
 export default SessionRepositoryInterface;

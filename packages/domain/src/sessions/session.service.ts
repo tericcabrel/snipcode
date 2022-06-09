@@ -9,11 +9,7 @@ export default class SessionService {
     return this._sessionRepository.create(createSessionDto.toSession());
   }
 
-  async findByToken(token: string): Promise<Session | null> {
-    return this._sessionRepository.findByToken(token);
-  }
-
-  async delete(id: string): Promise<void> {
-    await this._sessionRepository.delete(id);
+  async deleteUserSessions(userId: string): Promise<void> {
+    await this._sessionRepository.deleteUserSessions(userId);
   }
 }
