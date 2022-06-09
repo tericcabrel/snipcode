@@ -1,6 +1,6 @@
 import { Snippet } from '@sharingan/database';
 
-import CreateSnippetDto from '../../../../src/snippets/dtos/create-snippet-dto';
+import CreateSessionDto from '../../../../src/snippets/dtos/create-snippet-dto';
 import { generateTestId } from '../../../setup/test-utils';
 
 describe('Test Create Snippet DTO', () => {
@@ -9,7 +9,7 @@ describe('Test Create Snippet DTO', () => {
     const userId = generateTestId();
 
     // GIVEN
-    const dto = new CreateSnippetDto({
+    const dto = new CreateSessionDto({
       content: 'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n};',
       description: 'Basic react component',
       folderId,

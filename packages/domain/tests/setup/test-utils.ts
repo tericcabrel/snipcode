@@ -17,7 +17,7 @@ import {
 import { CreateUserDto } from '../../index';
 import CreateFolderDto from '../../src/folders/dtos/create-folder-dto';
 import CreateUserRootFolderDto from '../../src/folders/dtos/create-user-root-folder-dto';
-import CreateSnippetDto from '../../src/snippets/dtos/create-snippet-dto';
+import CreateSessionDto from '../../src/snippets/dtos/create-snippet-dto';
 import UpdateUserDto from '../../src/users/dtos/update-user-dto';
 
 const userRepository = new UserRepository();
@@ -128,7 +128,7 @@ export const createTestSnippetDto = (
 
   const index = randNumber({ max: languages.length - 1, min: 0 });
 
-  return new CreateSnippetDto({
+  return new CreateSessionDto({
     content: randWord({ length: randNumber({ max: 30, min: 5 }) }).join('\n'),
     description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
     folderId: args?.folderId ?? generateTestId(),
