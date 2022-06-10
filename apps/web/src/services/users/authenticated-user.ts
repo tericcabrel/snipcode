@@ -1,5 +1,5 @@
-import { useAuthenticatedUserQuery } from '@/graphql/users/queries/authenticated-user';
 import { AuthenticatedUserQuery } from '@/graphql/generated';
+import { useAuthenticatedUserQuery } from '@/graphql/users/queries/authenticated-user';
 import { AuthenticatedUser } from '@/typings/queries';
 
 const formatAuthenticatedUserResult = (data?: AuthenticatedUserQuery): AuthenticatedUser | undefined => {
