@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
+import dynamic from 'next/dynamic';
 
-import Home from '@/containers/home';
+const Home = dynamic(() => import('@/containers/home'));
 
 const HomePage: NextPage = () => {
   return <Home />;

@@ -1,5 +1,6 @@
 import http from 'http';
 
+import { dbClient } from '@sharingan/database';
 import express from 'express';
 
 import { env } from './configs/env';
@@ -19,6 +20,8 @@ export const startServer = async () => {
 
   httpServer
     .listen(env.PORT, async () => {
+      await dbClient.$connect();
+
       await loadData();
 
       logger.info(`🚀 Server ready at ${env.HOST}:${env.PORT}${graphqlServer.graphqlPath}`);
