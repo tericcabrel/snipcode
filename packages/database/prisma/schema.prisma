@@ -16,6 +16,7 @@ enum RoleName {
 }
 
 enum OauthProvider {
+  email
   github
   google
   stackoverflow
@@ -41,6 +42,7 @@ model Role {
 model User {
   id            String        @id @db.VarChar(50)
   email         String        @unique @db.VarChar(100)
+  password      String?       @db.VarChar(100)
   username      String?       @db.VarChar(50)
   name          String        @map("name") @db.VarChar(50)
   timezone      String?       @db.VarChar(50)
