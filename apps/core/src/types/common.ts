@@ -13,9 +13,8 @@ import { EnvironmentVariables } from '../../env';
 
 export type AppEnvironmentVariables = Omit<
   EnvironmentVariables,
-  'ENABLE_INTROSPECTION' | 'PORT' | 'REQUEST_TIMEOUT' | 'SESSION_LIFETIME' | 'AUTH_ENABLED'
+  'ENABLE_INTROSPECTION' | 'PORT' | 'REQUEST_TIMEOUT' | 'SESSION_LIFETIME'
 > & {
-  AUTH_ENABLED: boolean;
   ENABLE_INTROSPECTION: boolean;
   IS_DEV: boolean;
   IS_PROD: boolean;

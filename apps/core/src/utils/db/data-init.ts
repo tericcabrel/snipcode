@@ -1,5 +1,7 @@
 import { roleService, userService } from '@sharingan/domain';
 
+import { env } from '../../configs/env';
+
 export const loadData = async () => {
   await roleService.loadRoles();
 
@@ -9,5 +11,5 @@ export const loadData = async () => {
     throw new Error('[Data Loader]: Role administrator not found');
   }
 
-  await userService.loadAdminUsers(adminRole);
+  await userService.loadAdminUser(adminRole, env.ADMIN_PASSWORD);
 };

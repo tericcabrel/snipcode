@@ -7,6 +7,7 @@ import { createSnippet } from './snippets/mutations/createSnippet';
 import { allSnippets } from './snippets/queries/allSnippets';
 import { mySnippets } from './snippets/queries/mySnippets';
 import { dateScalar } from './types/date';
+import { loginUser } from './users/mutations/login-user';
 import { logoutUser } from './users/mutations/logout-user';
 import { authenticatedUser } from './users/queries/authenticated-user';
 
@@ -27,6 +28,7 @@ export const resolvers: Resolvers = {
     createFolder,
     createSnippet,
     deleteFolders,
+    loginUser,
     logoutUser,
     subscribeToNewsletter,
   },

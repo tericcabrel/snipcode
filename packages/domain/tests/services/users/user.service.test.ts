@@ -17,8 +17,9 @@ describe('Test User service', () => {
 
   it('should load users in the database', async () => {
     const [roleAdmin] = await roleService.findAll();
+    const adminPassword = 'VerStrongPassword';
 
-    await userService.loadAdminUsers(roleAdmin);
+    await userService.loadAdminUser(roleAdmin, adminPassword);
 
     const adminUser = await userService.findByEmail('teco@sharingan.dev');
 
