@@ -17,4 +17,8 @@ export default class SessionRepository implements SessionRepositoryInterface {
   async deleteUserSessions(userId: string): Promise<void> {
     await prisma.session.deleteMany({ where: { userId } });
   }
+
+  async findByToken(token: string): Promise<Session | null> {
+    return prisma.session.findUnique({ where: { token } });
+  }
 }
