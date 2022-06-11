@@ -24,8 +24,8 @@ export const startGraphqlServer = async (expressApplication: Application, httpSe
   });
 
   const apolloServer = new ApolloServer({
-    // formatError: (error) => { console.log(error); },
     context: async ({ req, res }): Promise<AppContext> => await buildGraphQLContext(req, res),
+    debug: env.IS_DEV,
     introspection: env.ENABLE_INTROSPECTION,
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }), // graceful shutdown

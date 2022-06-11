@@ -16,11 +16,12 @@ export default class UserService {
     return this._userRepository.update(currentUser.id, updateUserDto.toUser(currentUser));
   }
 
-  async loadAdminUsers(role: Role): Promise<void> {
+  async loadAdminUser(role: Role, adminPassword: string): Promise<void> {
     const userAdminDto = new CreateUserDto({
       email: 'teco@sharingan.dev',
       name: 'Eric Teco',
-      oauthProvider: 'github',
+      oauthProvider: 'email',
+      password: adminPassword,
       pictureUrl: null,
       roleId: role.id,
       timezone: 'Europe/Paris',
