@@ -9,12 +9,10 @@ type Props = {
 
 const PublicLayout = ({ children }: Props) => {
   return (
-    <div>
+    <div className="overflow-x-hidden bg-gray-50">
       <PublicHeader />
-      <div className="relative top-[65px]">
-        {children}
-        <PublicFooter />
-      </div>
+      {children}
+      <PublicFooter />
     </div>
   );
 };
