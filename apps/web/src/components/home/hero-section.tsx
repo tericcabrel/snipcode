@@ -59,4 +59,4 @@ const HeroSection = () => {
   );
 };
 
-export { HeroSection };
+export default HeroSection;

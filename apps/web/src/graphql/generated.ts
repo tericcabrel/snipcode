@@ -14,10 +14,66 @@ export type Scalars = {
   Date: any;
 };
 
+export type CreateFolderInput = {
+  name: Scalars['String'];
+  parentId: Scalars['String'];
+};
+
+export type CreateSnippetInput = {
+  content: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  folderId: Scalars['String'];
+  language: Scalars['String'];
+  name: Scalars['String'];
+  visibility: SnippetVisibility;
+};
+
+export type Folder = {
+  __typename?: 'Folder';
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  isFavorite: Scalars['Boolean'];
+  name: Scalars['String'];
+  parent?: Maybe<Folder>;
+  subFolders: Array<Folder>;
+  updatedAt: Scalars['Date'];
+  user: User;
+};
+
+export type LoginResult = {
+  __typename?: 'LoginResult';
+  token: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createFolder: Folder;
+  createSnippet: Snippet;
+  deleteFolders: Scalars['Boolean'];
+  loginUser: LoginResult;
   logoutUser: Scalars['Boolean'];
   subscribeToNewsletter: Result;
+};
+
+
+export type MutationCreateFolderArgs = {
+  input: CreateFolderInput;
+};
+
+
+export type MutationCreateSnippetArgs = {
+  input: CreateSnippetInput;
+};
+
+
+export type MutationDeleteFoldersArgs = {
+  folderIds: Array<Scalars['String']>;
+};
+
+
+export type MutationLoginUserArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 
@@ -34,7 +90,15 @@ export const OauthProvider = {
 export type OauthProvider = typeof OauthProvider[keyof typeof OauthProvider];
 export type Query = {
   __typename?: 'Query';
+  allSnippets: Array<Snippet>;
   authenticatedUser?: Maybe<User>;
+  listFolders: Array<Folder>;
+  mySnippets: Array<Snippet>;
+};
+
+
+export type QueryListFoldersArgs = {
+  folderId?: InputMaybe<Scalars['String']>;
 };
 
 export type Result = {
@@ -58,10 +122,32 @@ export const RoleName = {
 } as const;
 
 export type RoleName = typeof RoleName[keyof typeof RoleName];
+export type Snippet = {
+  __typename?: 'Snippet';
+  content: Scalars['String'];
+  createdAt: Scalars['Date'];
+  description?: Maybe<Scalars['String']>;
+  folder: Folder;
+  id: Scalars['ID'];
+  language: Scalars['String'];
+  name: Scalars['String'];
+  size: Scalars['Int'];
+  updatedAt: Scalars['Date'];
+  user: User;
+  visibility: SnippetVisibility;
+};
+
+export const SnippetVisibility = {
+  Private: 'private',
+  Public: 'public'
+} as const;
+
+export type SnippetVisibility = typeof SnippetVisibility[keyof typeof SnippetVisibility];
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['Date'];
   email: Scalars['String'];
+  folders: Array<Folder>;
   id: Scalars['ID'];
   isEnabled: Scalars['Boolean'];
   name: Scalars['String'];
