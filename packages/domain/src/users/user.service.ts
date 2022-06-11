@@ -1,4 +1,6 @@
 import { Role, User, UserRepositoryInterface } from '@sharingan/database';
+import SharinganError, { errors } from '@sharingan/utils';
+import bcrypt from 'bcrypt';
 
 import CreateUserDto from './dtos/create-user-dto';
 import UpdateUserDto from './dtos/update-user-dto';
@@ -42,5 +44,21 @@ export default class UserService {
 
   async findById(id: string): Promise<User | null> {
     return this._userRepository.findById(id);
+  }
+
+  async login(email: string, password: string): Promise<User> {
+    const user = await this.findByEmail(email);
+
+    if (!user) {
+      throw new SharinganError(errors.LOGIN_FAILED_EMAIL, 'LOGIN_FAILED');
+    }
+
+    const isPasswordValid = user.password ? bcrypt.compareSync(password, user.password) : false;
+
+    if (!isPasswordValid) {
+      throw new SharinganError(errors.LOGIN_FAILED_PASSWORD, 'LOGIN_FAILED');
+    }
+
+    return user;
   }
 }

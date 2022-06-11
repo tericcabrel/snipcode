@@ -14,7 +14,7 @@ describe('Test Update User DTO', () => {
     });
 
     const roleId = generateTestId();
-    const currentUser = createTestUserDto(roleId).toUser();
+    const currentUser = createTestUserDto({ roleId }).toUser();
 
     const userToUpdate = dto.toUser(currentUser);
 
@@ -25,6 +25,7 @@ describe('Test Update User DTO', () => {
       isEnabled: false,
       name: 'user updated',
       oauthProvider: 'github',
+      password: null,
       pictureUrl: 'updated pictureUrl',
       roleId: 'updated roleId',
       timezone: 'Europe/Paris',
@@ -45,7 +46,7 @@ describe('Test Update User DTO', () => {
     });
 
     const roleId = generateTestId();
-    const currentUser = createTestUserDto(roleId).toUser();
+    const currentUser = createTestUserDto({ roleId }).toUser();
 
     dto.isEnabled = true;
     const userToUpdate = dto.toUser(currentUser);
@@ -57,6 +58,7 @@ describe('Test Update User DTO', () => {
       isEnabled: true,
       name: 'user updated',
       oauthProvider: 'github',
+      password: null,
       pictureUrl: 'updated pictureUrl',
       roleId: 'updated roleId',
       timezone: 'Europe/Paris',

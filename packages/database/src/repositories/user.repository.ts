@@ -11,6 +11,7 @@ export default class UserRepository implements UserRepositoryInterface {
         isEnabled: user.isEnabled,
         name: user.name,
         oauthProvider: user.oauthProvider,
+        password: user.password,
         pictureUrl: user.pictureUrl,
         roleId: user.roleId,
         timezone: user.timezone,

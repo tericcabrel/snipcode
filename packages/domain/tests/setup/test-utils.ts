@@ -6,6 +6,8 @@ import {
   Role,
   RoleName,
   RoleRepository,
+  Session,
+  SessionRepository,
   Snippet,
   SnippetRepository,
   SnippetVisibility,
@@ -17,18 +19,32 @@ import {
 import { CreateUserDto } from '../../index';
 import CreateFolderDto from '../../src/folders/dtos/create-folder-dto';
 import CreateUserRootFolderDto from '../../src/folders/dtos/create-user-root-folder-dto';
-import CreateSessionDto from '../../src/snippets/dtos/create-snippet-dto';
+import CreateSessionDto from '../../src/sessions/dtos/create-session-dto';
+import CreateSnippetDto from '../../src/snippets/dtos/create-snippet-dto';
 import UpdateUserDto from '../../src/users/dtos/update-user-dto';
 
 const userRepository = new UserRepository();
 const roleRepository = new RoleRepository();
 const folderRepository = new FolderRepository();
 const snippetRepository = new SnippetRepository();
+const sessionRepository = new SessionRepository();
 
 type CreateManyTestFoldersArgs = {
   folderNames: string[];
   parentId: string;
   userId: string;
+};
+
+type CreateTestUserDtoArgs = {
+  oauthProvider?: OauthProvider;
+  password?: string | null;
+  roleId: string;
+};
+
+type CreateTestUserArgs = {
+  oauthProvider?: OauthProvider;
+  password?: string | null;
+  roleName?: RoleName;
 };
 
 export const findTestRole = async (name: RoleName): Promise<Role> => {
@@ -41,11 +57,12 @@ export const findTestRole = async (name: RoleName): Promise<Role> => {
   return role;
 };
 
-export const createTestUserDto = (roleId: string): CreateUserDto => {
+export const createTestUserDto = ({ oauthProvider, password, roleId }: CreateTestUserDtoArgs): CreateUserDto => {
   return new CreateUserDto({
     email: randEmail(),
     name: randFullName(),
-    oauthProvider: 'github',
+    oauthProvider: oauthProvider ?? 'github',
+    password: password ?? null,
     pictureUrl: randImg({ category: 'people' }),
     roleId,
     timezone: randTimeZone(),
@@ -53,10 +70,14 @@ export const createTestUserDto = (roleId: string): CreateUserDto => {
   });
 };
 
-export const createTestUser = async (roleName: RoleName = 'user'): Promise<User> => {
+export const createTestUser = async ({
+  oauthProvider,
+  password,
+  roleName = 'user',
+}: CreateTestUserArgs): Promise<User> => {
   const role = await findTestRole(roleName);
 
-  const createUserDto = createTestUserDto(role.id);
+  const createUserDto = createTestUserDto({ oauthProvider, password, roleId: role.id });
 
   return userRepository.create(createUserDto.toUser());
 };
@@ -86,7 +107,7 @@ export const deleteTestFoldersById = async (folderIds: Array<string | undefined>
 };
 
 export const createUserWithRootFolder = async (): Promise<[User, Folder]> => {
-  const user = await createTestUser();
+  const user = await createTestUser({});
   const rootFolder = await folderRepository.create(new CreateUserRootFolderDto(user.id).toFolder());
 
   return [user, rootFolder];
@@ -122,13 +143,13 @@ export const createTestFolderDto = (args?: { parentId?: string; userId?: string 
 
 export const createTestSnippetDto = (
   args: { folderId?: string; name?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
-) => {
+): CreateSnippetDto => {
   const languages = ['java', 'js', 'ts', 'c', 'c++', 'python', 'go', 'php', 'csharp'];
   const extensions = ['java', 'js', 'ts', 'c', 'cpp', 'py', 'go', 'php', 'cs'];
 
   const index = randNumber({ max: languages.length - 1, min: 0 });
 
-  return new CreateSessionDto({
+  return new CreateSnippetDto({
     content: randWord({ length: randNumber({ max: 30, min: 5 }) }).join('\n'),
     description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
     folderId: args?.folderId ?? generateTestId(),
@@ -160,7 +181,7 @@ export const createTestSnippet = async (
 };
 
 export const updateTestUserDto = (roleId: string): UpdateUserDto => {
-  const providers: OauthProvider[] = ['google', 'github', 'stackoverflow'];
+  const providers: OauthProvider[] = ['email', 'google', 'github', 'stackoverflow'];
   const index = randNumber({ max: 2, min: 0 });
 
   return new UpdateUserDto({
@@ -170,4 +191,21 @@ export const updateTestUserDto = (roleId: string): UpdateUserDto => {
     roleId,
     timezone: randTimeZone(),
   });
+};
+
+export const createTestSessionDto = (userId: string): CreateSessionDto => {
+  return new CreateSessionDto({
+    expireDate: new Date(),
+    userId,
+  });
+};
+
+export const createTestSession = async (args: { userId: string }): Promise<Session> => {
+  const createSessionDto = createTestSessionDto(args.userId);
+
+  return sessionRepository.create(createSessionDto.toSession());
+};
+
+export const deleteTestUserSessions = async (userId: string): Promise<void> => {
+  return sessionRepository.deleteUserSessions(userId);
 };

@@ -1,4 +1,5 @@
 import { User } from '@sharingan/database';
+import SharinganError, { errors } from '@sharingan/utils';
 
 import { roleService, userService } from '../../../index';
 import {
@@ -29,7 +30,7 @@ describe('Test User service', () => {
   it('should create a user', async () => {
     // GIVEN
     const role = await findTestRole('user');
-    const createUserDto = await createTestUserDto(role.id);
+    const createUserDto = await createTestUserDto({ roleId: role.id });
 
     // WHEN
     const createdUser = await userService.create(createUserDto);
@@ -42,6 +43,7 @@ describe('Test User service', () => {
       isEnabled: createUserDto.toUser().isEnabled,
       name: createUserDto.toUser().name,
       oauthProvider: createUserDto.toUser().oauthProvider,
+      password: null,
       pictureUrl: createUserDto.toUser().pictureUrl,
       roleId: createUserDto.toUser().roleId,
       timezone: createUserDto.toUser().timezone,
@@ -55,7 +57,7 @@ describe('Test User service', () => {
   it('should create a user - validation check', async () => {
     // GIVEN
     const role = await findTestRole('user');
-    const createUserDto = await createTestUserDto(role.id);
+    const createUserDto = await createTestUserDto({ roleId: role.id });
 
     createUserDto.isEnabled = true;
 
@@ -70,6 +72,7 @@ describe('Test User service', () => {
       isEnabled: createUserDto.toUser().isEnabled,
       name: createUserDto.toUser().name,
       oauthProvider: createUserDto.toUser().oauthProvider,
+      password: null,
       pictureUrl: createUserDto.toUser().pictureUrl,
       roleId: createUserDto.toUser().roleId,
       timezone: createUserDto.toUser().timezone,
@@ -82,7 +85,7 @@ describe('Test User service', () => {
 
   it('should update user information', async () => {
     // GIVEN
-    const currentUser = await createTestUser();
+    const currentUser = await createTestUser({});
 
     const role = await findTestRole('admin');
     const updateUserDto = updateTestUserDto(role.id);
@@ -98,6 +101,7 @@ describe('Test User service', () => {
       isEnabled: updateUserDto.toUser(currentUser).isEnabled,
       name: updateUserDto.toUser(currentUser).name,
       oauthProvider: updateUserDto.toUser(currentUser).oauthProvider,
+      password: null,
       pictureUrl: updateUserDto.toUser(currentUser).pictureUrl,
       roleId: updateUserDto.toUser(currentUser).roleId,
       timezone: updateUserDto.toUser(currentUser).timezone,
@@ -106,5 +110,51 @@ describe('Test User service', () => {
     });
 
     await deleteTestUsersById([currentUser.id]);
+  });
+
+  it("should fail to authenticate the user because the email doesn't exists", async () => {
+    // GIVEN
+    const userEmail = 'email@test.com';
+    const userPassword = 'strongPassword';
+
+    // WHEN
+    // THEN
+    await expect(() => userService.login(userEmail, userPassword)).rejects.toThrow(
+      new SharinganError(errors.LOGIN_FAILED_EMAIL, 'LOGIN_FAILED'),
+    );
+  });
+
+  it('should fail to authenticate the user because the password is not correct', async () => {
+    // GIVEN
+    const userPassword = 'strongPassword';
+    const userBadPassword = 'badPassword';
+    const user = await createTestUser({ oauthProvider: 'email', password: userPassword });
+
+    // WHEN
+    // THEN
+    await expect(() => userService.login(user.email, userBadPassword)).rejects.toThrow(
+      new SharinganError(errors.LOGIN_FAILED_PASSWORD, 'LOGIN_FAILED'),
+    );
+  });
+
+  it.only('should successfully authenticate the user', async () => {
+    // GIVEN
+    const userPassword = 'strongPassword';
+    const user = await createTestUser({ oauthProvider: 'email', password: userPassword });
+
+    // WHEN
+    const authenticatedUser = await userService.login(user.email, userPassword);
+
+    // THEN
+    expect(user).toMatchObject({
+      email: authenticatedUser.email,
+      id: authenticatedUser.id,
+      name: authenticatedUser.name,
+      oauthProvider: authenticatedUser.oauthProvider,
+      roleId: authenticatedUser.roleId,
+      username: authenticatedUser.username,
+    });
+
+    await deleteTestUsersById([user.id]);
   });
 });

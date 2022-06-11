@@ -18,7 +18,7 @@ describe('Test Folder service', () => {
 
   it('should create a root folder for a user', async () => {
     // GIVEN
-    const user = await createTestUser();
+    const user = await createTestUser({});
 
     const creatUserRootFolderDto = new CreateUserRootFolderDto(user.id);
 
@@ -107,7 +107,7 @@ describe('Test Folder service', () => {
 
   it("should not find the user's root folder", async () => {
     // GIVEN
-    const user = await createTestUser();
+    const user = await createTestUser({});
 
     // WHEN
     // THEN
