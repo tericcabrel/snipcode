@@ -1,3 +1,4 @@
+import { addDayToDate } from '@sharingan/utils';
 import { useCookies } from 'react-cookie';
 
 import { useAuthenticatedUser } from '@/services/users/authenticated-user';
@@ -9,7 +10,7 @@ const useAuth = () => {
   const { data, isLoading } = useAuthenticatedUser();
 
   const saveToken = (token: string) => {
-    setCookie(COOKIE_NAME, token, { path: '/', secure: true });
+    setCookie(COOKIE_NAME, token, { expires: addDayToDate(90), path: '/', secure: true });
   };
 
   const deleteToken = () => {
