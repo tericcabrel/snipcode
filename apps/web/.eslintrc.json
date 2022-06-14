@@ -59,6 +59,8 @@
     "next.config.js",
     "tailwind.config.js",
     "postcss.config.js",
-    "next-sitemap.js"
+    "next-sitemap.js",
+    "sentry.client.config.js",
+    "sentry.server.config.js"
   ]
 }

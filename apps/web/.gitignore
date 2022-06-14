@@ -43,3 +43,6 @@ src/graphql/server
 robots.txt
 sitemap.xml
 sitemap-0.xml
+
+# Sentry
+.sentryclirc
