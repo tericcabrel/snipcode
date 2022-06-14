@@ -24,6 +24,7 @@ jobs:
       ADMIN_PASSWORD: admin_password
       CONVERTKIT_API_KEY: api_key
       CONVERTKIT_FORM_ID: form_id
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Node 16
