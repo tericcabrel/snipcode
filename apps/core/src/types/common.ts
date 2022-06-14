@@ -20,7 +20,9 @@ export type AppEnvironmentVariables = Omit<
   IS_PROD: boolean;
   PORT: number;
   REQUEST_TIMEOUT: number;
+  SENTRY_ENABLED: boolean;
   SESSION_LIFETIME: number;
+  VALUE: string;
 };
 
 export type AppContext = {
