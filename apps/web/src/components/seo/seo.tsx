@@ -10,6 +10,7 @@ const GlobalSeo = () => {
   return (
     <DefaultSeo
       title={title}
+      titleTemplate="Sharingan - %s"
       description={description}
       canonical={baseUrl}
       additionalMetaTags={[
@@ -30,7 +31,7 @@ const GlobalSeo = () => {
           },
         ],
         locale: 'en-US',
-        site_name: 'Sharingan',
+        site_name: title,
         title,
         type: 'website',
         url: baseUrl,

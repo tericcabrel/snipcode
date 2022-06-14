@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 
 import FeatureSection from '@/components/home/feature-section';
 import HeroSection from '@/components/home/hero-section';
@@ -8,9 +8,7 @@ import PublicLayout from '@/components/layout/public/public-layout';
 const Home = () => {
   return (
     <PublicLayout>
-      <Head>
-        <title>Sharingan - Create and share your code snippets with the world</title>
-      </Head>
+      <NextSeo title="Create and share your code snippets with the world" nofollow noindex />
       <HeroSection />
       <FeatureSection />
       <NewsletterSection />

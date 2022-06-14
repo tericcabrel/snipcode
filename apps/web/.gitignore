@@ -38,3 +38,8 @@ yarn-error.log*
 *.tsbuildinfo
 
 src/graphql/server
+
+# sitemap
+robots.txt
+sitemap.xml
+sitemap-0.xml
