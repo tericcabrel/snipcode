@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { useAuth } from '@/hooks/authentication/use-auth';
 
-export const useSetAuthenticatedUser = () => {
+const useSetAuthenticatedUser = () => {
   const router = useRouter();
   const { saveToken } = useAuth();
 
@@ -17,3 +17,5 @@ export const useSetAuthenticatedUser = () => {
     void router.push('/board');
   }, [router.query]);
 };
+
+export default useSetAuthenticatedUser;
