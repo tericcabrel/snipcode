@@ -2,10 +2,16 @@ import path from 'path';
 
 import { fileLogger } from '@sharingan/logger';
 
+import { env } from './env';
+
 fileLogger.init({
   appName: 'core',
   logFileDirectory: path.resolve(__dirname, '../../logs'),
-  logToSentry: false,
+  sentry: {
+    dsn: env.SENTRY_DSN,
+    enabled: Boolean(env.SENTRY_DSN) && env.SENTRY_ENABLED,
+    environment: env.VALUE,
+  },
 });
 
 export { fileLogger as logger };

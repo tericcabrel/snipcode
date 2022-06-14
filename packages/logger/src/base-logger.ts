@@ -11,9 +11,9 @@ class BaseLogger {
   protected canLogToSentry = false;
 
   init(options: LoggerInitOptions): void {
-    this.canLogToSentry = Boolean(options.logToSentry) && Boolean(options.sentryDsn);
+    this.canLogToSentry = options.sentry.enabled;
 
-    this.initSentryIfNecessary();
+    this.initSentryIfNecessary(options.sentry.dsn, options.sentry.environment);
 
     this.logger = createLogger({
       format: combine(timestamp(), this.customFormat()),
@@ -34,15 +34,14 @@ class BaseLogger {
     this.logger.info(this.logMessage(output));
   }
 
-  private initSentryIfNecessary(sentryDsn?: string) {
+  private initSentryIfNecessary(sentryDsn?: string, environment?: string) {
     if (!this.canLogToSentry || !sentryDsn) {
       return;
     }
 
     Sentry.init({
       dsn: sentryDsn,
-      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-      // We recommend adjusting this value in production
+      environment,
       tracesSampleRate: 1.0,
     });
   }

@@ -9,6 +9,7 @@ export type EnvironmentVariables = {
   HOST: string;
   PORT: string;
   REQUEST_TIMEOUT: string;
+  SENTRY_DSN: string;
   SESSION_LIFETIME: string;
   WEB_APP_URL: string;
   WEB_AUTH_ERROR_URL: string;

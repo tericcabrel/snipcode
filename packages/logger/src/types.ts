@@ -4,8 +4,11 @@ export type EnhancedLogger = {
 };
 
 export type LoggerInitOptions = {
-  logToSentry?: boolean;
-  sentryDsn?: string;
+  sentry: {
+    dsn: string;
+    enabled: boolean;
+    environment: string;
+  };
   silent?: boolean;
 };
 
