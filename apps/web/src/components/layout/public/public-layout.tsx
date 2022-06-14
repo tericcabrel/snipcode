@@ -9,7 +9,7 @@ type Props = {
 
 const PublicLayout = ({ children }: Props) => {
   return (
-    <div className="overflow-x-hidden bg-gray-50">
+    <div className="overflow-x-hidden bg-gray-50 min-h-screen">
       <PublicHeader />
       {children}
       <PublicFooter />

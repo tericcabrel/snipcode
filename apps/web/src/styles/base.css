@@ -14,3 +14,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.auth-alert-container {
+  height: calc(100vh - (377px + 94px));
+}
