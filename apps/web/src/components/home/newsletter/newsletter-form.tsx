@@ -24,6 +24,7 @@ const NewsletterForm = () => {
       onCompleted: () => {
         setSubscriptionState('success');
         openAlert();
+        setEmail('');
       },
       onError: () => {
         setSubscriptionState('failure');
@@ -33,8 +34,6 @@ const NewsletterForm = () => {
         email,
       },
     });
-
-    setEmail('');
   };
 
   return (
