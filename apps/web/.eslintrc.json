@@ -58,6 +58,7 @@
     "__mocks__",
     "next.config.js",
     "tailwind.config.js",
-    "postcss.config.js"
+    "postcss.config.js",
+    "next-sitemap.js"
   ]
 }

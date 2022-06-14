@@ -7,7 +7,7 @@ import PublicLayout from '@/components/layout/public/public-layout';
 const AuthErrorPage: NextPage = () => {
   return (
     <PublicLayout>
-      <NextSeo title="Sharingan - Authentication failed" nofollow noindex />
+      <NextSeo title="Authentication failed" nofollow noindex />
       <AuthAlert
         ctaLabel="Go to home"
         descriptionElement={

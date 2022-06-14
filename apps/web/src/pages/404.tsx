@@ -6,7 +6,7 @@ const PageNotFound = dynamic(() => import('@/containers/page-not-found'));
 const NotFoundPage = () => {
   return (
     <>
-      <NextSeo title="Sharingan - Page not found" nofollow noindex />
+      <NextSeo title="Page not found" nofollow noindex />
       <PageNotFound />
     </>
   );

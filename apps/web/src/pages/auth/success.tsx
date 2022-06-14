@@ -10,7 +10,7 @@ const AuthSuccessPage: NextPage = () => {
 
   return (
     <PublicLayout>
-      <NextSeo title="Sharingan - Authentication succeed" nofollow noindex />
+      <NextSeo title="Authentication succeed" nofollow noindex />
       <AuthAlert
         ctaLabel="Go to Dashboard"
         descriptionElement={
