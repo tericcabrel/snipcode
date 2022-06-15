@@ -16,7 +16,11 @@ on:
         type: string
         required: true
         default: 'none'
-        options: [none, frontend, backend, all]
+        options:
+          - none
+          - frontend
+          - backend
+          - all
 
 jobs:
   deploy_frontend:
