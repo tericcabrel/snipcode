@@ -1,11 +1,7 @@
-name: Sharingan Deploy
+name: Sharingan Deploy Dev
 on:
   push:
-    branches: [ main ]
-    paths-ignore:
-      - '**/.md'
-  pull_request:
-    branches: [ main ]
+    branches: [ dev ]
     paths-ignore:
       - '**/.md'
 
@@ -27,16 +23,20 @@ jobs:
     if: ${{ github.event.inputs.should_deploy == 'frontend' || github.event.inputs.should_deploy == 'all'  }}
     name: deploy_frontend
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: development
+      url: https://staging.sharingan.dev
     steps:
       - name: Trigger the deployment
-        run: curl -X POST https://api.vercel.com/v1/integrations/deploy/prj_JteUo9hSVRPRAQlurvgW9SGl646S/8nPMwbBuZb
+        run: curl -X POST https://api.vercel.com/v1/integrations/deploy/prj_JteUo9hSVRPRAQlurvgW9SGl646S/WzizovSjPi
 
   deploy_backend:
     if: ${{ github.event.inputs.should_deploy == 'backend' || github.event.inputs.should_deploy == 'all'  }}
     name: deploy_backend
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: development
+      url: https://staging.api.sharingan.dev
     steps:
       - name: Trigger the deployment
         run: echo "Deploy the backend"

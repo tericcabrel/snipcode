@@ -35,7 +35,7 @@ const HeroSection = () => {
                   </linearGradient>
                 </defs>
               </svg>
-              <span className="relative"> TIOGO </span>
+              <span className="relative"> snippets </span>
             </span>
             all in one place
           </h1>
