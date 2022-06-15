@@ -1,0 +1,33 @@
+name: Sharingan Deploy
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**/.md'
+  workflow_dispatch:
+    inputs:
+      should_deploy:
+        description: 'Indicate which application to deploy'
+        type: string
+        required: true
+        default: 'none'
+        options: [none, frontend, backend, all]
+
+jobs:
+  deploy_frontend:
+    if: ${{ github.event.inputs.should_deploy == 'frontend' || github.event.inputs.should_deploy == 'all'  }}
+    name: deploy_frontend
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Trigger the deployment
+        run: curl -X POST https://api.vercel.com/v1/integrations/deploy/prj_JteUo9hSVRPRAQlurvgW9SGl646S/8nPMwbBuZb
+
+  deploy_backend:
+    if: ${{ github.event.inputs.should_deploy == 'backend' || github.event.inputs.should_deploy == 'all'  }}
+    name: deploy_backend
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Trigger the deployment
+        run: echo "Deploy the backend"

@@ -1,4 +1,4 @@
-name: Sharingan
+name: Sharingan Build
 on:
   push:
     branches: [ main ]
