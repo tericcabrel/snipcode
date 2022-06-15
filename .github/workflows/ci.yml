@@ -13,7 +13,6 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-latest
-    environment: dev
     env:
       NODE_ENV: test
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -25,7 +24,6 @@ jobs:
       ADMIN_PASSWORD: admin_password
       CONVERTKIT_API_KEY: api_key
       CONVERTKIT_FORM_ID: form_id
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Node 16
@@ -40,9 +38,7 @@ jobs:
         run: yarn lint
 
       - name: Build the projects
-        run: |
-          echo $SENTRY_AUTH_TOKEN
-          yarn build
+        run: yarn build
 
       - name: Start MySQL server
         run: sudo systemctl start mysql.service
