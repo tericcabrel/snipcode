@@ -1,0 +1,28 @@
+#!/bin/bash
+
+start=$(date +"%s")
+
+ssh -p ${SPORT} ${SUSER}@${SNAME} -i key.txt -t -t -o StrictHostKeyChecking=no << 'ENDSSH'
+cd sharingan
+
+docker pull tericcabrel/sharingan-core:latest
+
+API_CONTAINER_NAME=sharingan-core
+if [ "$(docker ps -qa -f name=$API_CONTAINER_NAME)" ]; then
+    if [ "$(docker ps -q -f name=$API_CONTAINER_NAME)" ]; then
+        echo "[API] Container is running -> stopping it..."
+        docker stop $API_CONTAINER_NAME;
+    fi
+    docker rm $API_CONTAINER_NAME;
+fi
+
+docker run -d -p 7501:7501  -v $(pwd)/logs:/app/logs --name sharingan-core --rm --env-file .env tericcabrel/sharingan-core:latest
+
+exit
+ENDSSH
+
+end=$(date +"%s")
+
+diff=$(($end - $start))
+
+echo "Deployed in : ${diff}s"
