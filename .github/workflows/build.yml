@@ -24,6 +24,7 @@ jobs:
       ADMIN_PASSWORD: admin_password
       CONVERTKIT_API_KEY: api_key
       CONVERTKIT_FORM_ID: form_id
+      COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Node 16
@@ -45,3 +46,18 @@ jobs:
 
       - name: Run tests
         run: yarn test
+
+      - name: show sha
+        run:  echo $COMMIT_SHA
+
+  trigger_deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    name: trigger_deploy
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Trigger deployment
+        run: |
+          echo $COMMIT_SHA
+#          curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/tericcabrel/sharingan/actions/workflows/deploy-core.yml/dispatches -d '{"ref": "main", "inputs": {"service": "'"$SERVICE"'"}}'
