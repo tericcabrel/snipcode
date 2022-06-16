@@ -1,7 +1,4 @@
-# Created by https://www.toptal.com/developers/gitignore/api/node
-# Edit at https://www.toptal.com/developers/gitignore?templates=node
-
-### Node ###
+### Node template
 # Logs
 logs
 *.log
@@ -45,8 +42,8 @@ build/Release
 node_modules/
 jspm_packages/
 
-# TypeScript v1 declaration files
-typings/
+# Snowpack dependency directory (https://snowpack.dev/)
+web_modules/
 
 # TypeScript cache
 *.tsbuildinfo
@@ -74,9 +71,7 @@ typings/
 
 # dotenv environment variables file
 .env
-../../packages/domain/.env.test
-.env*.local
-.env.docker
+.env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -84,6 +79,7 @@ typings/
 
 # Next.js build output
 .next
+out
 
 # Nuxt.js build / generate output
 .nuxt
@@ -113,7 +109,15 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# End of https://www.toptal.com/developers/gitignore/api/node
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
 
+.turbo
 .idea
-build
+.husky
+.github
+.git

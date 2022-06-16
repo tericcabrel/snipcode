@@ -42,6 +42,11 @@ yarn db:dev
 yarn db:shadow
 ```
 
+The shadow database run on Docker, so don't forget to stop it when you don't need it
+```shell
+yarn db:shadow:stop
+```
+
 ### Run the database migration, generate Prisma types and seed the database with default data
 ```shell
 yarn db:generate
