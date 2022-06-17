@@ -1,26 +1,21 @@
 import { Server } from 'http';
 
-import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
-import { loadSchemaSync } from '@graphql-tools/load';
-import { addResolversToSchema } from '@graphql-tools/schema';
+import { mergeSchemas } from '@graphql-tools/schema';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { ApolloServer } from 'apollo-server-express';
 import { Application } from 'express';
 
 import { env } from '../configs/env';
-import { resolvers } from '../resources/resolvers';
+import resolvers from '../resources/resolvers';
+import schemas from '../resources/schemas';
 import { AppContext } from '../types/common';
 import { CORS_APOLLO_STUDIO_URL } from '../utils/constants';
 import { buildGraphQLContext } from './config/build-context';
 
 export const startGraphqlServer = async (expressApplication: Application, httpServer: Server) => {
-  const schema = loadSchemaSync('**/*.graphql', {
-    loaders: [new GraphQLFileLoader()],
-  });
-
-  const schemaWithResolvers = addResolversToSchema({
+  const schemaWithResolvers = mergeSchemas({
     resolvers,
-    schema,
+    typeDefs: schemas,
   });
 
   const apolloServer = new ApolloServer({

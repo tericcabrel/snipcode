@@ -1,6 +1,6 @@
 import http from 'http';
 
-import { dbClient } from '@sharingan/database';
+// import { dbClient } from '@sharingan/database';
 import express from 'express';
 
 import { env } from './configs/env';
@@ -20,7 +20,7 @@ export const startServer = async () => {
 
   httpServer
     .listen(env.PORT, async () => {
-      await dbClient.$connect();
+      // await dbClient.$connect();
 
       await loadData();
 
@@ -35,10 +35,10 @@ void (async () => {
   await startServer();
 })();
 
-process.on('unhandledRejection', (e: any) => {
+/*process.on('unhandledRejection', (e: any) => {
   logger.error(e);
 });
 
 process.on('uncaughtException', (e) => {
   logger.error(e);
-});
+});*/

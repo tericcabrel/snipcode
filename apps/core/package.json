@@ -13,13 +13,11 @@
     "gql:gen:types": "yarn graphql-codegen"
   },
   "dependencies": {
-    "@graphql-tools/graphql-file-loader": "^7.3.15",
-    "@graphql-tools/load": "^7.5.5",
     "@graphql-tools/schema": "^8.3.5",
-    "@sharingan/database": "1.0.0",
-    "@sharingan/domain": "1.0.0",
-    "@sharingan/logger": "1.0.0",
-    "@sharingan/utils": "1.0.0",
+    "@sharingan/database": "*",
+    "@sharingan/domain": "*",
+    "@sharingan/logger": "*",
+    "@sharingan/utils": "*",
     "apollo-server-core": "^3.6.7",
     "apollo-server-express": "^3.6.7",
     "axios": "^0.26.1",
