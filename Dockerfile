@@ -34,6 +34,9 @@ COPY --chown=node:node --from=builder /sharingan/package.json /sharingan/yarn.lo
 
 RUN yarn install --production && chown node:node -R node_modules
 
+COPY --chown=node:node --from=builder /sharingan/node_modules/.prisma ./node_modules/.prisma/
+#exitCOPY --chown=node:node --from=builder /sharingan/node_modules/.prisma ./packages/database/node_modules/.prisma/
+
 EXPOSE 7501
 
 CMD ["node", "apps/core/src/index.js"]

@@ -11,7 +11,7 @@ import { loginUser } from './users/mutations/login-user';
 import { logoutUser } from './users/mutations/logout-user';
 import { authenticatedUser } from './users/queries/authenticated-user';
 
-export const resolvers: Resolvers = {
+const resolvers: Resolvers = {
   Date: dateScalar,
   Folder: {
     parent: (folder, _args, context) => {
@@ -55,3 +55,5 @@ export const resolvers: Resolvers = {
     },
   },
 };
+
+export default resolvers;
