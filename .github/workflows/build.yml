@@ -8,6 +8,12 @@ on:
     branches: [ main ]
     paths-ignore:
       - '**/.md'
+env:
+  COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -24,7 +30,6 @@ jobs:
       ADMIN_PASSWORD: admin_password
       CONVERTKIT_API_KEY: api_key
       CONVERTKIT_FORM_ID: form_id
-      COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Node 16
@@ -56,4 +61,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Trigger deployment
         run: |
-          curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/tericcabrel/sharingan/actions/workflows/deploy-core.yml/dispatches -d '{"ref": "main", "inputs": {"commit-sha": "'"$COMMIT_SHA"'"}}'
+          set -e
+
+          GITHUB_TOKEN=${{ github.token }}
+          SHA=${COMMIT_SHA:=latest}
+
+          echo $SHA
+
+          curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/tericcabrel/sharingan/actions/workflows/deploy-core.yml/dispatches -d '{"ref": "main", "inputs": {"commit-sha": "'"$SHA"'"}}'

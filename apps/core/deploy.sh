@@ -7,7 +7,7 @@ DOCKER_IMAGE_TAG=$IMAGE_TAG
 ssh -p ${SPORT} ${SUSER}@${SNAME} -i key.txt -t -t -o StrictHostKeyChecking=no << ENDSSH
 cd sharingan
 
-docker pull tericcabrel/sharingan-core:$DOCKER_IMAGE_TAG
+docker pull $DOCKER_IMAGE_TAG
 
 API_CONTAINER_NAME=sharingan-core
 if [ "$(docker ps -qa -f name=\$API_CONTAINER_NAME)" ]; then
@@ -18,7 +18,7 @@ if [ "$(docker ps -qa -f name=\$API_CONTAINER_NAME)" ]; then
     docker rm \$API_CONTAINER_NAME;
 fi
 
-docker run -d -p 7501:7501  -v $(pwd)/logs:/app/logs --name sharingan-core --rm --env-file .env tericcabrel/sharingan-core:$DOCKER_IMAGE_TAG
+docker run -d -p 7501:7501  -v $(pwd)/logs:/app/logs --name sharingan-core --rm --env-file .env $DOCKER_IMAGE_TAG
 
 exit
 ENDSSH
