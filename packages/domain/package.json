@@ -17,8 +17,8 @@
     "test:db:local": "TEST_WITH_DB=true IS_LOCAL=true jest"
   },
   "dependencies": {
-    "@sharingan/database": "*",
-    "@sharingan/utils": "*",
+    "@sharingan/database": "1.0.0",
+    "@sharingan/utils": "1.0.0",
     "axios": "^0.26.1",
     "bcrypt": "^5.0.1"
   },
