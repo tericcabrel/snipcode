@@ -1,29 +1,27 @@
-import { getEnv } from '@sharingan/utils';
 import axios, { AxiosInstance } from 'axios';
 
 import { handleRequestError } from '../utils/axios-error';
-import { SubscribeData, SubscribeInput } from './types';
+import { NewsletterOption, SubscribeData, SubscribeInput } from './types';
 
 export default class NewsletterService {
   private httpClient: AxiosInstance = axios.create();
-  private readonly apiKey: string;
-  private readonly formId: string;
+  private readonly options: NewsletterOption;
 
-  constructor() {
-    this.apiKey = getEnv('CONVERTKIT_API_KEY');
-    this.formId = getEnv('CONVERTKIT_FORM_ID');
+  constructor(options: NewsletterOption) {
+    this.options = options;
 
     this.initClient();
   }
 
-  async subscribe(email: string) {
+  async subscribe(email: string, tags: string[]) {
     const inputBody: SubscribeInput = {
-      api_key: this.apiKey,
+      api_key: this.options.apiKey,
       email,
+      tags,
     };
 
     await this.httpClient
-      .post<SubscribeData>(`forms/${this.formId}/subscribe`, inputBody)
+      .post<SubscribeData>(`forms/${this.options.formId}/subscribe`, inputBody)
       .catch(handleRequestError('NEWSLETTER_SUBSCRIBE_FAILED'));
   }
 
