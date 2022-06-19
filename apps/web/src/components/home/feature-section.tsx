@@ -7,7 +7,7 @@ import ShareIcon from '@/components/icons/share';
 
 const features = [
   {
-    description: 'Organize your similar code snippets into folder the same way you manage your file on the computer.',
+    description: 'Organize related code snippets into folders the same way you manage your file on the computer.',
     icon: <CollectionIcon />,
     id: 'organize-snippets',
     title: 'Organize your snippets',
@@ -25,13 +25,13 @@ const features = [
     title: 'Import from GitHub Gist',
   },
   {
-    description: 'Share your code snippets with others developers. Give them ability to interact and improve.',
+    description: 'Share your code snippets with other developers. Give them the ability to interact and improve.',
     icon: <ShareIcon />,
     id: 'share-snippets',
     title: 'Share your snippets',
   },
   {
-    description: 'For content creators, you can embed your snippet on a blog post or a post on social network.',
+    description: 'For content creators, you can embed your snippet on a blog post or a post on social networks.',
     icon: <EmbedIcon />,
     id: 'embed-snippets',
     title: 'Embed your snippets',
@@ -52,8 +52,8 @@ const FeatureSection = () => {
           What features to expect
         </h2>
         <p className="mx-auto mt-4 text-lg font-medium text-gray-400 lg:max-w-3xl lg:text-xl lg:text-center xs:text-center">
-          We want to offer the best experience for managing your code snippets, discover the some features that will
-          bring your experience into a new level.
+          We want to offer the best experience for managing your code snippets and discover some features that will
+          bring your experience to a new level.
         </p>
         <div className="grid grid-cols-1 mt-12 gap-x-6 gap-y-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-12">
           {features.map((feature) => (
