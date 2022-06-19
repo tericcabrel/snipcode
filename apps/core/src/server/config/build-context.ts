@@ -1,6 +1,6 @@
 import {
+  NewsletterService,
   folderService,
-  newsletterService,
   roleService,
   sessionService,
   snippetService,
@@ -8,6 +8,7 @@ import {
 } from '@sharingan/domain';
 import { Request, Response } from 'express';
 
+import { env } from '../../configs/env';
 import { AppContext } from '../../types/common';
 
 const getUserFromToken = async (req: Request): Promise<string | undefined> => {
@@ -23,6 +24,11 @@ const getUserFromToken = async (req: Request): Promise<string | undefined> => {
 
 export const buildGraphQLContext = async (req: Request, res: Response): Promise<AppContext> => {
   const userId = await getUserFromToken(req);
+
+  const newsletterService = new NewsletterService({
+    apiKey: env.CONVERTKIT_API_KEY,
+    formId: env.CONVERTKIT_FORM_ID,
+  });
 
   return {
     db: {

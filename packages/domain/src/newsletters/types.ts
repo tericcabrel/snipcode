@@ -1,6 +1,12 @@
+export type NewsletterOption = {
+  apiKey: string;
+  formId: string;
+};
+
 export type SubscribeInput = {
   api_key: string;
   email: string;
+  tags: string[];
 };
 
 export type SubscribeData = {

@@ -22,14 +22,12 @@ import UserService from './src/users/user.service';
 
 const roleService = new RoleService(new RoleRepository());
 const userService = new UserService(new UserRepository());
-const newsletterService = new NewsletterService();
 const folderService = new FolderService(new FolderRepository());
 const snippetService = new SnippetService(new SnippetRepository());
 const sessionService = new SessionService(new SessionRepository());
 
 export {
   folderService,
-  newsletterService,
   roleService,
   sessionService,
   snippetService,
@@ -41,5 +39,6 @@ export {
   CreateFolderDto,
   CreateSnippetDto,
   CreateUserRootFolderDto,
+  NewsletterService,
 };
-export type { NewsletterService, RoleService, UserService, FolderService, SessionService, SnippetService };
+export type { RoleService, UserService, FolderService, SessionService, SnippetService };
