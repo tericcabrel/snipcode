@@ -5,9 +5,9 @@ const NewsletterSection = () => {
     <section className="py-12 bg-gray-50 sm:py-16 lg:py-20" id="early-access">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-gray-900">Join our early access program ⚡</h2>
+          <h2 className="text-4xl font-bold text-gray-900">Join the early access program ⚡</h2>
           <p className="max-w-md mx-auto mt-5 text-base font-normal text-gray-600 font-pj">
-            Join the newsletter to get notified when the application will be live and also further updates.
+            Join the newsletter to get notified when the application will be live and further updates.
           </p>
         </div>
 

@@ -1,22 +1,25 @@
-# Sharingan Core
+# Sharingan Web
 
-This is the frontend of Sharingan. It holds the website landing page, the web application and the blog pages
+This project is about the front end of Sharingan. It holds the website landing page, the web application, and the blog pages.
+
+[![Website](https://sharingan.dev/assets/og.png)](https://sharingan.dev)
 
 ## Tech Stack
 * Next.js
 * Tailwind CSS
+* Typescript
 
 ## Prerequisites
 Make sure you have this tools installed before running the project
-* Node.js 14+
+* Node.js 16+
 * NPM or Yarn
 
 ## Packages dependencies
-We use Yarn workspace to create packages we can share with others applications.
-These packages are located in the folder `packages` so, you can find yourself needing to change
-code inside one or many packages to implement a feature. Here are the packages used in the core backend application:
+We use Yarn workspace to create packages we can share with other applications.
+These packages are located in the folder `packages`, so you might need to change the code of one or many packages to implement a feature.
+Here are the packages used in the front-end application:
 
-* common
+* [@sharingan/utils](../../packages/utils)
 
 ## Set up the project
 Delete the existing folders output from build commands
@@ -34,18 +37,20 @@ cp .env.template .env.local
 # Edit configuration to match your local environment and save
 nano .env.local
 ```
-| Variable | Description                                                         |
-|----------|---------------------------------------------------------------------|
-| APP_ENV  | Environment where the application is running (default: development) |                     |
+| Variable                     | Description                                                         |
+|------------------------------|---------------------------------------------------------------------|
+| NEXT_PUBLIC_APP_ENV          | Environment where the application is running (default: development) |
+| NEXT_PUBLIC_GITHUB_CLIENT_ID | GitHub application client ID for authentication with GitHub         |
+| NEXT_PUBLIC_SERVER_URL       | URL of the [backend](../core) application                           |
+| NEXT_PUBLIC_APP_URL          | URL of this application (default: http://localhost:7500)            |
+| NEXT_PUBLIC_SENTRY_DSN       | Sentry DSN                                                          |
 
 
-Start Application
+Start the application
 ```bash
 yarn dev
 ```
-The application will be launched by [Nodemon](https://nodemon.com).
-
-Open [http://localhost:7501](http://localhost:7501) with your browser to see the result.
+Open [http://localhost:7500](http://localhost:7500) in your browser to see the page.
 
 ## Running tests
 Run the command below to run all the tests
