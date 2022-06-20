@@ -9,6 +9,5 @@ export const getAuthenticatedUser = (context: AppContext): string => {
   if (!userId) {
     throw new AppError(errors.NOT_AUTHENTICATED, 'NOT_AUTHENTICATED');
   }
-
   return userId;
 };
