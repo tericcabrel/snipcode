@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 import { AppEnvironmentVariables } from '../types/common';
 
-dotenv.config();
+dotenv.config({ override: true });
 
 export const env: AppEnvironmentVariables = {
   ADMIN_PASSWORD: getEnv('ADMIN_PASSWORD'),
