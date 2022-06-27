@@ -28,7 +28,7 @@ const PageNotFound = () => {
       </main>
       <footer className="flex-shrink-0 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex justify-center space-x-4">
-          <Link href="mailto:contact@sharingan.dev">
+          <Link href="mailto:support@sharingan.dev">
             <a className="text-sm font-medium text-gray-500 hover:text-gray-600">Support</a>
           </Link>
           <span className="inline-block border-l border-gray-300" aria-hidden="true" />
@@ -42,7 +42,7 @@ const PageNotFound = () => {
             </a>
           </Link>
           <span className="inline-block border-l border-gray-300" aria-hidden="true" />
-          <Link href="https://twitter.com/sharinganapp">
+          <Link href="https://twitter.com/sharingandev">
             <a
               className="text-sm font-medium text-gray-500 hover:text-gray-600"
               target="_blank"
