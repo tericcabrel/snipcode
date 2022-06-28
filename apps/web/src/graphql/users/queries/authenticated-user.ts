@@ -1,4 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
+
 import { AuthenticatedUserQuery, AuthenticatedUserQueryVariables } from '@/graphql/generated';
 
 const queryDocument = gql`

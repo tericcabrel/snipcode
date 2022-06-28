@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/authentication/use-auth';
 
 const useSetAuthenticatedUser = () => {
   const router = useRouter();
-  const { saveToken } = useAuth();
+  const { redirectToDashboard, saveToken } = useAuth();
 
   useEffect(() => {
     const { token } = router.query;
@@ -14,7 +14,7 @@ const useSetAuthenticatedUser = () => {
       saveToken(token as string);
     }
 
-    void router.push('/board');
+    void redirectToDashboard();
   }, [router.query]);
 };
 
