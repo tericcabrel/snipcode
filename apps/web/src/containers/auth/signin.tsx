@@ -1,11 +1,34 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
+import { FormProvider, useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
+import Button from '@/components/common/form/button';
+import TextInput from '@/components/common/form/text-input';
 import GithubIcon from '@/components/icons/github';
 import GoogleIcon from '@/components/icons/google';
 import PublicLayout from '@/components/layout/public/public-layout';
+import { FORM_ERRORS } from '@/utils/constants';
+
+const MIN_PASSWORD_LENGTH = 8;
+const formSchema = yup.object().shape({
+  email: yup.string().required(FORM_ERRORS.fieldRequired).email(FORM_ERRORS.emailInvalid),
+  password: yup.string().required(FORM_ERRORS.fieldRequired).min(8, FORM_ERRORS.minCharacters(MIN_PASSWORD_LENGTH)),
+});
+
+type FormValues = yup.InferType<typeof formSchema>;
 
 const Signin = () => {
+  const formMethods = useForm<FormValues>({
+    defaultValues: {},
+    resolver: yupResolver(formSchema),
+  });
+
+  const handleLogin = async (values: FormValues) => {
+    console.log(values);
+  };
+
   return (
     <PublicLayout>
       <NextSeo title="Sign in" />
@@ -27,67 +50,40 @@ const Signin = () => {
                 <div className="text-center">
                   <h1 className="text-3xl font-bold text-gray-900 font-pj">Sign in for Sharingan</h1>
 
-                  <button className="flex items-center justify-center w-full px-8 py-2 mt-6 text-base font-bold text-gray-900 transition-all duration-200 bg-gray-100 border border-transparent rounded-xl hover:bg-gray-200">
+                  <Button color="white-gray">
                     <GithubIcon />
                     <span className="ml-4">Sign in with GitHub</span>
-                  </button>
+                  </Button>
 
-                  <button className="flex items-center justify-center w-full px-8 py-2 mt-6 text-base font-bold text-gray-900 transition-all duration-200 bg-gray-100 border border-transparent rounded-xl hover:bg-gray-200">
+                  <Button color="white-gray">
                     <GoogleIcon />
                     <span className="ml-4">Sign in with Google</span>
-                  </button>
+                  </Button>
 
                   <p className="mt-8 text-sm font-normal text-center text-gray-600">or sign in with email</p>
                 </div>
 
-                <form action="#" method="POST" className="mt-8">
-                  <div>
-                    <div className="mb-4">
-                      <label htmlFor="email" className="text-base font-medium text-gray-900">
-                        Email
-                      </label>
-                      <div className="mt-2.5">
-                        <input
-                          type="email"
-                          name="email"
-                          id="email"
-                          placeholder="teco@email.com"
-                          className="block w-full px-4 py-2 text-gray-900 placeholder-gray-600 bg-white border border-gray-400 rounded-lg caret-gray-900"
-                        />
-                      </div>
-                    </div>
+                <FormProvider {...formMethods}>
+                  <form onSubmit={formMethods.handleSubmit(handleLogin)} className="mt-8">
+                    <TextInput label="Email" type="email" name="email" placeholder="teco@email.com" />
 
-                    <div className="mb-4">
-                      <label htmlFor="password" className="text-base font-medium text-gray-900 font-pj">
-                        Password
-                      </label>
-                      <div className="mt-2.5">
-                        <input
-                          type="password"
-                          name="password"
-                          id="password"
-                          placeholder="Password (min. 8 characters)"
-                          className="block w-full px-4 py-2 text-gray-900 placeholder-gray-600 bg-white border border-gray-400 rounded-lg caret-gray-900"
-                        />
-                      </div>
-                    </div>
+                    <TextInput
+                      label="Password"
+                      type="password"
+                      name="password"
+                      placeholder={`Password (min. ${MIN_PASSWORD_LENGTH} characters)`}
+                    />
 
-                    <button
-                      type="submit"
-                      className="flex items-center justify-center w-full px-8 mt-10 py-3 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600"
-                    >
+                    <Button className="mt-10 py-3" type="submit">
                       Sign in
-                    </button>
-                  </div>
-                </form>
+                    </Button>
+                  </form>
+                </FormProvider>
 
-                <p className="mt-5 text-base font-normal text-center text-gray-900 font-pj">
+                <p className="mt-5 text-base font-normal text-center text-gray-900">
                   Don&apos;t have an account?{' '}
                   <Link href="/sign-up">
-                    <a
-                      title="Sign in"
-                      className="font-bold rounded hover:underline focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
-                    >
+                    <a title="Sign in" className="font-bold rounded hover:underline">
                       Create an account now
                     </a>
                   </Link>
