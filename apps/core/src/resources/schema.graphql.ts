@@ -67,4 +67,11 @@ export default gql`
     folder: Folder!
     user: User!
   }
+
+  type Query {
+    ping: String
+      @deprecated(
+        reason: "https://stackoverflow.com/questions/59868942/graphql-a-schema-must-have-a-query-operation-defined"
+      )
+  }
 `;

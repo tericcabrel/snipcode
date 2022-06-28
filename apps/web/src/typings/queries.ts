@@ -9,3 +9,8 @@ export type AuthenticatedUser = {
   role: RoleName;
   username: string | null;
 };
+
+export type LoginInput = {
+  email: string;
+  password: string;
+};

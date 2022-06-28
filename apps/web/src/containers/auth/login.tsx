@@ -1,25 +1,36 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
+import Alert from '@/components/common/alert';
 import Button from '@/components/common/form/button';
 import TextInput from '@/components/common/form/text-input';
 import GithubIcon from '@/components/icons/github';
 import GoogleIcon from '@/components/icons/google';
 import PublicLayout from '@/components/layout/public/public-layout';
+import { useAuth } from '@/hooks/authentication/use-auth';
+import useLoginUser from '@/services/users/login-user';
 import { FORM_ERRORS } from '@/utils/constants';
 
-const MIN_PASSWORD_LENGTH = 8;
+const MIN_PASSWORD_LENGTH = 6; // TODO remove min password length after the sign up
 const formSchema = yup.object().shape({
   email: yup.string().required(FORM_ERRORS.fieldRequired).email(FORM_ERRORS.emailInvalid),
-  password: yup.string().required(FORM_ERRORS.fieldRequired).min(8, FORM_ERRORS.minCharacters(MIN_PASSWORD_LENGTH)),
+  password: yup
+    .string()
+    .required(FORM_ERRORS.fieldRequired)
+    .min(MIN_PASSWORD_LENGTH, FORM_ERRORS.minCharacters(MIN_PASSWORD_LENGTH)),
 });
 
 type FormValues = yup.InferType<typeof formSchema>;
 
-const Signin = () => {
+const Login = () => {
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const { redirectToDashboard, saveToken } = useAuth();
+  const { authenticateUser, isLoading } = useLoginUser();
+
   const formMethods = useForm<FormValues>({
     defaultValues: {},
     resolver: yupResolver(formSchema),
@@ -27,6 +38,21 @@ const Signin = () => {
 
   const handleLogin = async (values: FormValues) => {
     console.log(values);
+
+    await authenticateUser({
+      input: {
+        email: values.email,
+        password: values.password,
+      },
+      onError: (errorMessage) => {
+        setLoginError(errorMessage);
+      },
+      onSuccess: async (token) => {
+        saveToken(token);
+
+        await redirectToDashboard();
+      },
+    });
   };
 
   return (
@@ -65,6 +91,8 @@ const Signin = () => {
 
                 <FormProvider {...formMethods}>
                   <form onSubmit={formMethods.handleSubmit(handleLogin)} className="mt-8">
+                    {loginError && <Alert message={loginError} type="error" />}
+
                     <TextInput label="Email" type="email" name="email" placeholder="teco@email.com" />
 
                     <TextInput
@@ -74,7 +102,7 @@ const Signin = () => {
                       placeholder={`Password (min. ${MIN_PASSWORD_LENGTH} characters)`}
                     />
 
-                    <Button className="mt-10 py-3" type="submit">
+                    <Button className="mt-10 py-3" type="submit" isLoading={isLoading}>
                       Sign in
                     </Button>
                   </form>
@@ -97,4 +125,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default Login;
