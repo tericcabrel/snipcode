@@ -15,13 +15,9 @@ import { useAuth } from '@/hooks/authentication/use-auth';
 import useLoginUser from '@/services/users/login-user';
 import { FORM_ERRORS } from '@/utils/constants';
 
-const MIN_PASSWORD_LENGTH = 6; // TODO remove min password length after the sign up
 const formSchema = yup.object().shape({
   email: yup.string().required(FORM_ERRORS.fieldRequired).email(FORM_ERRORS.emailInvalid),
-  password: yup
-    .string()
-    .required(FORM_ERRORS.fieldRequired)
-    .min(MIN_PASSWORD_LENGTH, FORM_ERRORS.minCharacters(MIN_PASSWORD_LENGTH)),
+  password: yup.string().required(FORM_ERRORS.fieldRequired),
 });
 
 type FormValues = yup.InferType<typeof formSchema>;
@@ -37,8 +33,6 @@ const Login = () => {
   });
 
   const handleLogin = async (values: FormValues) => {
-    console.log(values);
-
     await authenticateUser({
       input: {
         email: values.email,
@@ -95,12 +89,7 @@ const Login = () => {
 
                     <TextInput label="Email" type="email" name="email" placeholder="teco@email.com" />
 
-                    <TextInput
-                      label="Password"
-                      type="password"
-                      name="password"
-                      placeholder={`Password (min. ${MIN_PASSWORD_LENGTH} characters)`}
-                    />
+                    <TextInput label="Password" type="password" name="password" />
 
                     <Button className="mt-10 py-3" type="submit" isLoading={isLoading}>
                       Sign in

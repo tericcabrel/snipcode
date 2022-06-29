@@ -1,12 +1,38 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
+import { FormProvider, useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 import Button from '@/components/common/form/button';
+import TextInput from '@/components/common/form/text-input';
 import GithubIcon from '@/components/icons/github';
 import GoogleIcon from '@/components/icons/google';
 import PublicLayout from '@/components/layout/public/public-layout';
+import { FORM_ERRORS } from '@/utils/constants';
+
+const MIN_PASSWORD_LENGTH = 8;
+const formSchema = yup.object().shape({
+  confirmPassword: yup.string().oneOf([yup.ref('password'), null], FORM_ERRORS.passwordNotMatch),
+  email: yup.string().required(FORM_ERRORS.fieldRequired).email(FORM_ERRORS.emailInvalid),
+  password: yup
+    .string()
+    .required(FORM_ERRORS.fieldRequired)
+    .min(MIN_PASSWORD_LENGTH, FORM_ERRORS.minCharacters(MIN_PASSWORD_LENGTH)),
+});
+
+type FormValues = yup.InferType<typeof formSchema>;
 
 const Signup = () => {
+  const formMethods = useForm<FormValues>({
+    defaultValues: {},
+    resolver: yupResolver(formSchema),
+  });
+
+  const handleSignup = async (values: FormValues) => {
+    console.log(values);
+  };
+
   return (
     <PublicLayout>
       <NextSeo title="Sign up" />
@@ -42,54 +68,29 @@ const Signup = () => {
                   <p className="mt-8 text-sm font-normal text-center text-gray-600">or sign up with email</p>
                 </div>
 
-                <form action="#" method="POST" className="mt-8">
-                  <div className="mb-4">
-                    <label htmlFor="email" className="text-base font-medium text-gray-900">
-                      Email
-                    </label>
-                    <div className="mt-2.5">
-                      <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="teco@email.com"
-                        className="block w-full px-4 py-2 text-gray-900 placeholder-gray-600 bg-white border border-gray-400 rounded-lg caret-gray-900"
-                      />
-                    </div>
-                  </div>
+                <FormProvider {...formMethods}>
+                  <form onSubmit={formMethods.handleSubmit(handleSignup)} className="mt-8">
+                    <TextInput label="Email" type="email" name="email" placeholder="teco@email.com" />
 
-                  <div className="mb-4">
-                    <label htmlFor="password" className="text-base font-medium text-gray-900 font-pj">
-                      Password
-                    </label>
-                    <div className="mt-2.5">
-                      <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Password (min. 8 characters)"
-                        className="block w-full px-4 py-2 text-gray-900 placeholder-gray-600 bg-white border border-gray-400 rounded-lg caret-gray-900"
-                      />
-                    </div>
-                  </div>
+                    <TextInput
+                      label="Password"
+                      type="password"
+                      name="password"
+                      placeholder={`Password (min. ${MIN_PASSWORD_LENGTH} characters)`}
+                    />
 
-                  <div className="mb-4">
-                    <label htmlFor="confirm-password" className="text-base font-medium text-gray-900 font-pj">
-                      Confirm password
-                    </label>
-                    <div className="mt-2.5">
-                      <input
-                        type="password"
-                        name="confirm-password"
-                        id="confirm-password"
-                        placeholder="Password (min. 8 characters)"
-                        className="block w-full px-4 py-2 text-gray-900 placeholder-gray-600 bg-white border border-gray-400 rounded-lg caret-gray-900"
-                      />
-                    </div>
-                  </div>
+                    <TextInput
+                      label="Confirm password"
+                      type="password"
+                      name="confirmPassword"
+                      placeholder={`Password (min. ${MIN_PASSWORD_LENGTH} characters)`}
+                    />
 
-                  <Button className="mt-10 py-3">Sign up</Button>
-                </form>
+                    <Button className="mt-10 py-3" type="submit">
+                      Sign up
+                    </Button>
+                  </form>
+                </FormProvider>
 
                 <p className="mt-5 text-base font-normal text-center text-gray-900 font-pj">
                   Already have an account?{' '}
