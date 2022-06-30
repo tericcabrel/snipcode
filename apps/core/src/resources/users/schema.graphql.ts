@@ -5,6 +5,16 @@ export default gql`
     token: String!
   }
 
+  input SignupUserInput {
+    email: String!
+    name: String!
+    password: String!
+  }
+
+  type SignupUserResult {
+    message: String!
+  }
+
   type Query {
     authenticatedUser: User
   }
@@ -12,5 +22,6 @@ export default gql`
   type Mutation {
     loginUser(email: String!, password: String!): LoginResult!
     logoutUser: Boolean!
+    signupUser(input: SignupUserInput!): SignupUserResult!
   }
 `;
