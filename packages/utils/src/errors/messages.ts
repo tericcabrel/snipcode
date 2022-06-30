@@ -11,3 +11,5 @@ export const ROLE_USER_NOT_FOUND = 'Role user not found';
 export const USER_ROOT_FOLDER_NOT_FOUND = (userId: string) => `The root folder of the user "${userId}" not found`;
 export const LOGIN_FAILED_EMAIL = 'Invalid email address';
 export const LOGIN_FAILED_PASSWORD = 'Invalid password';
+export const EMAIL_ALREADY_TAKEN = 'The email address is already taken';
+export const USERNAME_ALREADY_TAKEN = 'The username is already taken';

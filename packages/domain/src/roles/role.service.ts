@@ -1,4 +1,5 @@
 import { Role, RoleName, RoleRepositoryInterface } from '@sharingan/database';
+import SharinganError, { errors } from '@sharingan/utils';
 
 import CreateRoleDto from './dtos/create-role-dto';
 
@@ -26,8 +27,14 @@ export default class RoleService {
     await Promise.all(promises);
   }
 
-  async findByName(name: RoleName): Promise<Role | null> {
-    return this.roleRepository.findByName(name);
+  async findByName(name: RoleName): Promise<Role> {
+    const role = await this.roleRepository.findByName(name);
+
+    if (!role) {
+      throw new SharinganError(errors.ROLE_USER_NOT_FOUND, 'ROLE_USER_NOT_FOUND');
+    }
+
+    return role;
   }
 
   async findById(id: string): Promise<Role | null> {

@@ -9,6 +9,7 @@ import { mySnippets } from './snippets/queries/mySnippets';
 import { dateScalar } from './types/date';
 import { loginUser } from './users/mutations/login-user';
 import { logoutUser } from './users/mutations/logout-user';
+import { signupUser } from './users/mutations/signup-user';
 import { authenticatedUser } from './users/queries/authenticated-user';
 
 const resolvers: Resolvers = {
@@ -30,6 +31,7 @@ const resolvers: Resolvers = {
     deleteFolders,
     loginUser,
     logoutUser,
+    signupUser,
     subscribeToNewsletter,
   },
   Query: {

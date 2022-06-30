@@ -1,6 +1,7 @@
 import { Role, User, UserRepositoryInterface } from '@sharingan/database';
 import SharinganError, { errors } from '@sharingan/utils';
 import bcrypt from 'bcrypt';
+import { generateFromEmail } from 'unique-username-generator';
 
 import CreateUserDto from './dtos/create-user-dto';
 import UpdateUserDto from './dtos/update-user-dto';
@@ -9,6 +10,16 @@ export default class UserService {
   constructor(private _userRepository: UserRepositoryInterface) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
+    const user = await this._userRepository.findByEmail(createUserDto.email);
+
+    if (user) {
+      throw new SharinganError(errors.EMAIL_ALREADY_TAKEN, 'EMAIL_ALREADY_TAKEN');
+    }
+
+    const username = await this.generateUsername(createUserDto.email, createUserDto.username);
+
+    createUserDto.setUsername(username);
+
     return this._userRepository.create(createUserDto.toUser());
   }
 
@@ -61,5 +72,19 @@ export default class UserService {
     }
 
     return user;
+  }
+
+  private async generateUsername(email: string, username: string | null): Promise<string> {
+    if (!username) {
+      return generateFromEmail(email, 3);
+    }
+
+    const user = await this._userRepository.findByUsername(username);
+
+    if (!user) {
+      return username;
+    }
+
+    return generateFromEmail(email, 3);
   }
 }

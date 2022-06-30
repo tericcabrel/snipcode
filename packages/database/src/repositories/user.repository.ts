@@ -54,4 +54,12 @@ export default class UserRepository implements UserRepositoryInterface {
       where: { id },
     });
   }
+
+  findByUsername(username: string): Promise<User | null> {
+    return prisma.user.findFirst({
+      where: {
+        username,
+      },
+    });
+  }
 }

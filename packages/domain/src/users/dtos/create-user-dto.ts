@@ -28,8 +28,16 @@ export default class CreateUserDto {
     return this._input.email;
   }
 
+  get username(): string | null {
+    return this._input.username;
+  }
+
   set isEnabled(value: boolean) {
     this.enabled = value;
+  }
+
+  setUsername(value: string) {
+    this._input.username = value;
   }
 
   toUser(): User {
