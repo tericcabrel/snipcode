@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -32,16 +33,18 @@ const formSchema = yup.object().shape({
 type FormValues = yup.InferType<typeof formSchema>;
 
 const Signup = () => {
+  const router = useRouter();
   const [signupError, setSignupError] = useState<string | null>(null);
   const { isLoading, signupUser } = useSignupUser();
 
   const formMethods = useForm<FormValues>({
-    defaultValues: {},
     resolver: yupResolver(formSchema),
   });
 
   const handleSignup = async (values: FormValues) => {
     console.log(values);
+
+    setSignupError(null);
 
     await signupUser({
       input: {
@@ -52,8 +55,8 @@ const Signup = () => {
       onError: (errorMessage) => {
         setSignupError(errorMessage);
       },
-      onSuccess: async (message) => {
-        // redirect
+      onSuccess: async () => {
+        await router.push('/auth/signup-success');
       },
     });
   };
