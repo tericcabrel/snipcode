@@ -1,9 +1,13 @@
-import SharinganError, { errors } from '@sharingan/utils';
+import { errors } from '@sharingan/utils';
 
 import AppError from './app-error';
 
+const isSharinganError = (error: any) => {
+  return 'message' in error && 'code' in error;
+};
+
 export const throwApplicationError = (error: any) => {
-  if (error instanceof SharinganError) {
+  if (isSharinganError(error)) {
     throw new AppError(error.message, error.code);
   }
 

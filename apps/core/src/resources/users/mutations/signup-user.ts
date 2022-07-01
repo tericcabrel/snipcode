@@ -1,4 +1,4 @@
-import { CreateUserDto } from '@sharingan/domain';
+import { CreateUserDto, CreateUserRootFolderDto } from '@sharingan/domain';
 
 import { logger } from '../../../configs/logger';
 import { MutationResolvers } from '../../../types/graphql';
@@ -23,7 +23,9 @@ export const signupUser: MutationResolvers['signupUser'] = async (_parent, args,
 
     const user = await context.db.user.create(createUserDto);
 
-    await context.db.folder.findUserRootFolder(user.id);
+    const createUserRootFolderDto = new CreateUserRootFolderDto(user.id);
+
+    await context.db.folder.createUserRootFolder(createUserRootFolderDto);
 
     // TODO published user created event
 
