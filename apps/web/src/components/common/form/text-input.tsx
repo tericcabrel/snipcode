@@ -28,7 +28,7 @@ const TextInput = (props: TextInputProps) => {
       <label htmlFor={inputProps.name} className="text-base font-medium text-gray-900">
         {inputLabel}
       </label>
-      <div className="mt-2.5">
+      <div className="mt-1">
         <input
           autoComplete="off"
           id={inputProps.name}

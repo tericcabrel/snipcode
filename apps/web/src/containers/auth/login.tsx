@@ -68,17 +68,19 @@ const Login = () => {
             <div className="relative overflow-hidden bg-white rounded-2xl lg:rounded-3xl">
               <div className="px-8 py-8">
                 <div className="text-center">
-                  <h1 className="text-3xl font-bold text-gray-900 font-pj">Sign in for Sharingan</h1>
+                  <h1 className="text-2xl font-bold text-gray-900">Sign in for Sharingan</h1>
 
-                  <Button color="white-gray">
-                    <GithubIcon />
-                    <span className="ml-4">Sign in with GitHub</span>
-                  </Button>
+                  <div className="flex justify-between">
+                    <Button color="white-gray" className="w-[45%]">
+                      <GithubIcon />
+                      <span className="ml-4">GitHub</span>
+                    </Button>
 
-                  <Button color="white-gray">
-                    <GoogleIcon />
-                    <span className="ml-4">Sign in with Google</span>
-                  </Button>
+                    <Button color="white-gray" className="w-[45%]">
+                      <GoogleIcon />
+                      <span className="ml-4">Google</span>
+                    </Button>
+                  </div>
 
                   <p className="mt-8 text-sm font-normal text-center text-gray-600">or sign in with email</p>
                 </div>
@@ -99,7 +101,7 @@ const Login = () => {
 
                 <p className="mt-5 text-base font-normal text-center text-gray-900">
                   Don&apos;t have an account?{' '}
-                  <Link href="/sign-up">
+                  <Link href="/signup">
                     <a title="Sign in" className="font-bold rounded hover:underline">
                       Create an account now
                     </a>
