@@ -52,6 +52,7 @@ export type Mutation = {
   deleteFolders: Scalars['Boolean'];
   loginUser: LoginResult;
   logoutUser: Scalars['Boolean'];
+  signupUser: SignupUserResult;
   subscribeToNewsletter: Result;
 };
 
@@ -72,6 +73,10 @@ export type MutationLoginUserArgs = {
   password: Scalars['String'];
 };
 
+export type MutationSignupUserArgs = {
+  input: SignupUserInput;
+};
+
 export type MutationSubscribeToNewsletterArgs = {
   email: Scalars['String'];
 };
@@ -89,6 +94,8 @@ export type Query = {
   authenticatedUser?: Maybe<User>;
   listFolders: Array<Folder>;
   mySnippets: Array<Snippet>;
+  /** @deprecated https://stackoverflow.com/questions/59868942/graphql-a-schema-must-have-a-query-operation-defined */
+  ping?: Maybe<Scalars['String']>;
 };
 
 export type QueryListFoldersArgs = {
@@ -116,6 +123,17 @@ export const RoleName = {
 } as const;
 
 export type RoleName = typeof RoleName[keyof typeof RoleName];
+export type SignupUserInput = {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type SignupUserResult = {
+  __typename?: 'SignupUserResult';
+  message: Scalars['String'];
+};
+
 export type Snippet = {
   __typename?: 'Snippet';
   content: Scalars['String'];
@@ -162,9 +180,25 @@ export type SubscribeNewsletterMutation = {
   subscribeToNewsletter: { __typename?: 'Result'; message: string };
 };
 
+export type LoginUserMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+export type LoginUserMutation = { __typename?: 'Mutation'; loginUser: { __typename: 'LoginResult'; token: string } };
+
 export type LogoutUserMutationVariables = Exact<{ [key: string]: never }>;
 
 export type LogoutUserMutation = { __typename?: 'Mutation'; logoutUser: boolean };
+
+export type SignupUserMutationVariables = Exact<{
+  input: SignupUserInput;
+}>;
+
+export type SignupUserMutation = {
+  __typename?: 'Mutation';
+  signupUser: { __typename?: 'SignupUserResult'; message: string };
+};
 
 export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -181,10 +215,3 @@ export type AuthenticatedUserQuery = {
     username?: string | null;
   } | null;
 };
-
-export type LoginUserMutationVariables = Exact<{
-  email: Scalars['String'];
-  password: Scalars['String'];
-}>;
-
-export type LoginUserMutation = { __typename?: 'Mutation'; loginUser: { __typename: 'LoginResult'; token: string } };

@@ -14,3 +14,9 @@ export type LoginInput = {
   email: string;
   password: string;
 };
+
+export type SignupUserInput = {
+  email: string;
+  name: string;
+  password: string;
+};
