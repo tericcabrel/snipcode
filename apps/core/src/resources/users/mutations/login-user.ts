@@ -1,8 +1,7 @@
 import { logger } from '../../../configs/logger';
 import { MutationResolvers } from '../../../types/graphql';
 import { createUserSession } from '../../../utils/auth/session';
-import { LOGIN_FAILED_MESSAGE } from '../../../utils/constants';
-import AppError from '../../../utils/errors/app-error';
+import { throwApplicationError } from '../../../utils/errors/throw-error';
 
 export const loginUser: MutationResolvers['loginUser'] = async (_parent, args, context) => {
   try {
@@ -15,6 +14,6 @@ export const loginUser: MutationResolvers['loginUser'] = async (_parent, args, c
   } catch (err) {
     logger.error(err);
 
-    throw new AppError(LOGIN_FAILED_MESSAGE, 'LOGIN_FAILED');
+    return throwApplicationError(err);
   }
 };

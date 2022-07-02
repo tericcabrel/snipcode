@@ -67,13 +67,13 @@ export default class UserService {
     const user = await this.findByEmail(email);
 
     if (!user) {
-      throw new SharinganError(errors.LOGIN_FAILED_EMAIL, 'LOGIN_FAILED');
+      throw new SharinganError(errors.LOGIN_FAILED, 'LOGIN_FAILED');
     }
 
     const isPasswordValid = user.password ? bcrypt.compareSync(password, user.password) : false;
 
     if (!isPasswordValid) {
-      throw new SharinganError(errors.LOGIN_FAILED_PASSWORD, 'LOGIN_FAILED');
+      throw new SharinganError(errors.LOGIN_FAILED, 'LOGIN_FAILED');
     }
 
     if (!user.isEnabled) {
