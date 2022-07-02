@@ -121,7 +121,7 @@ describe('Test User service', () => {
     // WHEN
     // THEN
     await expect(() => userService.login(userEmail, userPassword)).rejects.toThrow(
-      new SharinganError(errors.LOGIN_FAILED_EMAIL, 'LOGIN_FAILED'),
+      new SharinganError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
     );
   });
 
@@ -134,8 +134,10 @@ describe('Test User service', () => {
     // WHEN
     // THEN
     await expect(() => userService.login(user.email, userBadPassword)).rejects.toThrow(
-      new SharinganError(errors.LOGIN_FAILED_PASSWORD, 'LOGIN_FAILED'),
+      new SharinganError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
     );
+
+    await deleteTestUsersById([user.id]);
   });
 
   it('should fail to authenticate the user because the user is disabled', async () => {
@@ -148,6 +150,8 @@ describe('Test User service', () => {
     await expect(() => userService.login(user.email, userPassword)).rejects.toThrow(
       new SharinganError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED'),
     );
+
+    await deleteTestUsersById([user.id]);
   });
 
   it('should successfully authenticate the user', async () => {

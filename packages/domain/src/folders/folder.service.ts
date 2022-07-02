@@ -1,4 +1,4 @@
-import { Folder, FolderRepositoryInterface } from '@sharingan/database';
+import { Folder, dbClient } from '@sharingan/database';
 import SharinganError, { errors } from '@sharingan/utils';
 
 import CreateFolderDto from './dtos/create-folder-dto';
@@ -6,10 +6,17 @@ import CreateUserRootFolderDto from './dtos/create-user-root-folder-dto';
 import { isFoldersBelongToUser, isFoldersContainRoot } from './utils/folders';
 
 export default class FolderService {
-  constructor(private folderRepository: FolderRepositoryInterface) {}
-
   async createUserRootFolder(dto: CreateUserRootFolderDto): Promise<Folder> {
-    return this.folderRepository.create(dto.toFolder());
+    const input = dto.toFolder();
+
+    return dbClient.folder.create({
+      data: {
+        id: input.id,
+        name: input.name,
+        parentId: input.parentId,
+        userId: input.userId,
+      },
+    });
   }
 
   async create(createFolderDto: CreateFolderDto): Promise<Folder> {
@@ -23,15 +30,24 @@ export default class FolderService {
       throw new SharinganError(errors.FOLDER_ALREADY_EXIST(createFolderDto.name), 'FOLDER_ALREADY_EXIST');
     }
 
-    return this.folderRepository.create(createFolderDto.toFolder());
+    const input = createFolderDto.toFolder();
+
+    return dbClient.folder.create({
+      data: {
+        id: input.id,
+        name: input.name,
+        parentId: input.parentId,
+        userId: input.userId,
+      },
+    });
   }
 
   async findUserFolders(userId: string): Promise<Folder[]> {
-    return this.folderRepository.findByUser(userId);
+    return dbClient.folder.findMany({ orderBy: { name: 'asc' }, where: { userId } });
   }
 
   async findById(id: string): Promise<Folder | null> {
-    return this.folderRepository.findById(id);
+    return dbClient.folder.findUnique({ where: { id } });
   }
 
   async findUserRootFolder(userId: string): Promise<Folder> {
@@ -48,16 +64,23 @@ export default class FolderService {
 
   async findSubFolders(userId: string, folderId?: string | null): Promise<Folder[]> {
     if (folderId) {
-      return this.folderRepository.findSubFolders(folderId, userId);
+      return this.findFolderSubFolders(folderId, userId);
     }
 
     const rootFolder = await this.findUserRootFolder(userId);
 
-    return this.folderRepository.findSubFolders(rootFolder.id, userId);
+    return this.findFolderSubFolders(rootFolder.id, userId);
   }
 
   async deleteMany(folderIds: string[], userId: string): Promise<void> {
-    const foldersToDelete = await this.folderRepository.findFolders(folderIds, userId);
+    const foldersToDelete = await dbClient.folder.findMany({
+      where: {
+        id: {
+          in: folderIds,
+        },
+        userId,
+      },
+    });
 
     if (!isFoldersBelongToUser(foldersToDelete, userId)) {
       throw new SharinganError(errors.FOLDERS_DONT_BELONG_TO_USER, 'FOLDERS_DONT_BELONG_TO_USER');
@@ -69,7 +92,24 @@ export default class FolderService {
 
     // TODO Delete snippets
 
-    return this.folderRepository.bulkDelete(foldersToDelete.map((folder) => folder.id));
+    const ids = foldersToDelete.map((folder) => folder.id);
+
+    await dbClient.folder.deleteMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+  }
+
+  private findFolderSubFolders(folderId: string, userId: string): Promise<Folder[]> {
+    return dbClient.folder.findMany({
+      where: {
+        parentId: folderId,
+        userId,
+      },
+    });
   }
 
   private async isFolderExistInParentFolder(args: {

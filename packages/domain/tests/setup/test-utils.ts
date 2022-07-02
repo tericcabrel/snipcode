@@ -1,18 +1,14 @@
 import { randEmail, randFullName, randImg, randNumber, randTimeZone, randUserName, randWord } from '@ngneat/falso';
 import {
   Folder,
-  FolderRepository,
   OauthProvider,
   Role,
   RoleName,
-  RoleRepository,
   Session,
-  SessionRepository,
   Snippet,
-  SnippetRepository,
   SnippetVisibility,
   User,
-  UserRepository,
+  dbClient,
   dbId,
 } from '@sharingan/database';
 
@@ -22,12 +18,6 @@ import CreateUserRootFolderDto from '../../src/folders/dtos/create-user-root-fol
 import CreateSessionDto from '../../src/sessions/dtos/create-session-dto';
 import CreateSnippetDto from '../../src/snippets/dtos/create-snippet-dto';
 import UpdateUserDto from '../../src/users/dtos/update-user-dto';
-
-const userRepository = new UserRepository();
-const roleRepository = new RoleRepository();
-const folderRepository = new FolderRepository();
-const snippetRepository = new SnippetRepository();
-const sessionRepository = new SessionRepository();
 
 type CreateManyTestFoldersArgs = {
   folderNames: string[];
@@ -50,7 +40,7 @@ type CreateTestUserArgs = {
 };
 
 export const findTestRole = async (name: RoleName): Promise<Role> => {
-  const role = await roleRepository.findByName(name);
+  const role = await dbClient.role.findUnique({ where: { name } });
 
   if (!role) {
     throw new Error(`Role with the name "${name}" not found!`);
@@ -91,28 +81,28 @@ export const createTestUser = async ({
 
   const createUserDto = createTestUserDto({ isEnabled, oauthProvider, password, roleId: role.id });
 
-  return userRepository.create(createUserDto.toUser());
+  return dbClient.user.create({ data: createUserDto.toUser() });
 };
 
 export const deleteTestUsersById = async (userIds: Array<string | undefined>): Promise<void[]> => {
-  const promises = userIds.map((userId) => {
+  const promises = userIds.map(async (userId) => {
     if (!userId) {
       return;
     }
 
-    return userRepository.delete(userId);
+    await dbClient.user.delete({ where: { id: userId } });
   });
 
   return Promise.all(promises);
 };
 
 export const deleteTestFoldersById = async (folderIds: Array<string | undefined>): Promise<void[]> => {
-  const promises = folderIds.map((folderId) => {
+  const promises = folderIds.map(async (folderId) => {
     if (!folderId) {
       return;
     }
 
-    return folderRepository.delete(folderId);
+    await dbClient.folder.delete({ where: { id: folderId } });
   });
 
   return Promise.all(promises);
@@ -120,7 +110,7 @@ export const deleteTestFoldersById = async (folderIds: Array<string | undefined>
 
 export const createUserWithRootFolder = async (): Promise<[User, Folder]> => {
   const user = await createTestUser({});
-  const rootFolder = await folderRepository.create(new CreateUserRootFolderDto(user.id).toFolder());
+  const rootFolder = await dbClient.folder.create({ data: new CreateUserRootFolderDto(user.id).toFolder() });
 
   return [user, rootFolder];
 };
@@ -137,7 +127,7 @@ export const createManyTestFolders = async ({
       userId,
     });
 
-    return folderRepository.create(createFolderDto.toFolder());
+    return dbClient.folder.create({ data: createFolderDto.toFolder() });
   });
 
   return Promise.all(promises);
@@ -173,12 +163,12 @@ export const createTestSnippetDto = (
 };
 
 export const deleteTestSnippetsById = async (snippetIds: Array<string | undefined>): Promise<void[]> => {
-  const promises = snippetIds.map((snippetId) => {
+  const promises = snippetIds.map(async (snippetId) => {
     if (!snippetId) {
       return;
     }
 
-    return snippetRepository.delete(snippetId);
+    await dbClient.snippet.delete({ where: { id: snippetId } });
   });
 
   return Promise.all(promises);
@@ -189,7 +179,7 @@ export const createTestSnippet = async (
 ): Promise<Snippet> => {
   const createSnippetDto = createTestSnippetDto(args);
 
-  return snippetRepository.create(createSnippetDto.toSnippet());
+  return dbClient.snippet.create({ data: createSnippetDto.toSnippet() });
 };
 
 export const updateTestUserDto = (roleId: string): UpdateUserDto => {
@@ -215,9 +205,9 @@ export const createTestSessionDto = (userId: string): CreateSessionDto => {
 export const createTestSession = async (args: { userId: string }): Promise<Session> => {
   const createSessionDto = createTestSessionDto(args.userId);
 
-  return sessionRepository.create(createSessionDto.toSession());
+  return dbClient.session.create({ data: createSessionDto.toSession() });
 };
 
 export const deleteTestUserSessions = async (userId: string): Promise<void> => {
-  return sessionRepository.deleteUserSessions(userId);
+  await dbClient.session.deleteMany({ where: { userId } });
 };
