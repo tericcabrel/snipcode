@@ -1,13 +1,14 @@
-import { Role, User, UserRepositoryInterface } from '@sharingan/database';
+import { FolderRepositoryInterface, Role, User, UserRepositoryInterface } from '@sharingan/database';
 import SharinganError, { errors } from '@sharingan/utils';
 import bcrypt from 'bcrypt';
 import { generateFromEmail } from 'unique-username-generator';
 
+import CreateUserRootFolderDto from '../folders/dtos/create-user-root-folder-dto';
 import CreateUserDto from './dtos/create-user-dto';
 import UpdateUserDto from './dtos/update-user-dto';
 
 export default class UserService {
-  constructor(private _userRepository: UserRepositoryInterface) {}
+  constructor(private _userRepository: UserRepositoryInterface, private _folderRepository: FolderRepositoryInterface) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const user = await this._userRepository.findByEmail(createUserDto.email);
@@ -47,7 +48,11 @@ export default class UserService {
       return;
     }
 
-    await this._userRepository.create(userAdminDto.toUser());
+    const user = await this._userRepository.create(userAdminDto.toUser());
+
+    const createUserRootFolderDto = new CreateUserRootFolderDto(user.id);
+
+    await this._folderRepository.create(createUserRootFolderDto.toFolder());
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -69,6 +74,10 @@ export default class UserService {
 
     if (!isPasswordValid) {
       throw new SharinganError(errors.LOGIN_FAILED_PASSWORD, 'LOGIN_FAILED');
+    }
+
+    if (!user.isEnabled) {
+      throw new SharinganError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED');
     }
 
     return user;
