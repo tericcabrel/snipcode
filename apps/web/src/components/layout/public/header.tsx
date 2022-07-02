@@ -1,7 +1,6 @@
+import { Icon } from '@sharingan/ui';
 import Link from 'next/link';
 import { useState } from 'react';
-
-import LogoIcon from '@/components/icons/logo';
 
 const PublicHeader = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -12,7 +11,7 @@ const PublicHeader = () => {
         <div className="flex items-center justify-between">
           <div className="flex-shrink-0">
             <a href="/" className="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2">
-              <LogoIcon />
+              <Icon.Logo />
             </a>
           </div>
 

@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Alert, Button, Icon, TextInput } from '@sharingan/ui';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -6,11 +7,6 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import Alert from '@/components/common/alert';
-import Button from '@/components/common/form/button';
-import TextInput from '@/components/common/form/text-input';
-import GithubIcon from '@/components/icons/github';
-import GoogleIcon from '@/components/icons/google';
 import PublicLayout from '@/components/layout/public/public-layout';
 import useSignupUser from '@/services/users/signup-user';
 import { FORM_ERRORS } from '@/utils/constants';
@@ -85,12 +81,12 @@ const Signup = () => {
 
                   <div className="flex justify-between">
                     <Button color="white-gray" className="w-[47%]">
-                      <GithubIcon />
+                      <Icon.Github />
                       <span className="ml-4">GitHub</span>
                     </Button>
 
                     <Button color="white-gray" className="w-[47%]">
-                      <GoogleIcon />
+                      <Icon.Google />
                       <span className="ml-4">Google</span>
                     </Button>
                   </div>

@@ -1,9 +1,10 @@
 const { withSentryConfig } = require('@sentry/nextjs');
+const withTM = require('next-transpile-modules')(['@sharingan/ui'])
 
 /** @type {import('next').NextConfig} */
-const nextConfigOptions = {
+const nextConfigOptions = withTM({
   reactStrictMode: true
-}
+});
 
 const sentryWebpackPluginOptions = {
   dryRun: true,

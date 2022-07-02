@@ -19,6 +19,7 @@
     "packages/database",
     "packages/domain",
     "packages/logger",
+    "packages/ui",
     "packages/utils",
     "apps/core",
     "apps/web",
@@ -28,6 +29,10 @@
     "apps/**/*.{ts,tsx}": [
       "prettier --write",
       "eslint --fix --cache --debug"
+    ],
+    "packages/**/*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
     ]
   },
   "husky": {
