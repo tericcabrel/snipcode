@@ -138,10 +138,26 @@ describe('Test User service', () => {
     );
   });
 
-  it.only('should successfully authenticate the user', async () => {
+  it('should fail to authenticate the user because the user is disabled', async () => {
     // GIVEN
     const userPassword = 'strongPassword';
     const user = await createTestUser({ oauthProvider: 'email', password: userPassword });
+
+    // WHEN
+    // THEN
+    await expect(() => userService.login(user.email, userPassword)).rejects.toThrow(
+      new SharinganError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED'),
+    );
+  });
+
+  it('should successfully authenticate the user', async () => {
+    // GIVEN
+    const userPassword = 'strongPassword';
+    const user = await createTestUser({
+      isEnabled: true,
+      oauthProvider: 'email',
+      password: userPassword,
+    });
 
     // WHEN
     const authenticatedUser = await userService.login(user.email, userPassword);

@@ -36,12 +36,14 @@ type CreateManyTestFoldersArgs = {
 };
 
 type CreateTestUserDtoArgs = {
+  isEnabled?: boolean;
   oauthProvider?: OauthProvider;
   password?: string | null;
   roleId: string;
 };
 
 type CreateTestUserArgs = {
+  isEnabled?: boolean;
   oauthProvider?: OauthProvider;
   password?: string | null;
   roleName?: RoleName;
@@ -57,8 +59,13 @@ export const findTestRole = async (name: RoleName): Promise<Role> => {
   return role;
 };
 
-export const createTestUserDto = ({ oauthProvider, password, roleId }: CreateTestUserDtoArgs): CreateUserDto => {
-  return new CreateUserDto({
+export const createTestUserDto = ({
+  isEnabled,
+  oauthProvider,
+  password,
+  roleId,
+}: CreateTestUserDtoArgs): CreateUserDto => {
+  const dto = new CreateUserDto({
     email: randEmail(),
     name: randFullName(),
     oauthProvider: oauthProvider ?? 'github',
@@ -68,16 +75,21 @@ export const createTestUserDto = ({ oauthProvider, password, roleId }: CreateTes
     timezone: randTimeZone(),
     username: randUserName(),
   });
+
+  dto.isEnabled = Boolean(isEnabled);
+
+  return dto;
 };
 
 export const createTestUser = async ({
+  isEnabled,
   oauthProvider,
   password,
   roleName = 'user',
 }: CreateTestUserArgs): Promise<User> => {
   const role = await findTestRole(roleName);
 
-  const createUserDto = createTestUserDto({ oauthProvider, password, roleId: role.id });
+  const createUserDto = createTestUserDto({ isEnabled, oauthProvider, password, roleId: role.id });
 
   return userRepository.create(createUserDto.toUser());
 };
