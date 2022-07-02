@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { authenticateWithGitHub } from './handlers/github';
 
-const authenticationRoute = () => {
+const authenticationRoute = (): Router => {
   const router = Router();
 
   router.get('/auth/github/callback', authenticateWithGitHub);
