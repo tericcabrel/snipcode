@@ -71,7 +71,7 @@ model Folder {
   isFavorite Boolean   @default(false) @map("is_favorite") @db.TinyInt
   createdAt  DateTime  @default(now()) @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
-  user       User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   parent     Folder?   @relation(name: "parent_folder", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   subFolders Folder[]  @relation("parent_folder")
   snippets   Snippet[]
@@ -97,7 +97,7 @@ model Snippet {
   createdAt   DateTime          @default(now()) @map("created_at")
   updatedAt   DateTime          @updatedAt @map("updated_at")
   user        User              @relation(fields: [userId], references: [id], onDelete: Restrict)
-  folder      Folder            @relation(fields: [folderId], references: [id], onDelete: Restrict)
+  folder      Folder            @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
   @@index([name])
   @@index([userId])
