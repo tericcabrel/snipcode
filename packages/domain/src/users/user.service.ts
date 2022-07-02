@@ -1,6 +1,6 @@
 import { Role, User, dbClient } from '@sharingan/database';
 import SharinganError, { errors } from '@sharingan/utils';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { generateFromEmail } from 'unique-username-generator';
 
 import CreateUserRootFolderDto from '../folders/dtos/create-user-root-folder-dto';

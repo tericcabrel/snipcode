@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export const hashPassword = (password: string): string => {
   const SALT_ROUNDS = 10;
