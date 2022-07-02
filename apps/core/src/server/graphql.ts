@@ -1,7 +1,11 @@
 import { Server } from 'http';
 
 import { mergeSchemas } from '@graphql-tools/schema';
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import {
+  ApolloServerPluginDrainHttpServer,
+  ApolloServerPluginLandingPageLocalDefault,
+  PluginDefinition,
+} from 'apollo-server-core';
 import { ApolloServer } from 'apollo-server-express';
 import { Application } from 'express';
 
@@ -11,6 +15,10 @@ import schemas from '../resources/schemas';
 import { AppContext } from '../types/common';
 import { CORS_APOLLO_STUDIO_URL } from '../utils/constants';
 import { buildGraphQLContext } from './config/build-context';
+
+const explorerPlugin: PluginDefinition[] = env.IS_PROD
+  ? []
+  : [ApolloServerPluginLandingPageLocalDefault({ embed: true })];
 
 export const startGraphqlServer = async (expressApplication: Application, httpServer: Server) => {
   const schemaWithResolvers = mergeSchemas({
@@ -24,6 +32,7 @@ export const startGraphqlServer = async (expressApplication: Application, httpSe
     introspection: env.ENABLE_INTROSPECTION,
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }), // graceful shutdown
+      ...explorerPlugin,
     ],
     schema: schemaWithResolvers,
   });

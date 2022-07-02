@@ -45,3 +45,4 @@ dist/**
 .next/**
 eslintcache
 key.txt
+.eslintcache
