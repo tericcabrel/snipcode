@@ -121,3 +121,4 @@ dist
 .husky
 .github
 .git
+build

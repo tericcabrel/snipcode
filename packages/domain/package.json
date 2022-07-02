@@ -20,12 +20,12 @@
     "@sharingan/database": "1.0.0",
     "@sharingan/utils": "1.0.0",
     "axios": "^0.26.1",
-    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "unique-username-generator": "^1.1.1"
   },
   "devDependencies": {
     "@ngneat/falso": "^5.6.0",
-    "@types/bcrypt": "^5.0.0",
+    "@types/bcryptjs": "^2.4.2",
     "@types/jest": "^27.4.1",
     "add": "^2.0.6",
     "jest": "^27.5.1",
