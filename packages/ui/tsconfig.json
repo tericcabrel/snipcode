@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "display": "Sharingan UI",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "noEmit": true,
+    "target": "es5",
+    "allowJs": true,
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "lib": ["es2021", "dom", "dom.iterable"],
+    "module": "esnext",
+    "preserveWatchOutput": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["../../node_modules/@types"]
+  },
+  "include": ["./src/**/*", "index.tsx"],
+  "exclude": ["dist", "build", "node_modules"]
+}

@@ -1,44 +1,39 @@
-import CollectionIcon from '@/components/icons/collection';
-import DocumentSearchIcon from '@/components/icons/document-search';
-import EmbedIcon from '@/components/icons/embed';
-import ExtensionIcon from '@/components/icons/extension';
-import ImportIcon from '@/components/icons/import';
-import ShareIcon from '@/components/icons/share';
+import { Icon } from '@sharingan/ui';
 
 const features = [
   {
     description: 'Organize related code snippets into folders the same way you manage your file on the computer.',
-    icon: <CollectionIcon />,
+    icon: <Icon.Collection />,
     id: 'organize-snippets',
     title: 'Organize your snippets',
   },
   {
     description: 'Quickly find a code snippet in your whole directory and access it.',
-    icon: <DocumentSearchIcon />,
+    icon: <Icon.DocumentSearch />,
     id: 'find-snippets',
     title: 'Find your snippets',
   },
   {
     description: 'You can easily import all your code snippets from GitHub Gist to keep them all in one place.',
-    icon: <ImportIcon />,
+    icon: <Icon.Import />,
     id: 'import-snippets',
     title: 'Import from GitHub Gist',
   },
   {
     description: 'Share your code snippets with other developers. Give them the ability to interact and improve.',
-    icon: <ShareIcon />,
+    icon: <Icon.Share />,
     id: 'share-snippets',
     title: 'Share your snippets',
   },
   {
     description: 'For content creators, you can embed your snippet on a blog post or a post on social networks.',
-    icon: <EmbedIcon />,
+    icon: <Icon.Embed />,
     id: 'embed-snippets',
     title: 'Embed your snippets',
   },
   {
     description: 'Easily capture and save code snippets while you are browsing on the web.',
-    icon: <ExtensionIcon />,
+    icon: <Icon.Extension />,
     id: 'browser-extensions',
     title: 'Browser extensions',
   },

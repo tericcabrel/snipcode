@@ -1,9 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
+import { Icon } from '@sharingan/ui';
 import classNames from 'classnames';
 import React, { Fragment, useState } from 'react';
-
-import CheckIcon from '@/components/icons/check';
-import CrossIcon from '@/components/icons/cross';
 
 type Props = {
   handleClose: () => void;
@@ -19,7 +17,7 @@ type Content = {
 const alertContentMap: Record<Props['state'], Content> = {
   failure: {
     description: <span>An error occurred while performing the subscription</span>,
-    icon: <CrossIcon />,
+    icon: <Icon.Cross />,
     title: 'Subscription failure',
   },
   success: {
@@ -30,7 +28,7 @@ const alertContentMap: Record<Props['state'], Content> = {
         You will receive updates on the application progress.
       </span>
     ),
-    icon: <CheckIcon />,
+    icon: <Icon.Check />,
     title: 'Subscription successful',
   },
 };

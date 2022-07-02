@@ -1,7 +1,7 @@
+import { Icon } from '@sharingan/ui';
 import { useState } from 'react';
 
 import NewsletterAlert from '@/components/home/newsletter/newsletter-alert';
-import SpinnerIcon from '@/components/icons/spinner';
 import useSubscribeToNewsletter from '@/graphql/newsletters/mutations/subscribe-newsletter';
 import useBooleanState from '@/hooks/use-boolean-state';
 import { REGEX_EMAIL } from '@/utils/constants';
@@ -55,7 +55,7 @@ const NewsletterForm = () => {
           onClick={handleSubscribe}
           className="inline-flex items-center justify-center w-full px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent sm:w-auto sm:py-3 hover:bg-opacity-90 rounded-xl"
         >
-          {loading && <SpinnerIcon />}
+          {loading && <Icon.Spinner />}
           Get updates
         </button>
       </div>

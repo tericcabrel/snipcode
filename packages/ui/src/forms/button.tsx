@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { ButtonHTMLAttributes, DetailedHTMLProps, PropsWithChildren, forwardRef } from 'react';
 
-import SpinnerIcon from '@/components/icons/spinner';
-import { ColorVariants } from '@/typings/common';
+import SpinnerIcon from '../icons/spinner';
+import { ColorVariants } from '../typings/components';
 
 const colors: Record<ColorVariants, string> = {
   primary: 'text-white bg-gray-900 hover:bg-gray-600',

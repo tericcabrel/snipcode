@@ -1,23 +1,20 @@
-import GithubIcon from '@/components/icons/github';
-import LogoIcon from '@/components/icons/logo';
-import ProductHuntIcon from '@/components/icons/product-hunt';
-import TwitterIcon from '@/components/icons/twitter';
+import { Icon } from '@sharingan/ui';
 
 const socialIcons = [
   {
-    icon: <GithubIcon />,
+    icon: <Icon.Github />,
     link: 'https://github.com/tericcabrel/sharingan',
     name: 'GitHub',
     target: '_blank',
   },
   {
-    icon: <TwitterIcon />,
+    icon: <Icon.Twitter />,
     link: 'https://twitter.com/sharinganapp',
     name: 'Twitter',
     target: '_blank',
   },
   {
-    icon: <ProductHuntIcon />,
+    icon: <Icon.ProductHunt />,
     link: '#',
     name: 'Product Hunt',
     target: '_self',
@@ -45,7 +42,7 @@ const PublicFooter = () => {
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="lg:flex lg:items-center lg:justify-between mt-14 lg:mt-24">
           <div className="xs:flex xs:justify-center">
-            <LogoIcon />
+            <Icon.Logo />
           </div>
 
           <ul className="flex items-center justify-center mt-8 space-x-3 sm:mt-12 lg:justify-end lg:mt-0">
@@ -55,7 +52,7 @@ const PublicFooter = () => {
                   href={socialIcon.link}
                   target={socialIcon.target}
                   title={socialIcon.name}
-                  className="inline-flex items-center justify-center w-10 h-10 text-gray-900 transition-all duration-200 rounded-full hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-gray-200"
+                  className="inline-flex items-center justify-center w-6 h-6 text-gray-900 transition-all duration-200 rounded-full hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-gray-200"
                   rel="noopener noreferrer"
                 >
                   {socialIcon.icon}
