@@ -21,7 +21,7 @@ import UpdateUserDto from './src/users/dtos/update-user-dto';
 import UserService from './src/users/user.service';
 
 const roleService = new RoleService(new RoleRepository());
-const userService = new UserService(new UserRepository());
+const userService = new UserService(new UserRepository(), new FolderRepository());
 const folderService = new FolderService(new FolderRepository());
 const snippetService = new SnippetService(new SnippetRepository());
 const sessionService = new SessionService(new SessionRepository());

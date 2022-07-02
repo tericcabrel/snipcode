@@ -13,3 +13,4 @@ export const LOGIN_FAILED_EMAIL = 'Invalid email address';
 export const LOGIN_FAILED_PASSWORD = 'Invalid password';
 export const EMAIL_ALREADY_TAKEN = 'The email address is already taken';
 export const USERNAME_ALREADY_TAKEN = 'The username is already taken';
+export const ACCOUNT_DISABLED = 'Your account is disabled!';
