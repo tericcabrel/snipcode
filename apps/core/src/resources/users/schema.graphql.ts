@@ -15,11 +15,11 @@ export default gql`
     message: String!
   }
 
-  type Query {
+  extend type Query {
     authenticatedUser: User
   }
 
-  type Mutation {
+  extend type Mutation {
     loginUser(email: String!, password: String!): LoginResult!
     logoutUser: Boolean!
     signupUser(input: SignupUserInput!): SignupUserResult!

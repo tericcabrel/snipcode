@@ -1,10 +1,6 @@
 import { gql } from 'apollo-server-core';
 
 export default gql`
-  type Result {
-    message: String!
-  }
-
   input CreateFolderInput {
     parentId: String!
     name: String!
@@ -15,7 +11,7 @@ export default gql`
     deleteFolders(folderIds: [String!]!): Boolean!
   }
 
-  type Query {
+  extend type Query {
     listFolders(folderId: String): [Folder!]!
   }
 `;
