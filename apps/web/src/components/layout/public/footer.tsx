@@ -52,7 +52,7 @@ const PublicFooter = () => {
                   href={socialIcon.link}
                   target={socialIcon.target}
                   title={socialIcon.name}
-                  className="inline-flex items-center justify-center w-6 h-6 text-gray-900 transition-all duration-200 rounded-full hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-gray-200"
+                  className="inline-flex items-center justify-center text-gray-900 transition-all duration-200 rounded-full hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-gray-200"
                   rel="noopener noreferrer"
                 >
                   {socialIcon.icon}
