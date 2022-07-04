@@ -46,3 +46,5 @@ sitemap-0.xml
 
 # Sentry
 .sentryclirc
+
+.swc
