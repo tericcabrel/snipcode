@@ -37,8 +37,10 @@ const resolvers: Resolvers = {
   Query: {
     allSnippets,
     authenticatedUser,
+    hello: () => 'Hello from Sharingan',
     listFolders,
     mySnippets,
+    ping: () => 'pong',
   },
   Snippet: {
     folder: (snippet, _args, context) => {
