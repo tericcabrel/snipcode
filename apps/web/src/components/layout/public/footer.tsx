@@ -9,7 +9,7 @@ const socialIcons = [
   },
   {
     icon: <Icon.Twitter />,
-    link: 'https://twitter.com/sharinganapp',
+    link: 'https://twitter.com/sharingan_dev',
     name: 'Twitter',
     target: '_blank',
   },
@@ -45,7 +45,7 @@ const PublicFooter = () => {
             <Icon.Logo />
           </div>
 
-          <ul className="flex items-center justify-center mt-8 space-x-3 sm:mt-12 lg:justify-end lg:mt-0">
+          <ul className="flex items-center justify-center mt-8 space-x-5 sm:mt-12 lg:justify-end lg:mt-0">
             {socialIcons.map((socialIcon) => (
               <li key={socialIcon.name}>
                 <a

@@ -5,7 +5,11 @@ export default gql`
     message: String!
   }
 
-  type Mutation {
+  extend type Mutation {
     subscribeToNewsletter(email: String!): Result!
+  }
+
+  extend type Query {
+    hello: String! @deprecated
   }
 `;

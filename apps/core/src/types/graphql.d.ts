@@ -102,6 +102,8 @@ export type Query = {
   __typename?: 'Query';
   allSnippets: Array<Snippet>;
   authenticatedUser?: Maybe<User>;
+  /** @deprecated Field no longer supported */
+  hello: Scalars['String'];
   listFolders: Array<Folder>;
   mySnippets: Array<Snippet>;
   /** @deprecated https://stackoverflow.com/questions/59868942/graphql-a-schema-must-have-a-query-operation-defined */
@@ -365,6 +367,7 @@ export type QueryResolvers<
 > = {
   allSnippets?: Resolver<Array<ResolversTypes['Snippet']>, ParentType, ContextType>;
   authenticatedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   listFolders?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType, Partial<QueryListFoldersArgs>>;
   mySnippets?: Resolver<Array<ResolversTypes['Snippet']>, ParentType, ContextType>;
   ping?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

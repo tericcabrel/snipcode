@@ -10,11 +10,11 @@ export default gql`
     description: String
   }
 
-  type Mutation {
+  extend type Mutation {
     createSnippet(input: CreateSnippetInput!): Snippet!
   }
 
-  type Query {
+  extend type Query {
     allSnippets: [Snippet!]!
     mySnippets: [Snippet!]!
   }
