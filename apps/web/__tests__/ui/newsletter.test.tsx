@@ -46,7 +46,9 @@ describe('Newsletter Form', () => {
     const inputEmail = screen.getByRole('textbox');
     const submitButton = screen.getByRole('button', { name: /Get updates/i });
 
-    userEvent.type(inputEmail, 'user@email.com');
+    await act(async () => {
+      await userEvent.type(inputEmail, 'user@email.com');
+    });
 
     await act(async () => {
       fireEvent.click(submitButton);
@@ -87,7 +89,9 @@ describe('Newsletter Form', () => {
     const inputEmail = screen.getByRole('textbox');
     const submitButton = screen.getByRole('button', { name: /Get updates/i });
 
-    userEvent.type(inputEmail, 'user@email.com');
+    await act(async () => {
+      await userEvent.type(inputEmail, 'user@email.com');
+    });
 
     await act(async () => {
       fireEvent.click(submitButton);
