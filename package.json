@@ -28,7 +28,7 @@
   "lint-staged": {
     "apps/**/*.{ts,tsx}": [
       "prettier --write",
-      "eslint --fix --cache --debug"
+      "eslint --fix"
     ],
     "packages/**/*.{ts,tsx}": [
       "prettier --write",
