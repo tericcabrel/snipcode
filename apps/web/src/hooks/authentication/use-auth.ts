@@ -20,11 +20,15 @@ const useAuth = () => {
   };
 
   const redirectToDashboard = () => router.push('/board');
+  const redirectToSignin = () => router.push('/signin');
+  const redirectToSignup = () => router.push('/signup');
 
   return {
     deleteToken,
     loading: isLoading,
     redirectToDashboard,
+    redirectToSignin,
+    redirectToSignup,
     saveToken,
     user: data,
   };

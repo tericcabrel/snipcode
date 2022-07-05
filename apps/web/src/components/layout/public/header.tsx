@@ -1,9 +1,34 @@
 import { Icon } from '@sharingan/ui';
 import Link from 'next/link';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
+
+import { useAuth } from '@/hooks/authentication/use-auth';
 
 const PublicHeader = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { redirectToDashboard, redirectToSignin, redirectToSignup, user } = useAuth();
+
+  const redirectToSignInIfAuthenticated = async (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    if (user?.email) {
+      await redirectToDashboard();
+      return;
+    }
+
+    return redirectToSignin();
+  };
+
+  const redirectToSignupIfAuthenticated = async (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    if (user?.email) {
+      await redirectToDashboard();
+      return;
+    }
+
+    return redirectToSignup();
+  };
 
   return (
     <header className="relative py-4">
@@ -65,6 +90,7 @@ const PublicHeader = () => {
                 Resources
               </a>
             </Link>
+
             <Link href="/blog">
               <a
                 title="Blog"
@@ -77,18 +103,22 @@ const PublicHeader = () => {
 
           <nav className="hidden lg:flex lg:items-center lg:justify-end lg:space-x-10">
             <Link href="/signin">
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a
                 title="Sign in"
                 className="text-base font-medium text-gray-900 transition-all duration-200 rounded font-pj hover:text-opacity-50"
+                onClick={redirectToSignInIfAuthenticated}
               >
                 Sign in
               </a>
             </Link>
 
             <Link href="/signup">
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <a
                 title="Get started"
                 className="inline-flex items-center justify-center px-6 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj"
+                onClick={redirectToSignupIfAuthenticated}
               >
                 Get started
               </a>
@@ -125,18 +155,22 @@ const PublicHeader = () => {
                 </a>
 
                 <Link href="/signin">
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   <a
                     title="Sign in"
                     className="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50"
+                    onClick={redirectToSignInIfAuthenticated}
                   >
                     Sign in
                   </a>
                 </Link>
 
                 <Link href="/signup">
+                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                   <a
                     title="Get started"
                     className="inline-flex items-center justify-center px-6 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600"
+                    onClick={redirectToSignupIfAuthenticated}
                   >
                     Get started
                   </a>
