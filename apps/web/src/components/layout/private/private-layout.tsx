@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { Loader } from '@/components/common/loader';
 import { Redirect } from '@/components/common/redirect';
 import PrivateHeader from '@/components/layout/private/header';
+import Sidebar from '@/components/layout/private/sidebar';
 import PublicFooter from '@/components/layout/public/footer';
 import { useAuthenticatedUser } from '@/services/users/authenticated-user';
 
@@ -28,14 +29,14 @@ const PrivateLayout = ({ children }: Props) => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col flex-1">
-        <PrivateHeader user={data} />
+    <div className="relative w-full h-screen bg-gray-50 flex-grow">
+      <Sidebar />
+      <div className="flex-grow border border-4 bg-red-500"></div>
+      {/*<PrivateHeader user={data} />
         <div className="relative top-[65px]">
           {children}
           <PublicFooter />
-        </div>
-      </div>
+        </div>*/}
     </div>
   );
 };
