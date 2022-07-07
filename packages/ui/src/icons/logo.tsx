@@ -1,4 +1,4 @@
-import { IconProps } from '@/typings/common';
+import { IconProps } from '../typings/components';
 
 const LogoIcon = ({ height = 32, width = 160 }: IconProps) => {
   return (

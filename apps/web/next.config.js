@@ -3,7 +3,10 @@ const withTM = require('next-transpile-modules')(['@sharingan/ui'])
 
 /** @type {import('next').NextConfig} */
 const nextConfigOptions = withTM({
-  reactStrictMode: true
+  reactStrictMode: true,
+  images: {
+    domains: ['images.unsplash.com']
+  }
 });
 
 const sentryWebpackPluginOptions = {
