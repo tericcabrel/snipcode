@@ -19,7 +19,7 @@ import GithubIcon from './github';
 import GoogleIcon from './google';
 import ImportIcon from './import';
 import LogoIcon from './logo';
-import LogoWhiteIcon from './logo-white';
+import LogoLightIcon from './logo-light';
 import ProductHuntIcon from './product-hunt';
 import ShareIcon from './share';
 import SpinnerIcon from './spinner';
@@ -41,7 +41,7 @@ export default {
   Import: ImportIcon,
   Inbox: InboxIcon,
   Logo: LogoIcon,
-  LogoWhite: LogoWhiteIcon,
+  LogoLight: LogoLightIcon,
   Menu: MenuIcon,
   ProductHunt: ProductHuntIcon,
   Share: ShareIcon,
