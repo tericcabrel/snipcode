@@ -29,9 +29,9 @@ const PrivateLayout = ({ children }: Props) => {
   }
 
   return (
-    <div className="relative w-full h-screen bg-gray-50 flex-grow">
+    <div className="relative w-full min-h-screen bg-gray-50 flex-grow">
       <Sidebar />
-      <div className="flex-grow border border-4 bg-red-500"></div>
+      {children}
       {/*<PrivateHeader user={data} />
         <div className="relative top-[65px]">
           {children}
