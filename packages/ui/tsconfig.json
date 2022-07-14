@@ -4,7 +4,7 @@
   "compilerOptions": {
     "jsx": "preserve",
     "noEmit": true,
-    "target": "es5",
+    "target": "es2021",
     "allowJs": true,
     "composite": true,
     "declaration": true,
