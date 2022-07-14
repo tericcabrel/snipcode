@@ -1,3 +1,5 @@
+import { Language } from '@sharingan/utils';
+
 export type IconProps = {
   className?: string;
   height?: number;
@@ -14,5 +16,12 @@ export type FolderItem = {
 
 export type FilePath = {
   id: string;
+  name: string;
+};
+
+export type SnippetItem = {
+  folderId: string;
+  id: string;
+  language: Language;
   name: string;
 };
