@@ -9,7 +9,7 @@ type Props = {
   children?: ReactNode;
 };
 
-const PrivateLayout = ({ children }: Props) => {
+const Layout = ({ children }: Props) => {
   const { data, isLoading } = useAuthenticatedUser();
 
   if (isLoading) {
@@ -32,4 +32,4 @@ const PrivateLayout = ({ children }: Props) => {
   );
 };
 
-export default PrivateLayout;
+export default Layout;
