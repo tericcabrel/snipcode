@@ -5,3 +5,14 @@ export type IconProps = {
 };
 
 export type ColorVariants = 'primary' | 'red' | 'white-gray';
+
+export type FolderItem = {
+  fileCount: number;
+  id: string;
+  name: string;
+};
+
+export type FilePath = {
+  id: string;
+  name: string;
+};

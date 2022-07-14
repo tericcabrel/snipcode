@@ -21,8 +21,16 @@ const formatAuthenticatedUserResult = (data?: AuthenticatedUserQuery): Authentic
   };
 };
 
+const useUserInLocalStorage = () => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  return localStorage.getItem(COOKIE_NAME);
+};
+
 export const useAuthenticatedUser = () => {
-  const user = localStorage.getItem(COOKIE_NAME);
+  const user = useUserInLocalStorage();
 
   const query = useAuthenticatedUserQuery(Boolean(user));
 
@@ -34,7 +42,7 @@ export const useAuthenticatedUser = () => {
 
   if (user) {
     return {
-      data: JSON.parse(user),
+      data: JSON.parse(user) as AuthenticatedUser,
       isLoading: false,
     };
   }

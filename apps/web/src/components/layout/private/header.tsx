@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/authentication/use-auth';
 import { useLogoutUser } from '@/services/users/logout-user';
 
 const navigation = [
-  { current: true, href: '/board', name: 'Dashboard' },
+  { current: true, href: '/home', name: 'Home' },
   { current: false, href: '/browse', name: 'Browse' },
   /*{ current: false, href: '#', name: 'Favorites' },
   { current: false, href: '#', name: 'Editor' },*/
