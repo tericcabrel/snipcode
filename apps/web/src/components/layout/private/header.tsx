@@ -1,25 +1,30 @@
 import { Disclosure, Icon, Link, Menu, Transition, UserAvatar, classNames } from '@sharingan/ui';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 
 import { useAuth } from '@/hooks/authentication/use-auth';
 import { useLogoutUser } from '@/services/users/logout-user';
 
 const navigation = [
-  { current: true, href: '#', name: 'Dashboard' },
-  { current: false, href: '#', name: 'Browse' },
-  { current: false, href: '#', name: 'Favorites' },
-  { current: false, href: '#', name: 'Editor' },
+  { current: true, href: '/board', name: 'Dashboard' },
+  { current: false, href: '/browse', name: 'Browse' },
+  /*{ current: false, href: '#', name: 'Favorites' },
+  { current: false, href: '#', name: 'Editor' },*/
 ];
+
+const isActive = (appPath: string, linkPath: string) => {
+  return appPath.startsWith(linkPath);
+};
 
 const Header = () => {
   const [logoutUserMutation] = useLogoutUser();
   const { user } = useAuth();
+  const { pathname, push } = useRouter();
 
   const logout = async () => {
     await logoutUserMutation({
       onCompleted: async () => {
-        await router.push('/');
+        await push('/');
       },
     });
   };
@@ -37,19 +42,19 @@ const Header = () => {
                 </div>
                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                   {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className={classNames(
-                        item.current
-                          ? 'border-gray-900 text-gray-900'
-                          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-                        'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium',
-                      )}
-                      aria-current={item.current ? 'page' : undefined}
-                    >
-                      {item.name}
-                    </a>
+                    <Link key={item.name} href={item.href}>
+                      <a
+                        className={classNames(
+                          isActive(pathname, item.href)
+                            ? 'border-gray-900 text-gray-900'
+                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                          'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium',
+                        )}
+                        aria-current={isActive(pathname, item.href) ? 'page' : undefined}
+                      >
+                        {item.name}
+                      </a>
+                    </Link>
                   ))}
                 </div>
               </div>
