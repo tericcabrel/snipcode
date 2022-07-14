@@ -17,16 +17,22 @@ const useAuth = () => {
 
   const deleteToken = () => {
     removeCookie(COOKIE_NAME, { path: '/' });
+    localStorage.removeItem(COOKIE_NAME);
   };
 
   const redirectToDashboard = () => router.push('/board');
+
   const redirectToSignin = () => router.push('/signin');
+
   const redirectToSignup = () => router.push('/signup');
+
+  const redirectToHome = () => router.push('/');
 
   return {
     deleteToken,
     loading: isLoading,
     redirectToDashboard,
+    redirectToHome,
     redirectToSignin,
     redirectToSignup,
     saveToken,

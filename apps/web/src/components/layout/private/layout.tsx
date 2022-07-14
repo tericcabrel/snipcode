@@ -12,7 +12,7 @@ type Props = {
 const Layout = ({ children }: Props) => {
   const { data, isLoading } = useAuthenticatedUser();
 
-  if (isLoading) {
+  if (isLoading && !data) {
     return <Loader scope="page" />;
   }
 
