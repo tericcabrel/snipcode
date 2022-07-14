@@ -18,13 +18,14 @@ const isActive = (appPath: string, linkPath: string) => {
 
 const Header = () => {
   const [logoutUserMutation] = useLogoutUser();
-  const { user } = useAuth();
-  const { pathname, push } = useRouter();
+  const { deleteToken, redirectToHome, user } = useAuth();
+  const { pathname } = useRouter();
 
   const logout = async () => {
     await logoutUserMutation({
       onCompleted: async () => {
-        await push('/');
+        deleteToken();
+        await redirectToHome();
       },
     });
   };

@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 
 import { AuthenticatedUserQuery, AuthenticatedUserQueryVariables } from '@/graphql/generated';
 
-const queryDocument = gql`
+export const queryDocument = gql`
   query authenticatedUser {
     authenticatedUser {
       __typename
@@ -20,6 +20,6 @@ const queryDocument = gql`
   }
 `;
 
-export const useAuthenticatedUserQuery = () => {
-  return useQuery<AuthenticatedUserQuery, AuthenticatedUserQueryVariables>(queryDocument, {});
+export const useAuthenticatedUserQuery = (skip: boolean) => {
+  return useQuery<AuthenticatedUserQuery, AuthenticatedUserQueryVariables>(queryDocument, { skip, ssr: false });
 };
