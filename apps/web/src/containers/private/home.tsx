@@ -1,6 +1,7 @@
 import { Folder } from '@sharingan/ui';
 import { NextSeo } from 'next-seo';
 
+import MenuAction from '@/components/common/menu-action';
 import Layout from '@/components/layout/private/layout';
 import { useAuthenticatedUser } from '@/services/users/authenticated-user';
 
@@ -12,8 +13,9 @@ const Home = () => {
       <NextSeo title="Home" />
       <div className="py-10">
         <header>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold leading-tight text-gray-900">Welcome, {data?.name}</h1>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <div className="text-3xl font-bold leading-tight text-gray-900">Welcome, {data?.name}</div>
+            <MenuAction />
           </div>
         </header>
         <main>
