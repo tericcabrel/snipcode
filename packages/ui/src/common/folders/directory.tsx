@@ -1,4 +1,5 @@
 import { FilePath, FolderItem, SnippetItem } from '../../typings/components';
+import MenuAction from '../menu-action';
 import BreadCrumb from './breadcrumb';
 import EmptyFolder from './empty';
 import Folder from './folder';
@@ -6,9 +7,10 @@ import Snippet from './snippet';
 
 type Props = {
   folderId: string;
+  title: string;
 };
 
-const Directory = ({ folderId }: Props) => {
+const Directory = ({ folderId, title }: Props) => {
   console.log('rootFolderId => ', folderId);
 
   const folders: FolderItem[] = [
@@ -92,28 +94,38 @@ const Directory = ({ folderId }: Props) => {
 
   return (
     <>
-      {folders.length === 0 ? (
-        <div className="border-4 border-dashed border-gray-200 rounded-lg flex justify-center items-center py-8 sm:px-0 h-96">
-          <div className="w-1/2">
-            <EmptyFolder />
-          </div>
+      <header>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+          <div className="text-3xl font-bold leading-tight text-gray-900">{title}</div>
+          <MenuAction />
         </div>
-      ) : (
-        <div className="min-h-96">
-          <BreadCrumb paths={paths} current={folderId} />
-          <div className="mt-6 grid grid-cols-5 gap-4">
-            {folders.map((folder) => (
-              <Folder item={folder} key={folder.id} onNavigate={goToFolder} />
-            ))}
-          </div>
-          <div className="my-8 text-md font-bold text-gray-500">Files</div>
-          <div className="mt-6 grid grid-cols-4 gap-4">
-            {snippets.map((snippet) => (
-              <Snippet item={snippet} key={snippet.id} onClick={openFile} />
-            ))}
-          </div>
+      </header>
+      <main>
+        <div className="max-w-7xl py-8 mx-auto sm:px-6 lg:px-8">
+          {folders.length === 0 ? (
+            <div className="border-4 border-dashed border-gray-200 rounded-lg flex justify-center items-center py-8 sm:px-0 h-96">
+              <div className="w-1/2">
+                <EmptyFolder />
+              </div>
+            </div>
+          ) : (
+            <div className="min-h-96">
+              <BreadCrumb paths={paths} current={folderId} />
+              <div className="mt-6 grid grid-cols-5 gap-4">
+                {folders.map((folder) => (
+                  <Folder item={folder} key={folder.id} onNavigate={goToFolder} />
+                ))}
+              </div>
+              <div className="my-8 text-md font-bold text-gray-500">Files</div>
+              <div className="mt-6 grid grid-cols-4 gap-4">
+                {snippets.map((snippet) => (
+                  <Snippet item={snippet} key={snippet.id} onClick={openFile} />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </main>
     </>
   );
 };
