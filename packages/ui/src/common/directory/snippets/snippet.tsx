@@ -1,8 +1,8 @@
 import { DocumentIcon } from '@heroicons/react/solid';
 
-import { SnippetItem } from '../../typings/components';
-import { colors } from '../../utils/constants';
-import { truncate } from '../../utils/text';
+import { SnippetItem } from '../../../typings/components';
+import { colors } from '../../../utils/constants';
+import { truncate } from '../../../utils/text';
 
 type Props = {
   item: SnippetItem;

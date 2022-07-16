@@ -1,7 +1,7 @@
 import { FolderIcon } from '@heroicons/react/solid';
 
-import { FolderItem } from '../../typings/components';
-import { numberToString, truncate } from '../../utils/text';
+import { FolderItem } from '../../../typings/components';
+import { numberToString, truncate } from '../../../utils/text';
 
 type Props = {
   item: FolderItem;

@@ -1,9 +1,11 @@
+import { useBooleanState } from '../../hooks';
 import { FilePath, FolderItem, SnippetItem } from '../../typings/components';
 import MenuAction from '../menu-action';
 import BreadCrumb from './breadcrumb';
-import EmptyFolder from './empty';
-import Folder from './folder';
-import Snippet from './snippet';
+import EmptyFolder from './folders/empty';
+import Folder from './folders/folder';
+import NewFolderContainer from './folders/new/new-folder-container';
+import Snippet from './snippets/snippet';
 
 type Props = {
   folderId: string;
@@ -11,6 +13,8 @@ type Props = {
 };
 
 const Directory = ({ folderId, title }: Props) => {
+  const [isNewFolderOpened, openNewFolderModal, closeNewFolderModal] = useBooleanState(false);
+
   console.log('rootFolderId => ', folderId);
 
   const folders: FolderItem[] = [
@@ -97,7 +101,7 @@ const Directory = ({ folderId, title }: Props) => {
       <header>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="text-3xl font-bold leading-tight text-gray-900">{title}</div>
-          <MenuAction />
+          <MenuAction folderId={folderId} onNewFolderClick={openNewFolderModal} />
         </div>
       </header>
       <main>
@@ -126,6 +130,7 @@ const Directory = ({ folderId, title }: Props) => {
           )}
         </div>
       </main>
+      {isNewFolderOpened && <NewFolderContainer closeModal={closeNewFolderModal} />}
     </>
   );
 };
