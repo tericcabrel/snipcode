@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Button, Icon, TextInput, useLoginUser } from '@sharingan/ui';
+import { Alert, Button, Icon, TextInput, useLoginUser } from '@sharingan/front';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useState } from 'react';

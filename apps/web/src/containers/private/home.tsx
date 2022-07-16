@@ -1,4 +1,4 @@
-import { FolderDirectory, useAuthenticatedUser } from '@sharingan/ui';
+import { FolderDirectory, useAuthenticatedUser } from '@sharingan/front';
 import { NextSeo } from 'next-seo';
 
 import Layout from '@/components/layout/private/layout';

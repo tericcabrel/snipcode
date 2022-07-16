@@ -4,7 +4,7 @@ import MenuAction from '../menu-action';
 import BreadCrumb from './breadcrumb';
 import EmptyFolder from './folders/empty';
 import Folder from './folders/folder';
-import NewFolderContainer from './folders/new/new-folder-container';
+import CreateFolderContainer from './folders/form/create-folder';
 import Snippet from './snippets/snippet';
 
 type Props = {
@@ -130,7 +130,7 @@ const Directory = ({ folderId, title }: Props) => {
           )}
         </div>
       </main>
-      {isNewFolderOpened && <NewFolderContainer closeModal={closeNewFolderModal} />}
+      {isNewFolderOpened && <CreateFolderContainer closeModal={closeNewFolderModal} />}
     </>
   );
 };

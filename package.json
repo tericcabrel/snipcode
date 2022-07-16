@@ -19,7 +19,7 @@
     "packages/database",
     "packages/domain",
     "packages/logger",
-    "packages/ui",
+    "packages/front",
     "packages/utils",
     "apps/core",
     "apps/web",

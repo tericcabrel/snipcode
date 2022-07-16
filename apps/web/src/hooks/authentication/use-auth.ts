@@ -1,4 +1,4 @@
-import { useAuthenticatedUser } from '@sharingan/ui';
+import { useAuthenticatedUser } from '@sharingan/front';
 import { addDayToDate } from '@sharingan/utils';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';

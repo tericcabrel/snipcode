@@ -25,7 +25,7 @@ const formSchema = yup.object().shape({
 
 type FormValues = { name?: string };
 
-const NewFolderContainer = ({ closeModal }: Props) => {
+const CreateFolderContainer = ({ closeModal }: Props) => {
   const cancelButtonRef = useRef(null);
 
   const formMethods = useForm<FormValues>({
@@ -103,4 +103,4 @@ const NewFolderContainer = ({ closeModal }: Props) => {
   );
 };
 
-export default NewFolderContainer;
+export default CreateFolderContainer;
