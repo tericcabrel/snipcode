@@ -1,9 +1,8 @@
-import { Disclosure, Icon, Link, Menu, Transition, UserAvatar, classNames } from '@sharingan/ui';
+import { Disclosure, Icon, Link, Menu, Transition, UserAvatar, classNames, useLogoutUser } from '@sharingan/ui';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 
 import { useAuth } from '@/hooks/authentication/use-auth';
-import { useLogoutUser } from '@/services/users/logout-user';
 
 const navigation = [
   { current: true, href: '/home', name: 'Home' },

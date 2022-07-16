@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Button, Icon, TextInput } from '@sharingan/ui';
+import { Alert, Button, Icon, TextInput, useSignupUser } from '@sharingan/ui';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -8,7 +8,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import PublicLayout from '@/components/layout/public/public-layout';
-import useSignupUser from '@/services/users/signup-user';
 import { FORM_ERRORS } from '@/utils/constants';
 
 const MIN_PASSWORD_LENGTH = 8;

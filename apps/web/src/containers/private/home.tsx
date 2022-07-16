@@ -1,17 +1,17 @@
-import { Folder } from '@sharingan/ui';
+import { FolderDirectory, useAuthenticatedUser } from '@sharingan/ui';
 import { NextSeo } from 'next-seo';
 
 import Layout from '@/components/layout/private/layout';
-import { useAuthenticatedUser } from '@/services/users/authenticated-user';
+import { COOKIE_NAME } from '@/utils/constants';
 
 const Home = () => {
-  const { data } = useAuthenticatedUser();
+  const { data } = useAuthenticatedUser(COOKIE_NAME);
 
   return (
     <Layout>
       <NextSeo title="Home" />
       <div className="py-10">
-        <Folder.Directory folderId={data?.id ?? ''} title={`Welcome, ${data?.name}`} />
+        <FolderDirectory folderId={data?.id ?? ''} title={`Welcome, ${data?.name}`} />
       </div>
     </Layout>
   );

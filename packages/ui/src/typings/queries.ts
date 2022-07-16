@@ -1,4 +1,4 @@
-import { RoleName } from '@/graphql/generated';
+import { RoleName } from '../graphql/generated';
 
 export type AuthenticatedUser = {
   email: string;

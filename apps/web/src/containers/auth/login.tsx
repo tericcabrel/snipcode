@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Button, Icon, TextInput } from '@sharingan/ui';
+import { Alert, Button, Icon, TextInput, useLoginUser } from '@sharingan/ui';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -8,7 +8,6 @@ import * as yup from 'yup';
 
 import PublicLayout from '@/components/layout/public/public-layout';
 import { useAuth } from '@/hooks/authentication/use-auth';
-import useLoginUser from '@/services/users/login-user';
 import { FORM_ERRORS } from '@/utils/constants';
 
 const formSchema = yup.object().shape({

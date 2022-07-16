@@ -1,5 +1,5 @@
-import useLoginUserMutation from '@/graphql/users/mutations/login-user';
-import { LoginInput } from '@/typings/queries';
+import useLoginUserMutation from '../../graphql/users/mutations/login-user';
+import { LoginInput } from '../../typings/queries';
 
 type MutationArgs = {
   input: LoginInput;
@@ -9,7 +9,7 @@ type MutationArgs = {
 
 type MutationFn = (args: MutationArgs) => Promise<void>;
 
-const useLoginUser = () => {
+export const useLoginUser = () => {
   const [loginUser, { data, error, loading }] = useLoginUserMutation();
 
   const authenticateUser: MutationFn = async ({ input, onError, onSuccess }) => {
@@ -29,5 +29,3 @@ const useLoginUser = () => {
     isLoading: loading && !error && !data,
   };
 };
-
-export default useLoginUser;

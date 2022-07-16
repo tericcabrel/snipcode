@@ -6,7 +6,6 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Mayb
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   Boolean: boolean;
-  /** Date custom scalar type */
   Date: any;
   Float: number;
   ID: string;
@@ -92,6 +91,8 @@ export type Query = {
   __typename?: 'Query';
   allSnippets: Array<Snippet>;
   authenticatedUser?: Maybe<User>;
+  /** @deprecated No longer supported */
+  hello: Scalars['String'];
   listFolders: Array<Folder>;
   mySnippets: Array<Snippet>;
   /** @deprecated https://stackoverflow.com/questions/59868942/graphql-a-schema-must-have-a-query-operation-defined */

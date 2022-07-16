@@ -1,7 +1,6 @@
-import { AuthenticatedUserQuery } from '@/graphql/generated';
-import { useAuthenticatedUserQuery } from '@/graphql/users/queries/authenticated-user';
-import { AuthenticatedUser } from '@/typings/queries';
-import { COOKIE_NAME } from '@/utils/constants';
+import { AuthenticatedUserQuery } from '../../graphql/generated';
+import { useAuthenticatedUserQuery } from '../../graphql/users/queries/authenticated-user';
+import { AuthenticatedUser } from '../../typings/queries';
 
 const formatAuthenticatedUserResult = (data?: AuthenticatedUserQuery): AuthenticatedUser | undefined => {
   if (!data?.authenticatedUser) {
@@ -21,23 +20,24 @@ const formatAuthenticatedUserResult = (data?: AuthenticatedUserQuery): Authentic
   };
 };
 
-const useUserInLocalStorage = () => {
+const useUserInLocalStorage = (key: string) => {
   if (typeof window === 'undefined') {
     return null;
   }
 
-  return localStorage.getItem(COOKIE_NAME);
+  return localStorage.getItem(key);
 };
 
-export const useAuthenticatedUser = () => {
-  const user = useUserInLocalStorage();
+export const useAuthenticatedUser = (cookieName: string) => {
+  // TODO to replace with reading user's data from the apollo cache
+  const user = useUserInLocalStorage(cookieName);
 
   const query = useAuthenticatedUserQuery(Boolean(user));
 
   const data = formatAuthenticatedUserResult(query.data);
 
   if (data) {
-    localStorage.setItem(COOKIE_NAME, JSON.stringify(data));
+    localStorage.setItem(cookieName, JSON.stringify(data));
   }
 
   if (user) {

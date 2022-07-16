@@ -9,7 +9,6 @@
     "lint": "next lint",
     "start": "next start",
     "test": "jest",
-    "gql:gen:types": "graphql-codegen --config codegen.yml",
     "postbuild": "next-sitemap --config next-sitemap.js"
   },
   "dependencies": {
@@ -30,9 +29,6 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.7.0",
-    "@graphql-codegen/typescript": "^2.6.0",
-    "@graphql-codegen/typescript-operations": "^2.4.3",
     "@tailwindcss/forms": "^0.5.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
