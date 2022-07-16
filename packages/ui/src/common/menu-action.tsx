@@ -1,6 +1,8 @@
 import { Menu, Transition } from '@headlessui/react';
-import { Icon, Link } from '@sharingan/ui';
+import { ChevronDownIcon, DocumentAddIcon, FolderAddIcon } from '@heroicons/react/solid';
 import { Fragment } from 'react';
+
+import Link from './link';
 
 const MenuAction = () => {
   return (
@@ -8,7 +10,7 @@ const MenuAction = () => {
       <div>
         <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
           New
-          <Icon.ChevronDown className="mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+          <ChevronDownIcon className="mr-1 ml-2 h-5 w-5" aria-hidden="true" />
         </Menu.Button>
       </div>
 
@@ -26,7 +28,7 @@ const MenuAction = () => {
             <Menu.Item>
               <Link href="/snippets/new">
                 <a className="text-gray-700 block px-4 py-2 text-sm flex hover:text-gray-800 hover:bg-gray-100">
-                  <Icon.DocumentAdd
+                  <DocumentAddIcon
                     className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                     aria-hidden="true"
                   />
@@ -36,7 +38,7 @@ const MenuAction = () => {
             </Menu.Item>
             <Menu.Item>
               <button className="w-full text-gray-700 block px-4 py-2 text-sm flex hover:text-gray-800 hover:bg-gray-100">
-                <Icon.FolderAdd className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                <FolderAddIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                 New Folder
               </button>
             </Menu.Item>
