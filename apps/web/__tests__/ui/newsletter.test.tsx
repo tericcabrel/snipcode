@@ -1,11 +1,11 @@
 import { MockedProvider } from '@apollo/client/testing';
+import { subscribeNewsletterMutation } from '@sharingan/ui';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 
 import NewsletterForm from '@/components/home/newsletter/newsletter-form';
-import { subscribeNewsletterMutation } from '@/graphql/newsletters/mutations/subscribe-newsletter';
 
 describe('Newsletter Form', () => {
   beforeEach(() => {

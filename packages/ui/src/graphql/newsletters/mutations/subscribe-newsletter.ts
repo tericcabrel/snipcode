@@ -1,6 +1,6 @@
 import { gql, useMutation } from '@apollo/client';
 
-import { SubscribeNewsletterMutation, SubscribeNewsletterMutationVariables } from '@/graphql/generated';
+import { SubscribeNewsletterMutation, SubscribeNewsletterMutationVariables } from '../../generated';
 
 const subscribeNewsletterMutation = gql`
   mutation subscribeNewsletter($email: String!) {
@@ -10,9 +10,9 @@ const subscribeNewsletterMutation = gql`
   }
 `;
 
-const useSubscribeToNewsletter = () => {
+const useSubscribeToNewsletterMutation = () => {
   return useMutation<SubscribeNewsletterMutation, SubscribeNewsletterMutationVariables>(subscribeNewsletterMutation);
 };
 
-export default useSubscribeToNewsletter;
+export default useSubscribeToNewsletterMutation;
 export { subscribeNewsletterMutation };

@@ -1,6 +1,6 @@
 import { gql, useMutation } from '@apollo/client';
 
-import { LoginUserMutation, LoginUserMutationVariables } from '@/graphql/generated';
+import { LoginUserMutation, LoginUserMutationVariables } from '../../generated';
 
 const queryDocument = gql`
   mutation loginUser($email: String!, $password: String!) {
