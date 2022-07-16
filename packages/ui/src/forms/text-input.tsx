@@ -6,7 +6,7 @@ import { getInputErrorMessage } from '../utils/forms';
 
 type TextInputProps = {
   isRequired?: boolean;
-  label: string;
+  label?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
 const TextInput = (props: TextInputProps) => {
@@ -21,13 +21,15 @@ const TextInput = (props: TextInputProps) => {
     'block w-full px-4 py-2 text-gray-900 placeholder-gray-600 bg-white border border-gray-400 rounded-lg caret-gray-900',
     className,
   );
-  const inputLabel = `${label}${isRequired ? '*' : ''}`;
+  const inputLabel = label ? `${label}${isRequired ? '*' : ''}` : undefined;
 
   return (
     <div className="mb-4">
-      <label htmlFor={inputProps.name} className="text-base font-medium text-gray-900">
-        {inputLabel}
-      </label>
+      {inputLabel && (
+        <label htmlFor={inputProps.name} className="text-base font-medium text-gray-900">
+          {inputLabel}
+        </label>
+      )}
       <div className="mt-1">
         <input
           autoComplete="off"

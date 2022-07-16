@@ -1,6 +1,6 @@
 import { PlusIcon } from '@heroicons/react/solid';
 
-import Button from '../../forms/button';
+import Button from '../../../forms/button';
 
 const EmptyFolder = () => {
   return (

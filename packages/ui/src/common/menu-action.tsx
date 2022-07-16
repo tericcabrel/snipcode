@@ -4,7 +4,12 @@ import { Fragment } from 'react';
 
 import Link from './link';
 
-const MenuAction = () => {
+type Props = {
+  folderId: string;
+  onNewFolderClick: () => void;
+};
+
+const MenuAction = ({ folderId, onNewFolderClick }: Props) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -26,7 +31,7 @@ const MenuAction = () => {
         <Menu.Items className="origin-top-right absolute right-0 mt-2 z-10 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
             <Menu.Item>
-              <Link href="/snippets/new">
+              <Link href={`/folders/${folderId}/new-snippet`}>
                 <a className="text-gray-700 block px-4 py-2 text-sm flex hover:text-gray-800 hover:bg-gray-100">
                   <DocumentAddIcon
                     className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
@@ -37,7 +42,10 @@ const MenuAction = () => {
               </Link>
             </Menu.Item>
             <Menu.Item>
-              <button className="w-full text-gray-700 block px-4 py-2 text-sm flex hover:text-gray-800 hover:bg-gray-100">
+              <button
+                className="w-full text-gray-700 block px-4 py-2 text-sm flex hover:text-gray-800 hover:bg-gray-100"
+                onClick={onNewFolderClick}
+              >
                 <FolderAddIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                 New Folder
               </button>
