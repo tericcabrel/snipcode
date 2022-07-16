@@ -1,5 +1,5 @@
 const { withSentryConfig } = require('@sentry/nextjs');
-const withTM = require('next-transpile-modules')(['@sharingan/ui'])
+const withTM = require('next-transpile-modules')(['@sharingan/front'])
 
 /** @type {import('next').NextConfig} */
 const nextConfigOptions = withTM({

@@ -5,7 +5,7 @@ module.exports = {
     "./src/pages/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
     "./src/containers/**/*.{js,ts,jsx,tsx}",
-    "../../packages/ui/src/**/*.{js,ts,jsx,tsx}",
+    "../../packages/front/src/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: 'class',
   theme: {

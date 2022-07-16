@@ -1,4 +1,4 @@
-import { Icon, useSubscribeToNewsletter } from '@sharingan/ui';
+import { Icon, useSubscribeToNewsletter } from '@sharingan/front';
 import { useState } from 'react';
 
 import NewsletterAlert from '@/components/home/newsletter/newsletter-alert';

@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Icon } from '@sharingan/ui';
+import { Icon } from '@sharingan/front';
 import classNames from 'classnames';
 import React, { Fragment, useState } from 'react';
 

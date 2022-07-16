@@ -1,4 +1,4 @@
-import { useAuthenticatedUser } from '@sharingan/ui';
+import { useAuthenticatedUser } from '@sharingan/front';
 import { ReactNode } from 'react';
 
 import { Loader } from '@/components/common/loader';

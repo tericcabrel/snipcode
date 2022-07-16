@@ -1,4 +1,4 @@
-import { Disclosure, Icon, Link, Menu, Transition, UserAvatar, classNames, useLogoutUser } from '@sharingan/ui';
+import { Disclosure, Icon, Link, Menu, Transition, UserAvatar, classNames, useLogoutUser } from '@sharingan/front';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 

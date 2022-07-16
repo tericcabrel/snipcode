@@ -1,4 +1,4 @@
-import { Icon } from '@sharingan/ui';
+import { Icon } from '@sharingan/front';
 import Link from 'next/link';
 
 const PageNotFound = () => {
