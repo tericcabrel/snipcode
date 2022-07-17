@@ -5,6 +5,7 @@ import BreadCrumb from './breadcrumb';
 import EmptyFolder from './folders/empty';
 import Folder from './folders/folder';
 import CreateFolderContainer from './folders/form/create-folder';
+import CreateSnippetContainer from './snippets/form/create-snippet';
 import Snippet from './snippets/snippet';
 
 type Props = {
@@ -14,6 +15,7 @@ type Props = {
 
 const Directory = ({ folderId, title }: Props) => {
   const [isNewFolderOpened, openNewFolderModal, closeNewFolderModal] = useBooleanState(false);
+  const [isNewSnippetOpened, openNewSnippetModal, closeNewSnippetModal] = useBooleanState(false);
 
   console.log('rootFolderId => ', folderId);
 
@@ -101,7 +103,7 @@ const Directory = ({ folderId, title }: Props) => {
       <header>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="text-3xl font-bold leading-tight text-gray-900">{title}</div>
-          <MenuAction folderId={folderId} onNewFolderClick={openNewFolderModal} />
+          <MenuAction onNewFolderClick={openNewFolderModal} onNewSnippetClick={openNewSnippetModal} />
         </div>
       </header>
       <main>
@@ -131,6 +133,7 @@ const Directory = ({ folderId, title }: Props) => {
         </div>
       </main>
       {isNewFolderOpened && <CreateFolderContainer closeModal={closeNewFolderModal} />}
+      <CreateSnippetContainer open={isNewSnippetOpened} closeModal={closeNewSnippetModal} />
     </>
   );
 };
