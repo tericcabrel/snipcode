@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { colors } from '../utils/constants';
+import { COLORS } from '../utils/constants';
 
 type Props = {
   name?: string | null;
@@ -32,12 +32,12 @@ const UserAvatar = ({ name, url }: Props) => {
   const initials = generateInitials(name);
 
   const charIndex = initials.charCodeAt(0) - 65;
-  const colorIndex = charIndex % colors.length;
+  const colorIndex = charIndex % COLORS.length;
 
   return (
     <span
       className="inline-flex items-center justify-center h-10 w-10 rounded-full"
-      style={{ backgroundColor: colors[colorIndex] }}
+      style={{ backgroundColor: COLORS[colorIndex] }}
     >
       <span className="font-medium leading-none text-white">{initials}</span>
     </span>
