@@ -1,5 +1,6 @@
 export const REGEX_EMAIL = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 export const FOLDER_NAME_REGEX = /^((\w)+\s?\-?)+$/;
+export const SNIPPET_NAME_REGEX = /^((\w)+\s?\-?)+$/;
 
 export const FORM_ERRORS = {
   emailInvalid: 'The email address is invalid.',
@@ -8,6 +9,7 @@ export const FORM_ERRORS = {
   maxCharacters: (numChar: number) => `Must be at most ${numChar} characters`,
   minCharacters: (numChar: number) => `Must be at least ${numChar} characters`,
   passwordNotMatch: "The confirm password doesn't match the password",
+  snippetNameInvalid: 'The name must only contains alphabetical letters, numbers and _-',
 };
 
 export const colors: string[] = [

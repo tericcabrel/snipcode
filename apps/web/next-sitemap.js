@@ -10,5 +10,5 @@ module.exports = {
     ],
     additionalSitemaps: [`${SITE_URL}/sitemap.xml`],
   },
-  exclude: ['/login', '/board', '/profile', '/settings', '/private*'],
+  exclude: ['/login', '/home', '/profile', '/browse'],
 };

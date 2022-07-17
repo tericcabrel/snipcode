@@ -83,7 +83,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+apps/web/public/assets/shiki/dist
 
 # Gatsby files
 .cache/
