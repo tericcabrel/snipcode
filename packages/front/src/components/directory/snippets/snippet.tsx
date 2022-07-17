@@ -1,7 +1,7 @@
 import { DocumentIcon } from '@heroicons/react/solid';
 
 import { SnippetItem } from '../../../typings/components';
-import { colors } from '../../../utils/constants';
+import { COLORS } from '../../../utils/constants';
 import { truncate } from '../../../utils/text';
 
 type Props = {
@@ -13,7 +13,7 @@ const FILE_NAME_MAX_LENGTH = 30;
 
 const Snippet = ({ item, onClick }: Props) => {
   const charIndex = item.language.charCodeAt(0) - 65;
-  const colorIndex = charIndex % colors.length;
+  const colorIndex = charIndex % COLORS.length;
 
   return (
     <div
@@ -22,7 +22,7 @@ const Snippet = ({ item, onClick }: Props) => {
       title={item.name}
     >
       <div className="mt-4 text-gray-500 sm:pr-8 flex items-center">
-        <DocumentIcon className="h-6 w-6 mr-2" style={{ color: colors[colorIndex] }} />
+        <DocumentIcon className="h-6 w-6 mr-2" style={{ color: COLORS[colorIndex] }} />
         <div className="text-sm font-bold text-gray-900">{truncate(item.name, FILE_NAME_MAX_LENGTH)}</div>
       </div>
     </div>

@@ -7,7 +7,8 @@ import * as yup from 'yup';
 
 import Button from '../../../../forms/button';
 import TextInput from '../../../../forms/text-input';
-import { FORM_ERRORS, SNIPPET_NAME_REGEX } from '../../../../utils/constants';
+import { EditorFormValues } from '../../../../typings/components';
+import { CODE_HIGHLIGHT_OPTIONS, FORM_ERRORS, THEME_OPTIONS } from '../../../../utils/constants';
 import SnippetTextEditor from './editor';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -25,11 +26,10 @@ const formSchema = yup.object().shape({
     .string()
     .required(FORM_ERRORS.fieldRequired)
     .min(MIN_NAME_LENGTH, FORM_ERRORS.minCharacters(MIN_NAME_LENGTH))
-    .max(MAX_NAME_LENGTH, FORM_ERRORS.minCharacters(MAX_NAME_LENGTH))
-    .matches(SNIPPET_NAME_REGEX, { excludeEmptyString: false, message: FORM_ERRORS.snippetNameInvalid }),
+    .max(MAX_NAME_LENGTH, FORM_ERRORS.minCharacters(MAX_NAME_LENGTH)),
 });
 
-type FormValues = { name?: string };
+type FormValues = { code?: string; description?: string; name?: string } & EditorFormValues;
 
 const CreateSnippetContainer = ({ closeModal, open }: Props) => {
   const cancelButtonRef = useRef(null);
@@ -42,7 +42,8 @@ const CreateSnippetContainer = ({ closeModal, open }: Props) => {
 
       return shiki.getHighlighter({
         langs: ['javascript', 'html', 'css', 'typescript', 'java', 'c', 'cpp', 'c#'],
-        theme: 'github-dark-dimmed',
+        theme: 'monokai',
+        themes: ['one-dark-pro', 'dracula', 'dark-plus', 'monokai', 'github-dark', 'github-light'],
       });
     };
 
@@ -53,7 +54,21 @@ const CreateSnippetContainer = ({ closeModal, open }: Props) => {
 
   const formMethods = useForm<FormValues>({
     defaultValues: {
-      name: 'New file',
+      code: `@ExceptionHandler(ConstraintViolationException.class)
+public ResponseEntity<?> constraintViolationException(ConstraintViolationException ex, WebRequest request) {
+  List<String> errors = new ArrayList<>();
+
+  ex.getConstraintViolations().forEach(cv -> errors.add(cv.getMessage()));
+
+  Map<String, List<String>> result = new HashMap<>();
+
+  result.put("errors", errors);
+  return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+}
+`,
+      codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
+      name: undefined,
+      theme: THEME_OPTIONS[0],
     },
     resolver: yupResolver(formSchema),
   });
@@ -62,9 +77,20 @@ const CreateSnippetContainer = ({ closeModal, open }: Props) => {
     console.log(values);
   };
 
+  const handleCloseModal = () => {
+    closeModal();
+    formMethods.reset({
+      code: '',
+      codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
+      name: undefined,
+      theme: THEME_OPTIONS[0],
+    });
+    formMethods.clearErrors();
+  };
+
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={closeModal}>
+      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={handleCloseModal}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -96,9 +122,13 @@ const CreateSnippetContainer = ({ closeModal, open }: Props) => {
                     </Dialog.Title>
                     <div className="mt-2">
                       <FormProvider {...formMethods}>
-                        <TextInput className="mt-6 w-full" type="text" name="name" />
+                        <TextInput className="mt-6 mb-5 w-full" type="text" name="description" />
 
-                        <SnippetTextEditor highlighter={highlighter} />
+                        <SnippetTextEditor
+                          highlighter={highlighter}
+                          highlightOptions={CODE_HIGHLIGHT_OPTIONS}
+                          themeOptions={THEME_OPTIONS}
+                        />
                       </FormProvider>
                     </div>
                   </div>
@@ -113,7 +143,7 @@ const CreateSnippetContainer = ({ closeModal, open }: Props) => {
                   <button
                     type="button"
                     className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm"
-                    onClick={closeModal}
+                    onClick={handleCloseModal}
                     ref={cancelButtonRef}
                   >
                     Cancel

@@ -18,13 +18,14 @@ const TextInput = (props: TextInputProps) => {
   const errorMessage = getInputErrorMessage(errors, inputProps.name);
 
   const inputClasses = classNames(
-    'block w-full px-4 py-2 text-gray-900 placeholder-gray-600 bg-white border border-gray-400 rounded-lg caret-gray-900',
+    'block w-full px-4 py-2 text-gray-900 placeholder-gray-600 bg-white border border-gray-300 rounded-lg caret-gray-900',
     className,
   );
   const inputLabel = label ? `${label}${isRequired ? '*' : ''}` : undefined;
+  const formGroupClasses = classNames(inputLabel ? 'mb-4' : '');
 
   return (
-    <div className="mb-4">
+    <div className={formGroupClasses}>
       {inputLabel && (
         <label htmlFor={inputProps.name} className="text-base font-medium text-gray-900">
           {inputLabel}

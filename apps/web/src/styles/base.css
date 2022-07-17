@@ -18,38 +18,3 @@ a {
 .auth-alert-container {
   height: calc(100vh - (377px + 94px));
 }
-
-.code-editor-container {
-  counter-reset: line;
-}
-
-.code-editor-container textarea {
-  outline: 0;
-  caret-color: white;
-  font-family: 'Inter', monospace !important;
-  font-size: 14px;
-  padding-left: 50px !important;
-}
-
-.code-editor-container pre {
-  padding-left: 50px !important;
-  white-space: pre !important;
-}
-
-.code-editor-container code {
-  font-family: 'Inter', monospace !important;
-  font-size: 14px;
-}
-
-.code-editor-container .line-number {
-  position: absolute;
-  left: 0;
-  color: #cccccc;
-  text-align: right;
-  width: 30px;
-  font-size: 12px;
-  height: 18px;
-  overflow: hidden;
-  padding-top: 2px;
-}
-
