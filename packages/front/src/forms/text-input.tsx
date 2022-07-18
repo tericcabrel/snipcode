@@ -18,7 +18,7 @@ const TextInput = (props: TextInputProps) => {
   const errorMessage = getInputErrorMessage(errors, inputProps.name);
 
   const inputClasses = classNames(
-    'block w-full px-4 py-2 text-gray-900 placeholder-gray-600 bg-white border border-gray-300 rounded-lg caret-gray-900',
+    'block w-full px-4 py-2 text-gray-900 placeholder-gray-600 bg-white border border-gray-300 rounded-lg caret-gray-900 placeholder:text-xs placeholder:font-normal',
     className,
   );
   const inputLabel = label ? `${label}${isRequired ? '*' : ''}` : undefined;
