@@ -122,7 +122,12 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
                     </Dialog.Title>
                     <div className="mt-2">
                       <FormProvider {...formMethods}>
-                        <TextInput className="mt-6 mb-5 w-full" type="text" name="description" />
+                        <TextInput
+                          className="mt-6 mb-5 w-full"
+                          type="text"
+                          name="description"
+                          placeholder="Description of the snippet"
+                        />
 
                         <SnippetTextEditor
                           highlighter={highlighter}
