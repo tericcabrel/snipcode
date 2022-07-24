@@ -23,6 +23,15 @@ const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Prop
 
   const language = getLanguageFromExtension(name);
 
+  const handleEditorClick = (e: any) => {
+    const textareaComponent = e.target;
+
+    const lineNo = textareaComponent.value.substr(0, textareaComponent.selectionStart).split(/\r?\n|\r/).length;
+    const lineText = textareaComponent.value.split(/\r?\n|\r/)[lineNo - 1];
+
+    console.table({ lineNo, lineText });
+  };
+
   return (
     <div className="border rounded-tl-md rounded-tr-md flex flex-col">
       <div className="flex justify-between px-2 pt-1 pb-2 bg-gray-200 rounded-tl-md rounded-tr-md">
@@ -58,6 +67,7 @@ const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Prop
         className="code-editor-container"
         tabSize={2}
         insertSpaces
+        onClick={handleEditorClick}
       />
     </div>
   );
