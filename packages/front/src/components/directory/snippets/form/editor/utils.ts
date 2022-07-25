@@ -4,13 +4,22 @@ type HighlightSnippetArgs = {
   code: string;
   highlighter?: Highlighter;
   language: string;
+  lineHighlightOptions: Map<number, string>;
   theme: string;
 };
 
-export const highlightSnippet = ({ code, highlighter, language, theme }: HighlightSnippetArgs) => {
+export const highlightSnippet = ({
+  code,
+  highlighter,
+  language,
+  lineHighlightOptions,
+  theme,
+}: HighlightSnippetArgs) => {
   if (!highlighter) {
     return code;
   }
+
+  console.log(lineHighlightOptions);
 
   const text = highlighter
     .codeToHtml(code, {
