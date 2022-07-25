@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import Editor from 'react-simple-code-editor';
 import { Highlighter } from 'shiki';
@@ -5,7 +6,7 @@ import { Highlighter } from 'shiki';
 import SelectInput from '../../../../../forms/select-input';
 import TextInput from '../../../../../forms/text-input';
 import { EditorFormValues, SelectOption } from '../../../../../typings/components';
-import { THEME_BACKGROUND_COLOR_MAP } from '../../../../../utils/constants';
+import { CODE_HIGHLIGHT_OPTIONS, THEME_BACKGROUND_COLOR_MAP } from '../../../../../utils/constants';
 import { getLanguageFromExtension, highlightSnippet } from './utils';
 
 type Props = {
@@ -14,22 +15,74 @@ type Props = {
   themeOptions: SelectOption[];
 };
 
+type TextSelection = {
+  end: number;
+  start: number;
+};
+
 const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Props) => {
+  const [textSelection, setTextSelection] = useState<TextSelection | null>(null);
+  const [lineHighlight, setLineHighlight] = useState<Map<number, string>>(new Map());
+
   const { control, setValue, watch } = useFormContext<EditorFormValues>();
 
   const theme = watch('theme');
   const code = watch('code');
   const name = watch('name');
+  const codeHighlight = watch('codeHighlight');
 
   const language = getLanguageFromExtension(name);
 
-  const handleEditorClick = (e: any) => {
-    const textareaComponent = e.target;
+  useEffect(() => {
+    if (codeHighlight.id === 'none' || !textSelection) {
+      return;
+    }
+    console.log('codeHighlight => ', codeHighlight);
 
-    const lineNo = textareaComponent.value.substr(0, textareaComponent.selectionStart).split(/\r?\n|\r/).length;
-    const lineText = textareaComponent.value.split(/\r?\n|\r/)[lineNo - 1];
+    const lineHighlightClone = new Map(lineHighlight);
 
-    console.table({ lineNo, lineText });
+    for (let i = textSelection.start; i <= textSelection.end; i++) {
+      console.log(`i => ${i}`);
+      lineHighlightClone.set(i, codeHighlight.id);
+    }
+
+    setLineHighlight(lineHighlightClone);
+    setTextSelection(null);
+    setValue('codeHighlight', CODE_HIGHLIGHT_OPTIONS[0]);
+  }, [codeHighlight]);
+
+  const handleEditorSelect = (event: any) => {
+    const textareaComponent = event.target;
+
+    const { selectionEnd, selectionStart } = textareaComponent;
+    const selectedLines = textareaComponent.value.substring(selectionStart, selectionEnd).split(/\r?\n|\r/);
+    const numberOfLinesSelected = selectedLines.length;
+
+    const [firstSelectionLine] = selectedLines;
+
+    const allLines: string[] = textareaComponent.value.split(/\r?\n|\r/);
+
+    if (!firstSelectionLine) {
+      return;
+    }
+
+    const selectionStartLine = allLines.reduce((lineNumber, lineText, index) => {
+      if (lineNumber >= 0) {
+        return lineNumber;
+      }
+
+      return lineText.includes(firstSelectionLine) ? index : -1;
+    }, -1);
+
+    /*console.log('selectionStartLine => ', selectionStartLine);
+    console.log('numberOfLinesSelected => ', numberOfLinesSelected);*/
+
+    const lineHighlightStart = selectionStartLine + 1;
+    const lineHighlightEnd = selectionStartLine + numberOfLinesSelected;
+
+    console.log('Line to highlight => ', lineHighlightStart, lineHighlightEnd);
+
+    setTextSelection({ end: lineHighlightEnd, start: lineHighlightStart });
   };
 
   return (
@@ -54,7 +107,9 @@ const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Prop
       <Editor
         value={code}
         onValueChange={(code) => setValue('code', code)}
-        highlight={(code) => highlightSnippet({ code, highlighter, language, theme: theme.id })}
+        highlight={(code) =>
+          highlightSnippet({ code, highlighter, language, lineHighlightOptions: lineHighlight, theme: theme.id })
+        }
         padding={6.5}
         style={{
           backgroundColor: THEME_BACKGROUND_COLOR_MAP[theme.id],
@@ -67,7 +122,7 @@ const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Prop
         className="code-editor-container"
         tabSize={2}
         insertSpaces
-        onClick={handleEditorClick}
+        onSelect={handleEditorSelect}
       />
     </div>
   );
