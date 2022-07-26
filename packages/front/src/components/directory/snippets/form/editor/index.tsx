@@ -34,21 +34,32 @@ const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Prop
   const language = getLanguageFromExtension(name);
 
   useEffect(() => {
-    if (codeHighlight.id === 'none' || !textSelection) {
-      return;
-    }
-    console.log('codeHighlight => ', codeHighlight);
-
     const lineHighlightClone = new Map(lineHighlight);
 
+    if (codeHighlight.id === 'none' || !textSelection) {
+      if (!textSelection) {
+        return;
+      }
+
+      for (let i = textSelection.start; i <= textSelection.end; i++) {
+        lineHighlightClone.delete(i);
+      }
+
+      setLineHighlight(lineHighlightClone);
+      setTextSelection(null);
+      window.getSelection()?.removeAllRanges();
+
+      return;
+    }
+
     for (let i = textSelection.start; i <= textSelection.end; i++) {
-      console.log(`i => ${i}`);
       lineHighlightClone.set(i, codeHighlight.id);
     }
 
     setLineHighlight(lineHighlightClone);
     setTextSelection(null);
     setValue('codeHighlight', CODE_HIGHLIGHT_OPTIONS[0]);
+    window.getSelection()?.removeAllRanges();
   }, [codeHighlight]);
 
   const handleEditorSelect = (event: any) => {
@@ -74,13 +85,8 @@ const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Prop
       return lineText.includes(firstSelectionLine) ? index : -1;
     }, -1);
 
-    /*console.log('selectionStartLine => ', selectionStartLine);
-    console.log('numberOfLinesSelected => ', numberOfLinesSelected);*/
-
     const lineHighlightStart = selectionStartLine + 1;
     const lineHighlightEnd = selectionStartLine + numberOfLinesSelected;
-
-    console.log('Line to highlight => ', lineHighlightStart, lineHighlightEnd);
 
     setTextSelection({ end: lineHighlightEnd, start: lineHighlightStart });
   };
