@@ -37,8 +37,8 @@ export const COLORS: string[] = [
 export const CODE_HIGHLIGHT_OPTIONS: SelectOption[] = [
   { id: 'none', label: 'None' },
   { id: 'blur', label: 'Blur' },
-  { id: 'diff-add', label: 'Diff Add' },
-  { id: 'diff-remove', label: 'Diff Remove' },
+  { id: 'add', label: 'Diff Add' },
+  { id: 'delete', label: 'Diff Remove' },
   { id: 'current', label: 'Current Line' },
 ];
 

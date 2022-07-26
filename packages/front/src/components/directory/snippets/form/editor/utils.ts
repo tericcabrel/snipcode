@@ -8,6 +8,31 @@ type HighlightSnippetArgs = {
   theme: string;
 };
 
+type HighLightOption = {
+  classes: string[];
+  line: number;
+};
+
+const buildLineOptions = (highlightOptions: Map<number, string>): HighLightOption[] => {
+  const options: HighLightOption[] = [];
+
+  highlightOptions.forEach((value, key) => {
+    options.push({ classes: [`line-diff line-diff-${value}`], line: key });
+  });
+
+  return options;
+};
+
+const addWhitespaceForEmptyLine = (line: string) => {
+  if (/<span class="line (line-diff-?[a-z ]*)*"><\/span>/.test(line)) {
+    const [openingBracket] = line.split('</span>');
+
+    return `${openingBracket}&nbsp;&nbsp;</span>`;
+  }
+
+  return line;
+};
+
 export const highlightSnippet = ({
   code,
   highlighter,
@@ -24,13 +49,15 @@ export const highlightSnippet = ({
   const text = highlighter
     .codeToHtml(code, {
       lang: language,
-      lineOptions: [],
+      lineOptions: buildLineOptions(lineHighlightOptions),
       theme,
     })
     .replace(/<pre class="shiki" style="background-color: \#[\w]{6}">/, '')
     .replace('</pre>', '')
     .split('\n')
-    .map((line, i) => `<span class='line-number'>${i + 1}</span>${line}`)
+    .map((line, i) => {
+      return `<span class='line-number'>${i + 1}</span>${addWhitespaceForEmptyLine(line)}`;
+    })
     .join('\n');
 
   return text;

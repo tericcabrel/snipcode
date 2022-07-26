@@ -31,3 +31,20 @@
   overflow: hidden;
   padding-top: 2px;
 }
+
+.code-editor-container code .line-diff {
+  width: 100%;
+  display: inline-block;
+}
+.code-editor-container code .line-diff-delete {
+  background-color: rgba(229,83,75,0.15);
+}
+.code-editor-container code .line-diff-add {
+  background-color: rgba(87,171,90,0.3);
+}
+.code-editor-container code .line-diff-current {
+  background-color: #475569;
+}
+.code-editor-container code .line-diff-blur {
+  filter: blur(4px);
+}
