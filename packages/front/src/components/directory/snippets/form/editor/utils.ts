@@ -4,7 +4,7 @@ type HighlightSnippetArgs = {
   code: string;
   highlighter?: Highlighter;
   language: string;
-  lineHighlightOptions: Map<number, string>;
+  lineHighlight: Array<[number, string]>;
   theme: string;
 };
 
@@ -13,14 +13,9 @@ type HighLightOption = {
   line: number;
 };
 
-const buildLineOptions = (highlightOptions: Map<number, string>): HighLightOption[] => {
-  const options: HighLightOption[] = [];
-
-  highlightOptions.forEach((value, key) => {
-    options.push({ classes: [`line-diff line-diff-${value}`], line: key });
-  });
-
-  return options;
+const buildLineOptions = (lineHighlight: Array<[number, string]>): HighLightOption[] => {
+  console.log('lineHighlight => ', lineHighlight);
+  return lineHighlight.map(([key, value]) => ({ classes: [`line-diff line-diff-${value}`], line: key }));
 };
 
 const addWhitespaceForEmptyLine = (line: string) => {
@@ -33,23 +28,15 @@ const addWhitespaceForEmptyLine = (line: string) => {
   return line;
 };
 
-export const highlightSnippet = ({
-  code,
-  highlighter,
-  language,
-  lineHighlightOptions,
-  theme,
-}: HighlightSnippetArgs) => {
+export const highlightSnippet = ({ code, highlighter, language, lineHighlight, theme }: HighlightSnippetArgs) => {
   if (!highlighter) {
     return code;
   }
 
-  console.log(lineHighlightOptions);
-
   const text = highlighter
     .codeToHtml(code, {
       lang: language,
-      lineOptions: buildLineOptions(lineHighlightOptions),
+      lineOptions: buildLineOptions(lineHighlight),
       theme,
     })
     .replace(/<pre class="shiki" style="background-color: \#[\w]{6}">/, '')
@@ -79,4 +66,14 @@ export const getLanguageFromExtension = (fileName?: string) => {
   }
 
   return possibleExtension;
+};
+
+export const mapToArray = <Key, Value>(map: Map<Key, Value>): Array<[Key, Value]> => {
+  const result: Array<[Key, Value]> = [];
+
+  map.forEach((value, key) => {
+    result.push([key, value]);
+  });
+
+  return result;
 };

@@ -33,9 +33,10 @@ export type SnippetItem = {
 };
 
 export type EditorFormValues = {
-  backgroundMode: SelectOption;
   code: string;
   codeHighlight: SelectOption;
+  description: string;
+  lineHighlight: Array<[number, string]>;
   name: string;
   theme: SelectOption;
 };
