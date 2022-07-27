@@ -22,6 +22,9 @@ type Props = {
 const MIN_NAME_LENGTH = 1;
 const MAX_NAME_LENGTH = 100;
 const formSchema = yup.object().shape({
+  code: yup.string().required(FORM_ERRORS.fieldRequired),
+  description: yup.string(),
+  lineHighlight: yup.mixed(),
   name: yup
     .string()
     .required(FORM_ERRORS.fieldRequired)
@@ -41,7 +44,7 @@ const CreateSnippetContainer = ({ closeModal, open }: Props) => {
       shiki.setCDN('/assets/shiki/');
 
       return shiki.getHighlighter({
-        langs: ['javascript', 'html', 'css', 'typescript', 'java', 'c', 'cpp', 'c#'],
+        langs: ['javascript', 'html', 'css', 'typescript', 'java', 'c', 'cpp', 'c#', 'php', 'python'],
         theme: 'monokai',
         themes: ['one-dark-pro', 'dracula', 'dark-plus', 'monokai', 'github-dark', 'github-light'],
       });
@@ -67,7 +70,7 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
 }
 `,
       codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
-      name: undefined,
+      lineHighlight: [],
       theme: THEME_OPTIONS[0],
     },
     resolver: yupResolver(formSchema),
@@ -83,6 +86,7 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
       code: '',
       codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
       description: '',
+      lineHighlight: [],
       name: undefined,
       theme: THEME_OPTIONS[0],
     });
@@ -129,10 +133,9 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
                           name="description"
                           placeholder="Description of the snippet"
                         />
-
                         <SnippetTextEditor
                           highlighter={highlighter}
-                          highlightOptions={CODE_HIGHLIGHT_OPTIONS}
+                          codeHighlightOptions={CODE_HIGHLIGHT_OPTIONS}
                           themeOptions={THEME_OPTIONS}
                         />
                       </FormProvider>

@@ -7,10 +7,10 @@ import SelectInput from '../../../../../forms/select-input';
 import TextInput from '../../../../../forms/text-input';
 import { EditorFormValues, SelectOption } from '../../../../../typings/components';
 import { CODE_HIGHLIGHT_OPTIONS, THEME_BACKGROUND_COLOR_MAP } from '../../../../../utils/constants';
-import { getLanguageFromExtension, highlightSnippet } from './utils';
+import { getLanguageFromExtension, highlightSnippet, mapToArray } from './utils';
 
 type Props = {
-  highlightOptions: SelectOption[];
+  codeHighlightOptions: SelectOption[];
   highlighter?: Highlighter;
   themeOptions: SelectOption[];
 };
@@ -20,15 +20,15 @@ type TextSelection = {
   start: number;
 };
 
-const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Props) => {
+const SnippetTextEditor = ({ codeHighlightOptions, highlighter, themeOptions }: Props) => {
   const [textSelection, setTextSelection] = useState<TextSelection | null>(null);
-  const [lineHighlight, setLineHighlight] = useState<Map<number, string>>(new Map());
 
   const { control, setValue, watch } = useFormContext<EditorFormValues>();
 
-  const theme = watch('theme');
   const code = watch('code');
   const name = watch('name');
+  const theme = watch('theme');
+  const lineHighlight = watch('lineHighlight');
   const codeHighlight = watch('codeHighlight');
 
   const language = getLanguageFromExtension(name);
@@ -45,7 +45,7 @@ const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Prop
         lineHighlightClone.delete(i);
       }
 
-      setLineHighlight(lineHighlightClone);
+      setValue('lineHighlight', mapToArray(lineHighlightClone));
       setTextSelection(null);
       window.getSelection()?.removeAllRanges();
 
@@ -56,9 +56,9 @@ const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Prop
       lineHighlightClone.set(i, codeHighlight.id);
     }
 
-    setLineHighlight(lineHighlightClone);
-    setTextSelection(null);
+    setValue('lineHighlight', mapToArray(lineHighlightClone));
     setValue('codeHighlight', CODE_HIGHLIGHT_OPTIONS[0]);
+    setTextSelection(null);
     window.getSelection()?.removeAllRanges();
   }, [codeHighlight]);
 
@@ -101,7 +101,7 @@ const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Prop
           <Controller
             name="codeHighlight"
             control={control}
-            render={({ field }) => <SelectInput className="w-36" options={highlightOptions} {...field} />}
+            render={({ field }) => <SelectInput className="w-36" options={codeHighlightOptions} {...field} />}
           />
           <Controller
             name="theme"
@@ -113,9 +113,7 @@ const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Prop
       <Editor
         value={code}
         onValueChange={(code) => setValue('code', code)}
-        highlight={(code) =>
-          highlightSnippet({ code, highlighter, language, lineHighlightOptions: lineHighlight, theme: theme.id })
-        }
+        highlight={(code) => highlightSnippet({ code, highlighter, language, lineHighlight, theme: theme.id })}
         padding={6.5}
         style={{
           backgroundColor: THEME_BACKGROUND_COLOR_MAP[theme.id],
@@ -126,7 +124,7 @@ const SnippetTextEditor = ({ highlightOptions, highlighter, themeOptions }: Prop
           overflow: 'auto',
         }}
         className="code-editor-container"
-        tabSize={2}
+        tabSize={4}
         insertSpaces
         onSelect={handleEditorSelect}
       />
