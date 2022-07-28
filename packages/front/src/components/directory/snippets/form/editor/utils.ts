@@ -14,7 +14,6 @@ type HighLightOption = {
 };
 
 const buildLineOptions = (lineHighlight: Array<[number, string]>): HighLightOption[] => {
-  console.log('lineHighlight => ', lineHighlight);
   return lineHighlight.map(([key, value]) => ({ classes: [`line-diff line-diff-${value}`], line: key }));
 };
 
@@ -33,7 +32,7 @@ export const highlightSnippet = ({ code, highlighter, language, lineHighlight, t
     return code;
   }
 
-  const text = highlighter
+  return highlighter
     .codeToHtml(code, {
       lang: language,
       lineOptions: buildLineOptions(lineHighlight),
@@ -46,8 +45,6 @@ export const highlightSnippet = ({ code, highlighter, language, lineHighlight, t
       return `<span class='line-number'>${i + 1}</span>${addWhitespaceForEmptyLine(line)}`;
     })
     .join('\n');
-
-  return text;
 };
 
 export const getLanguageFromExtension = (fileName?: string) => {

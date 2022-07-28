@@ -87,7 +87,7 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
       codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
       description: '',
       lineHighlight: [],
-      name: undefined,
+      name: '',
       theme: THEME_OPTIONS[0],
     });
     formMethods.clearErrors();
