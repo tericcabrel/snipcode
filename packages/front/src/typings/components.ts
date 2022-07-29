@@ -32,13 +32,4 @@ export type SnippetItem = {
   name: string;
 };
 
-export type EditorFormValues = {
-  code: string;
-  codeHighlight: SelectOption;
-  description: string;
-  lineHighlight: Array<[number, string]>;
-  name: string;
-  theme: SelectOption;
-};
-
 // export type SupportedTheme = 'one-dark-pro' | 'dracula' | 'dark-plus' | 'monokai' | 'github-dark' | 'github-light';
