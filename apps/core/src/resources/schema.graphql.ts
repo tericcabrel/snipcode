@@ -63,6 +63,7 @@ export default gql`
     size: Int!
     visibility: SnippetVisibility!
     description: String
+    theme: String!
     createdAt: Date!
     updatedAt: Date!
     folder: Folder!

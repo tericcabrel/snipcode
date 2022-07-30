@@ -148,16 +148,19 @@ export const createTestSnippetDto = (
 ): CreateSnippetDto => {
   const languages = ['java', 'js', 'ts', 'c', 'c++', 'python', 'go', 'php', 'csharp'];
   const extensions = ['java', 'js', 'ts', 'c', 'cpp', 'py', 'go', 'php', 'cs'];
+  const themes = ['one-dark-pro', 'dracula', 'dark-plus', 'monokai', 'github-dark', 'github-light'];
 
-  const index = randNumber({ max: languages.length - 1, min: 0 });
+  const languageIndex = randNumber({ max: languages.length - 1, min: 0 });
+  const themeIndex = randNumber({ max: themes.length - 1, min: 0 });
 
   return new CreateSnippetDto({
     content: randWord({ length: randNumber({ max: 30, min: 5 }) }).join('\n'),
     description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
     folderId: args?.folderId ?? generateTestId(),
-    language: languages[index],
+    language: languages[languageIndex],
     lineHighlight: null,
-    name: args?.name ?? `${randWord()}.${extensions[index]}`,
+    name: args?.name ?? `${randWord()}.${extensions[languageIndex]}`,
+    theme: themes[themeIndex],
     userId: args?.userId ?? generateTestId(),
     visibility: args?.visibility ?? 'public',
   });

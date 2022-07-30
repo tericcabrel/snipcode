@@ -95,6 +95,7 @@ model Snippet {
   visibility    SnippetVisibility @default(public)
   description   String?           @db.Text
   lineHighlight String?           @db.Text @map("line_highlight")
+  theme         String            @db.VarChar(20)
   createdAt     DateTime          @default(now()) @map("created_at")
   updatedAt     DateTime          @updatedAt @map("updated_at")
   user          User              @relation(fields: [userId], references: [id], onDelete: Restrict)

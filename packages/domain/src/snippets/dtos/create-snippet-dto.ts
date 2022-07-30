@@ -7,6 +7,7 @@ type Input = {
   language: string;
   lineHighlight: string | null;
   name: string;
+  theme: string;
   userId: string;
   visibility: SnippetVisibility;
 };
@@ -37,6 +38,7 @@ export default class CreateSnippetDto {
       lineHighlight: this._input.lineHighlight,
       name: this._input.name,
       size: this.getContentSize(),
+      theme: this._input.theme,
       updatedAt: new Date(),
       userId: this._input.userId,
       visibility: this._input.visibility,

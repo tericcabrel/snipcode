@@ -16,6 +16,7 @@ describe('Test Create Snippet DTO', () => {
       language: 'tsx',
       lineHighlight: null,
       name: 'app.tsx',
+      theme: 'github-dark',
       userId,
       visibility: 'public',
     });
@@ -34,6 +35,7 @@ describe('Test Create Snippet DTO', () => {
       lineHighlight: null,
       name: 'app.tsx',
       size: expect.any(Number),
+      theme: 'github-dark',
       updatedAt: expect.any(Date),
       userId,
       visibility: 'public',
