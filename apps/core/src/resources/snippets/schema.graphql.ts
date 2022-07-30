@@ -9,6 +9,7 @@ export default gql`
     lineHighlight: String
     visibility: SnippetVisibility!
     description: String
+    theme: String!
   }
 
   extend type Mutation {

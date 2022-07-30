@@ -79,29 +79,6 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
     resolver: yupResolver(formSchema),
   });
 
-  const submitCreateSnippet = async (values: FormValues) => {
-    console.log(values);
-
-    await createSnippet({
-      input: {
-        content: values.code,
-        description: values.description,
-        folderId,
-        language: extractLanguageFromName(values.name),
-        lineHighlight: lineHighlightToString(values.lineHighlight),
-        name: values.name,
-        // theme: values.theme.id,
-        visibility: values.isPrivate ? 'private' : 'public',
-      },
-      onError: (message) => {
-        console.error('Message => ', message);
-      },
-      onSuccess: (snippetId: string) => {
-        console.log('Snippet => ', snippetId);
-      },
-    });
-  };
-
   const handleCloseModal = () => {
     closeModal();
     formMethods.reset({
@@ -114,6 +91,30 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
       theme: THEME_OPTIONS[0],
     });
     formMethods.clearErrors();
+  };
+
+  const submitCreateSnippet = async (values: FormValues) => {
+    console.log(values);
+
+    await createSnippet({
+      input: {
+        content: values.code,
+        description: values.description,
+        folderId,
+        language: extractLanguageFromName(values.name),
+        lineHighlight: lineHighlightToString(values.lineHighlight),
+        name: values.name,
+        theme: values.theme.id,
+        visibility: values.isPrivate ? 'private' : 'public',
+      },
+      onError: (message) => {
+        console.error('Message => ', message);
+      },
+      onSuccess: (snippetId: string) => {
+        console.log('Snippet => ', snippetId);
+        handleCloseModal();
+      },
+    });
   };
 
   return (

@@ -23,6 +23,7 @@ export default class SnippetService {
         lineHighlight: input.lineHighlight,
         name: input.name,
         size: input.size,
+        theme: input.theme,
         userId: input.userId,
         visibility: input.visibility,
       },

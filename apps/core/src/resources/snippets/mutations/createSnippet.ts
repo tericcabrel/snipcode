@@ -15,6 +15,7 @@ export const createSnippet: MutationResolvers['createSnippet'] = async (_parent,
     language: input.language,
     lineHighlight: input.lineHighlight ?? null,
     name: input.name,
+    theme: input.theme,
     userId,
     visibility: input.visibility,
   });

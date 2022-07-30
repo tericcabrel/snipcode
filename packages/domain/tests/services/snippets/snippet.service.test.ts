@@ -35,6 +35,7 @@ describe('Test Snippet service', () => {
       lineHighlight: createSnippetDto.toSnippet().lineHighlight,
       name: createSnippetDto.toSnippet().name,
       size: createSnippetDto.toSnippet().size,
+      theme: createSnippetDto.toSnippet().theme,
       updatedAt: expect.any(Date),
       userId: user.id,
       visibility: createSnippetDto.toSnippet().visibility,

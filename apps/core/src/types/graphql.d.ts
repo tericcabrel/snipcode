@@ -36,6 +36,7 @@ export type CreateSnippetInput = {
   language: Scalars['String'];
   lineHighlight?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
+  theme: Scalars['String'];
   visibility: SnippetVisibility;
 };
 
@@ -165,6 +166,7 @@ export type Snippet = {
   lineHighLight?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   size: Scalars['Int'];
+  theme: Scalars['String'];
   updatedAt: Scalars['Date'];
   user: User;
   visibility: SnippetVisibility;
@@ -367,6 +369,7 @@ export type SnippetResolvers<ContextType = AppContext, ParentType extends Resolv
   lineHighLight?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  theme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   visibility?: Resolver<ResolversTypes['SnippetVisibility'], ParentType, ContextType>;
