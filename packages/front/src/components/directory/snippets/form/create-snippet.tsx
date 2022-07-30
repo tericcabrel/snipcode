@@ -6,8 +6,10 @@ import { Highlighter } from 'shiki';
 import * as yup from 'yup';
 
 import Button from '../../../../forms/button';
+import { useCreateSnippet } from '../../../../services/snippets/create-snippet';
 import { EditorFormValues } from '../../../../typings/snippet-form';
 import { CODE_HIGHLIGHT_OPTIONS, FORM_ERRORS, THEME_OPTIONS } from '../../../../utils/constants';
+import { extractLanguageFromName, lineHighlightToString } from '../../../../utils/snippets';
 import SnippetTextEditor from './editor';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -15,6 +17,7 @@ const shiki = require('shiki');
 
 type Props = {
   closeModal: () => void;
+  folderId: string;
   open: boolean;
 };
 
@@ -33,10 +36,10 @@ const formSchema = yup.object().shape({
 
 type FormValues = EditorFormValues;
 
-const CreateSnippetContainer = ({ closeModal, open }: Props) => {
+const CreateSnippetContainer = ({ closeModal, folderId, open }: Props) => {
   const cancelButtonRef = useRef(null);
-
   const [highlighter, setHighlighter] = useState<Highlighter | undefined>();
+  const { createSnippet, isLoading } = useCreateSnippet();
 
   useEffect(() => {
     const loadShikiAssets = async () => {
@@ -76,8 +79,27 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
     resolver: yupResolver(formSchema),
   });
 
-  const submitCreateSnippet = (values: FormValues) => {
+  const submitCreateSnippet = async (values: FormValues) => {
     console.log(values);
+
+    await createSnippet({
+      input: {
+        content: values.code,
+        description: values.description,
+        folderId,
+        language: extractLanguageFromName(values.name),
+        lineHighlight: lineHighlightToString(values.lineHighlight),
+        name: values.name,
+        // theme: values.theme.id,
+        visibility: values.isPrivate ? 'private' : 'public',
+      },
+      onError: (message) => {
+        console.error('Message => ', message);
+      },
+      onSuccess: (snippetId: string) => {
+        console.log('Snippet => ', snippetId);
+      },
+    });
   };
 
   const handleCloseModal = () => {
@@ -141,7 +163,12 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
                   <Button className="w-auto" color="white-gray" onClick={handleCloseModal} ref={cancelButtonRef}>
                     Cancel
                   </Button>
-                  <Button className="w-auto" onClick={formMethods.handleSubmit(submitCreateSnippet)}>
+                  <Button
+                    className="w-auto"
+                    onClick={formMethods.handleSubmit(submitCreateSnippet)}
+                    disabled={isLoading}
+                    isLoading={isLoading}
+                  >
                     Create
                   </Button>
                 </div>
