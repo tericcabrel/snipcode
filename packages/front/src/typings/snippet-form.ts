@@ -1,6 +1,6 @@
 import { Highlighter } from 'shiki';
 
-import { SelectOption } from '../../../../../typings/components';
+import { SelectOption } from './components';
 
 export type HighlightSnippetArgs = {
   code: string;
@@ -24,6 +24,7 @@ export type EditorFormValues = {
   code: string;
   codeHighlight: SelectOption;
   description: string;
+  isPrivate: boolean;
   lineHighlight: Array<[number, string]>;
   name: string;
   theme: SelectOption;

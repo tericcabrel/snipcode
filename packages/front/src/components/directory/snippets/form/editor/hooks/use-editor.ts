@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BUNDLED_LANGUAGES } from 'shiki';
 
-import { HighLightOption, HighlightSnippetArgs, TextSelection } from '../types';
+import { HighLightOption, HighlightSnippetArgs, TextSelection } from '../../../../../../typings/types';
 
 export const useEditor = () => {
   const [textSelection, setTextSelection] = useState<TextSelection | null>(null);
