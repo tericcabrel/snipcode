@@ -6,6 +6,7 @@ export default gql`
     name: String!
     content: String!
     language: String!
+    lineHighlight: String
     visibility: SnippetVisibility!
     description: String
   }

@@ -59,6 +59,7 @@ export default gql`
     name: String!
     content: String!
     language: String!
+    lineHighLight: String
     size: Int!
     visibility: SnippetVisibility!
     description: String
