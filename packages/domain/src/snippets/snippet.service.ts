@@ -20,6 +20,7 @@ export default class SnippetService {
         folderId: input.folderId,
         id: input.id,
         language: input.language,
+        lineHighlight: input.lineHighlight,
         name: input.name,
         size: input.size,
         userId: input.userId,

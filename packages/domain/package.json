@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.prod.json",
     "clean": "rm -rf .turbo dist",
-    "lint": "eslint src index.ts",
+    "lint": "eslint --fix",
     "db:test": "docker run -d --rm -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=sharingan --name sharingandb -p 3313:3306 mysql:8.0",
     "db:test:stop": "docker container kill sharingandb",
     "db:test:migration": "npx prisma migrate dev --schema=../database/prisma/schema.test.prisma",
