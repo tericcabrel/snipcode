@@ -6,8 +6,7 @@ import { Highlighter } from 'shiki';
 import * as yup from 'yup';
 
 import Button from '../../../../forms/button';
-import TextInput from '../../../../forms/text-input';
-import { EditorFormValues } from '../../../../typings/components';
+import { EditorFormValues } from '../../../../typings/snippet-form';
 import { CODE_HIGHLIGHT_OPTIONS, FORM_ERRORS, THEME_OPTIONS } from '../../../../utils/constants';
 import SnippetTextEditor from './editor';
 
@@ -32,7 +31,7 @@ const formSchema = yup.object().shape({
     .max(MAX_NAME_LENGTH, FORM_ERRORS.minCharacters(MAX_NAME_LENGTH)),
 });
 
-type FormValues = { code?: string; description?: string; name?: string } & EditorFormValues;
+type FormValues = EditorFormValues;
 
 const CreateSnippetContainer = ({ closeModal, open }: Props) => {
   const cancelButtonRef = useRef(null);
@@ -70,6 +69,7 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
 }
 `,
       codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
+      isPrivate: true,
       lineHighlight: [],
       theme: THEME_OPTIONS[0],
     },
@@ -86,6 +86,7 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
       code: '',
       codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
       description: '',
+      isPrivate: true,
       lineHighlight: [],
       name: '',
       theme: THEME_OPTIONS[0],
@@ -127,12 +128,6 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
                     </Dialog.Title>
                     <div className="mt-2">
                       <FormProvider {...formMethods}>
-                        <TextInput
-                          className="mt-6 mb-5 w-full"
-                          type="text"
-                          name="description"
-                          placeholder="Description of the snippet"
-                        />
                         <SnippetTextEditor
                           highlighter={highlighter}
                           codeHighlightOptions={CODE_HIGHLIGHT_OPTIONS}
@@ -142,21 +137,13 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
                     </div>
                   </div>
                 </div>
-                <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                  <Button
-                    className="sm:w-auto sm:ml-3 sm:text-sm mt-0 rounded-md"
-                    onClick={formMethods.handleSubmit(submitCreateSnippet)}
-                  >
+                <div className="mt-5 sm:mt-4 sm:flex justify-end space-x-6">
+                  <Button className="w-auto" color="white-gray" onClick={handleCloseModal} ref={cancelButtonRef}>
+                    Cancel
+                  </Button>
+                  <Button className="w-auto" onClick={formMethods.handleSubmit(submitCreateSnippet)}>
                     Create
                   </Button>
-                  <button
-                    type="button"
-                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm"
-                    onClick={handleCloseModal}
-                    ref={cancelButtonRef}
-                  >
-                    Cancel
-                  </button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

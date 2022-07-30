@@ -5,6 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import { getInputErrorMessage } from '../utils/forms';
 
 type TextInputProps = {
+  groupClassName?: string;
   isRequired?: boolean;
   label?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
@@ -14,7 +15,7 @@ const TextInput = (props: TextInputProps) => {
     formState: { errors },
     register,
   } = useFormContext();
-  const { className, isRequired, label, ...inputProps } = props;
+  const { className, groupClassName = '', isRequired, label, ...inputProps } = props;
   const errorMessage = getInputErrorMessage(errors, inputProps.name);
 
   const inputClasses = classNames(
@@ -22,7 +23,7 @@ const TextInput = (props: TextInputProps) => {
     className,
   );
   const inputLabel = label ? `${label}${isRequired ? '*' : ''}` : undefined;
-  const formGroupClasses = classNames(inputLabel ? 'mb-4' : '');
+  const formGroupClasses = classNames(inputLabel ? 'mb-4' : '', groupClassName);
 
   return (
     <div className={formGroupClasses}>

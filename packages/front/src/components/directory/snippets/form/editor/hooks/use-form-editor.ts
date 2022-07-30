@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Highlighter } from 'shiki';
 
+import { EditorFormValues } from '../../../../../../typings/snippet-form';
 import { CODE_HIGHLIGHT_OPTIONS } from '../../../../../../utils/constants';
-import { EditorFormValues } from '../types';
 import { useEditor } from './use-editor';
 
 export const useFormEditor = () => {
@@ -22,6 +22,7 @@ export const useFormEditor = () => {
   const theme = watch('theme');
   const lineHighlight = watch('lineHighlight');
   const codeHighlight = watch('codeHighlight');
+  const isSnippetPrivate = watch('isPrivate');
 
   const language = getLanguageFromExtension(name);
 
@@ -58,5 +59,15 @@ export const useFormEditor = () => {
     return highlightSnippet({ code, highlighter, language, lineHighlight, theme: theme.id });
   };
 
-  return { code, handleEditorSelect, highlightSnippet, language, name, onHighlight, textSelection, theme };
+  return {
+    code,
+    handleEditorSelect,
+    highlightSnippet,
+    isSnippetPrivate,
+    language,
+    name,
+    onHighlight,
+    textSelection,
+    theme,
+  };
 };
