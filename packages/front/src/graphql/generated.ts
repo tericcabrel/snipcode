@@ -23,6 +23,7 @@ export type CreateSnippetInput = {
   description?: InputMaybe<Scalars['String']>;
   folderId: Scalars['String'];
   language: Scalars['String'];
+  lineHighlight?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   visibility: SnippetVisibility;
 };
@@ -143,6 +144,7 @@ export type Snippet = {
   folder: Folder;
   id: Scalars['ID'];
   language: Scalars['String'];
+  lineHighLight?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   size: Scalars['Int'];
   updatedAt: Scalars['Date'];
@@ -180,6 +182,12 @@ export type SubscribeNewsletterMutation = {
   __typename?: 'Mutation';
   subscribeToNewsletter: { __typename?: 'Result'; message: string };
 };
+
+export type CreateSnippetMutationVariables = Exact<{
+  input: CreateSnippetInput;
+}>;
+
+export type CreateSnippetMutation = { __typename?: 'Mutation'; createSnippet: { __typename?: 'Snippet'; id: string } };
 
 export type LoginUserMutationVariables = Exact<{
   email: Scalars['String'];
