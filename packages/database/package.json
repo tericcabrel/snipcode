@@ -22,14 +22,14 @@
     "db:seed": "prisma db seed"
   },
   "dependencies": {
-    "@prisma/client": "^4.0.0",
+    "@prisma/client": "^4.1.1",
     "cuid": "^2.1.8"
   },
   "devDependencies": {
     "@types/jest": "^28.1.4",
     "dotenv": "^16.0.1",
     "jest": "^28.1.2",
-    "prisma": "^4.0.0",
+    "prisma": "^4.1.1",
     "ts-jest": "^28.0.5",
     "typescript": "^4.7.4"
   }

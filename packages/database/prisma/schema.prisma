@@ -85,19 +85,20 @@ model Folder {
 }
 
 model Snippet {
-  id          String            @id @db.VarChar(50)
-  userId      String            @map("user_id") @db.VarChar(50)
-  folderId    String            @map("folder_id")
-  name        String            @db.VarChar(255)
-  content     String            @db.Text
-  language    String            @db.VarChar(20)
-  size        Int               @default(0) @db.Int
-  visibility  SnippetVisibility @default(public)
-  description String?           @db.Text
-  createdAt   DateTime          @default(now()) @map("created_at")
-  updatedAt   DateTime          @updatedAt @map("updated_at")
-  user        User              @relation(fields: [userId], references: [id], onDelete: Restrict)
-  folder      Folder            @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  id            String            @id @db.VarChar(50)
+  userId        String            @map("user_id") @db.VarChar(50)
+  folderId      String            @map("folder_id")
+  name          String            @db.VarChar(255)
+  content       String            @db.Text
+  language      String            @db.VarChar(20)
+  size          Int               @default(0) @db.Int
+  visibility    SnippetVisibility @default(public)
+  description   String?           @db.Text
+  lineHighlight String?           @db.Text @map("line_highlight")
+  createdAt     DateTime          @default(now()) @map("created_at")
+  updatedAt     DateTime          @updatedAt @map("updated_at")
+  user          User              @relation(fields: [userId], references: [id], onDelete: Restrict)
+  folder        Folder            @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
   @@index([name])
   @@index([userId])
