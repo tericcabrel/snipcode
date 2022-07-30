@@ -32,6 +32,7 @@ describe('Test Snippet service', () => {
       folderId: rootFolder.id,
       id: createSnippetDto.toSnippet().id,
       language: createSnippetDto.toSnippet().language,
+      lineHighlight: createSnippetDto.toSnippet().lineHighlight,
       name: createSnippetDto.toSnippet().name,
       size: createSnippetDto.toSnippet().size,
       updatedAt: expect.any(Date),

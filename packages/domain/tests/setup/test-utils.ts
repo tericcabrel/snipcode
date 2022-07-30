@@ -156,6 +156,7 @@ export const createTestSnippetDto = (
     description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
     folderId: args?.folderId ?? generateTestId(),
     language: languages[index],
+    lineHighlight: null,
     name: args?.name ?? `${randWord()}.${extensions[index]}`,
     userId: args?.userId ?? generateTestId(),
     visibility: args?.visibility ?? 'public',

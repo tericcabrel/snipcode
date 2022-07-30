@@ -5,6 +5,7 @@ type Input = {
   description: string | null;
   folderId: string;
   language: string;
+  lineHighlight: string | null;
   name: string;
   userId: string;
   visibility: SnippetVisibility;
@@ -33,6 +34,7 @@ export default class CreateSnippetDto {
       folderId: this._input.folderId,
       id: this.snippetId,
       language: this._input.language,
+      lineHighlight: this._input.lineHighlight,
       name: this._input.name,
       size: this.getContentSize(),
       updatedAt: new Date(),
