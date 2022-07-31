@@ -133,7 +133,7 @@ const Directory = ({ folderId, title }: Props) => {
         </div>
       </main>
       {isNewFolderOpened && <CreateFolderContainer closeModal={closeNewFolderModal} />}
-      <CreateSnippetContainer open={isNewSnippetOpened} closeModal={closeNewSnippetModal} />
+      <CreateSnippetContainer open={isNewSnippetOpened} closeModal={closeNewSnippetModal} folderId={folderId} />
     </>
   );
 };
