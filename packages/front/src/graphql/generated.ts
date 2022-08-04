@@ -5,12 +5,12 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
   Boolean: boolean;
-  Int: number;
-  Float: number;
   Date: any;
+  Float: number;
+  ID: string;
+  Int: number;
+  String: string;
 };
 
 export type CreateFolderInput = {
@@ -57,32 +57,26 @@ export type Mutation = {
   subscribeToNewsletter: Result;
 };
 
-
 export type MutationCreateFolderArgs = {
   input: CreateFolderInput;
 };
-
 
 export type MutationCreateSnippetArgs = {
   input: CreateSnippetInput;
 };
 
-
 export type MutationDeleteFoldersArgs = {
   folderIds: Array<Scalars['String']>;
 };
-
 
 export type MutationLoginUserArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
 };
 
-
 export type MutationSignupUserArgs = {
   input: SignupUserInput;
 };
-
 
 export type MutationSubscribeToNewsletterArgs = {
   email: Scalars['String'];
@@ -91,7 +85,7 @@ export type MutationSubscribeToNewsletterArgs = {
 export const OauthProvider = {
   Github: 'github',
   Stackoverflow: 'stackoverflow',
-  Twitter: 'twitter'
+  Twitter: 'twitter',
 } as const;
 
 export type OauthProvider = typeof OauthProvider[keyof typeof OauthProvider];
@@ -106,7 +100,6 @@ export type Query = {
   /** @deprecated https://stackoverflow.com/questions/59868942/graphql-a-schema-must-have-a-query-operation-defined */
   ping?: Maybe<Scalars['String']>;
 };
-
 
 export type QueryListFoldersArgs = {
   folderId?: InputMaybe<Scalars['String']>;
@@ -129,7 +122,7 @@ export type Role = {
 
 export const RoleName = {
   Admin: 'admin',
-  User: 'user'
+  User: 'user',
 } as const;
 
 export type RoleName = typeof RoleName[keyof typeof RoleName];
@@ -163,7 +156,7 @@ export type Snippet = {
 
 export const SnippetVisibility = {
   Private: 'private',
-  Public: 'public'
+  Public: 'public',
 } as const;
 
 export type SnippetVisibility = typeof SnippetVisibility[keyof typeof SnippetVisibility];
@@ -183,41 +176,59 @@ export type User = {
   username?: Maybe<Scalars['String']>;
 };
 
+export type CreateFolderMutationVariables = Exact<{
+  input: CreateFolderInput;
+}>;
+
+export type CreateFolderMutation = { __typename?: 'Mutation'; createFolder: { __typename?: 'Folder'; id: string } };
+
 export type SubscribeNewsletterMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
 
-
-export type SubscribeNewsletterMutation = { __typename?: 'Mutation', subscribeToNewsletter: { __typename?: 'Result', message: string } };
+export type SubscribeNewsletterMutation = {
+  __typename?: 'Mutation';
+  subscribeToNewsletter: { __typename?: 'Result'; message: string };
+};
 
 export type CreateSnippetMutationVariables = Exact<{
   input: CreateSnippetInput;
 }>;
 
-
-export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'Snippet', id: string } };
+export type CreateSnippetMutation = { __typename?: 'Mutation'; createSnippet: { __typename?: 'Snippet'; id: string } };
 
 export type LoginUserMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
+export type LoginUserMutation = { __typename?: 'Mutation'; loginUser: { __typename: 'LoginResult'; token: string } };
 
-export type LoginUserMutation = { __typename?: 'Mutation', loginUser: { __typename: 'LoginResult', token: string } };
+export type LogoutUserMutationVariables = Exact<{ [key: string]: never }>;
 
-export type LogoutUserMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type LogoutUserMutation = { __typename?: 'Mutation', logoutUser: boolean };
+export type LogoutUserMutation = { __typename?: 'Mutation'; logoutUser: boolean };
 
 export type SignupUserMutationVariables = Exact<{
   input: SignupUserInput;
 }>;
 
+export type SignupUserMutation = {
+  __typename?: 'Mutation';
+  signupUser: { __typename?: 'SignupUserResult'; message: string };
+};
 
-export type SignupUserMutation = { __typename?: 'Mutation', signupUser: { __typename?: 'SignupUserResult', message: string } };
+export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never }>;
 
-export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AuthenticatedUserQuery = { __typename?: 'Query', authenticatedUser?: { __typename: 'User', id: string, email: string, isEnabled: boolean, name: string, pictureUrl?: string | null, username?: string | null, role: { __typename: 'Role', name: RoleName } } | null };
+export type AuthenticatedUserQuery = {
+  __typename?: 'Query';
+  authenticatedUser?: {
+    __typename: 'User';
+    email: string;
+    id: string;
+    isEnabled: boolean;
+    name: string;
+    pictureUrl?: string | null;
+    role: { __typename: 'Role'; name: RoleName };
+    username?: string | null;
+  } | null;
+};

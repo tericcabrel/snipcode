@@ -46,3 +46,5 @@ Kindly read our [Contributing Guide](./CONTRIBUTING.md) to learn and understand 
 ## License
 
 This project is developed under the [MIT License](/LICENSE)
+
+> **Note**: This is a note
