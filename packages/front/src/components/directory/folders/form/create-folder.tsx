@@ -6,10 +6,12 @@ import * as yup from 'yup';
 
 import Button from '../../../../forms/button';
 import TextInput from '../../../../forms/text-input';
+import { useCreateFolder } from '../../../../services/folders/create-folder';
 import { FOLDER_NAME_REGEX, FORM_ERRORS } from '../../../../utils/constants';
 
 type Props = {
   closeModal: () => void;
+  parentFolderId: string;
 };
 
 const MIN_NAME_LENGTH = 1;
@@ -23,10 +25,11 @@ const formSchema = yup.object().shape({
     .matches(FOLDER_NAME_REGEX, { excludeEmptyString: false, message: FORM_ERRORS.folderNameInvalid }),
 });
 
-type FormValues = { name?: string };
+type FormValues = { name: string };
 
-const CreateFolderContainer = ({ closeModal }: Props) => {
+const CreateFolderContainer = ({ closeModal, parentFolderId }: Props) => {
   const cancelButtonRef = useRef(null);
+  const { createFolder, isLoading } = useCreateFolder();
 
   const formMethods = useForm<FormValues>({
     defaultValues: {
@@ -35,8 +38,22 @@ const CreateFolderContainer = ({ closeModal }: Props) => {
     resolver: yupResolver(formSchema),
   });
 
-  const submitCreateFolder = (values: FormValues) => {
+  const submitCreateFolder = async (values: FormValues) => {
     console.log(values);
+
+    await createFolder({
+      input: {
+        name: values.name,
+        parentId: parentFolderId,
+      },
+      onError: (message) => {
+        console.error(message);
+      },
+      onSuccess: (createdFolderId) => {
+        console.log('Folder => ', createdFolderId);
+        closeModal();
+      },
+    });
   };
 
   return (
@@ -78,21 +95,18 @@ const CreateFolderContainer = ({ closeModal }: Props) => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                <div className="mt-5 sm:mt-4 sm:flex justify-end space-x-6">
+                  <Button className="w-auto" color="white-gray" onClick={closeModal} ref={cancelButtonRef}>
+                    Cancel
+                  </Button>
                   <Button
-                    className="sm:w-auto sm:ml-3 sm:text-sm mt-0 rounded-md"
+                    className="w-auto"
                     onClick={formMethods.handleSubmit(submitCreateFolder)}
+                    disabled={isLoading}
+                    isLoading={isLoading}
                   >
                     Create
                   </Button>
-                  <button
-                    type="button"
-                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm"
-                    onClick={closeModal}
-                    ref={cancelButtonRef}
-                  >
-                    Cancel
-                  </button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
