@@ -1,6 +1,12 @@
 import { gql } from 'apollo-server-core';
 
 export default gql`
+  type Directory {
+    folders: [Folder!]!
+    snippets: [Snippet!]!
+    paths: [Folder!]!
+  }
+
   input CreateFolderInput {
     parentId: String!
     name: String!
@@ -13,5 +19,6 @@ export default gql`
 
   extend type Query {
     listFolders(folderId: String): [Folder!]!
+    listDirectory(folderId: String!): Directory
   }
 `;
