@@ -13,6 +13,7 @@ export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   info?: GraphQLResolveInfo
 ) => Promise<TResult> | TResult;
 
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -40,6 +41,13 @@ export type CreateSnippetInput = {
   visibility: SnippetVisibility;
 };
 
+export type Directory = {
+  __typename?: 'Directory';
+  folders: Array<Folder>;
+  paths: Array<Folder>;
+  snippets: Array<Snippet>;
+};
+
 export type Folder = {
   __typename?: 'Folder';
   createdAt: Scalars['Date'];
@@ -48,6 +56,7 @@ export type Folder = {
   name: Scalars['String'];
   parent?: Maybe<Folder>;
   subFolders: Array<Folder>;
+  subFoldersCount: Scalars['Int'];
   updatedAt: Scalars['Date'];
   user: User;
 };
@@ -112,10 +121,16 @@ export type Query = {
   authenticatedUser?: Maybe<User>;
   /** @deprecated Field no longer supported */
   hello: Scalars['String'];
+  listDirectory?: Maybe<Directory>;
   listFolders: Array<Folder>;
   mySnippets: Array<Snippet>;
   /** @deprecated https://stackoverflow.com/questions/59868942/graphql-a-schema-must-have-a-query-operation-defined */
   ping?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryListDirectoryArgs = {
+  folderId: Scalars['String'];
 };
 
 
@@ -260,6 +275,7 @@ export type ResolversTypes = {
   CreateFolderInput: CreateFolderInput;
   CreateSnippetInput: CreateSnippetInput;
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  Directory: ResolverTypeWrapper<Omit<Directory, 'folders' | 'paths' | 'snippets'> & { folders: Array<ResolversTypes['Folder']>, paths: Array<ResolversTypes['Folder']>, snippets: Array<ResolversTypes['Snippet']> }>;
   Folder: ResolverTypeWrapper<Folder>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -284,6 +300,7 @@ export type ResolversParentTypes = {
   CreateFolderInput: CreateFolderInput;
   CreateSnippetInput: CreateSnippetInput;
   Date: Scalars['Date'];
+  Directory: Omit<Directory, 'folders' | 'paths' | 'snippets'> & { folders: Array<ResolversParentTypes['Folder']>, paths: Array<ResolversParentTypes['Folder']>, snippets: Array<ResolversParentTypes['Snippet']> };
   Folder: Folder;
   ID: Scalars['ID'];
   Int: Scalars['Int'];
@@ -303,6 +320,13 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
+export type DirectoryResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Directory'] = ResolversParentTypes['Directory']> = {
+  folders?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType>;
+  paths?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType>;
+  snippets?: Resolver<Array<ResolversTypes['Snippet']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type FolderResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Folder'] = ResolversParentTypes['Folder']> = {
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -310,6 +334,7 @@ export type FolderResolvers<ContextType = AppContext, ParentType extends Resolve
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   parent?: Resolver<Maybe<ResolversTypes['Folder']>, ParentType, ContextType>;
   subFolders?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType>;
+  subFoldersCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -334,6 +359,7 @@ export type QueryResolvers<ContextType = AppContext, ParentType extends Resolver
   allSnippets?: Resolver<Array<ResolversTypes['Snippet']>, ParentType, ContextType>;
   authenticatedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  listDirectory?: Resolver<Maybe<ResolversTypes['Directory']>, ParentType, ContextType, RequireFields<QueryListDirectoryArgs, 'folderId'>>;
   listFolders?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType, Partial<QueryListFoldersArgs>>;
   mySnippets?: Resolver<Array<ResolversTypes['Snippet']>, ParentType, ContextType>;
   ping?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -394,6 +420,7 @@ export type UserResolvers<ContextType = AppContext, ParentType extends Resolvers
 
 export type Resolvers<ContextType = AppContext> = {
   Date?: GraphQLScalarType;
+  Directory?: DirectoryResolvers<ContextType>;
   Folder?: FolderResolvers<ContextType>;
   LoginResult?: LoginResultResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;

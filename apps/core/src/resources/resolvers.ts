@@ -2,6 +2,8 @@ import { Resolvers } from '../types/graphql';
 import { createFolder } from './folders/mutations/createFolder';
 import { deleteFolders } from './folders/mutations/deleteFolders';
 import { listFolders } from './folders/queries/list-folders';
+import { listDirectory } from './folders/queries/listDirectory';
+import { subFoldersCountResolver } from './folders/resolvers';
 import { subscribeToNewsletter } from './newsletter/mutations/subscribe';
 import { createSnippet } from './snippets/mutations/createSnippet';
 import { allSnippets } from './snippets/queries/allSnippets';
@@ -21,6 +23,7 @@ const resolvers: Resolvers = {
     subFolders: (folder, _args, context) => {
       return context.db.folder.findSubFolders(folder.id);
     },
+    subFoldersCount: subFoldersCountResolver,
     user: (folder, _args, context) => {
       return context.db.user.findById(folder.userId);
     },
@@ -38,6 +41,7 @@ const resolvers: Resolvers = {
     allSnippets,
     authenticatedUser,
     hello: () => 'Hello from Sharingan',
+    listDirectory,
     listFolders,
     mySnippets,
     ping: () => 'pong',

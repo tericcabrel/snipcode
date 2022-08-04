@@ -103,6 +103,18 @@ export default class FolderService {
     });
   }
 
+  async generateDirectoryPath(folderId: string, result: Folder[] = []): Promise<Folder[]> {
+    const folder = await dbClient.folder.findFirstOrThrow({ where: { id: folderId } });
+
+    result.push(folder);
+
+    if (!folder.parentId) {
+      return result;
+    }
+
+    return this.generateDirectoryPath(folder.parentId, result);
+  }
+
   private findFolderSubFolders(folderId: string, userId: string): Promise<Folder[]> {
     return dbClient.folder.findMany({
       where: {

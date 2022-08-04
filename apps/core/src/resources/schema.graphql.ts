@@ -52,6 +52,7 @@ export default gql`
     user: User!
     parent: Folder
     subFolders: [Folder!]!
+    subFoldersCount: Int!
   }
 
   type Snippet {
