@@ -40,6 +40,7 @@ export default gql`
     oauthProvider: OauthProvider
     createdAt: Date!
     updatedAt: Date!
+    rootFolder: Folder!
     folders: [Folder!]!
   }
 

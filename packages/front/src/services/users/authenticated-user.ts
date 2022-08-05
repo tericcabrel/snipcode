@@ -7,7 +7,7 @@ const formatAuthenticatedUserResult = (data?: AuthenticatedUserQuery): Authentic
     return;
   }
 
-  const { email, id, isEnabled, name, pictureUrl, role, username } = data.authenticatedUser;
+  const { email, id, isEnabled, name, pictureUrl, role, rootFolder, username } = data.authenticatedUser;
 
   return {
     email,
@@ -16,6 +16,7 @@ const formatAuthenticatedUserResult = (data?: AuthenticatedUserQuery): Authentic
     name,
     pictureUrl: pictureUrl ?? null,
     role: role.name,
+    rootFolderId: rootFolder.id,
     username: username ?? null,
   };
 };

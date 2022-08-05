@@ -61,6 +61,9 @@ const resolvers: Resolvers = {
     role: (user, _args, context) => {
       return context.db.role.findById(user.roleId);
     },
+    rootFolder: (user, _args, context) => {
+      return context.db.folder.findUserRootFolder(user.id);
+    },
   },
 };
 

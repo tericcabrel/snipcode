@@ -29,6 +29,13 @@ export type CreateSnippetInput = {
   visibility: SnippetVisibility;
 };
 
+export type Directory = {
+  __typename?: 'Directory';
+  folders: Array<Folder>;
+  paths: Array<Folder>;
+  snippets: Array<Snippet>;
+};
+
 export type Folder = {
   __typename?: 'Folder';
   createdAt: Scalars['Date'];
@@ -37,6 +44,7 @@ export type Folder = {
   name: Scalars['String'];
   parent?: Maybe<Folder>;
   subFolders: Array<Folder>;
+  subFoldersCount: Scalars['Int'];
   updatedAt: Scalars['Date'];
   user: User;
 };
@@ -95,10 +103,15 @@ export type Query = {
   authenticatedUser?: Maybe<User>;
   /** @deprecated No longer supported */
   hello: Scalars['String'];
+  listDirectory?: Maybe<Directory>;
   listFolders: Array<Folder>;
   mySnippets: Array<Snippet>;
   /** @deprecated https://stackoverflow.com/questions/59868942/graphql-a-schema-must-have-a-query-operation-defined */
   ping?: Maybe<Scalars['String']>;
+};
+
+export type QueryListDirectoryArgs = {
+  folderId: Scalars['String'];
 };
 
 export type QueryListFoldersArgs = {
@@ -171,6 +184,7 @@ export type User = {
   oauthProvider?: Maybe<OauthProvider>;
   pictureUrl?: Maybe<Scalars['String']>;
   role: Role;
+  rootFolder: Folder;
   timezone?: Maybe<Scalars['String']>;
   updatedAt: Scalars['Date'];
   username?: Maybe<Scalars['String']>;
@@ -181,6 +195,20 @@ export type CreateFolderMutationVariables = Exact<{
 }>;
 
 export type CreateFolderMutation = { __typename?: 'Mutation'; createFolder: { __typename?: 'Folder'; id: string } };
+
+export type ListDirectoryQueryVariables = Exact<{
+  folderId: Scalars['String'];
+}>;
+
+export type ListDirectoryQuery = {
+  __typename?: 'Query';
+  listDirectory?: {
+    __typename?: 'Directory';
+    folders: Array<{ __typename?: 'Folder'; id: string; name: string; subFoldersCount: number }>;
+    paths: Array<{ __typename?: 'Folder'; id: string; name: string }>;
+    snippets: Array<{ __typename?: 'Snippet'; id: string; language: string; name: string }>;
+  } | null;
+};
 
 export type SubscribeNewsletterMutationVariables = Exact<{
   email: Scalars['String'];
@@ -229,6 +257,7 @@ export type AuthenticatedUserQuery = {
     name: string;
     pictureUrl?: string | null;
     role: { __typename: 'Role'; name: RoleName };
+    rootFolder: { __typename: 'Folder'; id: string };
     username?: string | null;
   } | null;
 };
