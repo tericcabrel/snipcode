@@ -16,6 +16,10 @@ export const queryDocument = gql`
         __typename
         name
       }
+      rootFolder {
+        __typename
+        id
+      }
     }
   }
 `;

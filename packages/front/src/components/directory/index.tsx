@@ -1,4 +1,5 @@
 import { useBooleanState } from '../../hooks';
+import { useListDirectory } from '../../services/folders/list-directory';
 import { FilePath, FolderItem, SnippetItem } from '../../typings/components';
 import MenuAction from '../menu-action';
 import BreadCrumb from './breadcrumb';
@@ -16,6 +17,10 @@ type Props = {
 const Directory = ({ folderId, title }: Props) => {
   const [isNewFolderOpened, openNewFolderModal, closeNewFolderModal] = useBooleanState(false);
   const [isNewSnippetOpened, openNewSnippetModal, closeNewSnippetModal] = useBooleanState(false);
+
+  const { data, isLoading } = useListDirectory(folderId);
+
+  console.log(data);
 
   console.log('rootFolderId => ', folderId);
 

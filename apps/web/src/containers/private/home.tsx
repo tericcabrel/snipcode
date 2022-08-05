@@ -11,7 +11,7 @@ const Home = () => {
     <Layout>
       <NextSeo title="Home" />
       <div className="py-10">
-        <FolderDirectory folderId={data?.id ?? ''} title={`Welcome, ${data?.name}`} />
+        <FolderDirectory folderId={data?.rootFolderId ?? ''} title={`Welcome, ${data?.name}`} />
       </div>
     </Layout>
   );
