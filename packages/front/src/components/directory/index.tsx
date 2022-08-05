@@ -1,6 +1,6 @@
 import { useBooleanState } from '../../hooks';
 import { useListDirectory } from '../../services/folders/list-directory';
-import { FilePath, FolderItem, SnippetItem } from '../../typings/components';
+import { SnippetItem } from '../../typings/components';
 import MenuAction from '../menu-action';
 import BreadCrumb from './breadcrumb';
 import EmptyFolder from './folders/empty';
@@ -18,80 +18,13 @@ const Directory = ({ folderId, title }: Props) => {
   const [isNewFolderOpened, openNewFolderModal, closeNewFolderModal] = useBooleanState(false);
   const [isNewSnippetOpened, openNewSnippetModal, closeNewSnippetModal] = useBooleanState(false);
 
-  const { data, isLoading } = useListDirectory(folderId);
+  const { data } = useListDirectory(folderId);
 
-  console.log(data);
+  const isDirectoryEmpty = data && data.folders.length + data.snippets.length === 0;
 
-  console.log('rootFolderId => ', folderId);
-
-  const folders: FolderItem[] = [
-    {
-      fileCount: 1,
-      id: '1',
-      name: 'Projects',
-    },
-    {
-      fileCount: 3,
-      id: '2',
-      name: 'Gist',
-    },
-    {
-      fileCount: 17,
-      id: '3',
-      name: 'Blog',
-    },
-    {
-      fileCount: 0,
-      id: '4',
-      name: 'Local',
-    },
-    {
-      fileCount: 32,
-      id: '5',
-      name: 'Gist Import',
-    },
-    {
-      fileCount: 6,
-      id: '6',
-      name: 'Big long annoying folder name',
-    },
-  ];
-  const snippets: SnippetItem[] = [
-    {
-      folderId: 'fol_one',
-      id: '1',
-      language: 'typescript',
-      name: 'generate-id.ts',
-    },
-    {
-      folderId: 'fol_one',
-      id: '2',
-      language: 'java',
-      name: 'SpringBootApplication.java',
-    },
-    {
-      folderId: 'fol_one',
-      id: '3',
-      language: 'python',
-      name: 'run_main.py',
-    },
-    {
-      folderId: 'fol_one',
-      id: '4',
-      language: 'csharp',
-      name: 'GenerateReport.cs',
-    },
-    {
-      folderId: 'fol_one',
-      id: '5',
-      language: 'rust',
-      name: 'compute_workflow.rs',
-    },
-  ];
-  const paths: FilePath[] = [
-    { id: 'projects', name: 'Projects' },
-    { id: 'blog', name: 'Blog' },
-  ];
+  const folders = data?.folders ?? [];
+  const snippets = data?.snippets ?? [];
+  const paths = data?.paths ?? [];
 
   const goToFolder = (folderId: string) => {
     console.log('goToFolder', folderId);
@@ -113,7 +46,7 @@ const Directory = ({ folderId, title }: Props) => {
       </header>
       <main>
         <div className="max-w-7xl py-8 mx-auto sm:px-6 lg:px-8">
-          {folders.length === 0 ? (
+          {isDirectoryEmpty ? (
             <div className="border-4 border-dashed border-gray-200 rounded-lg flex justify-center items-center py-8 sm:px-0 h-96">
               <div className="w-1/2">
                 <EmptyFolder />

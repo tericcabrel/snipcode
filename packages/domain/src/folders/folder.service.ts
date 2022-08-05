@@ -103,7 +103,18 @@ export default class FolderService {
     });
   }
 
-  async generateDirectoryPath(folderId: string, result: Folder[] = []): Promise<Folder[]> {
+  async generateDirectoryPath(folderId: string): Promise<Folder[]> {
+    const folders: Folder[] = [];
+
+    await this.listParentFolderRecursively(folderId, folders);
+
+    // Remove the user root folder
+    folders.pop();
+
+    return folders.reverse();
+  }
+
+  private async listParentFolderRecursively(folderId: string, result: Folder[] = []): Promise<Folder[]> {
     const folder = await dbClient.folder.findFirstOrThrow({ where: { id: folderId } });
 
     result.push(folder);
@@ -112,7 +123,7 @@ export default class FolderService {
       return result;
     }
 
-    return this.generateDirectoryPath(folder.parentId, result);
+    return this.listParentFolderRecursively(folder.parentId, result);
   }
 
   private findFolderSubFolders(folderId: string, userId: string): Promise<Folder[]> {
