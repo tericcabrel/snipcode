@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 
 import { ListDirectoryQuery, ListDirectoryQueryVariables } from '../../generated';
 
-const queryDocument = gql`
+export const listDirectoryQueryDocument = gql`
   query listDirectory($folderId: String!) {
     listDirectory(folderId: $folderId) {
       folders {
@@ -24,7 +24,7 @@ const queryDocument = gql`
 `;
 
 export const useListDirectoryQuery = (folderId: string) => {
-  return useQuery<ListDirectoryQuery, ListDirectoryQueryVariables>(queryDocument, {
+  return useQuery<ListDirectoryQuery, ListDirectoryQueryVariables>(listDirectoryQueryDocument, {
     variables: {
       folderId,
     },

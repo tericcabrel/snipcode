@@ -1,4 +1,5 @@
 import useCreateFolderMutation from '../../graphql/folders/mutations/create-folder';
+import { listDirectoryQueryDocument } from '../../graphql/folders/queries/list-directory';
 import { CreateFolderInput } from '../../graphql/generated';
 
 type MutationArgs = {
@@ -14,12 +15,14 @@ export const useCreateFolder = () => {
 
   const createFolder: MutationFn = async ({ input, onError, onSuccess }) => {
     await createFolderMutation({
+      awaitRefetchQueries: true,
       onCompleted: (data) => {
         onSuccess(data.createFolder.id);
       },
       onError: (error) => {
         onError(error.message);
       },
+      refetchQueries: [{ query: listDirectoryQueryDocument, variables: { folderId: input.parentId } }],
       variables: {
         input,
       },

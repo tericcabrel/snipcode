@@ -39,7 +39,7 @@ const CreateFolderContainer = ({ closeModal, parentFolderId }: Props) => {
   });
 
   const submitCreateFolder = async (values: FormValues) => {
-    console.log(values);
+    console.log('Values => ', values);
 
     await createFolder({
       input: {
