@@ -45,3 +45,8 @@ export type DirectoryList = {
   paths: FilePath[];
   snippets: SnippetItem[];
 };
+
+export type FindFolderData = {
+  id: string;
+  name: string;
+};

@@ -1,6 +1,7 @@
 import { Resolvers } from '../types/graphql';
 import { createFolder } from './folders/mutations/createFolder';
 import { deleteFolders } from './folders/mutations/deleteFolders';
+import { findFolder } from './folders/queries/find-folder';
 import { listFolders } from './folders/queries/list-folders';
 import { listDirectory } from './folders/queries/listDirectory';
 import { subFoldersCountResolver } from './folders/resolvers';
@@ -40,6 +41,7 @@ const resolvers: Resolvers = {
   Query: {
     allSnippets,
     authenticatedUser,
+    findFolder,
     hello: () => 'Hello from Sharingan',
     listDirectory,
     listFolders,

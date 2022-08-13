@@ -20,7 +20,7 @@ const useAuth = () => {
     localStorage.removeItem(COOKIE_NAME);
   };
 
-  const redirectToDashboard = () => router.push('/home');
+  const redirectToDashboard = () => router.push('/app/home');
 
   const redirectToSignin = () => router.push('/signin');
 
