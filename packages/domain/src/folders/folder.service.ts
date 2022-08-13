@@ -1,5 +1,6 @@
 import { Folder, dbClient } from '@sharingan/database';
 import SharinganError, { errors } from '@sharingan/utils';
+import { FOLDER_NOT_FOUND } from '@sharingan/utils/dist/src/errors/messages';
 
 import CreateFolderDto from './dtos/create-folder-dto';
 import CreateUserRootFolderDto from './dtos/create-user-root-folder-dto';
@@ -46,8 +47,14 @@ export default class FolderService {
     return dbClient.folder.findMany({ orderBy: { name: 'asc' }, where: { userId } });
   }
 
-  async findById(id: string): Promise<Folder | null> {
-    return dbClient.folder.findUnique({ where: { id } });
+  async findById(id: string): Promise<Folder> {
+    const folder = await dbClient.folder.findUnique({ where: { id } });
+
+    if (!folder) {
+      throw new SharinganError(FOLDER_NOT_FOUND(id), 'FOLDER_NOT_FOUND');
+    }
+
+    return folder;
   }
 
   async findUserRootFolder(userId: string): Promise<Folder> {

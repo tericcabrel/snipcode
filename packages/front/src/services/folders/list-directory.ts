@@ -2,7 +2,7 @@ import { useListDirectoryQuery } from '../../graphql/folders/queries/list-direct
 import { ListDirectoryQuery } from '../../graphql/generated';
 import { DirectoryList } from '../../typings/queries';
 
-const formatAuthenticatedUserResult = (folderId: string, data?: ListDirectoryQuery): DirectoryList | undefined => {
+const formatListDirectoryResult = (folderId: string, data?: ListDirectoryQuery): DirectoryList | undefined => {
   if (!data?.listDirectory) {
     return;
   }
@@ -19,7 +19,7 @@ const formatAuthenticatedUserResult = (folderId: string, data?: ListDirectoryQue
 export const useListDirectory = (folderId: string) => {
   const query = useListDirectoryQuery(folderId);
 
-  const data = formatAuthenticatedUserResult(folderId, query.data);
+  const data = formatListDirectoryResult(folderId, query.data);
 
   return {
     data,

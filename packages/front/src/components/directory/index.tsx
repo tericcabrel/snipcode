@@ -11,10 +11,11 @@ import Snippet from './snippets/snippet';
 
 type Props = {
   folderId: string;
+  onNavigateToFolder: (folderId: string) => void;
   title: string;
 };
 
-const Directory = ({ folderId, title }: Props) => {
+const Directory = ({ folderId, onNavigateToFolder, title }: Props) => {
   const [isNewFolderOpened, openNewFolderModal, closeNewFolderModal] = useBooleanState(false);
   const [isNewSnippetOpened, openNewSnippetModal, closeNewSnippetModal] = useBooleanState(false);
 
@@ -28,7 +29,7 @@ const Directory = ({ folderId, title }: Props) => {
 
   const goToFolder = (folderId: string) => {
     console.log('goToFolder', folderId);
-    // TODO router push
+    onNavigateToFolder(folderId);
   };
 
   const openFile = (snippet: SnippetItem) => {
@@ -46,6 +47,7 @@ const Directory = ({ folderId, title }: Props) => {
       </header>
       <main>
         <div className="max-w-7xl py-8 mx-auto sm:px-6 lg:px-8">
+          <BreadCrumb paths={paths} current={folderId} />
           {isDirectoryEmpty ? (
             <div className="border-4 border-dashed border-gray-200 rounded-lg flex justify-center items-center py-8 sm:px-0 h-96">
               <div className="w-1/2">
@@ -54,7 +56,6 @@ const Directory = ({ folderId, title }: Props) => {
             </div>
           ) : (
             <div className="min-h-96">
-              <BreadCrumb paths={paths} current={folderId} />
               <div className="mt-6 grid grid-cols-5 gap-4">
                 {folders.map((folder) => (
                   <Folder item={folder} key={folder.id} onNavigate={goToFolder} />

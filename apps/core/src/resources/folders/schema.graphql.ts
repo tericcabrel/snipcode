@@ -19,6 +19,7 @@ export default gql`
 
   extend type Query {
     listFolders(folderId: String): [Folder!]!
+    findFolder(folderId: String!): Folder!
     listDirectory(folderId: String!): Directory
   }
 `;

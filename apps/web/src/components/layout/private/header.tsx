@@ -5,8 +5,8 @@ import { Fragment } from 'react';
 import { useAuth } from '@/hooks/authentication/use-auth';
 
 const navigation = [
-  { current: true, href: '/home', name: 'Home' },
-  { current: false, href: '/browse', name: 'Browse' },
+  { current: true, href: '/app/home', name: 'Home' },
+  { current: false, href: '/app/browse', name: 'Browse' },
   /*{ current: false, href: '#', name: 'Favorites' },
   { current: false, href: '#', name: 'Editor' },*/
 ];
@@ -76,7 +76,7 @@ const Header = () => {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Link href="/profile">
+                      <Link href="/app/profile">
                         <a className="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800 hover:bg-gray-100">
                           Profile
                         </a>
@@ -137,7 +137,7 @@ const Header = () => {
                 </div>
               </div>
               <div className="mt-3 space-y-1">
-                <Link href="/profile">
+                <Link href="/app/profile">
                   <a className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
                     Profile
                   </a>

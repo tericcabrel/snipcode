@@ -1,3 +1,4 @@
+import { listDirectoryQueryDocument } from '../../graphql/folders/queries/list-directory';
 import { CreateSnippetInput } from '../../graphql/generated';
 import useCreateSnippetMutation from '../../graphql/snippets/mutations/create-snippet';
 
@@ -14,12 +15,14 @@ export const useCreateSnippet = () => {
 
   const createSnippet: MutationFn = async ({ input, onError, onSuccess }) => {
     await createSnippetMutation({
+      awaitRefetchQueries: true,
       onCompleted: (data) => {
         onSuccess(data.createSnippet.id);
       },
       onError: (error) => {
         onError(error.message);
       },
+      refetchQueries: [{ query: listDirectoryQueryDocument, variables: { folderId: input.folderId } }],
       variables: {
         input,
       },
