@@ -1,3 +1,4 @@
+import { useApolloClient } from '@apollo/client';
 import { useAuthenticatedUser } from '@sharingan/front';
 import { addDayToDate } from '@sharingan/utils';
 import { useRouter } from 'next/router';
@@ -7,17 +8,19 @@ import { COOKIE_NAME } from '@/utils/constants';
 
 const useAuth = () => {
   const [, setCookie, removeCookie] = useCookies([COOKIE_NAME]);
+  const apolloClient = useApolloClient();
   const router = useRouter();
 
-  const { data, isLoading } = useAuthenticatedUser(COOKIE_NAME);
+  const { data, isLoading } = useAuthenticatedUser();
 
   const saveToken = (token: string) => {
-    setCookie(COOKIE_NAME, token, { expires: addDayToDate(90), path: '/', secure: true });
+    setCookie(COOKIE_NAME, token, { expires: addDayToDate(90), path: '/', sameSite: 'none', secure: true });
   };
 
-  const deleteToken = () => {
+  const deleteToken = async () => {
+    await apolloClient.clearStore();
+
     removeCookie(COOKIE_NAME, { path: '/' });
-    localStorage.removeItem(COOKIE_NAME);
   };
 
   const redirectToDashboard = () => router.push('/app/home');

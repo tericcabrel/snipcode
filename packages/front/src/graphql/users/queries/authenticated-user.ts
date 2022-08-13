@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 
 import { AuthenticatedUserQuery, AuthenticatedUserQueryVariables } from '../../generated';
 
-export const queryDocument = gql`
+export const authenticatedUserQuery = gql`
   query authenticatedUser {
     authenticatedUser {
       __typename
@@ -24,6 +24,6 @@ export const queryDocument = gql`
   }
 `;
 
-export const useAuthenticatedUserQuery = (skip: boolean) => {
-  return useQuery<AuthenticatedUserQuery, AuthenticatedUserQueryVariables>(queryDocument, { skip, ssr: false });
+export const useAuthenticatedUserQuery = () => {
+  return useQuery<AuthenticatedUserQuery, AuthenticatedUserQueryVariables>(authenticatedUserQuery);
 };

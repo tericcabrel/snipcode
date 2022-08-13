@@ -3,10 +3,9 @@ import { NextSeo } from 'next-seo';
 
 import Layout from '@/components/layout/private/layout';
 import { useFolderDirectory } from '@/hooks/use-folder-directory';
-import { COOKIE_NAME } from '@/utils/constants';
 
 const Home = () => {
-  const { data } = useAuthenticatedUser(COOKIE_NAME);
+  const { data } = useAuthenticatedUser();
   const { navigateToFolder } = useFolderDirectory();
 
   return (

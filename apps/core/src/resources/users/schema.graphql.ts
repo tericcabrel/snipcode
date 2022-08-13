@@ -16,7 +16,7 @@ export default gql`
   }
 
   extend type Query {
-    authenticatedUser: User
+    authenticatedUser: User!
   }
 
   extend type Mutation {
