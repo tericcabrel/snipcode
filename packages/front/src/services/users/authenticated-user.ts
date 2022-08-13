@@ -21,32 +21,10 @@ const formatAuthenticatedUserResult = (data?: AuthenticatedUserQuery): Authentic
   };
 };
 
-const useUserInLocalStorage = (key: string) => {
-  if (typeof window === 'undefined') {
-    return null;
-  }
-
-  return localStorage.getItem(key);
-};
-
-export const useAuthenticatedUser = (cookieName: string) => {
-  // TODO to replace with reading user's data from the apollo cache
-  const user = useUserInLocalStorage(cookieName);
-
-  const query = useAuthenticatedUserQuery(Boolean(user));
+export const useAuthenticatedUser = () => {
+  const query = useAuthenticatedUserQuery();
 
   const data = formatAuthenticatedUserResult(query.data);
-
-  if (data) {
-    localStorage.setItem(cookieName, JSON.stringify(data));
-  }
-
-  if (user) {
-    return {
-      data: JSON.parse(user) as AuthenticatedUser,
-      isLoading: false,
-    };
-  }
 
   return {
     data: formatAuthenticatedUserResult(query.data),

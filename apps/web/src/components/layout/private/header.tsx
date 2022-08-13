@@ -23,7 +23,7 @@ const Header = () => {
   const logout = async () => {
     await logoutUserMutation({
       onCompleted: async () => {
-        deleteToken();
+        await deleteToken();
         await redirectToHome();
       },
     });

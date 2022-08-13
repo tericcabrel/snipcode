@@ -11,8 +11,8 @@ type SpinnerProps = {
 const Spinner = ({ text = 'Loading...' }: SpinnerProps) => {
   return (
     <>
-      <div className="loader ease-linear rounded-full border-4 border-t-4 border-blue-500 h-12 w-12 mb-4" />
-      <h2 className="text-center text-blue-500 text-xl font-semibold">{text}</h2>
+      <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-500 h-12 w-12 mb-4" />
+      <h2 className="text-center text-gray-500 text-xl font-semibold">{text}</h2>
     </>
   );
 };

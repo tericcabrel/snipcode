@@ -118,7 +118,7 @@ export type OauthProvider = typeof OauthProvider[keyof typeof OauthProvider];
 export type Query = {
   __typename?: 'Query';
   allSnippets: Array<Snippet>;
-  authenticatedUser?: Maybe<User>;
+  authenticatedUser: User;
   findFolder: Folder;
   /** @deprecated Field no longer supported */
   hello: Scalars['String'];
@@ -364,7 +364,7 @@ export type MutationResolvers<ContextType = AppContext, ParentType extends Resol
 
 export type QueryResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   allSnippets?: Resolver<Array<ResolversTypes['Snippet']>, ParentType, ContextType>;
-  authenticatedUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  authenticatedUser?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   findFolder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType, RequireFields<QueryFindFolderArgs, 'folderId'>>;
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   listDirectory?: Resolver<Maybe<ResolversTypes['Directory']>, ParentType, ContextType, RequireFields<QueryListDirectoryArgs, 'folderId'>>;
