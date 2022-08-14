@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useLazyQuery, useQuery } from '@apollo/client';
 
 import { ListDirectoryQuery, ListDirectoryQueryVariables } from '../../generated';
 
@@ -28,5 +28,11 @@ export const useListDirectoryQuery = (folderId: string) => {
     variables: {
       folderId,
     },
+  });
+};
+
+export const useLazyListDirectoryQuery = () => {
+  return useLazyQuery<ListDirectoryQuery, ListDirectoryQueryVariables>(listDirectoryQueryDocument, {
+    fetchPolicy: 'network-only',
   });
 };

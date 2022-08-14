@@ -4,13 +4,13 @@ import { useFormContext } from 'react-hook-form';
 
 import { getInputErrorMessage } from '../utils/forms';
 
-type TextInputProps = {
+type Props = {
   groupClassName?: string;
   isRequired?: boolean;
   label?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
-const TextInput = (props: TextInputProps) => {
+const TextInput = (props: Props) => {
   const {
     formState: { errors },
     register,
