@@ -28,7 +28,6 @@ const Directory = ({ folderId, onNavigateToFolder, title }: Props) => {
   const paths = data?.paths ?? [];
 
   const goToFolder = (folderId: string) => {
-    console.log('goToFolder', folderId);
     onNavigateToFolder(folderId);
   };
 
@@ -49,9 +48,9 @@ const Directory = ({ folderId, onNavigateToFolder, title }: Props) => {
         <div className="max-w-7xl py-8 mx-auto sm:px-6 lg:px-8">
           <BreadCrumb paths={paths} current={folderId} />
           {isDirectoryEmpty ? (
-            <div className="border-4 border-dashed border-gray-200 rounded-lg flex justify-center items-center py-8 sm:px-0 h-96">
+            <div className="border-4 border-dashed border-gray-200 rounded-lg flex justify-center items-center py-8 px-0 mt-6 h-96">
               <div className="w-1/2">
-                <EmptyFolder />
+                <EmptyFolder handleCreateFolder={openNewFolderModal} handleCreateSnippet={openNewSnippetModal} />
               </div>
             </div>
           ) : (
