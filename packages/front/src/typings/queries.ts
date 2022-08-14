@@ -22,7 +22,7 @@ export type SignupUserInput = {
   password: string;
 };
 
-export type FolderItem = {
+export type LightFolderItem = {
   fileCount: number;
   id: string;
   name: string;
@@ -33,7 +33,7 @@ export type FilePath = {
   name: string;
 };
 
-export type SnippetItem = {
+export type LightSnippetItem = {
   folderId: string;
   id: string;
   language: string;
@@ -41,12 +41,30 @@ export type SnippetItem = {
 };
 
 export type DirectoryList = {
-  folders: FolderItem[];
+  folders: LightFolderItem[];
   paths: FilePath[];
-  snippets: SnippetItem[];
+  snippets: LightSnippetItem[];
 };
 
 export type FindFolderData = {
   id: string;
   name: string;
+};
+
+export type SnippetItem = {
+  content: string;
+  createdAt: number;
+  description: string | null;
+  id: string;
+  isPrivate: boolean;
+  language: string;
+  lineHighLight: [number, string][];
+  name: string;
+  theme: string;
+  updatedAt: number;
+};
+
+export type SnippetInfo = {
+  paths: FilePath[];
+  snippet: SnippetItem;
 };

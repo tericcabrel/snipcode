@@ -106,8 +106,9 @@ export type OauthProvider = typeof OauthProvider[keyof typeof OauthProvider];
 export type Query = {
   __typename?: 'Query';
   allSnippets: Array<Snippet>;
-  authenticatedUser?: Maybe<User>;
+  authenticatedUser: User;
   findFolder: Folder;
+  findSnippet: SnippetInfo;
   /** @deprecated No longer supported */
   hello: Scalars['String'];
   listDirectory?: Maybe<Directory>;
@@ -120,6 +121,11 @@ export type Query = {
 
 export type QueryFindFolderArgs = {
   folderId: Scalars['String'];
+};
+
+
+export type QueryFindSnippetArgs = {
+  snippetId: Scalars['String'];
 };
 
 
@@ -181,6 +187,12 @@ export type Snippet = {
   visibility: SnippetVisibility;
 };
 
+export type SnippetInfo = {
+  __typename?: 'SnippetInfo';
+  paths: Array<Folder>;
+  snippet: Snippet;
+};
+
 export const SnippetVisibility = {
   Private: 'private',
   Public: 'public'
@@ -239,6 +251,13 @@ export type CreateSnippetMutationVariables = Exact<{
 
 export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'Snippet', id: string } };
 
+export type FindSnippetQueryVariables = Exact<{
+  snippetId: Scalars['String'];
+}>;
+
+
+export type FindSnippetQuery = { __typename?: 'Query', findSnippet: { __typename?: 'SnippetInfo', paths: Array<{ __typename?: 'Folder', id: string, name: string }>, snippet: { __typename?: 'Snippet', id: string, name: string, description?: string | null, language: string, lineHighLight?: string | null, visibility: SnippetVisibility, content: string, theme: string, createdAt: any, updatedAt: any } } };
+
 export type LoginUserMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -262,4 +281,4 @@ export type SignupUserMutation = { __typename?: 'Mutation', signupUser: { __type
 export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AuthenticatedUserQuery = { __typename?: 'Query', authenticatedUser?: { __typename: 'User', id: string, email: string, isEnabled: boolean, name: string, pictureUrl?: string | null, username?: string | null, role: { __typename: 'Role', name: RoleName }, rootFolder: { __typename: 'Folder', id: string } } | null };
+export type AuthenticatedUserQuery = { __typename?: 'Query', authenticatedUser: { __typename: 'User', id: string, email: string, isEnabled: boolean, name: string, pictureUrl?: string | null, username?: string | null, role: { __typename: 'Role', name: RoleName }, rootFolder: { __typename: 'Folder', id: string } } };

@@ -1,14 +1,15 @@
 import { Resolvers } from '../types/graphql';
-import { createFolder } from './folders/mutations/createFolder';
-import { deleteFolders } from './folders/mutations/deleteFolders';
+import { createFolder } from './folders/mutations/create-folder';
+import { deleteFolders } from './folders/mutations/delete-folders';
 import { findFolder } from './folders/queries/find-folder';
+import { listDirectory } from './folders/queries/list-directory';
 import { listFolders } from './folders/queries/list-folders';
-import { listDirectory } from './folders/queries/listDirectory';
 import { subFoldersCountResolver } from './folders/resolvers';
 import { subscribeToNewsletter } from './newsletter/mutations/subscribe';
-import { createSnippet } from './snippets/mutations/createSnippet';
-import { allSnippets } from './snippets/queries/allSnippets';
-import { mySnippets } from './snippets/queries/mySnippets';
+import { createSnippet } from './snippets/mutations/create-snippet';
+import { allSnippets } from './snippets/queries/all-snippets';
+import { findSnippet } from './snippets/queries/find-snippet';
+import { mySnippets } from './snippets/queries/my-snippets';
 import { dateScalar } from './types/date';
 import { loginUser } from './users/mutations/login-user';
 import { logoutUser } from './users/mutations/logout-user';
@@ -42,6 +43,7 @@ const resolvers: Resolvers = {
     allSnippets,
     authenticatedUser,
     findFolder,
+    findSnippet,
     hello: () => 'Hello from Sharingan',
     listDirectory,
     listFolders,
