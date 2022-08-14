@@ -1,7 +1,7 @@
 import { FolderIcon } from '@heroicons/react/solid';
 
 import { FolderItem } from '../../../typings/components';
-import { numberToString, truncate } from '../../../utils/text';
+import { displayItemLabel, truncate } from '../../../utils/text';
 
 type Props = {
   item: FolderItem;
@@ -24,7 +24,7 @@ const Folder = ({ item, onNavigate }: Props) => {
       <div className="mt-4 text-gray-500 sm:pr-8">
         <FolderIcon className="h-6 w-6" />
         <div className="mt-4 text-base font-bold text-gray-900">{truncate(item.name, FOLDER_NAME_MAX_LENGTH)}</div>
-        <p className="hidden mt-2 text-sm sm:block">{`${numberToString(item.fileCount)} items`}</p>
+        <p className="hidden mt-2 text-sm sm:block">{displayItemLabel(item.fileCount, 'item')}</p>
       </div>
     </div>
   );

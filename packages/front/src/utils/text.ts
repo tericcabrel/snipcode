@@ -19,4 +19,10 @@ const numberToString = (value: number): string => {
   return value < 10 ? `0${value}` : value.toString();
 };
 
-export { truncate, numberToString };
+const displayItemLabel = (itemCount: number, itemLabel: string) => {
+  const label = itemCount < 10 ? itemLabel : `${itemLabel}s`;
+
+  return `${numberToString(itemCount)} ${label}`;
+};
+
+export { truncate, displayItemLabel };
