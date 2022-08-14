@@ -120,6 +120,7 @@ export type Query = {
   allSnippets: Array<Snippet>;
   authenticatedUser: User;
   findFolder: Folder;
+  findSnippet: SnippetInfo;
   /** @deprecated Field no longer supported */
   hello: Scalars['String'];
   listDirectory?: Maybe<Directory>;
@@ -132,6 +133,11 @@ export type Query = {
 
 export type QueryFindFolderArgs = {
   folderId: Scalars['String'];
+};
+
+
+export type QueryFindSnippetArgs = {
+  snippetId: Scalars['String'];
 };
 
 
@@ -191,6 +197,12 @@ export type Snippet = {
   updatedAt: Scalars['Date'];
   user: User;
   visibility: SnippetVisibility;
+};
+
+export type SnippetInfo = {
+  __typename?: 'SnippetInfo';
+  paths: Array<Folder>;
+  snippet: Snippet;
 };
 
 export const SnippetVisibility = {
@@ -296,6 +308,7 @@ export type ResolversTypes = {
   SignupUserInput: SignupUserInput;
   SignupUserResult: ResolverTypeWrapper<SignupUserResult>;
   Snippet: ResolverTypeWrapper<Snippet>;
+  SnippetInfo: ResolverTypeWrapper<Omit<SnippetInfo, 'paths' | 'snippet'> & { paths: Array<ResolversTypes['Folder']>, snippet: ResolversTypes['Snippet'] }>;
   SnippetVisibility: SnippetVisibility;
   String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
@@ -319,6 +332,7 @@ export type ResolversParentTypes = {
   SignupUserInput: SignupUserInput;
   SignupUserResult: SignupUserResult;
   Snippet: Snippet;
+  SnippetInfo: Omit<SnippetInfo, 'paths' | 'snippet'> & { paths: Array<ResolversParentTypes['Folder']>, snippet: ResolversParentTypes['Snippet'] };
   String: Scalars['String'];
   User: User;
 };
@@ -366,6 +380,7 @@ export type QueryResolvers<ContextType = AppContext, ParentType extends Resolver
   allSnippets?: Resolver<Array<ResolversTypes['Snippet']>, ParentType, ContextType>;
   authenticatedUser?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   findFolder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType, RequireFields<QueryFindFolderArgs, 'folderId'>>;
+  findSnippet?: Resolver<ResolversTypes['SnippetInfo'], ParentType, ContextType, RequireFields<QueryFindSnippetArgs, 'snippetId'>>;
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   listDirectory?: Resolver<Maybe<ResolversTypes['Directory']>, ParentType, ContextType, RequireFields<QueryListDirectoryArgs, 'folderId'>>;
   listFolders?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType, Partial<QueryListFoldersArgs>>;
@@ -410,6 +425,12 @@ export type SnippetResolvers<ContextType = AppContext, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type SnippetInfoResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['SnippetInfo'] = ResolversParentTypes['SnippetInfo']> = {
+  paths?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType>;
+  snippet?: Resolver<ResolversTypes['Snippet'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -438,6 +459,7 @@ export type Resolvers<ContextType = AppContext> = {
   Role?: RoleResolvers<ContextType>;
   SignupUserResult?: SignupUserResultResolvers<ContextType>;
   Snippet?: SnippetResolvers<ContextType>;
+  SnippetInfo?: SnippetInfoResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 

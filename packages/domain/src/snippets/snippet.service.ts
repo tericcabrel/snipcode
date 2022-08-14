@@ -30,8 +30,14 @@ export default class SnippetService {
     });
   }
 
-  async findById(id: string): Promise<Snippet | null> {
-    return dbClient.snippet.findUnique({ where: { id } });
+  async findById(id: string): Promise<Snippet> {
+    const snippet = await dbClient.snippet.findUnique({ where: { id } });
+
+    if (!snippet) {
+      throw new SharinganError(errors.SNIPPET_NOT_FOUND(id), 'SNIPPET_NOT_FOUND');
+    }
+
+    return snippet;
   }
 
   async findByUser(userId: string): Promise<Snippet[]> {

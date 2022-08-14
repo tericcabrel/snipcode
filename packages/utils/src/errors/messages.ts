@@ -14,3 +14,4 @@ export const EMAIL_ALREADY_TAKEN = 'The email address is already taken';
 export const USERNAME_ALREADY_TAKEN = 'The username is already taken';
 export const ACCOUNT_DISABLED = 'Your account is disabled!';
 export const FOLDER_NOT_FOUND = (folderId: string) => `The with the id ${folderId} not found`;
+export const SNIPPET_NOT_FOUND = (snippetId: string) => `The with the id ${snippetId} not found`;

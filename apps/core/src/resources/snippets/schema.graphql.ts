@@ -1,6 +1,11 @@
 import { gql } from 'apollo-server-core';
 
 export default gql`
+  type SnippetInfo {
+    snippet: Snippet!
+    paths: [Folder!]!
+  }
+
   input CreateSnippetInput {
     folderId: String!
     name: String!
@@ -19,5 +24,6 @@ export default gql`
   extend type Query {
     allSnippets: [Snippet!]!
     mySnippets: [Snippet!]!
+    findSnippet(snippetId: String!): SnippetInfo!
   }
 `;
