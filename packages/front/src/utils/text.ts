@@ -20,7 +20,7 @@ const numberToString = (value: number): string => {
 };
 
 const displayItemLabel = (itemCount: number, itemLabel: string) => {
-  const label = itemCount < 10 ? itemLabel : `${itemLabel}s`;
+  const label = itemCount < 2 ? itemLabel : `${itemLabel}s`;
 
   return `${numberToString(itemCount)} ${label}`;
 };

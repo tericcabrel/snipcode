@@ -11,11 +11,13 @@ import Snippet from './snippets/snippet';
 
 type Props = {
   folderId: string;
+  onBreadcrumbPathClick: (folderId: string, path: string) => Promise<void>;
   onNavigateToFolder: (folderId: string) => void;
+  rootFolderId: string;
   title: string;
 };
 
-const Directory = ({ folderId, onNavigateToFolder, title }: Props) => {
+const Directory = ({ folderId, onBreadcrumbPathClick, onNavigateToFolder, rootFolderId, title }: Props) => {
   const [isNewFolderOpened, openNewFolderModal, closeNewFolderModal] = useBooleanState(false);
   const [isNewSnippetOpened, openNewSnippetModal, closeNewSnippetModal] = useBooleanState(false);
 
@@ -46,7 +48,12 @@ const Directory = ({ folderId, onNavigateToFolder, title }: Props) => {
       </header>
       <main>
         <div className="max-w-7xl py-8 mx-auto sm:px-6 lg:px-8">
-          <BreadCrumb paths={paths} current={folderId} />
+          <BreadCrumb
+            paths={paths}
+            current={folderId}
+            onPathClick={onBreadcrumbPathClick}
+            rootFolderId={rootFolderId}
+          />
           {isDirectoryEmpty ? (
             <div className="border-4 border-dashed border-gray-200 rounded-lg flex justify-center items-center py-8 px-0 mt-6 h-96">
               <div className="w-1/2">

@@ -1,4 +1,4 @@
-import { useListDirectoryQuery } from '../../graphql/folders/queries/list-directory';
+import { useLazyListDirectoryQuery, useListDirectoryQuery } from '../../graphql/folders/queries/list-directory';
 import { ListDirectoryQuery } from '../../graphql/generated';
 import { DirectoryList } from '../../typings/queries';
 
@@ -24,5 +24,13 @@ export const useListDirectory = (folderId: string) => {
   return {
     data,
     isLoading: query.loading && !query.error && !query.data,
+  };
+};
+
+export const useLazyListDirectory = () => {
+  const [listDirectory] = useLazyListDirectoryQuery();
+
+  return {
+    listDirectory,
   };
 };
