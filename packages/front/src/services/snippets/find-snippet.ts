@@ -15,6 +15,7 @@ const formatFindSnippetResult = (data?: FindSnippetQuery): SnippetInfo | undefin
       content: snippet.content,
       createdAt: snippet.createdAt,
       description: snippet.description ?? null,
+      folderId: snippet.folder.id,
       id: snippet.id,
       isPrivate: snippet.visibility === 'private',
       language: snippet.language,

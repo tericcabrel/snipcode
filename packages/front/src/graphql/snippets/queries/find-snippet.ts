@@ -20,6 +20,9 @@ const queryDocument = gql`
         theme
         createdAt
         updatedAt
+        folder {
+          id
+        }
       }
     }
   }
