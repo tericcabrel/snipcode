@@ -13,11 +13,19 @@ type Props = {
   folderId: string;
   onBreadcrumbPathClick: (folderId: string, path: string) => Promise<void>;
   onNavigateToFolder: (folderId: string) => void;
+  onSnippetClick: (snippetId: string) => void;
   rootFolderId: string;
   title: string;
 };
 
-const Directory = ({ folderId, onBreadcrumbPathClick, onNavigateToFolder, rootFolderId, title }: Props) => {
+const Directory = ({
+  folderId,
+  onBreadcrumbPathClick,
+  onNavigateToFolder,
+  onSnippetClick,
+  rootFolderId,
+  title,
+}: Props) => {
   const [isNewFolderOpened, openNewFolderModal, closeNewFolderModal] = useBooleanState(false);
   const [isNewSnippetOpened, openNewSnippetModal, closeNewSnippetModal] = useBooleanState(false);
 
@@ -33,9 +41,8 @@ const Directory = ({ folderId, onBreadcrumbPathClick, onNavigateToFolder, rootFo
     onNavigateToFolder(folderId);
   };
 
-  const openFile = (snippet: SnippetItem) => {
-    console.log('openFile', snippet);
-    // TODO router push
+  const openSnippet = (snippet: SnippetItem) => {
+    onSnippetClick(snippet.id);
   };
 
   return (
@@ -70,7 +77,7 @@ const Directory = ({ folderId, onBreadcrumbPathClick, onNavigateToFolder, rootFo
               <div className="my-8 text-md font-bold text-gray-500">Files</div>
               <div className="mt-6 grid grid-cols-4 gap-4">
                 {snippets.map((snippet) => (
-                  <Snippet item={snippet} key={snippet.id} onClick={openFile} />
+                  <Snippet item={snippet} key={snippet.id} onClick={openSnippet} />
                 ))}
               </div>
             </div>

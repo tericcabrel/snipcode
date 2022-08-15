@@ -14,11 +14,7 @@ const FolderView = () => {
 
   const { data, isLoading } = useFindSnippet(snippetId);
 
-  const isSnippetFound = !isLoading && Boolean(data);
-
-  if (!data) {
-    return <div>Not found</div>;
-  }
+  const isSnippetFound = !isLoading && data;
 
   return (
     <Layout>
@@ -27,8 +23,8 @@ const FolderView = () => {
         {isSnippetFound && (
           <div className="max-w-7xl py-8 mx-auto sm:px-6 lg:px-8">
             <BreadCrumb
-              paths={data.paths}
-              current={data.snippet.folderId}
+              paths={data.paths.concat([{ id: snippetId, name: data.snippet.name }])}
+              current={data.snippet.id}
               onPathClick={handleBreadcrumbClick}
               rootFolderId={rootFolderId}
             />
