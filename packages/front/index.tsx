@@ -1,5 +1,7 @@
 import Alert from './src/components/alert';
 import FolderDirectory from './src/components/directory';
+import BreadCrumb from './src/components/directory/breadcrumb';
+import { ViewSnippet } from './src/components/directory/snippets/form/view-snippet';
 import Link from './src/components/link';
 import UserAvatar from './src/components/user-avatar';
 import Button from './src/forms/button';
@@ -14,4 +16,4 @@ export * from './src/hooks';
 export * from './src/services';
 export * from './src/utils/constants';
 
-export { Alert, Button, FolderDirectory, Icon, Link, TextInput, UserAvatar, classNames };
+export { Alert, BreadCrumb, Button, FolderDirectory, Icon, Link, TextInput, UserAvatar, ViewSnippet, classNames };

@@ -55,6 +55,7 @@ export type SnippetItem = {
   content: string;
   createdAt: number;
   description: string | null;
+  folderId: string;
   id: string;
   isPrivate: boolean;
   language: string;

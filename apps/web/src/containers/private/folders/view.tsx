@@ -7,28 +7,13 @@ import { useFolderDirectory } from '@/hooks/use-folder-directory';
 
 const FolderView = () => {
   const router = useRouter();
-  const { data: user } = useAuthenticatedUser();
-  const { navigateToFolder } = useFolderDirectory();
-  const { listDirectory } = useLazyListDirectory();
+  const { handleBreadcrumbClick, navigateToFolder, rootFolderId } = useFolderDirectory();
 
   const folderId = router.query.id as string;
 
   const { data, isLoading } = useFindFolder(folderId);
 
   const isFolderFound = !isLoading && Boolean(data);
-
-  const rootFolderId = user?.rootFolderId ?? '';
-
-  const handleBreadcrumbClick = async (folderId: string, path: string) => {
-    await listDirectory({
-      fetchPolicy: 'network-only',
-      variables: {
-        folderId,
-      },
-    });
-
-    await router.push(path);
-  };
 
   return (
     <Layout>
