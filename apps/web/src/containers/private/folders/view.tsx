@@ -7,7 +7,7 @@ import { useFolderDirectory } from '@/hooks/use-folder-directory';
 
 const FolderView = () => {
   const router = useRouter();
-  const { handleBreadcrumbClick, navigateToFolder, rootFolderId } = useFolderDirectory();
+  const { handleBreadcrumbClick, navigateToFolder, openSnippet, rootFolderId } = useFolderDirectory();
 
   const folderId = router.query.id as string;
 
@@ -24,6 +24,7 @@ const FolderView = () => {
             folderId={folderId}
             onBreadcrumbPathClick={handleBreadcrumbClick}
             onNavigateToFolder={navigateToFolder}
+            onSnippetClick={openSnippet}
             rootFolderId={rootFolderId}
             title={data?.name ?? '-----'}
           />

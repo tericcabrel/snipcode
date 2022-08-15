@@ -10,6 +10,10 @@ export const useFolderDirectory = () => {
     return router.push(`/app/folders/${folderId}`);
   };
 
+  const openSnippet = (snippetId: string) => {
+    return router.push(`/app/snippets/${snippetId}`);
+  };
+
   const handleBreadcrumbClick = async (folderId: string, path: string) => {
     await listDirectory({
       fetchPolicy: 'network-only',
@@ -24,6 +28,7 @@ export const useFolderDirectory = () => {
   return {
     handleBreadcrumbClick,
     navigateToFolder,
+    openSnippet,
     rootFolderId: user?.rootFolderId ?? '',
   };
 };
