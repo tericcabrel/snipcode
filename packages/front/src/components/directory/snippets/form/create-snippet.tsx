@@ -1,19 +1,16 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Highlighter } from 'shiki';
 import * as yup from 'yup';
 
 import Button from '../../../../forms/button';
+import { useCodeHighlighter } from '../../../../hooks/use-code-highlighter';
 import { useCreateSnippet } from '../../../../services/snippets/create-snippet';
 import { EditorFormValues } from '../../../../typings/snippet-form';
 import { CODE_HIGHLIGHT_OPTIONS, FORM_ERRORS, THEME_OPTIONS } from '../../../../utils/constants';
 import { extractLanguageFromName, lineHighlightToString } from '../../../../utils/snippets';
 import SnippetTextEditor from './editor';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const shiki = require('shiki');
 
 type Props = {
   closeModal: () => void;
@@ -38,24 +35,8 @@ type FormValues = EditorFormValues;
 
 const CreateSnippetContainer = ({ closeModal, folderId, open }: Props) => {
   const cancelButtonRef = useRef(null);
-  const [highlighter, setHighlighter] = useState<Highlighter | undefined>();
+  const { highlighter } = useCodeHighlighter();
   const { createSnippet, isLoading } = useCreateSnippet();
-
-  useEffect(() => {
-    const loadShikiAssets = async () => {
-      shiki.setCDN('/assets/shiki/');
-
-      return shiki.getHighlighter({
-        langs: ['javascript', 'html', 'css', 'typescript', 'java', 'c', 'cpp', 'c#', 'php', 'python'],
-        theme: 'monokai',
-        themes: ['one-dark-pro', 'dracula', 'dark-plus', 'monokai', 'github-dark', 'github-light'],
-      });
-    };
-
-    void loadShikiAssets().then((result) => {
-      setHighlighter(result);
-    });
-  }, []);
 
   const formMethods = useForm<FormValues>({
     defaultValues: {
