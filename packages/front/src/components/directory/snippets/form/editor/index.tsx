@@ -82,4 +82,4 @@ const SnippetTextEditor = ({ codeHighlightOptions, highlighter, themeOptions }: 
   );
 };
 
-export default SnippetTextEditor;
+export { SnippetTextEditor };

@@ -2,15 +2,14 @@ import { Dialog, Transition } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Fragment, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import * as yup from 'yup';
 
 import Button from '../../../../forms/button';
 import { useCodeHighlighter } from '../../../../hooks/use-code-highlighter';
 import { useCreateSnippet } from '../../../../services/snippets/create-snippet';
-import { EditorFormValues } from '../../../../typings/snippet-form';
-import { CODE_HIGHLIGHT_OPTIONS, FORM_ERRORS, THEME_OPTIONS } from '../../../../utils/constants';
+import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../utils/constants';
 import { extractLanguageFromName, lineHighlightToString } from '../../../../utils/snippets';
 import SnippetTextEditor from './editor';
+import { SnippetFormValues, formSchema } from './form-schema';
 
 type Props = {
   closeModal: () => void;
@@ -18,27 +17,12 @@ type Props = {
   open: boolean;
 };
 
-const MIN_NAME_LENGTH = 1;
-const MAX_NAME_LENGTH = 100;
-const formSchema = yup.object().shape({
-  code: yup.string().required(FORM_ERRORS.fieldRequired),
-  description: yup.string(),
-  lineHighlight: yup.mixed(),
-  name: yup
-    .string()
-    .required(FORM_ERRORS.fieldRequired)
-    .min(MIN_NAME_LENGTH, FORM_ERRORS.minCharacters(MIN_NAME_LENGTH))
-    .max(MAX_NAME_LENGTH, FORM_ERRORS.minCharacters(MAX_NAME_LENGTH)),
-});
-
-type FormValues = EditorFormValues;
-
 const CreateSnippetContainer = ({ closeModal, folderId, open }: Props) => {
   const cancelButtonRef = useRef(null);
   const { highlighter } = useCodeHighlighter();
   const { createSnippet, isLoading } = useCreateSnippet();
 
-  const formMethods = useForm<FormValues>({
+  const formMethods = useForm<SnippetFormValues>({
     defaultValues: {
       code: `@ExceptionHandler(ConstraintViolationException.class)
 public ResponseEntity<?> constraintViolationException(ConstraintViolationException ex, WebRequest request) {
@@ -74,9 +58,7 @@ public ResponseEntity<?> constraintViolationException(ConstraintViolationExcepti
     formMethods.clearErrors();
   };
 
-  const submitCreateSnippet = async (values: FormValues) => {
-    console.log(values);
-
+  const submitCreateSnippet = async (values: SnippetFormValues) => {
     await createSnippet({
       input: {
         content: values.code,
