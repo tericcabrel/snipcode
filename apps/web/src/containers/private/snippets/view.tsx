@@ -28,7 +28,9 @@ const FolderView = () => {
               onPathClick={handleBreadcrumbClick}
               rootFolderId={rootFolderId}
             />
-            <ViewSnippet snippet={data.snippet} />
+            <div className="px-5 pb-5 mt-6 mx-auto bg-white shadow-sm rounded-lg">
+              <ViewSnippet snippet={data.snippet} />
+            </div>
           </div>
         )}
       </div>

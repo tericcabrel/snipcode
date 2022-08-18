@@ -8,7 +8,7 @@ import { useCodeHighlighter } from '../../../../hooks/use-code-highlighter';
 import { useCreateSnippet } from '../../../../services/snippets/create-snippet';
 import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../utils/constants';
 import { extractLanguageFromName, lineHighlightToString } from '../../../../utils/snippets';
-import SnippetTextEditor from './editor';
+import { SnippetTextEditor } from './editor';
 import { SnippetFormValues, formSchema } from './form-schema';
 
 type Props = {
