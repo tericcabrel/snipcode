@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import Button from '../../../../forms/button';
 import { useCodeHighlighter } from '../../../../hooks/use-code-highlighter';
 import { SnippetItem } from '../../../../typings/queries';
 import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../utils/constants';
@@ -20,8 +21,6 @@ const selectCodeHighlightOptionValue = (theme: string) => {
 const ViewSnippet = ({ snippet }: Props) => {
   const { highlighter } = useCodeHighlighter();
 
-  console.log(snippet);
-
   const formMethods = useForm<SnippetFormValues>({
     defaultValues: {
       code: snippet.content,
@@ -35,6 +34,10 @@ const ViewSnippet = ({ snippet }: Props) => {
     resolver: yupResolver(formSchema),
   });
 
+  const submitUpdateSnippet = async (values: SnippetFormValues) => {
+    console.log('Values => ', values);
+  };
+
   return (
     <div>
       <FormProvider {...formMethods}>
@@ -43,6 +46,16 @@ const ViewSnippet = ({ snippet }: Props) => {
           codeHighlightOptions={CODE_HIGHLIGHT_OPTIONS}
           themeOptions={THEME_OPTIONS}
         />
+        <div className="mt-5 flex justify-end space-x-6">
+          <Button
+            className="w-auto"
+            onClick={formMethods.handleSubmit(submitUpdateSnippet)}
+            disabled={false}
+            isLoading={false}
+          >
+            Update
+          </Button>
+        </div>
       </FormProvider>
     </div>
   );
