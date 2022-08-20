@@ -2,6 +2,7 @@ import { Snippet, SnippetVisibility, dbClient } from '@sharingan/database';
 import SharinganError, { errors } from '@sharingan/utils';
 
 import CreateSnippetDto from './dtos/create-snippet-dto';
+import UpdateSnippetDto from './dtos/update-snippet-dto';
 
 export default class SnippetService {
   async create(createSnippetDto: CreateSnippetDto): Promise<Snippet> {
@@ -73,5 +74,39 @@ export default class SnippetService {
     const snippets = await this.findByFolder(folderId);
 
     return snippets.some(({ name }) => name.toLowerCase() === snippetName.toLowerCase());
+  }
+
+  async update(updateSnippetDto: UpdateSnippetDto): Promise<Snippet> {
+    const snippet = await this.findById(updateSnippetDto.snippetId);
+
+    if (snippet.userId !== updateSnippetDto.creatorId) {
+      throw new SharinganError(errors.CANT_EDIT_SNIPPET(updateSnippetDto.creatorId, snippet.id), 'CANT_EDIT_SNIPPET');
+    }
+
+    if (snippet.name !== updateSnippetDto.name) {
+      const isSnippetExist = await this.isSnippetExistInFolder(snippet.folderId, updateSnippetDto.name);
+
+      if (isSnippetExist) {
+        throw new SharinganError(errors.SNIPPET_ALREADY_EXIST(updateSnippetDto.name), 'SNIPPET_ALREADY_EXIST');
+      }
+    }
+
+    const input = updateSnippetDto.toSnippet(snippet);
+
+    return dbClient.snippet.update({
+      data: {
+        content: input.content,
+        description: input.description,
+        language: input.language,
+        lineHighlight: input.lineHighlight,
+        name: input.name,
+        size: input.size,
+        theme: input.theme,
+        visibility: input.visibility,
+      },
+      where: {
+        id: snippet.id,
+      },
+    });
   }
 }

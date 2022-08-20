@@ -7,6 +7,7 @@ import { listFolders } from './folders/queries/list-folders';
 import { subFoldersCountResolver } from './folders/resolvers';
 import { subscribeToNewsletter } from './newsletter/mutations/subscribe';
 import { createSnippet } from './snippets/mutations/create-snippet';
+import { updateSnippet } from './snippets/mutations/update-snippet';
 import { allSnippets } from './snippets/queries/all-snippets';
 import { findSnippet } from './snippets/queries/find-snippet';
 import { mySnippets } from './snippets/queries/my-snippets';
@@ -38,6 +39,7 @@ const resolvers: Resolvers = {
     logoutUser,
     signupUser,
     subscribeToNewsletter,
+    updateSnippet,
   },
   Query: {
     allSnippets,

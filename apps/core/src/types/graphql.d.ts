@@ -75,6 +75,7 @@ export type Mutation = {
   logoutUser: Scalars['Boolean'];
   signupUser: SignupUserResult;
   subscribeToNewsletter: Result;
+  updateSnippet: Snippet;
 };
 
 
@@ -106,6 +107,12 @@ export type MutationSignupUserArgs = {
 
 export type MutationSubscribeToNewsletterArgs = {
   email: Scalars['String'];
+};
+
+
+export type MutationUpdateSnippetArgs = {
+  id: Scalars['ID'];
+  input: UpdateSnippetInput;
 };
 
 export const OauthProvider = {
@@ -211,6 +218,16 @@ export const SnippetVisibility = {
 } as const;
 
 export type SnippetVisibility = typeof SnippetVisibility[keyof typeof SnippetVisibility];
+export type UpdateSnippetInput = {
+  content: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  language: Scalars['String'];
+  lineHighlight?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  theme: Scalars['String'];
+  visibility: SnippetVisibility;
+};
+
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['Date'];
@@ -311,6 +328,7 @@ export type ResolversTypes = {
   SnippetInfo: ResolverTypeWrapper<Omit<SnippetInfo, 'paths' | 'snippet'> & { paths: Array<ResolversTypes['Folder']>, snippet: ResolversTypes['Snippet'] }>;
   SnippetVisibility: SnippetVisibility;
   String: ResolverTypeWrapper<Scalars['String']>;
+  UpdateSnippetInput: UpdateSnippetInput;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -334,6 +352,7 @@ export type ResolversParentTypes = {
   Snippet: Snippet;
   SnippetInfo: Omit<SnippetInfo, 'paths' | 'snippet'> & { paths: Array<ResolversParentTypes['Folder']>, snippet: ResolversParentTypes['Snippet'] };
   String: Scalars['String'];
+  UpdateSnippetInput: UpdateSnippetInput;
   User: User;
 };
 
@@ -374,6 +393,7 @@ export type MutationResolvers<ContextType = AppContext, ParentType extends Resol
   logoutUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   signupUser?: Resolver<ResolversTypes['SignupUserResult'], ParentType, ContextType, RequireFields<MutationSignupUserArgs, 'input'>>;
   subscribeToNewsletter?: Resolver<ResolversTypes['Result'], ParentType, ContextType, RequireFields<MutationSubscribeToNewsletterArgs, 'email'>>;
+  updateSnippet?: Resolver<ResolversTypes['Snippet'], ParentType, ContextType, RequireFields<MutationUpdateSnippetArgs, 'id' | 'input'>>;
 };
 
 export type QueryResolvers<ContextType = AppContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {

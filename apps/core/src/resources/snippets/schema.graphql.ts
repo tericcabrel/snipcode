@@ -17,8 +17,19 @@ export default gql`
     theme: String!
   }
 
+  input UpdateSnippetInput {
+    name: String!
+    content: String!
+    language: String!
+    lineHighlight: String
+    visibility: SnippetVisibility!
+    description: String
+    theme: String!
+  }
+
   extend type Mutation {
     createSnippet(input: CreateSnippetInput!): Snippet!
+    updateSnippet(id: ID!, input: UpdateSnippetInput!): Snippet!
   }
 
   extend type Query {
