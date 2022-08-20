@@ -13,5 +13,7 @@ export const LOGIN_FAILED = 'Invalid email address or password.';
 export const EMAIL_ALREADY_TAKEN = 'The email address is already taken';
 export const USERNAME_ALREADY_TAKEN = 'The username is already taken';
 export const ACCOUNT_DISABLED = 'Your account is disabled!';
-export const FOLDER_NOT_FOUND = (folderId: string) => `The with the id ${folderId} not found`;
-export const SNIPPET_NOT_FOUND = (snippetId: string) => `The with the id ${snippetId} not found`;
+export const FOLDER_NOT_FOUND = (folderId: string) => `The folder with the id ${folderId} not found`;
+export const SNIPPET_NOT_FOUND = (snippetId: string) => `The folder with the id ${snippetId} not found`;
+export const CANT_EDIT_SNIPPET = (userId: string, snippetId: string) =>
+  `The user with id ${userId} cannot edit the snippet ${snippetId}`;
