@@ -7,6 +7,7 @@ import { useUpdateSnippet } from '../../../../services/snippets/update-snippet';
 import { SnippetItem } from '../../../../typings/queries';
 import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../utils/constants';
 import { extractLanguageFromName, lineHighlightToString } from '../../../../utils/snippets';
+import { useToast } from '../../../toast/provider';
 import { SnippetTextEditor } from './editor';
 import { SnippetFormValues, formSchema } from './form-schema';
 
@@ -22,6 +23,7 @@ const selectCodeHighlightOptionValue = (theme: string) => {
 
 const ViewSnippet = ({ snippet }: Props) => {
   const { highlighter } = useCodeHighlighter();
+  const { toastError, toastSuccess } = useToast();
 
   const { isLoading, updateSnippet } = useUpdateSnippet(snippet.folderId);
 
@@ -51,10 +53,10 @@ const ViewSnippet = ({ snippet }: Props) => {
         visibility: values.isPrivate ? 'private' : 'public',
       },
       onError: (message) => {
-        console.error('Message => ', message);
+        toastError({ message: `Failed to update: ${message}` });
       },
-      onSuccess: (snippetId: string) => {
-        console.log('Snippet => ', snippetId);
+      onSuccess: () => {
+        toastSuccess({ message: 'Snippet updated!' });
       },
     });
   };

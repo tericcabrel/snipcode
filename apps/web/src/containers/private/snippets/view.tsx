@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import Layout from '@/components/layout/private/layout';
 import { useFolderDirectory } from '@/hooks/use-folder-directory';
 
-const FolderView = () => {
+const SnippetView = () => {
   const router = useRouter();
   const { handleBreadcrumbClick, rootFolderId } = useFolderDirectory();
 
@@ -38,4 +38,4 @@ const FolderView = () => {
   );
 };
 
-export default FolderView;
+export default SnippetView;
