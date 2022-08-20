@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import Button from '../../../../forms/button';
 import { useCodeHighlighter } from '../../../../hooks/use-code-highlighter';
+import { useUpdateSnippet } from '../../../../services/snippets/update-snippet';
 import { SnippetItem } from '../../../../typings/queries';
 import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../utils/constants';
 import { extractLanguageFromName, lineHighlightToString } from '../../../../utils/snippets';
@@ -22,6 +23,8 @@ const selectCodeHighlightOptionValue = (theme: string) => {
 const ViewSnippet = ({ snippet }: Props) => {
   const { highlighter } = useCodeHighlighter();
 
+  const { isLoading, updateSnippet } = useUpdateSnippet(snippet.folderId);
+
   const formMethods = useForm<SnippetFormValues>({
     defaultValues: {
       code: snippet.content,
@@ -36,16 +39,24 @@ const ViewSnippet = ({ snippet }: Props) => {
   });
 
   const submitUpdateSnippet = async (values: SnippetFormValues) => {
-    console.log('Values => ', values);
-    const input = {
-      content: values.code,
-      description: values.description,
-      language: extractLanguageFromName(values.name),
-      lineHighlight: lineHighlightToString(values.lineHighlight),
-      name: values.name,
-      theme: values.theme.id,
-      visibility: values.isPrivate ? 'private' : 'public',
-    };
+    await updateSnippet({
+      id: snippet.id,
+      input: {
+        content: values.code,
+        description: values.description,
+        language: extractLanguageFromName(values.name),
+        lineHighlight: lineHighlightToString(values.lineHighlight),
+        name: values.name,
+        theme: values.theme.id,
+        visibility: values.isPrivate ? 'private' : 'public',
+      },
+      onError: (message) => {
+        console.error('Message => ', message);
+      },
+      onSuccess: (snippetId: string) => {
+        console.log('Snippet => ', snippetId);
+      },
+    });
   };
 
   return (
@@ -60,8 +71,8 @@ const ViewSnippet = ({ snippet }: Props) => {
           <Button
             className="w-auto"
             onClick={formMethods.handleSubmit(submitUpdateSnippet)}
-            disabled={false}
-            isLoading={false}
+            disabled={isLoading}
+            isLoading={isLoading}
           >
             Update
           </Button>

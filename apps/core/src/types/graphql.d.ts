@@ -197,7 +197,7 @@ export type Snippet = {
   folder: Folder;
   id: Scalars['ID'];
   language: Scalars['String'];
-  lineHighLight?: Maybe<Scalars['String']>;
+  lineHighlight?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   size: Scalars['Int'];
   theme: Scalars['String'];
@@ -435,7 +435,7 @@ export type SnippetResolvers<ContextType = AppContext, ParentType extends Resolv
   folder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   language?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  lineHighLight?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  lineHighlight?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   theme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
