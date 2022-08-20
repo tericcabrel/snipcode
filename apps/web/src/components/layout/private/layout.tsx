@@ -1,4 +1,5 @@
 import { useAuthenticatedUser } from '@sharingan/front';
+import { ToastProvider } from '@sharingan/front';
 import { ReactNode } from 'react';
 
 import { Loader } from '@/components/common/loader';
@@ -26,8 +27,10 @@ const Layout = ({ children }: Props) => {
 
   return (
     <div className="relative w-full min-h-screen bg-gray-50 flex-grow">
-      <Header />
-      {children}
+      <ToastProvider>
+        <Header />
+        {children}
+      </ToastProvider>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import FolderDirectory from './src/components/directory';
 import BreadCrumb from './src/components/directory/breadcrumb';
 import { ViewSnippet } from './src/components/directory/snippets/form/view-snippet';
 import Link from './src/components/link';
+import { ToastProvider, useToast } from './src/components/toast/provider';
 import UserAvatar from './src/components/user-avatar';
 import Button from './src/forms/button';
 import TextInput from './src/forms/text-input';
@@ -16,4 +17,17 @@ export * from './src/hooks';
 export * from './src/services';
 export * from './src/utils/constants';
 
-export { Alert, BreadCrumb, Button, FolderDirectory, Icon, Link, TextInput, UserAvatar, ViewSnippet, classNames };
+export {
+  Alert,
+  BreadCrumb,
+  Button,
+  FolderDirectory,
+  Icon,
+  Link,
+  TextInput,
+  ToastProvider,
+  useToast,
+  UserAvatar,
+  ViewSnippet,
+  classNames,
+};
