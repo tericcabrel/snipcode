@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 
 import { FindSnippetQuery, FindSnippetQueryVariables } from '../../generated';
 
-const queryDocument = gql`
+export const findSnippetQueryDocument = gql`
   query findSnippet($snippetId: String!) {
     findSnippet(snippetId: $snippetId) {
       paths {
@@ -10,11 +10,12 @@ const queryDocument = gql`
         name
       }
       snippet {
+        __typename
         id
         name
         description
         language
-        lineHighLight
+        lineHighlight
         visibility
         content
         theme
@@ -29,7 +30,7 @@ const queryDocument = gql`
 `;
 
 export const useFindSnippetQuery = (snippetId: string) => {
-  return useQuery<FindSnippetQuery, FindSnippetQueryVariables>(queryDocument, {
+  return useQuery<FindSnippetQuery, FindSnippetQueryVariables>(findSnippetQueryDocument, {
     variables: {
       snippetId,
     },

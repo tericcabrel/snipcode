@@ -19,7 +19,7 @@ const formatFindSnippetResult = (data?: FindSnippetQuery): SnippetInfo | undefin
       id: snippet.id,
       isPrivate: snippet.visibility === 'private',
       language: snippet.language,
-      lineHighLight: snippet.lineHighLight ? JSON.parse(snippet.lineHighLight) : [],
+      lineHighLight: snippet.lineHighlight ? JSON.parse(snippet.lineHighlight) : [],
       name: snippet.name,
       theme: snippet.theme,
       updatedAt: snippet.updatedAt,
