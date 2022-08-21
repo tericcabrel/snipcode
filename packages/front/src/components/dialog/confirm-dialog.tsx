@@ -8,7 +8,7 @@ type Props = {
   cancelText?: string;
   confirmText?: string;
   isLoading?: boolean;
-  messageText?: string;
+  messageText?: string | null;
   onCancelButtonClick: () => void;
   onConfirmButtonClick: () => void;
   open: boolean;
@@ -18,7 +18,7 @@ const ConfirmDialog = ({
   cancelText = 'Cancel',
   confirmText = 'Delete',
   isLoading = false,
-  messageText = 'Are you sure you want to delete this item? ',
+  messageText = 'Are you sure you want to delete this item?',
   onCancelButtonClick,
   onConfirmButtonClick,
   open,
@@ -32,7 +32,7 @@ const ConfirmDialog = ({
         static
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        open={open}
+        open={open && Boolean(messageText)}
         onClose={onCancelButtonClick}
       >
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
