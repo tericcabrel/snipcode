@@ -6,7 +6,7 @@ import { ColorVariants } from '../typings/components';
 
 const colors: Record<ColorVariants, string> = {
   primary: 'text-white bg-gray-900 hover:bg-gray-600',
-  red: 'text-white bg-red-900 hover:bg-red-600',
+  red: 'text-white bg-red-500 hover:bg-red-600',
   'white-gray': 'text-gray-900 bg-gray-100 hover:bg-gray-200',
 };
 

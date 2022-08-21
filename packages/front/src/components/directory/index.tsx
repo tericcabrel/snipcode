@@ -1,6 +1,9 @@
+import { useState } from 'react';
+
 import { useBooleanState } from '../../hooks';
 import { useListDirectory } from '../../services/folders/list-directory';
 import { SnippetItem } from '../../typings/components';
+import { ConfirmDialog } from '../dialog/confirm-dialog';
 import MenuAction from '../menu-action';
 import BreadCrumb from './breadcrumb';
 import EmptyFolder from './folders/empty';
@@ -28,6 +31,8 @@ const Directory = ({
 }: Props) => {
   const [isNewFolderOpened, openNewFolderModal, closeNewFolderModal] = useBooleanState(false);
   const [isNewSnippetOpened, openNewSnippetModal, closeNewSnippetModal] = useBooleanState(false);
+  const [isConfirmDialogOpen, openConfirmDialog, closeConfirmDialog] = useBooleanState(false);
+  const [selectedId, setSelectedId] = useState<string | null>();
 
   const { data } = useListDirectory(folderId);
 
@@ -46,7 +51,14 @@ const Directory = ({
   };
 
   const onDeleteSnippet = (snippet: SnippetItem) => {
-    console.log('Delete Met', snippet);
+    setSelectedId(snippet.id);
+    openConfirmDialog();
+  };
+
+  const handleDeleteSnippetClick = () => {
+    console.log('Delete snippet snif!', selectedId);
+    closeConfirmDialog();
+    setSelectedId(null);
   };
 
   return (
@@ -90,6 +102,12 @@ const Directory = ({
       </main>
       {isNewFolderOpened && <CreateFolderContainer closeModal={closeNewFolderModal} parentFolderId={folderId} />}
       <CreateSnippetContainer open={isNewSnippetOpened} closeModal={closeNewSnippetModal} folderId={folderId} />
+      <ConfirmDialog
+        isLoading={false}
+        open={isConfirmDialogOpen}
+        onConfirmButtonClick={handleDeleteSnippetClick}
+        onCancelButtonClick={closeConfirmDialog}
+      />
     </>
   );
 };
