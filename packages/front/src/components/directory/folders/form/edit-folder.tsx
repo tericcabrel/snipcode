@@ -7,8 +7,10 @@ import * as yup from 'yup';
 import Button from '../../../../forms/button';
 import TextInput from '../../../../forms/text-input';
 import { useCreateFolder } from '../../../../services/folders/create-folder';
+import { useUpdateFolder } from '../../../../services/folders/update-folder';
 import { FolderItem } from '../../../../typings/components';
 import { FOLDER_NAME_REGEX, FORM_ERRORS } from '../../../../utils/constants';
+import { useToast } from '../../../toast/provider';
 
 type Props = {
   closeModal: () => void;
@@ -29,13 +31,17 @@ const formSchema = yup.object().shape({
 
 type FormValues = { name: string };
 
-const CreateFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Props) => {
+const EditFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Props) => {
   const cancelButtonRef = useRef(null);
-  const { createFolder, isLoading } = useCreateFolder();
+  const { toastError, toastSuccess } = useToast();
+  const { createFolder, isLoading: isCreateFolderLoading } = useCreateFolder();
+  const { isLoading: isUpdateFolderLoading, updateFolder } = useUpdateFolder(parentFolderId);
+
+  const isLoading = isCreateFolderLoading || isUpdateFolderLoading;
 
   const formMethods = useForm<FormValues>({
     defaultValues: {
-      name: currentFolder?.name ?? 'New folder',
+      name: currentFolder?.name,
     },
     resolver: yupResolver(formSchema),
   });
@@ -47,12 +53,42 @@ const CreateFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Pr
         parentId: parentFolderId,
       },
       onError: (message) => {
-        console.error(message);
+        toastError({ message: `Failed to create: ${message}` });
       },
       onSuccess: () => {
+        toastSuccess({ message: 'Folder created!' });
         closeModal();
       },
     });
+  };
+
+  const submitUpdateFolder = async (values: FormValues) => {
+    if (!currentFolder || currentFolder.name === values.name) {
+      return;
+    }
+
+    await updateFolder({
+      id: currentFolder.id,
+      input: {
+        name: values.name,
+      },
+      onError: (message) => {
+        toastError({ message: `Failed to update: ${message}` });
+      },
+      onSuccess: () => {
+        toastSuccess({ message: 'Folder updated!' });
+
+        closeModal();
+      },
+    });
+  };
+
+  const handleSubmit = async (values: FormValues) => {
+    if (currentFolder) {
+      return submitUpdateFolder(values);
+    }
+
+    return submitCreateFolder(values);
   };
 
   return (
@@ -85,7 +121,7 @@ const CreateFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Pr
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
                     <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                      Create a new folder
+                      {currentFolder ? 'Rename folder' : 'Create a new folder'}
                     </Dialog.Title>
                     <div className="mt-2">
                       <FormProvider {...formMethods}>
@@ -100,11 +136,11 @@ const CreateFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Pr
                   </Button>
                   <Button
                     className="w-auto"
-                    onClick={formMethods.handleSubmit(submitCreateFolder)}
+                    onClick={formMethods.handleSubmit(handleSubmit)}
                     disabled={isLoading}
                     isLoading={isLoading}
                   >
-                    Create
+                    {currentFolder ? 'Update' : 'Create'}
                   </Button>
                 </div>
               </Dialog.Panel>
@@ -116,4 +152,4 @@ const CreateFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Pr
   );
 };
 
-export default CreateFolderContainer;
+export { EditFolderContainer };

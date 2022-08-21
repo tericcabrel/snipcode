@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 
 import { FindFolderQuery, FindFolderQueryVariables } from '../../generated';
 
-const queryDocument = gql`
+export const findFolderQueryDocument = gql`
   query findFolder($folderId: String!) {
     findFolder(folderId: $folderId) {
       id
@@ -12,7 +12,7 @@ const queryDocument = gql`
 `;
 
 export const useFindFolderQuery = (folderId: string) => {
-  return useQuery<FindFolderQuery, FindFolderQueryVariables>(queryDocument, {
+  return useQuery<FindFolderQuery, FindFolderQueryVariables>(findFolderQueryDocument, {
     variables: {
       folderId,
     },

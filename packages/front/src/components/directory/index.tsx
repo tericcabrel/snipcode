@@ -11,7 +11,7 @@ import { useToast } from '../toast/provider';
 import BreadCrumb from './breadcrumb';
 import EmptyFolder from './folders/empty';
 import Folder from './folders/folder';
-import CreateFolderContainer from './folders/form/create-folder';
+import { EditFolderContainer } from './folders/form/edit-folder';
 import CreateSnippetContainer from './snippets/form/create-snippet';
 import Snippet from './snippets/snippet';
 
@@ -185,7 +185,7 @@ const Directory = ({
         </div>
       </main>
       {isNewFolderOpened && (
-        <CreateFolderContainer
+        <EditFolderContainer
           closeModal={closeNewFolderModal}
           currentFolder={selectedFolder}
           parentFolderId={folderId}
