@@ -7,6 +7,7 @@ import RoleService from './src/roles/role.service';
 import CreateSessionDto from './src/sessions/dtos/create-session-dto';
 import SessionService from './src/sessions/session.service';
 import CreateSnippetDto from './src/snippets/dtos/create-snippet-dto';
+import DeleteSnippetDto from './src/snippets/dtos/delete-snippet-dto';
 import UpdateSnippetDto from './src/snippets/dtos/update-snippet-dto';
 import SnippetService from './src/snippets/snippet.service';
 import CreateUserDto from './src/users/dtos/create-user-dto';
@@ -28,6 +29,7 @@ export {
   CreateRoleDto,
   CreateSessionDto,
   CreateUserDto,
+  DeleteSnippetDto,
   UpdateUserDto,
   CreateFolderDto,
   CreateSnippetDto,

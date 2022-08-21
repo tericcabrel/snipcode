@@ -71,6 +71,7 @@ export type Mutation = {
   createFolder: Folder;
   createSnippet: Snippet;
   deleteFolders: Scalars['Boolean'];
+  deleteSnippet: Scalars['Boolean'];
   loginUser: LoginResult;
   logoutUser: Scalars['Boolean'];
   signupUser: SignupUserResult;
@@ -91,6 +92,11 @@ export type MutationCreateSnippetArgs = {
 
 export type MutationDeleteFoldersArgs = {
   folderIds: Array<Scalars['String']>;
+};
+
+
+export type MutationDeleteSnippetArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -389,6 +395,7 @@ export type MutationResolvers<ContextType = AppContext, ParentType extends Resol
   createFolder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType, RequireFields<MutationCreateFolderArgs, 'input'>>;
   createSnippet?: Resolver<ResolversTypes['Snippet'], ParentType, ContextType, RequireFields<MutationCreateSnippetArgs, 'input'>>;
   deleteFolders?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteFoldersArgs, 'folderIds'>>;
+  deleteSnippet?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteSnippetArgs, 'id'>>;
   loginUser?: Resolver<ResolversTypes['LoginResult'], ParentType, ContextType, RequireFields<MutationLoginUserArgs, 'email' | 'password'>>;
   logoutUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   signupUser?: Resolver<ResolversTypes['SignupUserResult'], ParentType, ContextType, RequireFields<MutationSignupUserArgs, 'input'>>;

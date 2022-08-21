@@ -30,6 +30,7 @@ export default gql`
   extend type Mutation {
     createSnippet(input: CreateSnippetInput!): Snippet!
     updateSnippet(id: ID!, input: UpdateSnippetInput!): Snippet!
+    deleteSnippet(id: ID!): Boolean!
   }
 
   extend type Query {
