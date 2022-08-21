@@ -3,6 +3,7 @@ import SharinganError, { errors } from '@sharingan/utils';
 
 import CreateFolderDto from './dtos/create-folder-dto';
 import CreateUserRootFolderDto from './dtos/create-user-root-folder-dto';
+import UpdateFolderDto from './dtos/update-folder-dto';
 import { isFoldersBelongToUser, isFoldersContainRoot } from './utils/folders';
 
 export default class FolderService {
@@ -118,6 +119,39 @@ export default class FolderService {
     folders.pop();
 
     return folders.reverse();
+  }
+
+  async update(updateFolderDto: UpdateFolderDto): Promise<Folder> {
+    const folder = await this.findById(updateFolderDto.folderId);
+
+    if (folder.userId !== updateFolderDto.creatorId) {
+      throw new SharinganError(errors.CANT_EDIT_FOLDER(updateFolderDto.creatorId, folder.id), 'CANT_EDIT_FOLDER');
+    }
+
+    if (!folder.parentId) {
+      throw new SharinganError(errors.CANT_RENAME_ROOT_FOLDER, 'CANT_RENAME_ROOT_FOLDER');
+    }
+
+    const isFolderExist = await this.isFolderExistInParentFolder({
+      folderName: updateFolderDto.name,
+      parentFolderId: folder.parentId,
+      userId: folder.userId,
+    });
+
+    if (isFolderExist) {
+      throw new SharinganError(errors.FOLDER_ALREADY_EXIST(updateFolderDto.name), 'FOLDER_ALREADY_EXIST');
+    }
+
+    const input = updateFolderDto.toFolder(folder);
+
+    return dbClient.folder.update({
+      data: {
+        name: input.name,
+      },
+      where: {
+        id: folder.id,
+      },
+    });
   }
 
   private async listParentFolderRecursively(folderId: string, result: Folder[] = []): Promise<Folder[]> {

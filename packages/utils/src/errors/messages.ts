@@ -17,3 +17,6 @@ export const FOLDER_NOT_FOUND = (folderId: string) => `The folder with the id ${
 export const SNIPPET_NOT_FOUND = (snippetId: string) => `The folder with the id ${snippetId} not found`;
 export const CANT_EDIT_SNIPPET = (userId: string, snippetId: string) =>
   `The user with id ${userId} cannot edit the snippet ${snippetId}`;
+export const CANT_EDIT_FOLDER = (userId: string, folderId: string) =>
+  `The user with id ${userId} cannot edit the folder ${folderId}`;
+export const CANT_RENAME_ROOT_FOLDER = 'The root folder cannot be renamed.';
