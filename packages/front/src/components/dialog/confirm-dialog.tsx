@@ -79,7 +79,7 @@ const ConfirmDialog = ({
               </div>
               <div className="bg-gray-50 px-6 py-3 flex justify-end space-x-4">
                 <Button
-                  className="w-auto"
+                  className="w-auto mt-2"
                   color="white-gray"
                   type="button"
                   onClick={onCancelButtonClick}
@@ -88,7 +88,7 @@ const ConfirmDialog = ({
                   {cancelText}
                 </Button>
                 <Button
-                  className="w-auto"
+                  className="w-auto mt-2"
                   color="red"
                   type="button"
                   isLoading={isLoading}
