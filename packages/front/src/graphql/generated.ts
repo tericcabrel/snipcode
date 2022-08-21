@@ -64,6 +64,7 @@ export type Mutation = {
   logoutUser: Scalars['Boolean'];
   signupUser: SignupUserResult;
   subscribeToNewsletter: Result;
+  updateFolder: Folder;
   updateSnippet: Snippet;
 };
 
@@ -94,6 +95,11 @@ export type MutationSignupUserArgs = {
 
 export type MutationSubscribeToNewsletterArgs = {
   email: Scalars['String'];
+};
+
+export type MutationUpdateFolderArgs = {
+  id: Scalars['ID'];
+  input: UpdateFolderInput;
 };
 
 export type MutationUpdateSnippetArgs = {
@@ -200,6 +206,10 @@ export const SnippetVisibility = {
 } as const;
 
 export type SnippetVisibility = typeof SnippetVisibility[keyof typeof SnippetVisibility];
+export type UpdateFolderInput = {
+  name: Scalars['String'];
+};
+
 export type UpdateSnippetInput = {
   content: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
@@ -232,6 +242,16 @@ export type CreateFolderMutationVariables = Exact<{
 }>;
 
 export type CreateFolderMutation = { __typename?: 'Mutation'; createFolder: { __typename?: 'Folder'; id: string } };
+
+export type UpdateFolderMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: UpdateFolderInput;
+}>;
+
+export type UpdateFolderMutation = {
+  __typename?: 'Mutation';
+  updateFolder: { __typename: 'Folder'; id: string; name: string; updatedAt: any };
+};
 
 export type FindFolderQueryVariables = Exact<{
   folderId: Scalars['String'];
