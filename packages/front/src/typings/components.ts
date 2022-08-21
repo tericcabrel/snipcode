@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type IconProps = {
   className?: string;
   height?: number;
@@ -24,10 +26,17 @@ export type FilePath = {
 };
 
 export type SnippetItem = {
+  content: string;
   folderId: string;
   id: string;
   language: string;
   name: string;
+};
+
+export type SnippetMenuAction = {
+  icon?: React.ReactNode;
+  label: string;
+  onClick: () => void;
 };
 
 // export type SupportedTheme = 'one-dark-pro' | 'dracula' | 'dark-plus' | 'monokai' | 'github-dark' | 'github-light';

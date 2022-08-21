@@ -14,6 +14,7 @@ export const listDirectoryQueryDocument = gql`
         id
         name
         language
+        content
       }
       paths {
         id
