@@ -34,6 +34,7 @@ export type FilePath = {
 };
 
 export type LightSnippetItem = {
+  content: string;
   folderId: string;
   id: string;
   language: string;

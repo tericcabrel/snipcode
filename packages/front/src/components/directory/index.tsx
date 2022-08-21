@@ -45,6 +45,10 @@ const Directory = ({
     onSnippetClick(snippet.id);
   };
 
+  const onDeleteSnippet = (snippet: SnippetItem) => {
+    console.log('Delete Met', snippet);
+  };
+
   return (
     <>
       <header>
@@ -77,7 +81,7 @@ const Directory = ({
               <div className="my-8 text-md font-bold text-gray-500">Files</div>
               <div className="mt-6 grid grid-cols-4 gap-4">
                 {snippets.map((snippet) => (
-                  <Snippet item={snippet} key={snippet.id} onClick={openSnippet} />
+                  <Snippet item={snippet} key={snippet.id} onClick={openSnippet} onDeleteClick={onDeleteSnippet} />
                 ))}
               </div>
             </div>
