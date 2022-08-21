@@ -1,5 +1,6 @@
 import CreateFolderDto from './src/folders/dtos/create-folder-dto';
 import CreateUserRootFolderDto from './src/folders/dtos/create-user-root-folder-dto';
+import UpdateFolderDto from './src/folders/dtos/update-folder-dto';
 import FolderService from './src/folders/folder.service';
 import NewsletterService from './src/newsletters/newsletter.service';
 import CreateRoleDto from './src/roles/dtos/create-role-dto';
@@ -36,5 +37,7 @@ export {
   CreateUserRootFolderDto,
   NewsletterService,
   UpdateSnippetDto,
+  UpdateFolderDto,
 };
+
 export type { RoleService, UserService, FolderService, SessionService, SnippetService };
