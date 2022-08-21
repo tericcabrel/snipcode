@@ -12,9 +12,14 @@ export default gql`
     name: String!
   }
 
+  input UpdateFolderInput {
+    name: String!
+  }
+
   type Mutation {
     createFolder(input: CreateFolderInput!): Folder!
     deleteFolders(folderIds: [String!]!): Boolean!
+    updateFolder(id: ID!, input: UpdateFolderInput!): Folder!
   }
 
   extend type Query {

@@ -1,6 +1,7 @@
 import { Resolvers } from '../types/graphql';
 import { createFolder } from './folders/mutations/create-folder';
 import { deleteFolders } from './folders/mutations/delete-folders';
+import { updateFolder } from './folders/mutations/update-folder';
 import { findFolder } from './folders/queries/find-folder';
 import { listDirectory } from './folders/queries/list-directory';
 import { listFolders } from './folders/queries/list-folders';
@@ -41,6 +42,7 @@ const resolvers: Resolvers = {
     logoutUser,
     signupUser,
     subscribeToNewsletter,
+    updateFolder,
     updateSnippet,
   },
   Query: {

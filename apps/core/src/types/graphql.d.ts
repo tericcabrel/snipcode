@@ -76,6 +76,7 @@ export type Mutation = {
   logoutUser: Scalars['Boolean'];
   signupUser: SignupUserResult;
   subscribeToNewsletter: Result;
+  updateFolder: Folder;
   updateSnippet: Snippet;
 };
 
@@ -113,6 +114,12 @@ export type MutationSignupUserArgs = {
 
 export type MutationSubscribeToNewsletterArgs = {
   email: Scalars['String'];
+};
+
+
+export type MutationUpdateFolderArgs = {
+  id: Scalars['ID'];
+  input: UpdateFolderInput;
 };
 
 
@@ -224,6 +231,10 @@ export const SnippetVisibility = {
 } as const;
 
 export type SnippetVisibility = typeof SnippetVisibility[keyof typeof SnippetVisibility];
+export type UpdateFolderInput = {
+  name: Scalars['String'];
+};
+
 export type UpdateSnippetInput = {
   content: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
@@ -334,6 +345,7 @@ export type ResolversTypes = {
   SnippetInfo: ResolverTypeWrapper<Omit<SnippetInfo, 'paths' | 'snippet'> & { paths: Array<ResolversTypes['Folder']>, snippet: ResolversTypes['Snippet'] }>;
   SnippetVisibility: SnippetVisibility;
   String: ResolverTypeWrapper<Scalars['String']>;
+  UpdateFolderInput: UpdateFolderInput;
   UpdateSnippetInput: UpdateSnippetInput;
   User: ResolverTypeWrapper<User>;
 };
@@ -358,6 +370,7 @@ export type ResolversParentTypes = {
   Snippet: Snippet;
   SnippetInfo: Omit<SnippetInfo, 'paths' | 'snippet'> & { paths: Array<ResolversParentTypes['Folder']>, snippet: ResolversParentTypes['Snippet'] };
   String: Scalars['String'];
+  UpdateFolderInput: UpdateFolderInput;
   UpdateSnippetInput: UpdateSnippetInput;
   User: User;
 };
@@ -400,6 +413,7 @@ export type MutationResolvers<ContextType = AppContext, ParentType extends Resol
   logoutUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   signupUser?: Resolver<ResolversTypes['SignupUserResult'], ParentType, ContextType, RequireFields<MutationSignupUserArgs, 'input'>>;
   subscribeToNewsletter?: Resolver<ResolversTypes['Result'], ParentType, ContextType, RequireFields<MutationSubscribeToNewsletterArgs, 'email'>>;
+  updateFolder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType, RequireFields<MutationUpdateFolderArgs, 'id' | 'input'>>;
   updateSnippet?: Resolver<ResolversTypes['Snippet'], ParentType, ContextType, RequireFields<MutationUpdateSnippetArgs, 'id' | 'input'>>;
 };
 
