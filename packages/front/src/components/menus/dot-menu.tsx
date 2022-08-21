@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { DotsVerticalIcon } from '@heroicons/react/solid';
 import React, { Fragment } from 'react';
 
-import { SnippetMenuAction } from '../../typings/components';
+import { MenuItemAction } from '../../typings/components';
 import { classNames } from '../../utils/classnames';
 
 type MenuItemProps = {
@@ -12,7 +12,7 @@ type MenuItemProps = {
 };
 
 type Props = {
-  data: SnippetMenuAction[];
+  data: MenuItemAction[];
 };
 
 const MenuItem = ({ icon, label, onClick }: MenuItemProps) => {

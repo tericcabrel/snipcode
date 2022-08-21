@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { useBooleanState } from '../../hooks';
 import { useListDirectory } from '../../services/folders/list-directory';
 import { useDeleteSnippet } from '../../services/snippets/delete-snippet';
-import { SnippetItem } from '../../typings/components';
+import { FolderItem, SnippetItem } from '../../typings/components';
+import { displayItemLabel } from '../../utils/text';
 import { ConfirmDialog } from '../dialog/confirm-dialog';
 import MenuAction from '../menu-action';
 import { useToast } from '../toast/provider';
@@ -23,6 +24,33 @@ type Props = {
   title: string;
 };
 
+type ItemToDelete = {
+  id: string;
+  type: 'snippet' | 'folder';
+};
+
+const generateConfirmDialogMessage = (item: ItemToDelete | null, folders: FolderItem[]) => {
+  if (!item) {
+    return null;
+  }
+
+  if (item.type === 'snippet') {
+    return 'Are you sure you want to delete this snippet?';
+  }
+
+  const folderItem = folders.find((folder) => item.id === folder.id);
+
+  if (!folderItem) {
+    return null;
+  }
+
+  if (folderItem.fileCount === 0) {
+    return 'Are you sure you want to delete this folder?';
+  }
+
+  return `This folder has ${displayItemLabel(folderItem.fileCount, 'item')}; are you sure you want to delete it?`;
+};
+
 const Directory = ({
   folderId,
   onBreadcrumbPathClick,
@@ -34,7 +62,8 @@ const Directory = ({
   const [isNewFolderOpened, openNewFolderModal, closeNewFolderModal] = useBooleanState(false);
   const [isNewSnippetOpened, openNewSnippetModal, closeNewSnippetModal] = useBooleanState(false);
   const [isConfirmDialogOpen, openConfirmDialog, closeConfirmDialog] = useBooleanState(false);
-  const [selectedId, setSelectedId] = useState<string | null>();
+  const [itemToDelete, setItemToDelete] = useState<ItemToDelete | null>(null);
+  const [selectedFolder, setSelectedFolder] = useState<FolderItem | null>(null);
 
   const { toastError, toastSuccess } = useToast();
 
@@ -56,17 +85,17 @@ const Directory = ({
   };
 
   const onDeleteSnippet = (snippet: SnippetItem) => {
-    setSelectedId(snippet.id);
+    setItemToDelete({ id: snippet.id, type: 'snippet' });
     openConfirmDialog();
   };
 
   const handleDeleteSnippetClick = async () => {
-    if (!selectedId) {
+    if (!itemToDelete || itemToDelete.type !== 'snippet') {
       return;
     }
 
     await deleteSnippet({
-      id: selectedId,
+      id: itemToDelete.id,
       onError: (message) => {
         toastError({ message: `Failed to delete: ${message}` });
       },
@@ -74,9 +103,40 @@ const Directory = ({
         toastSuccess({ message: 'Snippet deleted!' });
 
         closeConfirmDialog();
-        setSelectedId(null);
+        setItemToDelete(null);
       },
     });
+  };
+
+  const onRenameFolder = (folder: FolderItem) => {
+    setSelectedFolder(folder);
+
+    openNewFolderModal();
+  };
+
+  const onDeleteFolder = (folder: FolderItem) => {
+    setItemToDelete({ id: folder.id, type: 'folder' });
+
+    openConfirmDialog();
+  };
+
+  const handleDeleteFolderClick = async () => {
+    console.log('Delete Folder sniff!');
+  };
+
+  const handleConfirmDialogClick = async () => {
+    if (!itemToDelete) {
+      return;
+    }
+
+    switch (itemToDelete.type) {
+      case 'folder':
+        return handleDeleteFolderClick();
+      case 'snippet':
+        return handleDeleteSnippetClick();
+      default:
+        return;
+    }
   };
 
   return (
@@ -105,7 +165,13 @@ const Directory = ({
             <div className="min-h-96">
               <div className="mt-6 grid grid-cols-5 gap-4">
                 {folders.map((folder) => (
-                  <Folder item={folder} key={folder.id} onNavigate={goToFolder} />
+                  <Folder
+                    item={folder}
+                    key={folder.id}
+                    onNavigate={goToFolder}
+                    onRenameClick={onRenameFolder}
+                    onDeleteClick={onDeleteFolder}
+                  />
                 ))}
               </div>
               <div className="my-8 text-md font-bold text-gray-500">Files</div>
@@ -118,13 +184,20 @@ const Directory = ({
           )}
         </div>
       </main>
-      {isNewFolderOpened && <CreateFolderContainer closeModal={closeNewFolderModal} parentFolderId={folderId} />}
+      {isNewFolderOpened && (
+        <CreateFolderContainer
+          closeModal={closeNewFolderModal}
+          currentFolder={selectedFolder}
+          parentFolderId={folderId}
+        />
+      )}
       <CreateSnippetContainer open={isNewSnippetOpened} closeModal={closeNewSnippetModal} folderId={folderId} />
       <ConfirmDialog
         isLoading={isLoading}
         open={isConfirmDialogOpen}
-        onConfirmButtonClick={handleDeleteSnippetClick}
+        onConfirmButtonClick={handleConfirmDialogClick}
         onCancelButtonClick={closeConfirmDialog}
+        messageText={generateConfirmDialogMessage(itemToDelete, folders)}
       />
     </>
   );

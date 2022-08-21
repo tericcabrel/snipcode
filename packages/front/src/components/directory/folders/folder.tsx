@@ -1,19 +1,40 @@
-import { FolderIcon } from '@heroicons/react/solid';
+import { FolderIcon, FolderOpenIcon, PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
 
-import { FolderItem } from '../../../typings/components';
+import { FolderItem, MenuItemAction } from '../../../typings/components';
 import { displayItemLabel, truncate } from '../../../utils/text';
+import { DotMenu } from '../../menus/dot-menu';
 
 type Props = {
   item: FolderItem;
+  onDeleteClick: (snippet: FolderItem) => void;
   onNavigate: (folderId: string) => void;
+  onRenameClick: (snippet: FolderItem) => void;
 };
 
 const FOLDER_NAME_MAX_LENGTH = 20;
 
-const Folder = ({ item, onNavigate }: Props) => {
+const Folder = ({ item, onDeleteClick, onNavigate, onRenameClick }: Props) => {
   const handleDoubleClick = () => {
     onNavigate(item.id);
   };
+
+  const menuActions: MenuItemAction[] = [
+    {
+      icon: <FolderOpenIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
+      label: 'Open',
+      onClick: handleDoubleClick,
+    },
+    {
+      icon: <PencilAltIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
+      label: 'Rename',
+      onClick: () => onRenameClick(item),
+    },
+    {
+      icon: <TrashIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
+      label: 'Delete',
+      onClick: () => onDeleteClick(item),
+    },
+  ];
 
   return (
     <div
@@ -21,8 +42,11 @@ const Folder = ({ item, onNavigate }: Props) => {
       onDoubleClick={handleDoubleClick}
       title={item.name}
     >
-      <div className="mt-4 text-gray-500 sm:pr-8">
-        <FolderIcon className="h-6 w-6" />
+      <div className="mt-4 text-gray-500">
+        <div className="flex justify-between items-center">
+          <FolderIcon className="h-6 w-6" />
+          <DotMenu data={menuActions} />
+        </div>
         <div className="mt-4 text-base font-bold text-gray-900">{truncate(item.name, FOLDER_NAME_MAX_LENGTH)}</div>
         <p className="hidden mt-2 text-sm sm:block">{displayItemLabel(item.fileCount, 'item')}</p>
       </div>

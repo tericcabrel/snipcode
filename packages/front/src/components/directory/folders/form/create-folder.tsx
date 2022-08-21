@@ -7,10 +7,12 @@ import * as yup from 'yup';
 import Button from '../../../../forms/button';
 import TextInput from '../../../../forms/text-input';
 import { useCreateFolder } from '../../../../services/folders/create-folder';
+import { FolderItem } from '../../../../typings/components';
 import { FOLDER_NAME_REGEX, FORM_ERRORS } from '../../../../utils/constants';
 
 type Props = {
   closeModal: () => void;
+  currentFolder: FolderItem | null;
   parentFolderId: string;
 };
 
@@ -27,13 +29,13 @@ const formSchema = yup.object().shape({
 
 type FormValues = { name: string };
 
-const CreateFolderContainer = ({ closeModal, parentFolderId }: Props) => {
+const CreateFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Props) => {
   const cancelButtonRef = useRef(null);
   const { createFolder, isLoading } = useCreateFolder();
 
   const formMethods = useForm<FormValues>({
     defaultValues: {
-      name: 'New folder',
+      name: currentFolder?.name ?? 'New folder',
     },
     resolver: yupResolver(formSchema),
   });

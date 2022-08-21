@@ -2,7 +2,7 @@ import { ClipboardIcon, CodeIcon, DocumentIcon, PencilAltIcon, ShareIcon, TrashI
 import React from 'react';
 
 import { useCopyToClipboard } from '../../../hooks/use-copy-to-clipboard';
-import { SnippetItem, SnippetMenuAction } from '../../../typings/components';
+import { MenuItemAction, SnippetItem } from '../../../typings/components';
 import { COLORS } from '../../../utils/constants';
 import { generateEmbeddableLink, generateShareableLink } from '../../../utils/snippets';
 import { truncate } from '../../../utils/text';
@@ -39,7 +39,7 @@ const Snippet = ({ item, onClick, onDeleteClick }: Props) => {
     await copyToClipboard(content);
   };
 
-  const snippetMenus: SnippetMenuAction[] = [
+  const menuActions: MenuItemAction[] = [
     {
       icon: <PencilAltIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
       label: 'Edit',
@@ -79,7 +79,7 @@ const Snippet = ({ item, onClick, onDeleteClick }: Props) => {
             {truncate(item.name, FILE_NAME_MAX_LENGTH)}
           </div>
         </div>
-        <DotMenu data={snippetMenus} />
+        <DotMenu data={menuActions} />
       </div>
     </div>
   );

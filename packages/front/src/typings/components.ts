@@ -33,7 +33,7 @@ export type SnippetItem = {
   name: string;
 };
 
-export type SnippetMenuAction = {
+export type MenuItemAction = {
   icon?: React.ReactNode;
   label: string;
   onClick: () => void;
