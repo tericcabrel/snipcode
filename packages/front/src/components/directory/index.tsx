@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useBooleanState } from '../../hooks';
+import { useDeleteFolders } from '../../services/folders/delete-folders';
 import { useListDirectory } from '../../services/folders/list-directory';
 import { useDeleteSnippet } from '../../services/snippets/delete-snippet';
 import { FolderItem, SnippetItem } from '../../typings/components';
@@ -68,7 +69,8 @@ const Directory = ({
   const { toastError, toastSuccess } = useToast();
 
   const { data } = useListDirectory(folderId);
-  const { deleteSnippet, isLoading } = useDeleteSnippet(folderId);
+  const { deleteSnippet, isLoading: isDeleteSnippetLoading } = useDeleteSnippet(folderId);
+  const { deleteFolders, isLoading: isDeleteFolderLoading } = useDeleteFolders(folderId);
 
   const isDirectoryEmpty = data && data.folders.length + data.snippets.length === 0;
 
@@ -121,7 +123,22 @@ const Directory = ({
   };
 
   const handleDeleteFolderClick = async () => {
-    console.log('Delete Folder sniff!');
+    if (!itemToDelete || itemToDelete.type !== 'folder') {
+      return;
+    }
+
+    await deleteFolders({
+      ids: [itemToDelete.id],
+      onError: (message) => {
+        toastError({ message: `Failed to delete: ${message}` });
+      },
+      onSuccess: () => {
+        toastSuccess({ message: 'Folder deleted!' });
+
+        closeConfirmDialog();
+        setItemToDelete(null);
+      },
+    });
   };
 
   const handleConfirmDialogClick = async () => {
@@ -193,7 +210,7 @@ const Directory = ({
       )}
       <CreateSnippetContainer open={isNewSnippetOpened} closeModal={closeNewSnippetModal} folderId={folderId} />
       <ConfirmDialog
-        isLoading={isLoading}
+        isLoading={isDeleteSnippetLoading || isDeleteFolderLoading}
         open={isConfirmDialogOpen}
         onConfirmButtonClick={handleConfirmDialogClick}
         onCancelButtonClick={closeConfirmDialog}

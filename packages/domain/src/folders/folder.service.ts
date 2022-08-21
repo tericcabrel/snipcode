@@ -97,8 +97,6 @@ export default class FolderService {
       throw new SharinganError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER');
     }
 
-    // TODO Delete snippets
-
     const ids = foldersToDelete.map((folder) => folder.id);
 
     await dbClient.folder.deleteMany({
