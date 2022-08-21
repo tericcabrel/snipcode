@@ -2,6 +2,7 @@ import { Snippet, SnippetVisibility, dbClient } from '@sharingan/database';
 import SharinganError, { errors } from '@sharingan/utils';
 
 import CreateSnippetDto from './dtos/create-snippet-dto';
+import DeleteSnippetDto from './dtos/delete-snippet-dto';
 import UpdateSnippetDto from './dtos/update-snippet-dto';
 
 export default class SnippetService {
@@ -62,12 +63,14 @@ export default class SnippetService {
     });
   }
 
-  async delete(id: string): Promise<void> {
-    const snippet = await dbClient.snippet.findFirst({ where: { id } });
+  async delete(deleteSnippetDto: DeleteSnippetDto): Promise<void> {
+    const snippet = await this.findById(deleteSnippetDto.snippetId);
 
-    if (snippet) {
-      await dbClient.snippet.delete({ where: { id } });
+    if (snippet.userId !== deleteSnippetDto.creatorId) {
+      throw new SharinganError(errors.CANT_EDIT_SNIPPET(deleteSnippetDto.creatorId, snippet.id), 'CANT_EDIT_SNIPPET');
     }
+
+    await dbClient.snippet.delete({ where: { id: deleteSnippetDto.snippetId } });
   }
 
   async isSnippetExistInFolder(folderId: string, snippetName: string): Promise<boolean> {
