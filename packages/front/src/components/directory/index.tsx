@@ -2,9 +2,11 @@ import { useState } from 'react';
 
 import { useBooleanState } from '../../hooks';
 import { useListDirectory } from '../../services/folders/list-directory';
+import { useDeleteSnippet } from '../../services/snippets/delete-snippet';
 import { SnippetItem } from '../../typings/components';
 import { ConfirmDialog } from '../dialog/confirm-dialog';
 import MenuAction from '../menu-action';
+import { useToast } from '../toast/provider';
 import BreadCrumb from './breadcrumb';
 import EmptyFolder from './folders/empty';
 import Folder from './folders/folder';
@@ -34,7 +36,10 @@ const Directory = ({
   const [isConfirmDialogOpen, openConfirmDialog, closeConfirmDialog] = useBooleanState(false);
   const [selectedId, setSelectedId] = useState<string | null>();
 
+  const { toastError, toastSuccess } = useToast();
+
   const { data } = useListDirectory(folderId);
+  const { deleteSnippet, isLoading } = useDeleteSnippet(folderId);
 
   const isDirectoryEmpty = data && data.folders.length + data.snippets.length === 0;
 
@@ -55,10 +60,23 @@ const Directory = ({
     openConfirmDialog();
   };
 
-  const handleDeleteSnippetClick = () => {
-    console.log('Delete snippet snif!', selectedId);
-    closeConfirmDialog();
-    setSelectedId(null);
+  const handleDeleteSnippetClick = async () => {
+    if (!selectedId) {
+      return;
+    }
+
+    await deleteSnippet({
+      id: selectedId,
+      onError: (message) => {
+        toastError({ message: `Failed to delete: ${message}` });
+      },
+      onSuccess: () => {
+        toastSuccess({ message: 'Snippet deleted!' });
+
+        closeConfirmDialog();
+        setSelectedId(null);
+      },
+    });
   };
 
   return (
@@ -103,7 +121,7 @@ const Directory = ({
       {isNewFolderOpened && <CreateFolderContainer closeModal={closeNewFolderModal} parentFolderId={folderId} />}
       <CreateSnippetContainer open={isNewSnippetOpened} closeModal={closeNewSnippetModal} folderId={folderId} />
       <ConfirmDialog
-        isLoading={false}
+        isLoading={isLoading}
         open={isConfirmDialogOpen}
         onConfirmButtonClick={handleDeleteSnippetClick}
         onCancelButtonClick={closeConfirmDialog}

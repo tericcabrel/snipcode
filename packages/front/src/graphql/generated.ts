@@ -59,6 +59,7 @@ export type Mutation = {
   createFolder: Folder;
   createSnippet: Snippet;
   deleteFolders: Scalars['Boolean'];
+  deleteSnippet: Scalars['Boolean'];
   loginUser: LoginResult;
   logoutUser: Scalars['Boolean'];
   signupUser: SignupUserResult;
@@ -76,6 +77,10 @@ export type MutationCreateSnippetArgs = {
 
 export type MutationDeleteFoldersArgs = {
   folderIds: Array<Scalars['String']>;
+};
+
+export type MutationDeleteSnippetArgs = {
+  id: Scalars['ID'];
 };
 
 export type MutationLoginUserArgs = {
@@ -262,6 +267,12 @@ export type CreateSnippetMutationVariables = Exact<{
 }>;
 
 export type CreateSnippetMutation = { __typename?: 'Mutation'; createSnippet: { __typename?: 'Snippet'; id: string } };
+
+export type DeleteSnippetMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type DeleteSnippetMutation = { __typename?: 'Mutation'; deleteSnippet: boolean };
 
 export type UpdateSnippetMutationVariables = Exact<{
   id: Scalars['ID'];
