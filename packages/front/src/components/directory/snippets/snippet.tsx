@@ -2,6 +2,7 @@ import { ClipboardIcon, CodeIcon, DocumentIcon, PencilAltIcon, ShareIcon, TrashI
 import React from 'react';
 
 import { useCopyToClipboard } from '../../../hooks/use-copy-to-clipboard';
+import { useHover } from '../../../hooks/use-hover';
 import { MenuItemAction, SnippetItem } from '../../../typings/components';
 import { COLORS } from '../../../utils/constants';
 import { generateEmbeddableLink, generateShareableLink } from '../../../utils/snippets';
@@ -17,6 +18,7 @@ type Props = {
 const FILE_NAME_MAX_LENGTH = 30;
 
 const Snippet = ({ item, onClick, onDeleteClick }: Props) => {
+  const [hoverRef, isHovered] = useHover<HTMLDivElement>();
   const [, copyToClipboard] = useCopyToClipboard();
   const charIndex = item.language.charCodeAt(0) - 65;
   const colorIndex = charIndex % COLORS.length;
@@ -71,6 +73,7 @@ const Snippet = ({ item, onClick, onDeleteClick }: Props) => {
     <div
       className="relative block pb-4 px-4 border border-gray-100 shadow-sm rounded-md cursor-default bg-white hover:bg-gray-100 transition"
       title={item.name}
+      ref={hoverRef}
     >
       <div className="mt-4 text-gray-500 flex items-center justify-between">
         <div className="flex items-center">
@@ -79,7 +82,7 @@ const Snippet = ({ item, onClick, onDeleteClick }: Props) => {
             {truncate(item.name, FILE_NAME_MAX_LENGTH)}
           </div>
         </div>
-        <DotMenu data={menuActions} />
+        {isHovered && <DotMenu data={menuActions} />}
       </div>
     </div>
   );

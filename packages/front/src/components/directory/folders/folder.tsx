@@ -1,5 +1,6 @@
 import { FolderIcon, FolderOpenIcon, PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
 
+import { useHover } from '../../../hooks/use-hover';
 import { FolderItem, MenuItemAction } from '../../../typings/components';
 import { displayItemLabel, truncate } from '../../../utils/text';
 import { DotMenu } from '../../menus/dot-menu';
@@ -14,6 +15,8 @@ type Props = {
 const FOLDER_NAME_MAX_LENGTH = 20;
 
 const Folder = ({ item, onDeleteClick, onNavigate, onRenameClick }: Props) => {
+  const [hoverRef, isHovered] = useHover<HTMLDivElement>();
+
   const handleDoubleClick = () => {
     onNavigate(item.id);
   };
@@ -41,11 +44,12 @@ const Folder = ({ item, onDeleteClick, onNavigate, onRenameClick }: Props) => {
       className="relative block pb-4 px-4 border border-gray-100 shadow-sm rounded-md cursor-default bg-white hover:bg-gray-100 transition"
       onDoubleClick={handleDoubleClick}
       title={item.name}
+      ref={hoverRef}
     >
       <div className="mt-4 text-gray-500">
         <div className="flex justify-between items-center">
           <FolderIcon className="h-6 w-6" />
-          <DotMenu data={menuActions} />
+          {isHovered && <DotMenu data={menuActions} />}
         </div>
         <div className="mt-4 text-base font-bold text-gray-900">{truncate(item.name, FOLDER_NAME_MAX_LENGTH)}</div>
         <p className="hidden mt-2 text-sm sm:block">{displayItemLabel(item.fileCount, 'item')}</p>
