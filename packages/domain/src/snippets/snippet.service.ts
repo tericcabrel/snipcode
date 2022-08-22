@@ -15,11 +15,6 @@ export default class SnippetService {
 
     const input = createSnippetDto.toSnippet();
 
-    console.log(
-      input,
-      '-------------------------------------------------------------------------------------------------------------------------',
-    );
-
     return dbClient.snippet.create({
       data: {
         content: input.content,

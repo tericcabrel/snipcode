@@ -15,7 +15,7 @@
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module",
-    "project": ["./packages/**/tsconfig.json", "./apps/**/tsconfig.json"]
+    "project": ["./packages/**/tsconfig.json", "./apps/core/tsconfig.json"]
   },
   "env": {
     "es6": true,
@@ -32,7 +32,12 @@
     "no-multiple-empty-lines": "warn",
     "prefer-const": "warn",
     "no-use-before-define": "warn",
-    "max-len": ["warn", 120],
+    "max-len": [
+      "warn", 120, {
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
+      }],
     "import/order": [
       "error",
       {
@@ -104,6 +109,41 @@
     "no-param-reassign": "error",
     "no-underscore-dangle": "off",
     "no-unused-vars": "off",
-    "ods-use-this": "off"
+    "ods-use-this": "off",
+    "no-async-promise-executor": "error",
+    "no-await-in-loop": "error",
+    "no-promise-executor-return": "error",
+    "require-atomic-updates": "error",
+    "max-nested-callbacks": ["error", 3],
+    "no-return-await": "error",
+    "prefer-promise-reject-errors": "error",
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "next": "return",
+        "prev": "*"
+      },
+      {
+        "blankLine": "always",
+        "next": "*",
+        "prev": "directive"
+      },
+      {
+        "blankLine": "any",
+        "next": "directive",
+        "prev": "directive"
+      },
+      {
+        "blankLine": "always",
+        "next": "*",
+        "prev": ["case", "default"]
+      },
+      {
+        "blankLine": "never",
+        "next": "case",
+        "prev": ["case", "default"]
+      }
+    ]
   }
 }

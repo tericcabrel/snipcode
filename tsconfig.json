@@ -19,13 +19,16 @@
       "path": "./packages/database"
     },
     {
-      "path": "./apps/core"
-    },
-    {
       "path": "./packages/domain"
     },
     {
       "path": "./packages/front"
+    },
+    {
+      "path": "./apps/core"
+    },
+    {
+      "path": "./apps/web"
     }
   ]
 }
