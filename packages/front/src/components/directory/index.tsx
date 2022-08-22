@@ -151,6 +151,7 @@ const Directory = ({
         return handleDeleteFolderClick();
       case 'snippet':
         return handleDeleteSnippetClick();
+
       default:
         return;
     }

@@ -1,6 +1,16 @@
 {
   "plugins": ["prettier"],
   "extends": ["next", "next/core-web-vitals", "prettier"],
+  "settings": {
+    "next": {
+      "rootDir": "."
+    }
+  },
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "project": ["tsconfig.json"]
+  },
   "rules": {
     "prettier/prettier": "error",
     "camelcase": "off",
@@ -49,7 +59,21 @@
             "ignoreTemplateLiterals": true,
             "ignoreStrings": true,
             "ignoreComments": true
-          }]
+          }],
+        "sort-keys": "warn",
+        "react/destructuring-assignment": "warn",
+        "react/display-name": "warn",
+        "react/prop-types": "warn",
+        "react/sort-prop-types": "warn",
+        "react/no-unescaped-entities": "off",
+        "react/jsx-sort-props": [
+          1,
+          {
+            "callbacksLast": true,
+            "ignoreCase": false,
+            "shorthandLast": true
+          }
+        ]
       }
     }
   ],
