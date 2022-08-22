@@ -4,15 +4,9 @@
   "compilerOptions": {
     "rootDir": "."
   },
-  "include": [
-    "apps/**/*.ts",
-    "packages/**/*.ts"
-  ],
   "exclude": [
     "node_modules",
     "tmp",
-    "packages/**/tests/**",
-    "packages/**/dist/**"
   ],
   "references": [
     {
@@ -26,6 +20,12 @@
     },
     {
       "path": "./apps/core"
+    },
+    {
+      "path": "./packages/domain"
+    },
+    {
+      "path": "./packages/front"
     }
   ]
 }

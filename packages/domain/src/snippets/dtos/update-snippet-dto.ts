@@ -37,7 +37,6 @@ export default class UpdateSnippetDto {
       name: this._input.name,
       size: this.getContentSize(),
       theme: this._input.theme,
-      updatedAt: new Date(),
       visibility: this._input.visibility,
     };
   }
