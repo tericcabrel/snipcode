@@ -13,9 +13,9 @@
     "import"
   ],
   "parserOptions": {
-    "ecmaVersion": 2020,
+    "ecmaVersion": 2021,
     "sourceType": "module",
-    "project": ["tsconfig.json", "./packages/**/tsconfig.json", "./apps/**/tsconfig.json"]
+    "project": ["./packages/**/tsconfig.json", "./apps/**/tsconfig.json"]
   },
   "env": {
     "es6": true,

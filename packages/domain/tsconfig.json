@@ -7,7 +7,7 @@
     "sourceMap": true
   },
   "files": ["env.d.ts"],
-  "include": ["./src/**/*", "./tests/**/*", "index.ts"],
+  "include": ["src", "tests", "index.ts"],
   "exclude": [
     "node_modules"
   ],
