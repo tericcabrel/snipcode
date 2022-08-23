@@ -1,4 +1,8 @@
 {
-  "rules": {},
-  "ignorePatterns": ["jest.config.ts"]
+  "ignorePatterns": ["jest.config.ts"],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "project": "tsconfig.json"
+  }
 }

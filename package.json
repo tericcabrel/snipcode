@@ -26,13 +26,8 @@
     "functions/kyubi"
   ],
   "lint-staged": {
-    "apps/**/*.{ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "packages/**/*.{ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
+    "**/*.ts?(x)": [
+      "prettier --write"
     ]
   },
   "husky": {

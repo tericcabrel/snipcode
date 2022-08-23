@@ -9,10 +9,6 @@ const GlobalSeo = () => {
 
   return (
     <DefaultSeo
-      title={title}
-      titleTemplate="Sharingan - %s"
-      description={description}
-      canonical={baseUrl}
       additionalMetaTags={[
         { content: 'Eric Cabrel TIOGO', property: 'author' },
         {
@@ -20,6 +16,8 @@ const GlobalSeo = () => {
           property: 'keywords',
         },
       ]}
+      canonical={baseUrl}
+      description={description}
       openGraph={{
         description,
         images: [
@@ -36,6 +34,8 @@ const GlobalSeo = () => {
         type: 'website',
         url: baseUrl,
       }}
+      title={title}
+      titleTemplate="Sharingan - %s"
       twitter={{
         cardType: 'summary_large_image',
         handle: '@sharinganapp',
