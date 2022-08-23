@@ -1,12 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "rootDir": "."
-  },
   "exclude": [
     "node_modules",
-    "tmp",
+    "tmp"
   ],
   "references": [
     {

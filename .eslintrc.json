@@ -12,11 +12,6 @@
     "typescript-sort-keys",
     "import"
   ],
-  "parserOptions": {
-    "ecmaVersion": 2021,
-    "sourceType": "module",
-    "project": ["./packages/**/tsconfig.json", "./apps/core/tsconfig.json"]
-  },
   "env": {
     "es6": true,
     "node": true,

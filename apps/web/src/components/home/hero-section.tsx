@@ -11,24 +11,24 @@ const HeroSection = () => {
             <span className="relative">
               <svg
                 className="absolute inset-x-0 bottom-0 w-full h-auto mx-auto"
-                viewBox="0 0 259 16"
                 fill="none"
+                viewBox="0 0 259 16"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M2.14689 13.6626C46.6856 6.89549 88.3011 4.11963 133.218 3.29473C166.412 2.68514 203.253 1.30776 236.126 5.12509C242.71 5.4987 248.725 6.75385 256.089 8.20337"
                   stroke="url(#paint0_linear_116_3568)"
-                  strokeWidth="4"
                   strokeLinecap="round"
+                  strokeWidth="4"
                 />
                 <defs>
                   <linearGradient
+                    gradientUnits="userSpaceOnUse"
                     id="paint0_linear_116_3568"
                     x1="22.5697"
-                    y1="5.28618"
                     x2="54.2445"
+                    y1="5.28618"
                     y2="82.5027"
-                    gradientUnits="userSpaceOnUse"
                   >
                     <stop stopColor="#D9B227" />
                     <stop offset="1" stopColor="#FD4141" />
@@ -46,8 +46,8 @@ const HeroSection = () => {
           <div className="relative inline-flex mt-10 group">
             <div className="absolute transitiona-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg filter group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200" />
             <a
-              href="#early-access"
               className="relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-gray-900 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+              href="#early-access"
               role="button"
             >
               Request Early Access

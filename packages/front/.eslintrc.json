@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": ["jest.config.ts", "dist"],
+  "ignorePatterns": ["postcss.config.js", "tailwind.config.js", "jest.config.ts", "generated.ts"],
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module",

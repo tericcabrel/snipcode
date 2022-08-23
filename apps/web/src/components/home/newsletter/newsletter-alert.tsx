@@ -49,7 +49,7 @@ const NewsletterAlert = ({ handleClose, state = 'failure' }: Props) => {
   };
 
   return (
-    <Transition appear show={isOpen} as={Fragment}>
+    <Transition as={Fragment} show={isOpen} appear>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
         <Transition.Child
           as={Fragment}
@@ -86,8 +86,8 @@ const NewsletterAlert = ({ handleClose, state = 'failure' }: Props) => {
 
                 <div className="mt-8 flex justify-center">
                   <button
-                    type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    type="button"
                     onClick={closeModal}
                   >
                     Got it!

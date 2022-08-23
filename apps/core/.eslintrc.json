@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": ["jest.config.ts", "dist"],
+  "ignorePatterns": ["graphql.d.ts", "jest.config.ts"],
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module",

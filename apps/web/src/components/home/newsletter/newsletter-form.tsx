@@ -43,16 +43,16 @@ const NewsletterForm = () => {
         disabled={isLoading}
         name="email"
         placeholder="Enter your email address"
-        required
         type="email"
         value={email}
+        required
         onChange={(e) => setEmail(e.target.value)}
       />
 
       <div className="mt-4 sm:mt-0 sm:absolute sm:inset-y-0 sm:right-0 sm:flex sm:items-center sm:pr-3">
         <button
-          onClick={handleSubscribe}
           className="inline-flex items-center justify-center w-full px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent sm:w-auto sm:py-3 hover:bg-opacity-90 rounded-xl"
+          onClick={handleSubscribe}
         >
           {isLoading && <Icon.Spinner />}
           Get updates

@@ -1,6 +1,6 @@
 build
 .eslintrc.js
-jest.config.js
+jest.config.ts
 module.d.ts
 dist
 .next

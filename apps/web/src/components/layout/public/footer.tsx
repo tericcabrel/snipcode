@@ -49,11 +49,11 @@ const PublicFooter = () => {
             {socialIcons.map((socialIcon) => (
               <li key={socialIcon.name}>
                 <a
+                  className="inline-flex items-center justify-center text-gray-900 transition-all duration-200 rounded-full hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-gray-200"
                   href={socialIcon.link}
+                  rel="noopener noreferrer"
                   target={socialIcon.target}
                   title={socialIcon.name}
-                  className="inline-flex items-center justify-center text-gray-900 transition-all duration-200 rounded-full hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-gray-200"
-                  rel="noopener noreferrer"
                 >
                   {socialIcon.icon}
                 </a>
@@ -69,8 +69,8 @@ const PublicFooter = () => {
             {policies.map((policy) => (
               <li key={policy.id}>
                 <a
-                  href={policy.link}
                   className="text-base font-normal text-gray-600 transition-all duration-200 font-pj hover:text-gray-900"
+                  href={policy.link}
                 >
                   {policy.text}
                 </a>

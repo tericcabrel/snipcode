@@ -42,15 +42,15 @@ const Header = () => {
                 </div>
                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                   {navigation.map((item) => (
-                    <Link key={item.name} href={item.href}>
+                    <Link href={item.href} key={item.name}>
                       <a
+                        aria-current={isActive(pathname, item.href) ? 'page' : undefined}
                         className={classNames(
                           isActive(pathname, item.href)
                             ? 'border-gray-900 text-gray-900'
                             : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
                           'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium',
                         )}
-                        aria-current={isActive(pathname, item.href) ? 'page' : undefined}
                       >
                         {item.name}
                       </a>
@@ -98,9 +98,9 @@ const Header = () => {
                 <Disclosure.Button className="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
-                    <Icon.X className="block h-6 w-6" aria-hidden="true" />
+                    <Icon.X aria-hidden="true" className="block h-6 w-6" />
                   ) : (
-                    <Icon.Menu className="block h-6 w-6" aria-hidden="true" />
+                    <Icon.Menu aria-hidden="true" className="block h-6 w-6" />
                   )}
                 </Disclosure.Button>
               </div>
@@ -111,16 +111,16 @@ const Header = () => {
             <div className="pt-2 pb-3 space-y-1">
               {navigation.map((item) => (
                 <Disclosure.Button
-                  key={item.name}
+                  aria-current={item.current ? 'page' : undefined}
                   as="a"
-                  href={item.href}
                   className={classNames(
                     item.current
                       ? 'bg-indigo-50 border-indigo-500 text-indigo-700'
                       : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800',
                     'block pl-3 pr-4 py-2 border-l-4 text-base font-medium',
                   )}
-                  aria-current={item.current ? 'page' : undefined}
+                  href={item.href}
+                  key={item.name}
                 >
                   {item.name}
                 </Disclosure.Button>
