@@ -18,6 +18,7 @@
   "workspaces": [
     "packages/database",
     "packages/domain",
+    "packages/embed",
     "packages/logger",
     "packages/front",
     "packages/utils",
