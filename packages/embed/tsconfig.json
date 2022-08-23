@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": true,
+    "composite": true,
+    "sourceMap": true,
+    "lib": ["es2021", "dom"],
+    "target": "es5"
+  },
+  "files": ["env.d.ts"],
+  "include": ["./src/**/*", "index.ts"],
+  "exclude": [
+    "node_modules"
+  ]
+}
