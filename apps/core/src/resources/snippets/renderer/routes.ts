@@ -5,7 +5,7 @@ import { previewSnippet } from './handlers/preview';
 const rendererRoute = (): Router => {
   const router = Router();
 
-  router.get('/snippet/:id', previewSnippet);
+  router.get('/snippets/:id', previewSnippet);
 
   return router;
 };

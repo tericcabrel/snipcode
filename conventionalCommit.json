@@ -43,6 +43,7 @@
     "cli": {},
     "core": {},
     "database": {},
+    "embed": {},
     "directory": {},
     "domain": {},
     "folder": {},
