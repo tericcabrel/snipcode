@@ -1,1 +1,1 @@
-console.log('Hello Embed');
+console.log('Hello From Embed JS');
