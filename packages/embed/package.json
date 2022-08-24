@@ -5,13 +5,21 @@
   "license": "MIT",
   "scripts": {
     "build": "tsup",
+    "build:watch": "tsup --watch",
     "clean": "rm -rf .turbo dist build",
-    "watch": "tsup --watch",
     "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/server/index.ts",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "preview": "serve ./src/server/static -l 7503"
   },
   "devDependencies": {
+    "@sharingan/database": "*",
+    "@types/express": "^4.17.13",
     "@types/node": "^18.7.11",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19",
+    "serve": "^14.0.1",
+    "shiki": "^0.11.1",
+    "ts-node": "^10.9.1",
     "tsup": "^6.2.2"
   }
 }
