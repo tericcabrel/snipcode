@@ -4,9 +4,7 @@ import { defineConfig } from 'tsup';
 
 const copyFile = async () => {
   const buildStylePath = path.resolve(__dirname, 'build', 'style.css');
-  const buildStyleMapPath = path.resolve(__dirname, 'build', 'style.css.map');
   const buildScriptPath = path.resolve(__dirname, 'build', 'script.js');
-  const buildScriptMapPath = path.resolve(__dirname, 'build', 'script.js.map');
 
   const serverPublicFolderPath = path.resolve(__dirname, 'src/server/public');
   const shariganPublicFolderPath = path.resolve(serverPublicFolderPath, 'sharingan');
@@ -16,9 +14,7 @@ const copyFile = async () => {
   }
 
   fs.cpSync(buildStylePath, path.resolve(shariganPublicFolderPath, 'style.css'));
-  fs.cpSync(buildStyleMapPath, path.resolve(shariganPublicFolderPath, 'style.css.map'));
   fs.cpSync(buildScriptPath, path.resolve(shariganPublicFolderPath, 'script.js'));
-  fs.cpSync(buildScriptMapPath, path.resolve(shariganPublicFolderPath, 'script.js.map'));
 };
 
 export default defineConfig((options) => {
@@ -31,7 +27,7 @@ export default defineConfig((options) => {
     minify: !options.watch,
     outDir: 'build',
     platform: 'browser',
-    sourcemap: true,
+    sourcemap: false,
     splitting: false,
     onSuccess: () => copyFile(),
   };

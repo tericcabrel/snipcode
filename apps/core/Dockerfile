@@ -30,7 +30,7 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-COPY --chown=node:node --from=builder /app/apps/core/dist/index.js ./
+COPY --chown=node:node --from=builder /app/apps/core/build/index.js ./
 COPY --chown=node:node --from=schema-builder /app/node_modules/.prisma/client/schema.prisma ./
 COPY --chown=node:node --from=schema-builder /app/node_modules/.prisma/client/libquery_engine-linux-musl.so.node ./
 

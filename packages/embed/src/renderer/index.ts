@@ -26,6 +26,7 @@ export const renderSnippetToHtml = async ({ options, shiki, snippet }: Args): Pr
 
     return generateHtmlPreview({
       code,
+      rawCode: 'No content',
       scriptUrl: SCRIPT_URL,
       styleUrl: STYLE_URL,
       title: 'Not found',
@@ -57,6 +58,7 @@ export const renderSnippetToHtml = async ({ options, shiki, snippet }: Args): Pr
   return generateHtmlPreview({
     code: html,
     color: backgroundColor,
+    rawCode: snippet.content,
     scriptUrl: SCRIPT_URL,
     styleUrl: STYLE_URL,
     title: snippet.name,
