@@ -19,9 +19,7 @@
   font-weight: bold;
 }
 .code-editor-container {
-  border: solid 1px ${color};
   border-radius: 0 0 3px 3px;
-  background-color: ${color};
   overflow-x: auto;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -73,7 +71,7 @@
   width: 1.5rem;
   height: 1.5rem;
 }
-#btn-copy {
+.btn-copy {
   position: fixed;
   top: 60px;
   right: 20px;
@@ -85,4 +83,7 @@
 }
 .hidden {
   display: none;
+}
+.show {
+  display: block;
 }

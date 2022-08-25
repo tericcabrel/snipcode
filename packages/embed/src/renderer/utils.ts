@@ -13,3 +13,10 @@ export const addWhitespaceForEmptyLine = (line: string) => {
 
   return line;
 };
+
+export const generateRandomString = (strLength: number) => {
+  const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  const randomArray = Array.from({ length: strLength }, () => chars[Math.floor(Math.random() * chars.length)]);
+
+  return randomArray.join('');
+};

@@ -6,10 +6,10 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --project tsconfig.prod.json",
-    "clean": "rm -rf .turbo dist logs",
+    "clean": "rm -rf .turbo dist build logs",
     "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts",
     "lint": "eslint src",
-    "build:prod": "esbuild ./src/index.ts --bundle --platform=node --outfile=dist/index.js",
+    "build:prod": "esbuild ./src/index.ts --bundle --platform=node --outfile=build/index.js",
     "test": "jest",
     "gql:gen:types": "yarn graphql-codegen"
   },
@@ -25,8 +25,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "graphql": "^16.5.0",
-    "shiki": "^0.10.1"
+    "graphql": "^16.5.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.7.0",
