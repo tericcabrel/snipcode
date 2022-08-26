@@ -1,0 +1,11 @@
+{
+  "headers": {
+    "Content-Type": "text/html"
+  },
+  "pathParameters": {
+    "id": "/path/to/resource"
+  },
+  "queryStringParameters": {
+    "foo": "bar"
+  }
+}
