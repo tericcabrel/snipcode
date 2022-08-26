@@ -13,7 +13,11 @@
   "engines": {
     "node": ">=16.14.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@sharingan/database": "*",
+    "@sharingan/embed": "*",
+    "shiki": "^0.11.1"
+  },
   "devDependencies": {
     "@serverless/typescript": "^3.21.0",
     "@types/aws-lambda": "^8.10.102",

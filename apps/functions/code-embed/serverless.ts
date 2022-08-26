@@ -8,7 +8,7 @@ const serverlessConfiguration: AWS = {
       bundle: true,
       concurrency: 10,
       define: { 'require.resolve': undefined },
-      exclude: ['aws-sdk'],
+      exclude: ['aws-sdk', 'vscode-oniguruma'],
       minify: false,
       platform: 'node',
       sourcemap: true,
@@ -16,7 +16,6 @@ const serverlessConfiguration: AWS = {
     },
   },
   frameworkVersion: '3',
-  // import the function via paths
   functions: { renderer },
   package: { individually: true },
   plugins: ['serverless-esbuild'],
@@ -33,6 +32,7 @@ const serverlessConfiguration: AWS = {
     runtime: 'nodejs16.x',
   },
   service: 'code-embed',
+  useDotenv: true,
 };
 
 module.exports = serverlessConfiguration;

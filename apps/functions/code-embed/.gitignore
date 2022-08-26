@@ -9,3 +9,5 @@ jspm_packages
 .esbuild
 .turbo
 lib
+.env
+.esbuild/.build/src/functions/renderer/schema.prisma
