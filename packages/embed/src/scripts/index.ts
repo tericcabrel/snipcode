@@ -47,7 +47,7 @@ const init = () => {
         try {
           await navigator.clipboard.writeText(rawContent);
         } catch (error) {
-          console.warn('Copy failed:', error);
+          console.warn('Copy error:', error);
         }
       }
 

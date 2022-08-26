@@ -1,0 +1,35 @@
+name: Publish Sharingan embed assets to npmjs
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/embed/src/scripts/**'
+      - 'packages/embed/src/styles/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'packages/embed/src/scripts/**'
+      - 'packages/embed/src/styles/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install projects dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Publish to NPM
+        run: |
+          yarn build
+          cp package.publish.json build/package.json
+          cd build
+          yarn publish
+        working-directory: packages/embed
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
