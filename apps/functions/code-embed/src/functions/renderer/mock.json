@@ -3,7 +3,7 @@
     "Content-Type": "text/html"
   },
   "pathParameters": {
-    "id": "/path/to/resource"
+    "id": "cl6rt3y1n0004vcczdvag2n10"
   },
   "queryStringParameters": {
     "foo": "bar"
