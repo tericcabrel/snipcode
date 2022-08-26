@@ -30,6 +30,7 @@ sharingan
 │  ├─ web
 ├─ packages
 │  ├─ database
+│  ├─ embed
 │  ├─ domain
 │  ├─ logger
 │  ├─ utils
@@ -47,4 +48,3 @@ Kindly read our [Contributing Guide](./CONTRIBUTING.md) to learn and understand 
 
 This project is developed under the [MIT License](/LICENSE)
 
-> **Note**: This is a note

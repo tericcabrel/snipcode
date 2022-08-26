@@ -1,7 +1,9 @@
 {
   "name": "@sharingan/embed",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "build/index.js",
+  "repository": " https://github.com/tericcabrel/sharingan.git",
+  "author": "Eric Cabrel TIOGO <tericcabrel@yahoo.com>",
   "license": "MIT",
   "scripts": {
     "build": "tsup",
@@ -9,7 +11,8 @@
     "clean": "rm -rf .turbo dist build",
     "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/server/index.ts",
     "lint": "eslint src",
-    "preview": "serve ./src/server/static -l 7503"
+    "preview": "serve ./src/server/static -l 7503",
+    "push": "cp package.publish.json build/package.json && cd build && npm publish --access=public"
   },
   "devDependencies": {
     "@sharingan/database": "*",
