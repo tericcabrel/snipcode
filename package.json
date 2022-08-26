@@ -19,11 +19,12 @@
     "packages/database",
     "packages/domain",
     "packages/embed",
-    "packages/logger",
     "packages/front",
+    "packages/logger",
     "packages/utils",
     "apps/core",
-    "apps/web"
+    "apps/web",
+    "apps/functions/**"
   ],
   "lint-staged": {
     "**/*.ts?(x)": [
