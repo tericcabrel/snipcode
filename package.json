@@ -23,8 +23,7 @@
     "packages/front",
     "packages/utils",
     "apps/core",
-    "apps/web",
-    "functions/kyubi"
+    "apps/web"
   ],
   "lint-staged": {
     "**/*.ts?(x)": [
