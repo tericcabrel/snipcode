@@ -2,7 +2,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { defineConfig } from 'tsup';
 
-const copyFile = async () => {
+const copyFile = async (isProd: boolean) => {
+  if (isProd) {
+    return;
+  }
+
   const buildStylePath = path.resolve(__dirname, 'build', 'style.css');
   const buildScriptPath = path.resolve(__dirname, 'build', 'script.js');
 
@@ -18,17 +22,22 @@ const copyFile = async () => {
 };
 
 export default defineConfig((options) => {
+  const isProd = !options.watch;
+
+  const scriptEntryFile = isProd ? 'script.min' : 'script';
+  const styleEntryFile = isProd ? 'style.min' : 'style';
+
   return {
     clean: true,
     entry: {
-      style: 'src/styles/index.css',
-      script: 'src/scripts/index.ts',
+      [styleEntryFile]: 'src/styles/index.css',
+      [scriptEntryFile]: 'src/scripts/index.ts',
     },
     minify: !options.watch,
     outDir: 'build',
     platform: 'browser',
-    sourcemap: false,
+    sourcemap: !options.watch,
     splitting: false,
-    onSuccess: () => copyFile(),
+    onSuccess: () => copyFile(isProd),
   };
 });

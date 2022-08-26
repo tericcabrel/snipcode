@@ -3,3 +3,5 @@ dist
 build
 .env
 public
+.npmrc
+.env.cdn
