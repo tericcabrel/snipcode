@@ -2,7 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import { handlerPath } from '@/libs/handler-resolver';
 
-type LambdaEventHandler = Pick<AWS['functions'][number], 'events' | 'handler'>;
+type LambdaEventHandler = Pick<AWS['functions'][number], 'events' | 'handler' | 'layers'>;
 
 export default {
   events: [
@@ -21,4 +21,12 @@ export default {
     },
   ],
   handler: `${handlerPath(__dirname)}/handler.main`,
+  layers: [
+    {
+      Ref: 'PrismaLambdaLayer',
+    },
+    {
+      Ref: 'ShikiLambdaLayer',
+    },
+  ],
 } as LambdaEventHandler;
