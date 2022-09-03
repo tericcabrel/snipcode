@@ -8,7 +8,12 @@ const shiki = require('shiki');
 export const main: Handler<APIGatewayProxyEvent, APIGatewayProxyResult> = async (event) => {
   const snippetId = event.pathParameters['id'];
 
-  const snippet = await dbClient.snippet.findFirst({ where: { id: snippetId, visibility: 'public' } });
+  const snippet = await dbClient.snippet.findFirst({
+    where: {
+      id: snippetId,
+      visibility: 'public',
+    },
+  });
 
   const content = await renderSnippetToHtml({
     options: {
