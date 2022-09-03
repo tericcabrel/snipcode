@@ -1,15 +1,9 @@
 name: Sharingan Build
 on:
-  push:
-    branches: [ main ]
-    paths-ignore:
-      - '**/.md'
   pull_request:
     branches: [ main ]
     paths-ignore:
       - '**/.md'
-env:
-  COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -51,21 +45,3 @@ jobs:
 
       - name: Run tests
         run: yarn test
-
-  trigger_deploy:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    name: trigger_deploy
-    needs: [ build ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Trigger deployment
-        run: |
-          set -e
-
-          GITHUB_TOKEN=${{ github.token }}
-          SHA=${COMMIT_SHA:=latest}
-
-          echo $SHA
-
-          curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/tericcabrel/sharingan/actions/workflows/deploy-core.yml/dispatches -d '{"ref": "main", "inputs": {"commit-sha": "'"$SHA"'"}}'
