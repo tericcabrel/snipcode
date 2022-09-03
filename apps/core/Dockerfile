@@ -4,7 +4,7 @@ RUN mkdir app
 
 WORKDIR /app
 
-COPY ../.. .
+COPY . .
 
 RUN yarn install
 
