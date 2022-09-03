@@ -12,9 +12,16 @@ yarn workspace @sharingan/database db:generate
 
 cp -r node_modules/.prisma apps/functions/code-embed/layers/prisma-layer/nodejs/node_modules
 
+PRISMA_ENGINE_MACOS=apps/functions/code-embed/layers/prisma-layer/nodejs/node_modules/.prisma/client/libquery_engine-darwin.dylib.node
+PRISMA_ENGINE_DOCKER_LINUX=apps/functions/code-embed/layers/prisma-layer/nodejs/node_modules/.prisma/client/libquery_engine-linux-musl.so.node
+
 if [ $1 = "remote" ]; then
-    rm apps/functions/code-embed/layers/prisma-layer/nodejs/node_modules/.prisma/client/libquery_engine-darwin.dylib.node
-    rm apps/functions/code-embed/layers/prisma-layer/nodejs/node_modules/.prisma/client/libquery_engine-linux-musl.so.node
+  if [ -f "$PRISMA_ENGINE_MACOS" ]; then
+      rm $PRISMA_ENGINE_MACOS
+  fi
+  if [ -f "$PRISMA_ENGINE_DOCKER_LINUX" ]; then
+      rm $PRISMA_ENGINE_DOCKER_LINUX
+  fi
 else
   echo 'local'
 fi

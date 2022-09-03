@@ -1,17 +1,9 @@
 name: Sharingan Deploy Code Embed
 on:
-  workflow_dispatch:
-    inputs:
-      stage:
-        default: Production
-        options:
-          - Production
-          - Development
-        description: "Environment to deploy on"
-        required: true
   push:
     branches:
       - main
+      - dev
     paths:
       - 'packages/database/prisma/**'
       - 'packages/database/src/**'
@@ -21,7 +13,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.stage }}
+    environment: ${{ (github.ref == 'refs/heads/main' && 'Production') || 'Development' }}
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       EMBED_STYLE_URL: ${{ secrets.EMBED_STYLE_URL }}
@@ -41,14 +33,14 @@ jobs:
 
       - name: Deploy the application in staging
         working-directory: 'apps/functions/code-embed'
-        if: ${{ github.event.inputs.stage == 'Development' }}
+        if: ${{ github.ref == 'refs/heads/dev' }}
         run: |
           yarn setup:layer:remote
           yarn sls deploy --stage dev
 
       - name: Deploy the application in production
         working-directory: 'apps/functions/code-embed'
-        if: ${{ github.event.inputs.stage == 'Production' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           yarn setup:layer:remote
           yarn sls deploy --stage prod
