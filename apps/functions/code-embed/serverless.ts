@@ -8,7 +8,7 @@ const serverlessConfiguration: AWS = {
       bundle: true,
       concurrency: 10,
       define: { 'require.resolve': undefined },
-      exclude: ['aws-sdk', 'vscode-oniguruma'],
+      exclude: ['aws-sdk', 'vscode-oniguruma', 'shiki', '@prisma'],
       minify: false,
       platform: 'node',
       sourcemap: true,
@@ -17,8 +17,19 @@ const serverlessConfiguration: AWS = {
   },
   frameworkVersion: '3',
   functions: { renderer },
-  package: { individually: true },
-  plugins: ['serverless-esbuild'],
+  layers: {
+    Prisma: {
+      path: 'layers/prisma-layer',
+    },
+    Shiki: {
+      path: 'layers/shiki-layer',
+    },
+  },
+  package: {
+    individually: true,
+    patterns: ['./src/**'],
+  },
+  plugins: ['serverless-esbuild', 'serverless-offline'],
   provider: {
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -26,9 +37,14 @@ const serverlessConfiguration: AWS = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+      DATABASE_URL: '${env:DATABASE_URL}',
+      EMBED_JS_URL: '${env:EMBED_JS_URL}',
+      EMBED_STYLE_URL: '${env:EMBED_STYLE_URL}',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      WEB_APP_URL: '${env:WEB_APP_URL}',
     },
     name: 'aws',
+    region: 'eu-west-2',
     runtime: 'nodejs16.x',
   },
   service: 'code-embed',

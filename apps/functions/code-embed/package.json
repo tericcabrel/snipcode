@@ -4,11 +4,15 @@
   "description": "Generate the HTML page from a code snippet",
   "main": "serverless.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "clean": "rm -rf .turbo lib .esbuild",
+    "clean": "rm -rf .turbo lib .esbuild .serverless",
     "lint": "eslint src serverless.ts",
-    "invoke:local": "sls invoke local -f renderer --path src/functions/renderer/mock.json"
+    "invoke:local": "sls invoke local -f renderer --path src/functions/renderer/mock.json",
+    "offline": "sls offline start",
+    "setup:layer:local": "./scripts/setup-layer.sh local",
+    "setup:layer:remote": "./scripts/setup-layer.sh remote",
+    "reset:env": "cp -f .env.template .env",
+    "deploy:dev": "yarn setup:layer:remote && cp -f .env.dev .env && sls deploy --stage dev && yarn reset:env"
   },
   "engines": {
     "node": ">=16.14.0"
@@ -25,6 +29,7 @@
     "esbuild": "^0.15.5",
     "serverless": "^3.22.0",
     "serverless-esbuild": "^1.32.8",
+    "serverless-offline": "^9.2.6",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^4.1.0",
     "typescript": "^4.8.2"

@@ -21,6 +21,9 @@ export const main: Handler<APIGatewayProxyEvent, APIGatewayProxyResult> = async 
 
   return {
     body: content,
+    headers: {
+      'Content-Type': 'text/html',
+    },
     statusCode: 200,
   };
 };
