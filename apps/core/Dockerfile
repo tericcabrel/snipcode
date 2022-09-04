@@ -31,6 +31,7 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 COPY --chown=node:node --from=builder /app/apps/core/build/index.js ./
+COPY --chown=node:node --from=builder /app/apps/core/build/index.js.map ./
 COPY --chown=node:node --from=schema-builder /app/node_modules/.prisma/client/schema.prisma ./
 COPY --chown=node:node --from=schema-builder /app/node_modules/.prisma/client/libquery_engine-linux-musl.so.node ./
 
@@ -38,4 +39,4 @@ RUN yarn init -y
 
 EXPOSE 7501
 
-CMD ["node", "index.js"]
+CMD ["node", "--enable-source-maps", "index.js"]

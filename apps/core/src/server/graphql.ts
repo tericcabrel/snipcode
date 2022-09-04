@@ -27,6 +27,7 @@ export const startGraphqlServer = async (expressApplication: Application, httpSe
   });
 
   const apolloServer = new ApolloServer({
+    cache: 'bounded',
     context: async ({ req, res }): Promise<AppContext> => buildGraphQLContext(req, res),
     debug: env.IS_DEV,
     introspection: env.ENABLE_INTROSPECTION,
