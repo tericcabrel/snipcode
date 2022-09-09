@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response } from 'express';
 
 import { authenticationRoute } from '../resources/authentication/routes';
 import { errorHandlerMiddleware } from './middleware/error-middleware';
@@ -15,6 +15,10 @@ export const setupRestEndpoints = (app: Application) => {
 
   app.use('/', router);
   app.use('/', authenticationRoute());
+
+  app.get('/', (_req: Request, res: Response) => {
+    res.json({ message: 'Hello from Sharingan!' });
+  });
 
   app.use(notFoundMiddleware);
 

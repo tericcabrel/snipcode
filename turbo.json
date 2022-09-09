@@ -52,6 +52,10 @@
       "dependsOn": ["^build"],
       "outputs": []
     },
+    "build:prod": {
+      "dependsOn": ["^build"],
+      "outputs": ["build/**"]
+    },
     "lint": {
       "outputs": []
     },

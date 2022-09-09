@@ -1,0 +1,36 @@
+name: Sentry release source maps
+on:
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - 'apps/core/src/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install projects dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Generate sourcemaps from build
+        run: yarn build:prod --filter=@sharingan/core
+
+      - name: Create a Sentry release
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: sharingan
+          SENTRY_PROJECT: backend
+          VERSION: ${{ github.sha }}
+        run: |
+          curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.2.0" bash
+          sentry-cli releases new "$VERSION"
+          sentry-cli releases files "$VERSION" upload-sourcemaps ./apps/core/build
+          sentry-cli releases finalize "$VERSION"
