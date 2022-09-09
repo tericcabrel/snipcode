@@ -9,7 +9,7 @@
     "clean": "rm -rf .turbo dist build logs",
     "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts",
     "lint": "eslint src",
-    "build:prod": "esbuild ./src/index.ts --bundle --sourcemap --platform=node --outfile=build/index.js",
+    "build:prod": "esbuild ./src/index.ts --bundle --platform=node --outfile=build/index.js",
     "test": "jest",
     "gql:gen:types": "yarn graphql-codegen"
   },
