@@ -3,6 +3,7 @@ import type { AWS } from '@serverless/typescript';
 import renderer from '@/functions/renderer';
 
 const serverlessConfiguration: AWS = {
+  configValidationMode: 'error',
   custom: {
     esbuild: {
       bundle: true,
@@ -40,11 +41,13 @@ const serverlessConfiguration: AWS = {
       DATABASE_URL: '${env:DATABASE_URL}',
       EMBED_JS_URL: '${env:EMBED_JS_URL}',
       EMBED_STYLE_URL: '${env:EMBED_STYLE_URL}',
-      NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      ENV: '${env:ENV}',
+      NODE_OPTIONS: '--stack-trace-limit=1000',
+      SENTRY_DSN: '${env:SENTRY_DSN}',
       WEB_APP_URL: '${env:WEB_APP_URL}',
     },
     name: 'aws',
-    region: 'eu-west-2',
+    region: 'eu-west-1',
     runtime: 'nodejs16.x',
   },
   service: 'code-embed',

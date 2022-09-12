@@ -19,6 +19,8 @@ jobs:
       EMBED_STYLE_URL: ${{ secrets.EMBED_STYLE_URL }}
       EMBED_JS_URL: ${{ secrets.EMBED_JS_URL }}
       WEB_APP_URL: ${{ secrets.WEB_APP_URL }}
+      ENV: ${{ secrets.ENV }}
+      SENTRY_DSN: ${{ secrets.CODE_EMBED_SENTRY_DSN }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
