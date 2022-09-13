@@ -5,6 +5,30 @@ import renderer from '@/functions/renderer';
 const serverlessConfiguration: AWS = {
   configValidationMode: 'error',
   custom: {
+    customCertificate: {
+      certificateName: '${self:custom.domains.${self:provider.stage}.certificateName}',
+      hostedZoneNames: 'sharingan.dev.',
+      region: '${self:provider.region}',
+    },
+    customDomain: {
+      apiType: 'rest',
+      autoDomain: false,
+      basePath: '',
+      certificateName: '${self:custom.domains.${self:provider.stage}.certificateName}',
+      createRoute53Record: false,
+      domainName: '${self:custom.domains.${self:provider.stage}.domainName}',
+      endpointType: 'edge',
+    },
+    domains: {
+      dev: {
+        certificateName: 'embedstaging.sharingan.dev',
+        domainName: 'embedstaging.sharingan.dev',
+      },
+      prod: {
+        certificateName: 'embed.sharingan.dev',
+        domainName: 'embed.sharingan.dev',
+      },
+    },
     esbuild: {
       bundle: true,
       concurrency: 10,
@@ -30,7 +54,7 @@ const serverlessConfiguration: AWS = {
     individually: true,
     patterns: ['./src/**'],
   },
-  plugins: ['serverless-esbuild', 'serverless-offline'],
+  plugins: ['serverless-esbuild', 'serverless-offline', 'serverless-domain-manager', 'serverless-certificate-creator'],
   provider: {
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -49,6 +73,7 @@ const serverlessConfiguration: AWS = {
     name: 'aws',
     region: 'eu-west-1',
     runtime: 'nodejs16.x',
+    stage: "${opt:stage, 'dev'}",
   },
   service: 'code-embed',
   useDotenv: true,
