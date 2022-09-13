@@ -28,6 +28,8 @@
     "@types/node": "^17.0.45",
     "esbuild": "^0.15.5",
     "serverless": "^3.22.0",
+    "serverless-certificate-creator": "^1.6.0",
+    "serverless-domain-manager": "^6.1.0",
     "serverless-esbuild": "^1.32.8",
     "serverless-offline": "^9.2.6",
     "ts-node": "^10.4.0",
