@@ -20,6 +20,7 @@ Sharingan is an open-source code-sharing platform that makes it easy to create c
 * [MySQL 8 through PlanetScale](https://planetscale.com/)
 * [Prisma](https://www.prisma.io/)
 * [Tailwind CSS](https://tailwindcss.com/)
+* [AWS](https://aws.amazon.com)
 
 ## Project Structure
 ```text
@@ -27,11 +28,13 @@ sharingan
 ├─ apps
 │  ├─ core
 │  ├─ functions
+│  │  ├─ code-embed
 │  ├─ web
 ├─ packages
 │  ├─ database
 │  ├─ embed
 │  ├─ domain
+│  ├─ front
 │  ├─ logger
 │  ├─ utils
 package.json
