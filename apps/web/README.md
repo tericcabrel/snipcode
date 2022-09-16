@@ -20,6 +20,7 @@ These packages are located in the folder `packages`, so you might need to change
 Here are the packages used in the front-end application:
 
 * [@sharingan/utils](../../packages/utils)
+* [@sharingan/front](../../packages/front)
 
 ## Set up the project
 Delete the existing folders output from build commands
