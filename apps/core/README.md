@@ -19,7 +19,7 @@ Make sure you have this tools installed before running the project
 ## Packages dependencies
 We use Yarn workspace to create packages we can share with other applications.
 These packages are located in the folder `packages`, so you might need to change the code of one or many packages to implement a feature.
-Here are the packages used in the front-end application:
+Here are the packages used in this project:
 
 * [@sharingan/database](../../packages/database)
 * [@sharingan/domain](../../packages/domain)
