@@ -12,8 +12,7 @@ Make sure you have this tools installed before running the project
 * Node.js 16+
 * NPM or Yarn
 
-> **Note**: This repo requires a connection to the database, follow the instructions in the database packages before going to the next step. 
-
+> **Note**: This repo requires a connection to the database, follow the instructions in the **database** packages before going to the next step. 
 
 ## Set up the project
 Delete the existing folders output from build commands

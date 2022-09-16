@@ -22,6 +22,9 @@ Here are the packages used in this project:
 * [@sharingan/embed](../../../packages/embed)
 
 ## Set up
+> **Note**: This repo requires a connection to the database, follow the instructions in the **database** packages before going to the next step.
+
+
 Delete the existing folders output from build commands
 ```shell
 yarn clean
