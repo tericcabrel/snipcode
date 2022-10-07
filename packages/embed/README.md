@@ -46,7 +46,7 @@ We use [tsup](https://github.com/egoist/tsup) under the hood to make this possib
 
 To start the watcher, run the command:
 ```shell
-yarn build:watch
+yarn build:cdn:watch
 ```
 
 ## Preview a snippet
@@ -72,7 +72,7 @@ Navigate to the URL `http://localhost:7503` to see the result.
 This part is handled inside the CI/CD, so it will not be useful to do it locally:
 ```shell
 # Generate the assets optimized for production
-yarn build
+yarn build:cdn
 cp package.publish.json build/package.json
 cd build
 # Authenticate to NPM
@@ -82,3 +82,11 @@ npm publish --access=public
 ```
 
 Before publishing, make sure to upgrade the package version in the file [package.publish.json](./package.publish.json) . Check out the [Semantic versioning](https://docs.npmjs.com/about-semantic-versioning) to see how to define the version number.
+
+## Build TS library
+This package also expose functions used in others packages or apps. Run the command below to build them 
+```shell
+yarn build:lib
+```
+
+

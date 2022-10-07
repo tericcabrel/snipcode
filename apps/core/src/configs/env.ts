@@ -22,6 +22,7 @@ export const env: AppEnvironmentVariables = {
   SENTRY_DSN: getEnv('SENTRY_DSN'),
   SENTRY_ENABLED: getEnv('SENTRY_ENABLED') === 'true',
   SESSION_LIFETIME: parseInt(getEnv('SESSION_LIFETIME'), 10),
+  SNIPPET_RENDERER_URL: getEnv('SNIPPET_RENDERER_URL'),
   VALUE: getEnv('NODE_ENV'),
   WEB_APP_URL: getEnv('WEB_APP_URL'),
   WEB_AUTH_ERROR_URL: getEnv('WEB_AUTH_ERROR_URL'),

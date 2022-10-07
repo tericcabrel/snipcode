@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 
 import { authenticationRoute } from '../resources/authentication/routes';
+import { snippetRoute } from '../resources/snippets/routes';
 import { errorHandlerMiddleware } from './middleware/error-middleware';
 import { notFoundMiddleware } from './middleware/not-found-middleware';
 
@@ -15,6 +16,7 @@ export const setupRestEndpoints = (app: Application) => {
 
   app.use('/', router);
   app.use('/', authenticationRoute());
+  app.use('/', snippetRoute());
 
   app.get('/', (_req: Request, res: Response) => {
     res.json({ message: 'Hello from Sharingan!' });

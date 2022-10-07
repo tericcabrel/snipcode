@@ -17,6 +17,7 @@
     "@graphql-tools/schema": "^8.5.0",
     "@sharingan/database": "*",
     "@sharingan/domain": "*",
+    "@sharingan/embed": "*",
     "@sharingan/logger": "*",
     "@sharingan/utils": "*",
     "apollo-server-core": "^3.9.0",
