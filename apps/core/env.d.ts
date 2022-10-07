@@ -12,6 +12,7 @@ export type EnvironmentVariables = {
   REQUEST_TIMEOUT: string;
   SENTRY_DSN: string;
   SESSION_LIFETIME: string;
+  SNIPPET_RENDERER_URL: string;
   WEB_APP_URL: string;
   WEB_AUTH_ERROR_URL: string;
   WEB_AUTH_SUCCESS_URL: string;
