@@ -1,7 +1,7 @@
 {
   "name": "@sharingan/embed",
   "version": "1.0.0",
-  "main": "build/index.js",
+  "main": "dist/index.js",
   "repository": " https://github.com/tericcabrel/sharingan.git",
   "author": "Eric Cabrel TIOGO <tericcabrel@yahoo.com>",
   "license": "MIT",
