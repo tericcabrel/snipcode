@@ -9,16 +9,20 @@
   ],
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
     },
     "@sharingan/core#build": {
       "dependsOn": [
-        "^build",
-        "$NODE_ENV",
-        "$DATABASE_URL"
+        "^build"
       ],
-      "outputs": ["dist/**"],
+      "outputs": [
+        "dist/**"
+      ],
       "inputs": [
         "src/**/*.tsx",
         "src/**/*.ts",
@@ -26,15 +30,20 @@
         "codegen.yml",
         ".eslintignore",
         "*.json"
+      ],
+      "env": [
+        "NODE_ENV",
+        "DATABASE_URL"
       ]
     },
     "@sharingan/web#build": {
       "dependsOn": [
-        "^build",
-        "$NODE_ENV",
-        "$NEXT_PUBLIC_SERVER_URL"
+        "^build"
       ],
-      "outputs": [".next/**", "dist/**"],
+      "outputs": [
+        ".next/**",
+        "dist/**"
+      ],
       "inputs": [
         "src/**/*.tsx",
         "src/**/*.ts",
@@ -46,15 +55,25 @@
         "codegen.yml",
         ".eslintignore",
         "*.json"
+      ],
+      "env": [
+        "NODE_ENV",
+        "NEXT_PUBLIC_SERVER_URL"
       ]
     },
     "test": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "^build"
+      ],
       "outputs": []
     },
     "build:prod": {
-      "dependsOn": ["^build"],
-      "outputs": ["build/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "build/**"
+      ]
     },
     "lint": {
       "outputs": []
