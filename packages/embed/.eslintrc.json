@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": ["dist", "build", "tsup.config.ts", "env.d.ts", "src/server/public"],
+  "ignorePatterns": ["dist", "build", "tsup.config.ts", "env.d.ts", "src/server/public", "jest.config.ts"],
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module",

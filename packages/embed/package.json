@@ -8,22 +8,26 @@
   "scripts": {
     "build:cdn": "tsup",
     "build:cdn:watch": "tsup --watch",
-    "build:lib": "tsc",
+    "build:lib": "tsc --project tsconfig.prod.json",
     "build": "yarn build:lib && yarn build:cdn",
     "clean": "rm -rf .turbo dist build",
     "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/server/index.ts",
     "lint": "eslint src",
     "preview": "serve ./src/server/static -l 7503",
-    "push": "cp package.publish.json build/package.json && cd build && npm publish --access=public"
+    "push": "cp package.publish.json build/package.json && cd build && npm publish --access=public",
+    "test": "jest"
   },
   "devDependencies": {
     "@sharingan/database": "*",
     "@types/express": "^4.17.13",
+    "@types/jest": "^29.1.2",
     "@types/node": "^18.7.11",
     "express": "^4.18.1",
+    "jest": "^29.1.2",
     "nodemon": "^2.0.19",
     "serve": "^14.0.1",
     "shiki": "^0.11.1",
+    "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
     "tsup": "^6.2.2",
     "typescript": "^4.8.4"
