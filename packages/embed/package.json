@@ -13,7 +13,7 @@
     "clean": "rm -rf .turbo dist build",
     "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/server/index.ts",
     "lint": "eslint src",
-    "preview": "serve ./src/server/static -l 7503",
+    "iframe:preview": "serve ./src/server/static -l 7503",
     "push": "cp package.publish.json build/package.json && cd build && npm publish --access=public",
     "test": "jest"
   },

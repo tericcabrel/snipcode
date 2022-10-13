@@ -64,7 +64,7 @@ save. The URL follows this pattern: `http://localhost:7502/snippets/:id`.
 
 Run the command below:
 ```shell
-yarn preview
+yarn iframe:preview
 ```
 Navigate to the URL `http://localhost:7503` to see the result.
 
