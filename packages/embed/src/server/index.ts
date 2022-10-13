@@ -35,6 +35,7 @@ export const startServer = async () => {
       options: {
         scriptUrl: process.env.EMBED_JS_URL,
         styleUrl: process.env.EMBED_STYLE_URL,
+        webAppUrl: process.env.WEB_APP_URL,
       },
       shiki,
       snippet,

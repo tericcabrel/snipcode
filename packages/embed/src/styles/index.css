@@ -87,3 +87,16 @@
 .show {
   display: block;
 }
+.no-content {
+  font-family: 'Inter', monospace !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  margin-top: 15px;
+  margin-bottom: 40px;
+}
+.no-content a {
+  text-decoration: none;
+  color: aquamarine;
+}

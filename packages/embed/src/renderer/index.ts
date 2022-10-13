@@ -1,17 +1,14 @@
 import { Snippet } from '@sharingan/database';
-import { Highlighter, HighlighterOptions, Lang } from 'shiki';
 
-import { generateHtmlPreview } from './html-preview';
-import { addWhitespaceForEmptyLine, generateLineHighlightOptions } from './utils';
-
-type Shiki = {
-  getHighlighter: (options: HighlighterOptions) => Promise<Highlighter>;
-};
+import { generateNoSnippetHtmlContent, generateSnippetHtmlContent } from './content/html-generator';
+import { generateHTMLPreview } from './content/preview-template';
+import { Shiki } from './types';
 
 type Args = {
   options: {
     scriptUrl: string;
     styleUrl: string;
+    webAppUrl: string;
   };
   shiki: Shiki;
   snippet: Snippet | null;
@@ -20,47 +17,30 @@ type Args = {
 export const renderSnippetToHtml = async ({ options, shiki, snippet }: Args): Promise<string> => {
   const STYLE_URL = options.styleUrl;
   const SCRIPT_URL = options.scriptUrl;
+  const WEBAPP_URL = options.webAppUrl;
 
   if (!snippet) {
-    const code = 'No content';
+    const code = generateNoSnippetHtmlContent(WEBAPP_URL);
 
-    return generateHtmlPreview({
+    return generateHTMLPreview({
       code,
-      rawCode: 'No content',
+      rawCode: '',
       scriptUrl: SCRIPT_URL,
       styleUrl: STYLE_URL,
       title: 'Not found',
+      webAppUrl: WEBAPP_URL,
     });
   }
 
-  const highlighter = await shiki.getHighlighter({
-    langs: [snippet.language] as Lang[],
-    theme: snippet.theme,
-    themes: [snippet.theme],
-  });
+  const { backgroundColor, html } = await generateSnippetHtmlContent({ shiki, snippet });
 
-  const snippetCodeHtml = highlighter.codeToHtml(snippet.content.trim(), {
-    lang: snippet.language,
-    lineOptions: generateLineHighlightOptions(snippet.lineHighlight),
-  });
-
-  const backgroundColor = highlighter.getBackgroundColor();
-
-  const html = snippetCodeHtml
-    .replace(/<pre class="shiki" style="background-color: \#[\w]{6}">/, '')
-    .replace('</pre>', '')
-    .split('\n')
-    .map((line: string, i: number) => {
-      return `<span class='line-number'>${i + 1}</span>${addWhitespaceForEmptyLine(line)}`;
-    })
-    .join('\n');
-
-  return generateHtmlPreview({
+  return generateHTMLPreview({
     code: html,
     color: backgroundColor,
     rawCode: snippet.content,
     scriptUrl: SCRIPT_URL,
     styleUrl: STYLE_URL,
     title: snippet.name,
+    webAppUrl: WEBAPP_URL,
   });
 };
