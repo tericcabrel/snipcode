@@ -2,7 +2,7 @@ import { Snippet } from '@sharingan/database';
 import { Lang } from 'shiki';
 
 import { Shiki } from '../types';
-import { addWhitespaceForEmptyLine, generateLineHighlightOptions } from './utils';
+import { generateLineHighlightOptions, parseHTMLSnippetCode } from './utils';
 
 export const generateNoSnippetHtmlContent = (webAppUrl: string) => {
   return `<div class="no-content">
@@ -25,14 +25,7 @@ export const generateSnippetHtmlContent = async ({ shiki, snippet }: { shiki: Sh
 
   const backgroundColor = highlighter.getBackgroundColor();
 
-  const html = snippetCodeHtml
-    .replace(/<pre class="shiki" style="background-color: \#[\w]{6}">/, '')
-    .replace('</pre>', '')
-    .split('\n')
-    .map((line: string, i: number) => {
-      return `<span class='line-number'>${i + 1}</span>${addWhitespaceForEmptyLine(line)}`;
-    })
-    .join('\n');
+  const html = parseHTMLSnippetCode(snippetCodeHtml);
 
   return {
     backgroundColor,
