@@ -13,13 +13,24 @@ export const generateLineHighlightOptions = (lineHighlight: string | null) => {
  * @param line
  */
 export const addWhitespaceForEmptyLine = (line: string) => {
-  if (/<span class="line (line-diff-?[a-z ]*)*"><\/span>/.test(line)) {
+  if (/<span class="line( line-diff-?[a-z ]*)*"><\/span>/.test(line)) {
     const [openingBracket] = line.split('</span>');
 
     return `${openingBracket}&nbsp;&nbsp;</span>`;
   }
 
   return line;
+};
+
+export const parseHTMLSnippetCode = (snippetCodeHtml: string) => {
+  return snippetCodeHtml
+    .replace(/<pre class="shiki" style="background-color: \#[\w]{6}">/, '')
+    .replace('</pre>', '')
+    .split('\n')
+    .map((line: string, i: number) => {
+      return `<span class='line-number'>${i + 1}</span>${addWhitespaceForEmptyLine(line)}`;
+    })
+    .join('\n');
 };
 
 export const generateRandomString = (strLength: number) => {
