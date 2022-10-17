@@ -1,5 +1,11 @@
 import { Args, generateHTMLPreview } from '../preview-template';
 
+jest.mock('../utils', () => {
+  return {
+    generateRandomString: () => 'random-id',
+  };
+});
+
 describe('Test generateHTMLPreview()', () => {
   it('should generates the html preview for a code snippet', () => {
     // GIVEN
@@ -38,23 +44,23 @@ describe('Test generateHTMLPreview()', () => {
               <title>Sharingan - helpers.ts</title>
               <link rel="stylesheet" type="text/css" href="https://cdn.com/sharigan/style.css" />
           </head>
-          <body data-id="4D3Wsb">
+          <body data-id="random-id">
               <div class="ctner">
                 <div class="ctner-header">
                   <div>helpers.ts</div>
                   <div>view on <a href="https://sharingan.dev" target="_blank">Sharingan</a></div>
                 </div>
-                <textarea id="raw-code-4D3Wsb" class="hidden" rows="1" cols="1">export const hashPassword = (password: string): string => {
+                <textarea id="raw-code-random-id" class="hidden" rows="1" cols="1">export const hashPassword = (password: string): string => {
         const SALT_ROUNDS = 10;
 
         return bcrypt.hashSync(password, SALT_ROUNDS);
       };</textarea>
-                <div class="code-editor-container" id="code-4D3Wsb" style="border: solid 1px #f5f5f5; background-color: #f5f5f5">
-                  <button id="btn-copy-4D3Wsb" class="btn-copy hidden" style="">
-                    <svg class="ic show" id="ic-copy-4D3Wsb" fill="none" stroke="#fff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <div class="code-editor-container" id="code-random-id" style="border: solid 1px #f5f5f5; background-color: #f5f5f5">
+                  <button id="btn-copy-random-id" class="btn-copy hidden" style="">
+                    <svg class="ic show" id="ic-copy-random-id" fill="none" stroke="#fff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                     </svg>
-                    <svg class="ic hidden" id="ic-copied-4D3Wsb" fill="none" stroke="#10B981" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="ic hidden" id="ic-copied-random-id" fill="none" stroke="#10B981" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                   </button>
