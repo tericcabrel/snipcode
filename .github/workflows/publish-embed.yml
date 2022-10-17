@@ -5,11 +5,7 @@ on:
     paths:
       - 'packages/embed/src/scripts/**'
       - 'packages/embed/src/styles/**'
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'packages/embed/src/scripts/**'
-      - 'packages/embed/src/styles/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest
