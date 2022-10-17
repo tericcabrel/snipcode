@@ -68,6 +68,7 @@ const serverlessConfiguration: AWS = {
       ENV: '${env:ENV}',
       NODE_OPTIONS: '--stack-trace-limit=1000',
       SENTRY_DSN: '${env:SENTRY_DSN}',
+      WEB_APP_SNIPPET_VIEW_URL: '${env:WEB_APP_SNIPPET_VIEW_URL}',
       WEB_APP_URL: '${env:WEB_APP_URL}',
     },
     name: 'aws',
