@@ -9,6 +9,7 @@ type Args = {
     scriptUrl: string;
     styleUrl: string;
     webAppUrl: string;
+    webAppViewUrl: string;
   };
   shiki: Shiki;
   snippet: Snippet | null;
@@ -18,6 +19,7 @@ export const renderSnippetToHtml = async ({ options, shiki, snippet }: Args): Pr
   const STYLE_URL = options.styleUrl;
   const SCRIPT_URL = options.scriptUrl;
   const WEBAPP_URL = options.webAppUrl;
+  const WEBAPP_VIEW_URL = options.webAppViewUrl;
 
   if (!snippet) {
     const code = generateNoSnippetHtmlContent(WEBAPP_URL);
@@ -41,6 +43,6 @@ export const renderSnippetToHtml = async ({ options, shiki, snippet }: Args): Pr
     scriptUrl: SCRIPT_URL,
     styleUrl: STYLE_URL,
     title: snippet.name,
-    webAppUrl: WEBAPP_URL,
+    webAppUrl: `${WEBAPP_VIEW_URL}/${snippet.id}`,
   });
 };

@@ -1,4 +1,4 @@
-import { addWhitespaceForEmptyLine, generateLineHighlightOptions } from '../utils';
+import { addWhitespaceForEmptyLine, generateLineHighlightOptions, parseHTMLSnippetCode } from '../utils';
 
 describe('Test utils functions', () => {
   describe('Test addWhitespaceForEmptyLine()', () => {
@@ -36,7 +36,7 @@ describe('Test utils functions', () => {
     });
   });
 
-  describe.only('Test generateLineHighlightOptions()', () => {
+  describe('Test generateLineHighlightOptions()', () => {
     it('should generate no line highlight options from a null string', () => {
       // GIVEN
       const lineHighlight: string | null = null;
@@ -77,5 +77,18 @@ describe('Test utils functions', () => {
     });
   });
 
-  describe('Test parseHTMLSnippetCode()', () => {});
+  describe('Test parseHTMLSnippetCode()', () => {
+    it('should parse html snippet code', () => {
+      // GIVEN
+      const htmlCode = `<pre class="shiki" style="background-color: #ffffff"><span class="line">line code 1</span>\n<span class="line"></span>\n<span class="line">line code 3</span></pre>`;
+
+      // WHEN
+      const result = parseHTMLSnippetCode(htmlCode);
+
+      // THEN
+      expect(result).toEqual(
+        `<span class='line-number'>1</span><span class="line">line code 1</span>\n<span class='line-number'>2</span><span class="line">&nbsp;&nbsp;</span>\n<span class='line-number'>3</span><span class="line">line code 3</span>`,
+      );
+    });
+  });
 });

@@ -1,6 +1,6 @@
 import { generateRandomString } from './utils';
 
-type Args = {
+export type Args = {
   code: string;
   color?: string;
   rawCode: string;
