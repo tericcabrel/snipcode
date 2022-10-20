@@ -33,11 +33,14 @@ export default class FolderService {
 
     const input = createFolderDto.toFolder();
 
+    const parentFolder = await this.findById(createFolderDto.parentFolderId);
+
     return dbClient.folder.create({
       data: {
         id: input.id,
         name: input.name,
         parentId: input.parentId,
+        path: this.buildFolderPath(parentFolder),
         userId: input.userId,
       },
     });
@@ -150,6 +153,14 @@ export default class FolderService {
         id: folder.id,
       },
     });
+  }
+
+  private buildFolderPath(parentFolder: Folder): string {
+    if (!parentFolder.path) {
+      return parentFolder.id;
+    }
+
+    return [parentFolder.path, parentFolder.id].join('/');
   }
 
   private async listParentFolderRecursively(folderId: string, result: Folder[] = []): Promise<Folder[]> {
