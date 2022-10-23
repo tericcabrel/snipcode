@@ -10,9 +10,9 @@ import { subscribeToNewsletter } from './newsletter/mutations/subscribe';
 import { createSnippet } from './snippets/mutations/create-snippet';
 import { deleteSnippet } from './snippets/mutations/delete-snippet';
 import { updateSnippet } from './snippets/mutations/update-snippet';
-import { allSnippets } from './snippets/queries/all-snippets';
 import { findSnippet } from './snippets/queries/find-snippet';
 import { mySnippets } from './snippets/queries/my-snippets';
+import { publicSnippets } from './snippets/queries/public-snippets';
 import { dateScalar } from './types/date';
 import { loginUser } from './users/mutations/login-user';
 import { logoutUser } from './users/mutations/logout-user';
@@ -46,7 +46,6 @@ const resolvers: Resolvers = {
     updateSnippet,
   },
   Query: {
-    allSnippets,
     authenticatedUser,
     findFolder,
     findSnippet,
@@ -55,6 +54,7 @@ const resolvers: Resolvers = {
     listFolders,
     mySnippets,
     ping: () => 'pong',
+    publicSnippets,
   },
   Snippet: {
     folder: (snippet, _args, context) => {

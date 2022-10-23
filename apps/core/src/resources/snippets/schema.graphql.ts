@@ -6,6 +6,13 @@ export default gql`
     paths: [Folder!]!
   }
 
+  type PublicSnippetsResult {
+    items: [Snippet!]!
+    hasMore: Boolean!
+    itemPerPage: Int
+    nextToken: String
+  }
+
   input CreateSnippetInput {
     folderId: String!
     name: String!
@@ -27,6 +34,11 @@ export default gql`
     theme: String!
   }
 
+  input PublicSnippetsArgs {
+    nextToken: String
+    itemPerPage: Int
+  }
+
   extend type Mutation {
     createSnippet(input: CreateSnippetInput!): Snippet!
     updateSnippet(id: ID!, input: UpdateSnippetInput!): Snippet!
@@ -34,7 +46,7 @@ export default gql`
   }
 
   extend type Query {
-    allSnippets: [Snippet!]!
+    publicSnippets(args: PublicSnippetsArgs!): PublicSnippetsResult!
     mySnippets: [Snippet!]!
     findSnippet(snippetId: String!): SnippetInfo!
   }
