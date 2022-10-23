@@ -5,6 +5,8 @@ import CreateSnippetDto from './dtos/create-snippet-dto';
 import DeleteSnippetDto from './dtos/delete-snippet-dto';
 import UpdateSnippetDto from './dtos/update-snippet-dto';
 
+const MAX_ITEM_PER_PAGE = 50;
+
 export default class SnippetService {
   async create(createSnippetDto: CreateSnippetDto): Promise<Snippet> {
     const isSnippetExist = await this.isSnippetExistInFolder(createSnippetDto.folderId, createSnippetDto.name);
@@ -56,11 +58,35 @@ export default class SnippetService {
     });
   }
 
-  async findPublicSnippet(): Promise<Snippet[]> {
-    return dbClient.snippet.findMany({
+  async findPublicSnippet(args: {
+    cursor?: string | null;
+    itemPerPage: number;
+  }): Promise<{ hasMore: boolean; items: Snippet[]; nextCursor: string | null }> {
+    const { cursor, itemPerPage } = args;
+
+    const limit = Math.min(MAX_ITEM_PER_PAGE, itemPerPage);
+
+    // If the use has 20 we fetch 21 which help to know if there still more in the table
+    const limitPlusOne = limit + 1;
+
+    const snippets = await dbClient.snippet.findMany({
       orderBy: { createdAt: 'desc' },
-      where: { visibility: 'public' },
+      take: limitPlusOne,
+      where: {
+        createdAt: cursor
+          ? {
+              lt: new Date(parseInt(cursor, 10)),
+            }
+          : undefined,
+        visibility: 'public',
+      },
     });
+
+    return {
+      hasMore: snippets.length === limitPlusOne,
+      items: snippets.slice(0, limit),
+      nextCursor: snippets.length > 0 ? snippets[snippets.length - 1].createdAt.getTime().toString() : null,
+    };
   }
 
   async delete(deleteSnippetDto: DeleteSnippetDto): Promise<void> {
