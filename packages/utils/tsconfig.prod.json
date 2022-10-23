@@ -3,5 +3,7 @@
   "compilerOptions": {
     "sourceMap": false
   },
-  "exclude": ["tests"]
+  "exclude": [
+    "__tests__"
+  ]
 }

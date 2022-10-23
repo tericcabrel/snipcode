@@ -135,9 +135,9 @@ export const createManyTestFolders = async ({
 
 export const generateTestId = (): string => dbId.generate();
 
-export const createTestFolderDto = (args?: { parentId?: string; userId?: string }): CreateFolderDto => {
+export const createTestFolderDto = (args?: { name?: string; parentId?: string; userId?: string }): CreateFolderDto => {
   return new CreateFolderDto({
-    name: randWord(),
+    name: args?.name ?? randWord(),
     parentId: args?.parentId ?? generateTestId(),
     userId: args?.userId ?? generateTestId(),
   });

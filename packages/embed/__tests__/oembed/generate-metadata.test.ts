@@ -1,4 +1,4 @@
-import { generateOembedMetadata } from '../index';
+import { generateOembedMetadata } from '../../src/oembed';
 
 describe('Test Generate Oembed metadata', () => {
   it('should generate Oembed metadata for a code snippet', () => {

@@ -32,6 +32,7 @@ export default class CreateFolderDto {
       isFavorite: false,
       name: this._input.name,
       parentId: this._input.parentId,
+      path: null,
       updatedAt: new Date(),
       userId: this._input.userId,
     };

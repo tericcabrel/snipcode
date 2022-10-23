@@ -111,15 +111,30 @@ export default class FolderService {
     });
   }
 
-  async generateDirectoryPath(folderId: string): Promise<Folder[]> {
-    const folders: Folder[] = [];
+  async generateBreadcrumb(folderId: string): Promise<Folder[]> {
+    const folder = await this.findById(folderId);
 
-    await this.listParentFolderRecursively(folderId, folders);
+    const parentFolderIds = folder.path?.split('/') ?? [];
+
+    if (parentFolderIds.length === 0) {
+      return [];
+    }
+
+    const parentFoldersOrdered = await dbClient.folder.findMany({
+      orderBy: {
+        createdAt: 'asc',
+      },
+      where: {
+        id: {
+          in: parentFolderIds,
+        },
+      },
+    });
 
     // Remove the user root folder
-    folders.pop();
+    parentFoldersOrdered.shift();
 
-    return folders.reverse();
+    return parentFoldersOrdered.concat(folder);
   }
 
   async update(updateFolderDto: UpdateFolderDto): Promise<Folder> {
@@ -161,18 +176,6 @@ export default class FolderService {
     }
 
     return [parentFolder.path, parentFolder.id].join('/');
-  }
-
-  private async listParentFolderRecursively(folderId: string, result: Folder[] = []): Promise<Folder[]> {
-    const folder = await dbClient.folder.findFirstOrThrow({ where: { id: folderId } });
-
-    result.push(folder);
-
-    if (!folder.parentId) {
-      return result;
-    }
-
-    return this.listParentFolderRecursively(folder.parentId, result);
   }
 
   private findFolderSubFolders(folderId: string, userId: string): Promise<Folder[]> {

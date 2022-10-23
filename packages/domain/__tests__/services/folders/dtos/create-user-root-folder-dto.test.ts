@@ -14,6 +14,7 @@ describe('Test Create User Root Folder DTO', () => {
       isFavorite: false,
       name: '__dm34saxf6111113dabfed9tmm__',
       parentId: null,
+      path: null,
       updatedAt: expect.any(Date),
       userId: 'dm34saxf6111113dabfed9tmm',
     });

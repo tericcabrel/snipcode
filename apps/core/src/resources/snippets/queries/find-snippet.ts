@@ -8,7 +8,7 @@ export const findSnippet: QueryResolvers['findSnippet'] = async (_parent, args, 
 
   try {
     const snippet = await context.db.snippet.findById(args.snippetId);
-    const paths = await context.db.folder.generateDirectoryPath(snippet.folderId);
+    const paths = await context.db.folder.generateBreadcrumb(snippet.folderId);
 
     return {
       paths,

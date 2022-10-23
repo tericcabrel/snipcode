@@ -1,6 +1,6 @@
-import { Args, generateHTMLPreview } from '../preview-template';
+import { Args, generateHTMLPreview } from '../../../src/renderer/content/preview-template';
 
-jest.mock('../utils', () => {
+jest.mock('../../../src/renderer/content/utils', () => {
   return {
     generateRandomString: () => 'random-id',
   };
