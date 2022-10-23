@@ -5,6 +5,7 @@ import { CreateUserRootFolderDto } from '../../../index';
 import CreateFolderDto from '../../../src/folders/dtos/create-folder-dto';
 import {
   createManyTestFolders,
+  createTestFolderDto,
   createTestUser,
   createUserWithRootFolder,
   deleteTestFoldersById,
@@ -247,5 +248,48 @@ describe('Test Folder service', () => {
     await deleteTestFoldersById([snippetFolder.id, blogsFolder.id, rootFolder1.id, rootFolder2.id]);
     await deleteTestUsersById([user1.id]);
     await deleteTestUsersById([user2.id]);
+  });
+
+  it('should generate the breadcrumb path of a folder', async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+
+    const gistFolderDto = createTestFolderDto({
+      name: 'My gist',
+      parentId: rootFolder.id,
+      userId: user.id,
+    });
+    const gistFolder = await folderService.create(gistFolderDto);
+
+    const nodeFolderDto = createTestFolderDto({
+      name: 'Node.js',
+      parentId: gistFolder.id,
+      userId: user.id,
+    });
+    const nodeFolder = await folderService.create(nodeFolderDto);
+
+    // WHEN
+    const subFolders = await folderService.generateBreadcrumb(nodeFolder.id);
+
+    // THEN
+    expect(subFolders).toHaveLength(2);
+    expect(subFolders.map((folder) => folder.name)).toEqual(['My gist', 'Node.js']);
+
+    await deleteTestFoldersById([nodeFolder.id, gistFolder.id, rootFolder.id]);
+    await deleteTestUsersById([user.id]);
+  });
+
+  it('should generate the breadcrumb path of the root folder', async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+
+    // WHEN
+    const subFolders = await folderService.generateBreadcrumb(rootFolder.id);
+
+    // THEN
+    expect(subFolders).toHaveLength(0);
+
+    await deleteTestFoldersById([rootFolder.id]);
+    await deleteTestUsersById([user.id]);
   });
 });

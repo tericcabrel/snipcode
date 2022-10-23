@@ -1,4 +1,4 @@
-import { generateNoSnippetHtmlContent } from '../html-generator';
+import { generateNoSnippetHtmlContent } from '../../../src/renderer/content/html-generator';
 
 describe('Test HTML generator functions', () => {
   it.only('should generates html content for a non existing code snippet', () => {

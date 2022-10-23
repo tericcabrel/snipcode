@@ -21,6 +21,7 @@ describe('Test Create Folder DTO', () => {
       isFavorite: false,
       name: 'blogs',
       parentId: 'cl23rzwe5000002czaedc8sll',
+      path: null,
       updatedAt: expect.any(Date),
       userId: 'dm34saxf6111113dabfed9tmm',
     });

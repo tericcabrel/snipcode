@@ -9,6 +9,7 @@
     "build": "tsc --project tsconfig.prod.json",
     "clean": "rm -rf .turbo dist",
     "lint": "eslint src index.ts",
+    "test": "jest",
     "db:dev": "pscale connect sharingan dev --port 3311",
     "db:shadow": "docker run -d --rm -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=sharingan --name sharingan-shadow-db -p 3312:3306 mysql:8.0",
     "db:shadow:stop": "docker kill sharingan-shadow-db && docker container prune -f",

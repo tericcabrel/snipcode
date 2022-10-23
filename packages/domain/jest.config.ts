@@ -8,16 +8,13 @@ const config: Config.InitialOptions = {
   clearMocks: true,
   maxWorkers: 1,
   snapshotFormat: {
-    "printBasicPrototype": false
+    printBasicPrototype: false,
   },
-  globalSetup: './tests/setup/global-setup.ts',
-  setupFilesAfterEnv: ['./tests/setup/test-setup.ts'],
+  globalSetup: './__tests__/setup/global-setup.ts',
+  setupFilesAfterEnv: ['./__tests__/setup/test-setup.ts'],
   coverageDirectory: 'coverage',
   collectCoverage: false, // When set to true, coverage is performed even if coverage flag isn't provided
-  collectCoverageFrom: [
-    'src/**/*.ts',
-    '!src/index.ts',
-  ],
+  collectCoverageFrom: ['src/**/*.ts', '!src/index.ts'],
   coverageThreshold: {
     global: {
       branches: 40,

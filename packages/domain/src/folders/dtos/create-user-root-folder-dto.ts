@@ -14,6 +14,7 @@ export default class CreateUserRootFolderDto {
       isFavorite: false,
       name: `__${this._userId}__`,
       parentId: null,
+      path: null,
       updatedAt: new Date(),
       userId: this._userId,
     };

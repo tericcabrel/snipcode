@@ -1,4 +1,8 @@
-import { addWhitespaceForEmptyLine, generateLineHighlightOptions, parseHTMLSnippetCode } from '../utils';
+import {
+  addWhitespaceForEmptyLine,
+  generateLineHighlightOptions,
+  parseHTMLSnippetCode,
+} from '../../../src/renderer/content/utils';
 
 describe('Test utils functions', () => {
   describe('Test addWhitespaceForEmptyLine()', () => {
