@@ -4,7 +4,7 @@ import { Fragment, useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import Button from '../../../../forms/button';
-import { useCodeHighlighter } from '../../../../hooks/use-code-highlighter';
+import { useCodeHighlighter } from '../../../../hooks';
 import { useCreateSnippet } from '../../../../services/snippets/create-snippet';
 import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../utils/constants';
 import { extractLanguageFromName, lineHighlightToString } from '../../../../utils/snippets';
@@ -26,8 +26,14 @@ const CreateSnippetContainer = ({ closeModal, folderId, open }: Props) => {
 
   const formMethods = useForm<SnippetFormValues>({
     defaultValues: {
-      code: `\n`,
+      code: `import fs from "fs";
+import path from "path";
+
+const content= fs.readFileSync(path.resolve(__dirname, 'file.json'), { encoding: "utf-8" });
+
+console.log(content);`,
       codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
+      codeHighlighted: '',
       isPrivate: true,
       lineHighlight: [],
       theme: THEME_OPTIONS[0],
@@ -40,6 +46,7 @@ const CreateSnippetContainer = ({ closeModal, folderId, open }: Props) => {
     formMethods.reset({
       code: '',
       codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
+      codeHighlighted: '',
       description: '',
       isPrivate: true,
       lineHighlight: [],
@@ -50,9 +57,12 @@ const CreateSnippetContainer = ({ closeModal, folderId, open }: Props) => {
   };
 
   const submitCreateSnippet = async (values: SnippetFormValues) => {
+    console.log('Values => ', values);
+
     await createSnippet({
       input: {
         content: values.code,
+        contentHighlighted: values.codeHighlighted,
         description: values.description,
         folderId,
         language: extractLanguageFromName(values.name),

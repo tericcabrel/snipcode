@@ -3,7 +3,7 @@ import { BUNDLED_LANGUAGES } from 'shiki';
 
 import { HighLightOption, HighlightSnippetArgs, TextSelection } from '../../../../../../typings/snippet-form';
 
-const languageNames = BUNDLED_LANGUAGES.map((language) => language.id);
+const languageNames = BUNDLED_LANGUAGES.map((language) => [language.id].concat(language.aliases ?? [])).flat();
 
 export const useEditor = () => {
   const [textSelection, setTextSelection] = useState<TextSelection | null>(null);
@@ -22,38 +22,39 @@ export const useEditor = () => {
     return line;
   };
 
-  const selectLanguage = (language: string) => {
-    const mappers: Record<string, string> = {
-      yml: 'yaml',
-    };
-
-    const mappedLanguage = language in mappers ? mappers[language] : language;
-
-    if (languageNames.includes(mappedLanguage)) {
-      return mappedLanguage;
-    }
-
-    return 'txt';
-  };
-
   const highlightSnippet = ({ code, highlighter, language, lineHighlight, theme }: HighlightSnippetArgs) => {
     if (!highlighter) {
-      return code;
+      return {
+        codeHighlighted: `<pre>${code}</pre>`,
+        codeHighlightedForPreview: `<pre>${code}</pre>`,
+      };
     }
 
-    return highlighter
-      .codeToHtml(code, {
-        lang: selectLanguage(language),
-        lineOptions: buildLineOptions(lineHighlight),
-        theme,
-      })
-      .replace(/<pre class="shiki" style="background-color: \#[\w]{6}">/, '')
+    const codeHighlightedWithoutLineNumbers = highlighter.codeToHtml(code, {
+      lang: language,
+      lineOptions: buildLineOptions(lineHighlight),
+      theme,
+    });
+
+    const preTagRegex = /<pre class="shiki" style="background-color: \#[\w]{6}">/;
+
+    const preMatcher = codeHighlightedWithoutLineNumbers.match(preTagRegex);
+
+    const preHtml = preMatcher && preMatcher.length > 0 ? preMatcher[0] : '<pre class="no-shiki">';
+
+    const codeHighlightedForPreview = codeHighlightedWithoutLineNumbers
+      .replace(preTagRegex, '')
       .replace('</pre>', '')
       .split('\n')
       .map((line, i) => {
         return `<span class='line-number'>${i + 1}</span>${addWhitespaceForEmptyLine(line)}`;
       })
       .join('\n');
+
+    return {
+      codeHighlighted: `${preHtml}${codeHighlightedForPreview}</pre>`,
+      codeHighlightedForPreview,
+    };
   };
 
   const getLanguageFromExtension = (fileName?: string) => {
@@ -63,13 +64,23 @@ export const useEditor = () => {
       return DEFAULT_LANGUAGE;
     }
 
-    const possibleExtension = fileName.split('.').pop();
+    const language = fileName.split('.').pop();
 
-    if (!possibleExtension || (possibleExtension && !languageNames.includes(possibleExtension as any))) {
+    if (!language) {
       return DEFAULT_LANGUAGE;
     }
 
-    return possibleExtension;
+    const mappers: Record<string, string> = {
+      yml: 'yaml',
+    };
+
+    const mappedLanguage = language in mappers ? mappers[language] : language;
+
+    if (!mappedLanguage || (mappedLanguage && !languageNames.includes(mappedLanguage as any))) {
+      return DEFAULT_LANGUAGE;
+    }
+
+    return mappedLanguage;
   };
 
   const mapToArray = <Key, Value>(map: Map<Key, Value>): Array<[Key, Value]> => {

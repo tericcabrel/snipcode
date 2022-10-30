@@ -20,6 +20,14 @@ const SnippetTextEditor = ({ codeHighlightOptions, highlighter, themeOptions }: 
   const { control, setValue } = useFormContext<EditorFormValues>();
   const { code, handleEditorSelect, isSnippetPrivate, onHighlight, theme } = useFormEditor();
 
+  const handleCodeHighlight = (codeToHighlight: string) => {
+    const highlightedCode = onHighlight(highlighter)(codeToHighlight);
+
+    setValue('codeHighlighted', highlightedCode.codeHighlighted);
+
+    return highlightedCode.codeHighlightedForPreview;
+  };
+
   return (
     <div>
       <div className="w-full flex items-center space-x-4">
@@ -62,7 +70,7 @@ const SnippetTextEditor = ({ codeHighlightOptions, highlighter, themeOptions }: 
         <Editor
           value={code}
           onValueChange={(code) => setValue('code', code)}
-          highlight={onHighlight(highlighter)}
+          highlight={handleCodeHighlight}
           padding={6.5}
           style={{
             backgroundColor: THEME_BACKGROUND_COLOR_MAP[theme.id],

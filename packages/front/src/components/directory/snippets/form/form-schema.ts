@@ -10,6 +10,7 @@ export type SnippetFormValues = EditorFormValues;
 
 export const formSchema = yup.object().shape({
   code: yup.string().required(FORM_ERRORS.fieldRequired),
+  codeHighlighted: yup.string().required(FORM_ERRORS.fieldRequired),
   description: yup.string(),
   lineHighlight: yup.mixed(),
   name: yup

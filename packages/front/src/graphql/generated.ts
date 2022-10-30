@@ -20,6 +20,7 @@ export type CreateFolderInput = {
 
 export type CreateSnippetInput = {
   content: Scalars['String'];
+  contentHighlighted: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
   folderId: Scalars['String'];
   language: Scalars['String'];
@@ -197,6 +198,7 @@ export type SignupUserResult = {
 export type Snippet = {
   __typename?: 'Snippet';
   content: Scalars['String'];
+  contentHighlighted?: Maybe<Scalars['String']>;
   createdAt: Scalars['Date'];
   description?: Maybe<Scalars['String']>;
   folder: Folder;
@@ -230,6 +232,7 @@ export type UpdateFolderInput = {
 
 export type UpdateSnippetInput = {
   content: Scalars['String'];
+  contentHighlighted: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
   language: Scalars['String'];
   lineHighlight?: InputMaybe<Scalars['String']>;
