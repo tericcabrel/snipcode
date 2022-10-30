@@ -1,5 +1,5 @@
 import { User } from '@sharingan/database';
-import SharinganError, { errors } from '@sharingan/utils';
+import SharinganError, { errors, generateRandomId } from '@sharingan/utils';
 
 import { roleService, userService } from '../../../index';
 import {
@@ -55,6 +55,49 @@ describe('Test User service', () => {
     await deleteTestUsersById([createdUser.id]);
   });
 
+  it('should create a user with no username', async () => {
+    // GIVEN
+    const role = await findTestRole('user');
+    const createUserDto = await createTestUserDto({ roleId: role.id, username: null });
+
+    // WHEN
+    const createdUser = await userService.create(createUserDto);
+
+    // THEN
+    expect(createdUser).toMatchObject<User>({
+      createdAt: expect.any(Date),
+      email: createUserDto.email,
+      id: createUserDto.toUser().id,
+      isEnabled: createUserDto.toUser().isEnabled,
+      name: createUserDto.toUser().name,
+      oauthProvider: createUserDto.toUser().oauthProvider,
+      password: null,
+      pictureUrl: createUserDto.toUser().pictureUrl,
+      roleId: createUserDto.toUser().roleId,
+      timezone: createUserDto.toUser().timezone,
+      updatedAt: expect.any(Date),
+      username: expect.any(String),
+    });
+
+    await deleteTestUsersById([createdUser.id]);
+  });
+
+  it('should create a user with a username that already exists', async () => {
+    // GIVEN
+    const role = await findTestRole('user');
+    const user = await createTestUser({ username: 'roloto' });
+
+    const createUserDto = await createTestUserDto({ roleId: role.id, username: 'roloto' });
+
+    // WHEN
+    const createdUser = await userService.create(createUserDto);
+
+    // THEN
+    expect(createdUser.username).not.toEqual('roloto');
+
+    await deleteTestUsersById([user.id, createdUser.id]);
+  });
+
   it('should create a user - validation check', async () => {
     // GIVEN
     const role = await findTestRole('user');
@@ -82,6 +125,21 @@ describe('Test User service', () => {
     });
 
     await deleteTestUsersById([createdUser.id]);
+  });
+
+  it('should fail create a user because the email address already exists', async () => {
+    // GIVEN
+    const user = await createTestUser({ email: 'user@email.com' });
+    const role = await findTestRole('user');
+    const createUserDto = await createTestUserDto({ email: 'user@email.com', roleId: role.id });
+
+    // WHEN
+    // THEN
+    await expect(async () => {
+      await userService.create(createUserDto);
+    }).rejects.toThrow(new SharinganError(errors.EMAIL_ALREADY_TAKEN, 'EMAIL_ALREADY_TAKEN'));
+
+    await deleteTestUsersById([user.id]);
   });
 
   it('should update user information', async () => {
@@ -177,5 +235,16 @@ describe('Test User service', () => {
     });
 
     await deleteTestUsersById([user.id]);
+  });
+
+  it('should found no user given the ID provided', async () => {
+    // GIVEN
+    const snippetId = generateRandomId();
+
+    // WHEN
+    const user = await userService.findById(snippetId);
+
+    // THEN
+    expect(user).toBeNull();
   });
 });
