@@ -23,6 +23,7 @@ export type TextSelection = {
 export type EditorFormValues = {
   code: string;
   codeHighlight: SelectOption;
+  codeHighlighted: string;
   description: string;
   isPrivate: boolean;
   lineHighlight: Array<[number, string]>;
