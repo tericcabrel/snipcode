@@ -153,8 +153,11 @@ export const createTestSnippetDto = (
   const languageIndex = randNumber({ max: languages.length - 1, min: 0 });
   const themeIndex = randNumber({ max: themes.length - 1, min: 0 });
 
+  const snippetContent = randWord({ length: randNumber({ max: 30, min: 5 }) }).join('\n');
+
   return new CreateSnippetDto({
-    content: randWord({ length: randNumber({ max: 30, min: 5 }) }).join('\n'),
+    content: snippetContent,
+    contentHighlighted: `${snippetContent} highlighted`,
     description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
     folderId: args?.folderId ?? generateTestId(),
     language: languages[languageIndex],

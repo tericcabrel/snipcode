@@ -11,6 +11,8 @@ describe('Test Create Snippet DTO', () => {
     // GIVEN
     const dto = new CreateSessionDto({
       content: 'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n};',
+      contentHighlighted:
+        'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n}; highlighted',
       description: 'Basic react component',
       folderId,
       language: 'tsx',
@@ -27,6 +29,8 @@ describe('Test Create Snippet DTO', () => {
     // THEN
     expect(folder).toMatchObject<Snippet>({
       content: 'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n};',
+      contentHtml:
+        'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n}; highlighted',
       createdAt: expect.any(Date),
       description: 'Basic react component',
       folderId,

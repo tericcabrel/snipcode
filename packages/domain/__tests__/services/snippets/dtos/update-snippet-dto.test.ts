@@ -11,6 +11,8 @@ describe('Test Update Snippet DTO', () => {
     const dto = new UpdateSnippetDto({
       content:
         'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello Updated</div>\n\t);\n};',
+      contentHighlighted:
+        'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello Updated</div>\n\t);\n}; highlighted',
       creatorId: userId,
       description: 'Basic react component updated',
       language: 'tsx',
@@ -34,6 +36,8 @@ describe('Test Update Snippet DTO', () => {
     const expectedSnippet: Snippet = {
       content:
         'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello Updated</div>\n\t);\n};',
+      contentHtml:
+        'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello Updated</div>\n\t);\n}; highlighted',
       createdAt: currentSnippet.createdAt,
       description: 'Basic react component updated',
       folderId: snippetToUpdate.folderId,

@@ -2,6 +2,7 @@ import { Snippet, SnippetVisibility, dbId } from '@sharingan/database';
 
 type Input = {
   content: string;
+  contentHighlighted: string;
   description: string | null;
   folderId: string;
   language: string;
@@ -30,6 +31,7 @@ export default class CreateSnippetDto {
   toSnippet(): Snippet {
     return {
       content: this._input.content,
+      contentHtml: this._input.contentHighlighted,
       createdAt: new Date(),
       description: this._input.description,
       folderId: this._input.folderId,

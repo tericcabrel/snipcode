@@ -91,6 +91,7 @@ model Snippet {
   folderId      String            @map("folder_id")
   name          String            @db.VarChar(255)
   content       String            @db.Text
+  contentHtml   String?           @db.Text @map("content_html")
   language      String            @db.VarChar(20)
   size          Int               @default(0) @db.Int
   visibility    SnippetVisibility @default(public)
