@@ -13,6 +13,7 @@ const formatFindSnippetResult = (data?: FindSnippetQuery): SnippetInfo | undefin
     paths,
     snippet: {
       content: snippet.content,
+      contentHighlighted: snippet.contentHighlighted ?? '',
       createdAt: snippet.createdAt,
       description: snippet.description ?? null,
       folderId: snippet.folder.id,

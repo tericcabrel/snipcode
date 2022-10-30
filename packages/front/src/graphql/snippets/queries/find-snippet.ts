@@ -18,6 +18,7 @@ export const findSnippetQueryDocument = gql`
         lineHighlight
         visibility
         content
+        contentHighlighted
         theme
         createdAt
         updatedAt
