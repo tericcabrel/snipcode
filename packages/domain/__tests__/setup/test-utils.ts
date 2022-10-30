@@ -15,6 +15,7 @@ import {
 import { CreateUserDto } from '../../index';
 import CreateFolderDto from '../../src/folders/dtos/create-folder-dto';
 import CreateUserRootFolderDto from '../../src/folders/dtos/create-user-root-folder-dto';
+import UpdateFolderDto from '../../src/folders/dtos/update-folder-dto';
 import CreateSessionDto from '../../src/sessions/dtos/create-session-dto';
 import CreateSnippetDto from '../../src/snippets/dtos/create-snippet-dto';
 import DeleteSnippetDto from '../../src/snippets/dtos/delete-snippet-dto';
@@ -251,5 +252,15 @@ export const updateTestSnippetDto = (
     snippetId: args?.snippetId ?? generateTestId(),
     theme: themes[themeIndex],
     visibility: args?.visibility ?? 'public',
+  });
+};
+
+export const updateTestFolderDto = (
+  args: { folderId?: string; name?: string; userId?: string } | undefined,
+): UpdateFolderDto => {
+  return new UpdateFolderDto({
+    creatorId: args?.userId ?? generateTestId(),
+    folderId: args?.folderId ?? generateTestId(),
+    name: args?.name ?? `${randWord()}`,
   });
 };
