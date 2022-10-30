@@ -10,6 +10,7 @@ export const updateSnippet: MutationResolvers['updateSnippet'] = async (_parent,
 
   const updateSnippetDto = new UpdateSnippetDto({
     content: input.content,
+    contentHighlighted: input.contentHighlighted,
     creatorId: userId,
     description: input.description ?? null,
     language: input.language,

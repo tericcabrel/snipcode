@@ -32,6 +32,7 @@ export type CreateFolderInput = {
 
 export type CreateSnippetInput = {
   content: Scalars['String'];
+  contentHighlighted: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
   folderId: Scalars['String'];
   language: Scalars['String'];
@@ -209,6 +210,7 @@ export type SignupUserResult = {
 export type Snippet = {
   __typename?: 'Snippet';
   content: Scalars['String'];
+  contentHighlighted?: Maybe<Scalars['String']>;
   createdAt: Scalars['Date'];
   description?: Maybe<Scalars['String']>;
   folder: Folder;
@@ -242,6 +244,7 @@ export type UpdateFolderInput = {
 
 export type UpdateSnippetInput = {
   content: Scalars['String'];
+  contentHighlighted: Scalars['String'];
   description?: InputMaybe<Scalars['String']>;
   language: Scalars['String'];
   lineHighlight?: InputMaybe<Scalars['String']>;
@@ -586,6 +589,7 @@ export type SnippetResolvers<
   ParentType extends ResolversParentTypes['Snippet'] = ResolversParentTypes['Snippet'],
 > = {
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  contentHighlighted?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   folder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType>;

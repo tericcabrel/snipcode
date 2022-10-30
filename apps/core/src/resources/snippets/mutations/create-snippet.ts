@@ -10,6 +10,7 @@ export const createSnippet: MutationResolvers['createSnippet'] = async (_parent,
 
   const createSnippetDto = new CreateSnippetDto({
     content: input.content,
+    contentHighlighted: input.contentHighlighted,
     description: input.description ?? null,
     folderId: input.folderId,
     language: input.language,
