@@ -1,5 +1,5 @@
 import { Snippet } from '@sharingan/database';
-import SharinganError, { errors } from '@sharingan/utils';
+import SharinganError, { errors, generateRandomId } from '@sharingan/utils';
 
 import { roleService, snippetService } from '../../../index';
 import {
@@ -7,8 +7,10 @@ import {
   createTestSnippetDto,
   createUserWithRootFolder,
   deleteTestFoldersById,
+  deleteTestSnippetDto,
   deleteTestSnippetsById,
   deleteTestUsersById,
+  updateTestSnippetDto,
 } from '../../setup/test-utils';
 
 describe('Test Snippet service', () => {
@@ -140,29 +142,176 @@ describe('Test Snippet service', () => {
     await deleteTestUsersById([user1.id, user2.id]);
   });
 
-  it('should find all snippets of a folder', async () => {
+  it('should retrieve a snippet by its ID', async () => {
+    // GIVEN
+    const [user1, rootFolder1] = await createUserWithRootFolder();
+
+    const [snippet] = await Promise.all([
+      createTestSnippet({ folderId: rootFolder1.id, userId: user1.id, visibility: 'public' }),
+    ]);
+
+    // WHEN
+    const snippetFound = await snippetService.findById(snippet.id);
+
+    // THEN
+    expect(snippetFound).toMatchObject({
+      folderId: rootFolder1.id,
+      id: snippet.id,
+      userId: user1.id,
+      visibility: 'public',
+    });
+
+    await deleteTestSnippetsById([snippet.id]);
+    await deleteTestFoldersById([rootFolder1.id]);
+    await deleteTestUsersById([user1.id]);
+  });
+
+  it('should found no snippet given the ID provided', async () => {
+    // GIVEN
+    const snippetId = generateRandomId();
+
+    // WHEN
+    // THEN
+    await expect(async () => {
+      await snippetService.findById(snippetId);
+    }).rejects.toThrow(new SharinganError(errors.SNIPPET_NOT_FOUND(snippetId), 'SNIPPET_NOT_FOUND'));
+  });
+
+  it('should delete an existing snippet belonging to a user', async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+
+    const [snippet1, snippet2] = await Promise.all([
+      createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'public' }),
+      createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'private' }),
+    ]);
+
+    // WHEN
+    const deleteSnippetDto = deleteTestSnippetDto({ snippetId: snippet1.id, userId: snippet1.userId });
+
+    await snippetService.delete(deleteSnippetDto);
+
+    // THEN
+    const folderSnippets = await snippetService.findByFolder(rootFolder.id);
+
+    expect(folderSnippets).toHaveLength(1);
+
+    await deleteTestSnippetsById([snippet2.id]);
+    await deleteTestFoldersById([rootFolder.id]);
+    await deleteTestUsersById([user.id]);
+  });
+
+  it('should not delete an existing snippet because it belongs to other user', async () => {
     // GIVEN
     const [user1, rootFolder1] = await createUserWithRootFolder();
     const [user2, rootFolder2] = await createUserWithRootFolder();
 
-    const existingSnippets = await Promise.all([
+    const [snippet1, snippet2, snippet3] = await Promise.all([
       createTestSnippet({ folderId: rootFolder1.id, userId: user1.id, visibility: 'public' }),
-      createTestSnippet({ folderId: rootFolder1.id, userId: user1.id, visibility: 'private' }),
-      createTestSnippet({ folderId: rootFolder2.id, userId: user2.id, visibility: 'public' }),
-      createTestSnippet({ folderId: rootFolder1.id, userId: user1.id, visibility: 'private' }),
-      createTestSnippet({ folderId: rootFolder2.id, userId: user2.id, visibility: 'public' }),
-      createTestSnippet({ folderId: rootFolder1.id, userId: user1.id, visibility: 'private' }),
-      createTestSnippet({ folderId: rootFolder1.id, userId: user1.id, visibility: 'private' }),
+      createTestSnippet({ folderId: rootFolder2.id, userId: user2.id, visibility: 'private' }),
       createTestSnippet({ folderId: rootFolder1.id, userId: user1.id, visibility: 'private' }),
     ]);
 
     // WHEN
-    const folderSnippets = await snippetService.findByFolder(rootFolder1.id);
+    const deleteSnippetDto = deleteTestSnippetDto({ snippetId: snippet1.id, userId: user2.id });
 
     // THEN
-    await expect(folderSnippets).toHaveLength(6);
+    await expect(async () => {
+      await snippetService.delete(deleteSnippetDto);
+    }).rejects.toThrow(
+      new SharinganError(errors.CANT_EDIT_SNIPPET(deleteSnippetDto.creatorId, snippet1.id), 'CANT_EDIT_SNIPPET'),
+    );
 
-    await deleteTestSnippetsById(existingSnippets.map((snippet) => snippet.id));
+    const user1FolderSnippets = await snippetService.findByFolder(rootFolder1.id);
+    const user2FolderSnippets = await snippetService.findByFolder(rootFolder2.id);
+
+    expect(user1FolderSnippets).toHaveLength(2);
+    expect(user2FolderSnippets).toHaveLength(1);
+
+    await deleteTestSnippetsById([snippet2.id, snippet3.id]);
+    await deleteTestFoldersById([rootFolder1.id, rootFolder2.id]);
+    await deleteTestUsersById([user1.id, user2.id]);
+  });
+
+  it('should update an existing snippet in the specified folder', async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+    const [snippet] = await Promise.all([
+      createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'public' }),
+    ]);
+
+    const updateSnippetDto = updateTestSnippetDto({ snippetId: snippet.id, userId: user.id });
+
+    // WHEN
+    const updatedSnippet = await snippetService.update(updateSnippetDto);
+
+    // THEN
+    const snippetToUpdate = updateSnippetDto.toSnippet(snippet);
+
+    expect(updatedSnippet).toMatchObject<Snippet>({
+      content: snippetToUpdate.content,
+      contentHtml: snippetToUpdate.contentHtml,
+      createdAt: expect.any(Date),
+      description: snippetToUpdate.description,
+      folderId: rootFolder.id,
+      id: snippet.id,
+      language: snippetToUpdate.language,
+      lineHighlight: snippetToUpdate.lineHighlight,
+      name: snippetToUpdate.name,
+      size: snippetToUpdate.size,
+      theme: snippetToUpdate.theme,
+      updatedAt: expect.any(Date),
+      userId: user.id,
+      visibility: snippetToUpdate.visibility,
+    });
+
+    await deleteTestSnippetsById([updatedSnippet.id]);
+    await deleteTestFoldersById([rootFolder.id]);
+    await deleteTestUsersById([user.id]);
+  });
+
+  it('should not update an existing snippet in the specified folder because another snippet with the updated name already exists in the folder', async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+    const [snippet] = await Promise.all([
+      createTestSnippet({ folderId: rootFolder.id, name: 'snippet-one.java', userId: user.id }),
+      createTestSnippet({ folderId: rootFolder.id, name: 'snippet-two.java', userId: user.id, visibility: 'private' }),
+    ]);
+
+    const updateSnippetDto = updateTestSnippetDto({ name: 'snippet-two.java', snippetId: snippet.id, userId: user.id });
+
+    // WHEN
+    // THEN
+    await expect(async () => {
+      await snippetService.update(updateSnippetDto);
+    }).rejects.toThrow(
+      new SharinganError(errors.SNIPPET_ALREADY_EXIST(updateSnippetDto.name), 'SNIPPET_ALREADY_EXIST'),
+    );
+
+    await deleteTestSnippetsById([snippet.id]);
+    await deleteTestFoldersById([rootFolder.id]);
+    await deleteTestUsersById([user.id]);
+  });
+
+  it('should not update an existing snippet in the specified folder because because it belongs to other user', async () => {
+    // GIVEN
+    const [user1, rootFolder1] = await createUserWithRootFolder();
+    const [user2, rootFolder2] = await createUserWithRootFolder();
+    const [snippet] = await Promise.all([
+      createTestSnippet({ folderId: rootFolder1.id, name: 'snippet-one.java', userId: user1.id }),
+    ]);
+
+    const updateSnippetDto = updateTestSnippetDto({ snippetId: snippet.id, userId: user2.id });
+
+    // WHEN
+    // THEN
+    await expect(async () => {
+      await snippetService.update(updateSnippetDto);
+    }).rejects.toThrow(
+      new SharinganError(errors.CANT_EDIT_SNIPPET(updateSnippetDto.creatorId, snippet.id), 'CANT_EDIT_SNIPPET'),
+    );
+
+    await deleteTestSnippetsById([snippet.id]);
     await deleteTestFoldersById([rootFolder1.id, rootFolder2.id]);
     await deleteTestUsersById([user1.id, user2.id]);
   });

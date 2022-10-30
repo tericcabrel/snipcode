@@ -17,6 +17,8 @@ import CreateFolderDto from '../../src/folders/dtos/create-folder-dto';
 import CreateUserRootFolderDto from '../../src/folders/dtos/create-user-root-folder-dto';
 import CreateSessionDto from '../../src/sessions/dtos/create-session-dto';
 import CreateSnippetDto from '../../src/snippets/dtos/create-snippet-dto';
+import DeleteSnippetDto from '../../src/snippets/dtos/delete-snippet-dto';
+import UpdateSnippetDto from '../../src/snippets/dtos/update-snippet-dto';
 import UpdateUserDto from '../../src/users/dtos/update-user-dto';
 
 type CreateManyTestFoldersArgs = {
@@ -217,4 +219,37 @@ export const createTestSession = async (args: { userId: string }): Promise<Sessi
 
 export const deleteTestUserSessions = async (userId: string): Promise<void> => {
   await dbClient.session.deleteMany({ where: { userId } });
+};
+
+export const deleteTestSnippetDto = (args: { snippetId: string; userId: string }): DeleteSnippetDto => {
+  return new DeleteSnippetDto({
+    creatorId: args.userId,
+    snippetId: args.snippetId,
+  });
+};
+
+export const updateTestSnippetDto = (
+  args: { name?: string; snippetId?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
+): UpdateSnippetDto => {
+  const languages = ['java', 'js', 'ts', 'c', 'c++', 'python', 'go', 'php', 'csharp'];
+  const extensions = ['java', 'js', 'ts', 'c', 'cpp', 'py', 'go', 'php', 'cs'];
+  const themes = ['one-dark-pro', 'dracula', 'dark-plus', 'monokai', 'github-dark', 'github-light'];
+
+  const languageIndex = randNumber({ max: languages.length - 1, min: 0 });
+  const themeIndex = randNumber({ max: themes.length - 1, min: 0 });
+
+  const snippetContent = randWord({ length: randNumber({ max: 30, min: 5 }) }).join('\n');
+
+  return new UpdateSnippetDto({
+    content: snippetContent,
+    contentHighlighted: `${snippetContent} highlighted`,
+    creatorId: args?.userId ?? generateTestId(),
+    description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
+    language: languages[languageIndex],
+    lineHighlight: null,
+    name: args?.name ?? `${randWord()}.${extensions[languageIndex]}`,
+    snippetId: args?.snippetId ?? generateTestId(),
+    theme: themes[themeIndex],
+    visibility: args?.visibility ?? 'public',
+  });
 };
