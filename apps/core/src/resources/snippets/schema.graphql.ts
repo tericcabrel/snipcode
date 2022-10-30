@@ -17,6 +17,7 @@ export default gql`
     folderId: String!
     name: String!
     content: String!
+    contentHighlighted: String!
     language: String!
     lineHighlight: String
     visibility: SnippetVisibility!
@@ -27,6 +28,7 @@ export default gql`
   input UpdateSnippetInput {
     name: String!
     content: String!
+    contentHighlighted: String!
     language: String!
     lineHighlight: String
     visibility: SnippetVisibility!
