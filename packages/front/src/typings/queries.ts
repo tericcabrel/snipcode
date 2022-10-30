@@ -70,3 +70,26 @@ export type SnippetInfo = {
   paths: FilePath[];
   snippet: SnippetItem;
 };
+
+export type PublicSnippetItem = {
+  content: string;
+  createdAt: number;
+  description: string | null;
+  id: string;
+  language: string;
+  lineHighLight: [number, string][];
+  name: string;
+  theme: string;
+  user: {
+    name: string;
+    pictureUrl?: string | null;
+    username?: string | null;
+  };
+};
+
+export type PublicSnippetResult = {
+  hasMore: boolean;
+  itemPerPage?: number | null;
+  items: PublicSnippetItem[];
+  nextToken?: string | null;
+};

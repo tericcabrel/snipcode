@@ -3,6 +3,8 @@ import { BUNDLED_LANGUAGES } from 'shiki';
 
 import { HighLightOption, HighlightSnippetArgs, TextSelection } from '../../../../../../typings/snippet-form';
 
+const languageNames = BUNDLED_LANGUAGES.map((language) => language.id);
+
 export const useEditor = () => {
   const [textSelection, setTextSelection] = useState<TextSelection | null>(null);
 
@@ -20,6 +22,20 @@ export const useEditor = () => {
     return line;
   };
 
+  const selectLanguage = (language: string) => {
+    const mappers: Record<string, string> = {
+      yml: 'yaml',
+    };
+
+    const mappedLanguage = language in mappers ? mappers[language] : language;
+
+    if (languageNames.includes(mappedLanguage)) {
+      return mappedLanguage;
+    }
+
+    return 'txt';
+  };
+
   const highlightSnippet = ({ code, highlighter, language, lineHighlight, theme }: HighlightSnippetArgs) => {
     if (!highlighter) {
       return code;
@@ -27,7 +43,7 @@ export const useEditor = () => {
 
     return highlighter
       .codeToHtml(code, {
-        lang: language,
+        lang: selectLanguage(language),
         lineOptions: buildLineOptions(lineHighlight),
         theme,
       })
@@ -41,15 +57,13 @@ export const useEditor = () => {
   };
 
   const getLanguageFromExtension = (fileName?: string) => {
-    const DEFAULT_LANGUAGE = 'js';
+    const DEFAULT_LANGUAGE = 'txt';
 
     if (!fileName || !fileName.includes('.')) {
       return DEFAULT_LANGUAGE;
     }
 
     const possibleExtension = fileName.split('.').pop();
-
-    const languageNames = BUNDLED_LANGUAGES.map((language) => language.id);
 
     if (!possibleExtension || (possibleExtension && !languageNames.includes(possibleExtension as any))) {
       return DEFAULT_LANGUAGE;

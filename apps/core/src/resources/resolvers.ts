@@ -13,6 +13,7 @@ import { updateSnippet } from './snippets/mutations/update-snippet';
 import { findSnippet } from './snippets/queries/find-snippet';
 import { mySnippets } from './snippets/queries/my-snippets';
 import { publicSnippets } from './snippets/queries/public-snippets';
+import { shortContentResolver } from './snippets/queries/resolvers/short-content';
 import { dateScalar } from './types/date';
 import { loginUser } from './users/mutations/login-user';
 import { logoutUser } from './users/mutations/logout-user';
@@ -60,6 +61,7 @@ const resolvers: Resolvers = {
     folder: (snippet, _args, context) => {
       return context.db.folder.findById(snippet.folderId);
     },
+    shortContent: shortContentResolver,
     user: (snippet, _args, context) => {
       return context.db.user.findById(snippet.userId);
     },

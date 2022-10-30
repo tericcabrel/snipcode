@@ -12,6 +12,7 @@ export const ExternalLink = ({ child, href }: Props) => {
   if (child.type !== 'a') {
     throw new Error('Child must be an <a> element');
   }
+
   return cloneElement(child, {
     href,
     rel: 'noopener noreferrer',

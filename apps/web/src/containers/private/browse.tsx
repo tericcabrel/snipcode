@@ -1,8 +1,20 @@
+import { PublicSnippetResult, useCodeHighlighter } from '@sharingan/front';
 import { NextSeo } from 'next-seo';
 
 import Layout from '@/components/layout/private/layout';
+import { PublicSnippet } from '@/components/snippets/public-snippet';
 
-const Browse = () => {
+type Props = {
+  data: PublicSnippetResult;
+};
+
+const Browse = ({ data }: Props) => {
+  const { highlighter } = useCodeHighlighter();
+
+  console.log(data);
+
+  const snippets = data.items;
+
   return (
     <Layout>
       <NextSeo title="Browse" />
@@ -13,12 +25,14 @@ const Browse = () => {
           </div>
         </header>
         <main>
-          <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            {/* Replace with your content */}
+          <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div className="px-4 py-8 sm:px-0">
-              <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+              <div className="space-y-3 min-h-96">
+                {snippets.map((snippet) => (
+                  <PublicSnippet highlighter={highlighter} key={snippet.id} snippet={snippet} />
+                ))}
+              </div>
             </div>
-            {/* /End replace */}
           </div>
         </main>
       </div>

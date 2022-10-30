@@ -1,3 +1,5 @@
+import { Highlighter } from 'shiki';
+
 import Alert from './src/components/alert';
 import FolderDirectory from './src/components/directory';
 import BreadCrumb from './src/components/directory/breadcrumb';
@@ -16,6 +18,7 @@ export * from './src/graphql';
 export * from './src/hooks';
 export * from './src/services';
 export * from './src/utils/constants';
+export type { PublicSnippetItem, PublicSnippetResult } from './src/typings/queries';
 
 export {
   Alert,
@@ -31,3 +34,5 @@ export {
   ViewSnippet,
   classNames,
 };
+
+export type { Highlighter };

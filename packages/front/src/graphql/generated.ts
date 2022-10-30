@@ -68,48 +68,39 @@ export type Mutation = {
   updateSnippet: Snippet;
 };
 
-
 export type MutationCreateFolderArgs = {
   input: CreateFolderInput;
 };
-
 
 export type MutationCreateSnippetArgs = {
   input: CreateSnippetInput;
 };
 
-
 export type MutationDeleteFoldersArgs = {
   folderIds: Array<Scalars['String']>;
 };
 
-
 export type MutationDeleteSnippetArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MutationLoginUserArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
 };
 
-
 export type MutationSignupUserArgs = {
   input: SignupUserInput;
 };
-
 
 export type MutationSubscribeToNewsletterArgs = {
   email: Scalars['String'];
 };
 
-
 export type MutationUpdateFolderArgs = {
   id: Scalars['ID'];
   input: UpdateFolderInput;
 };
-
 
 export type MutationUpdateSnippetArgs = {
   id: Scalars['ID'];
@@ -119,13 +110,25 @@ export type MutationUpdateSnippetArgs = {
 export const OauthProvider = {
   Github: 'github',
   Stackoverflow: 'stackoverflow',
-  Twitter: 'twitter'
+  Twitter: 'twitter',
 } as const;
 
 export type OauthProvider = typeof OauthProvider[keyof typeof OauthProvider];
+export type PublicSnippetsArgs = {
+  itemPerPage?: InputMaybe<Scalars['Int']>;
+  nextToken?: InputMaybe<Scalars['String']>;
+};
+
+export type PublicSnippetsResult = {
+  __typename?: 'PublicSnippetsResult';
+  hasMore: Scalars['Boolean'];
+  itemPerPage?: Maybe<Scalars['Int']>;
+  items: Array<Snippet>;
+  nextToken?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
-  allSnippets: Array<Snippet>;
   authenticatedUser: User;
   findFolder: Folder;
   findSnippet: SnippetInfo;
@@ -136,26 +139,27 @@ export type Query = {
   mySnippets: Array<Snippet>;
   /** @deprecated https://stackoverflow.com/questions/59868942/graphql-a-schema-must-have-a-query-operation-defined */
   ping?: Maybe<Scalars['String']>;
+  publicSnippets: PublicSnippetsResult;
 };
-
 
 export type QueryFindFolderArgs = {
   folderId: Scalars['String'];
 };
 
-
 export type QueryFindSnippetArgs = {
   snippetId: Scalars['String'];
 };
-
 
 export type QueryListDirectoryArgs = {
   folderId: Scalars['String'];
 };
 
-
 export type QueryListFoldersArgs = {
   folderId?: InputMaybe<Scalars['String']>;
+};
+
+export type QueryPublicSnippetsArgs = {
+  args: PublicSnippetsArgs;
 };
 
 export type Result = {
@@ -175,7 +179,7 @@ export type Role = {
 
 export const RoleName = {
   Admin: 'admin',
-  User: 'user'
+  User: 'user',
 } as const;
 
 export type RoleName = typeof RoleName[keyof typeof RoleName];
@@ -200,6 +204,7 @@ export type Snippet = {
   language: Scalars['String'];
   lineHighlight?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  shortContent: Scalars['String'];
   size: Scalars['Int'];
   theme: Scalars['String'];
   updatedAt: Scalars['Date'];
@@ -215,7 +220,7 @@ export type SnippetInfo = {
 
 export const SnippetVisibility = {
   Private: 'private',
-  Public: 'public'
+  Public: 'public',
 } as const;
 
 export type SnippetVisibility = typeof SnippetVisibility[keyof typeof SnippetVisibility];
@@ -254,95 +259,171 @@ export type CreateFolderMutationVariables = Exact<{
   input: CreateFolderInput;
 }>;
 
-
-export type CreateFolderMutation = { __typename?: 'Mutation', createFolder: { __typename?: 'Folder', id: string } };
+export type CreateFolderMutation = { __typename?: 'Mutation'; createFolder: { __typename?: 'Folder'; id: string } };
 
 export type DeleteFoldersMutationVariables = Exact<{
   folderIds: Array<Scalars['String']> | Scalars['String'];
 }>;
 
-
-export type DeleteFoldersMutation = { __typename?: 'Mutation', deleteFolders: boolean };
+export type DeleteFoldersMutation = { __typename?: 'Mutation'; deleteFolders: boolean };
 
 export type UpdateFolderMutationVariables = Exact<{
   id: Scalars['ID'];
   input: UpdateFolderInput;
 }>;
 
-
-export type UpdateFolderMutation = { __typename?: 'Mutation', updateFolder: { __typename: 'Folder', id: string, name: string, updatedAt: any } };
+export type UpdateFolderMutation = {
+  __typename?: 'Mutation';
+  updateFolder: { __typename: 'Folder'; id: string; name: string; updatedAt: any };
+};
 
 export type FindFolderQueryVariables = Exact<{
   folderId: Scalars['String'];
 }>;
 
-
-export type FindFolderQuery = { __typename?: 'Query', findFolder: { __typename?: 'Folder', id: string, name: string } };
+export type FindFolderQuery = { __typename?: 'Query'; findFolder: { __typename?: 'Folder'; id: string; name: string } };
 
 export type ListDirectoryQueryVariables = Exact<{
   folderId: Scalars['String'];
 }>;
 
-
-export type ListDirectoryQuery = { __typename?: 'Query', listDirectory?: { __typename?: 'Directory', folders: Array<{ __typename?: 'Folder', id: string, name: string, subFoldersCount: number }>, snippets: Array<{ __typename?: 'Snippet', id: string, name: string, language: string, content: string }>, paths: Array<{ __typename?: 'Folder', id: string, name: string }> } | null };
+export type ListDirectoryQuery = {
+  __typename?: 'Query';
+  listDirectory?: {
+    __typename?: 'Directory';
+    folders: Array<{ __typename?: 'Folder'; id: string; name: string; subFoldersCount: number }>;
+    snippets: Array<{ __typename?: 'Snippet'; id: string; name: string; language: string; content: string }>;
+    paths: Array<{ __typename?: 'Folder'; id: string; name: string }>;
+  } | null;
+};
 
 export type SubscribeNewsletterMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
 
-
-export type SubscribeNewsletterMutation = { __typename?: 'Mutation', subscribeToNewsletter: { __typename?: 'Result', message: string } };
+export type SubscribeNewsletterMutation = {
+  __typename?: 'Mutation';
+  subscribeToNewsletter: { __typename?: 'Result'; message: string };
+};
 
 export type CreateSnippetMutationVariables = Exact<{
   input: CreateSnippetInput;
 }>;
 
-
-export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet: { __typename?: 'Snippet', id: string } };
+export type CreateSnippetMutation = { __typename?: 'Mutation'; createSnippet: { __typename?: 'Snippet'; id: string } };
 
 export type DeleteSnippetMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type DeleteSnippetMutation = { __typename?: 'Mutation', deleteSnippet: boolean };
+export type DeleteSnippetMutation = { __typename?: 'Mutation'; deleteSnippet: boolean };
 
 export type UpdateSnippetMutationVariables = Exact<{
   id: Scalars['ID'];
   input: UpdateSnippetInput;
 }>;
 
-
-export type UpdateSnippetMutation = { __typename?: 'Mutation', updateSnippet: { __typename: 'Snippet', id: string, name: string, description?: string | null, language: string, lineHighlight?: string | null, visibility: SnippetVisibility, content: string, theme: string, updatedAt: any } };
+export type UpdateSnippetMutation = {
+  __typename?: 'Mutation';
+  updateSnippet: {
+    __typename: 'Snippet';
+    id: string;
+    name: string;
+    description?: string | null;
+    language: string;
+    lineHighlight?: string | null;
+    visibility: SnippetVisibility;
+    content: string;
+    theme: string;
+    updatedAt: any;
+  };
+};
 
 export type FindSnippetQueryVariables = Exact<{
   snippetId: Scalars['String'];
 }>;
 
+export type FindSnippetQuery = {
+  __typename?: 'Query';
+  findSnippet: {
+    __typename?: 'SnippetInfo';
+    paths: Array<{ __typename?: 'Folder'; id: string; name: string }>;
+    snippet: {
+      __typename: 'Snippet';
+      id: string;
+      name: string;
+      description?: string | null;
+      language: string;
+      lineHighlight?: string | null;
+      visibility: SnippetVisibility;
+      content: string;
+      theme: string;
+      createdAt: any;
+      updatedAt: any;
+      folder: { __typename?: 'Folder'; id: string };
+    };
+  };
+};
 
-export type FindSnippetQuery = { __typename?: 'Query', findSnippet: { __typename?: 'SnippetInfo', paths: Array<{ __typename?: 'Folder', id: string, name: string }>, snippet: { __typename: 'Snippet', id: string, name: string, description?: string | null, language: string, lineHighlight?: string | null, visibility: SnippetVisibility, content: string, theme: string, createdAt: any, updatedAt: any, folder: { __typename?: 'Folder', id: string } } } };
+export type PublicSnippetsQueryVariables = Exact<{
+  args: PublicSnippetsArgs;
+}>;
+
+export type PublicSnippetsQuery = {
+  __typename?: 'Query';
+  publicSnippets: {
+    __typename: 'PublicSnippetsResult';
+    hasMore: boolean;
+    itemPerPage?: number | null;
+    nextToken?: string | null;
+    items: Array<{
+      __typename: 'Snippet';
+      id: string;
+      name: string;
+      description?: string | null;
+      language: string;
+      lineHighlight?: string | null;
+      shortContent: string;
+      theme: string;
+      createdAt: any;
+      user: { __typename?: 'User'; id: string; username?: string | null; name: string; pictureUrl?: string | null };
+    }>;
+  };
+};
 
 export type LoginUserMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
 
+export type LoginUserMutation = { __typename?: 'Mutation'; loginUser: { __typename: 'LoginResult'; token: string } };
 
-export type LoginUserMutation = { __typename?: 'Mutation', loginUser: { __typename: 'LoginResult', token: string } };
+export type LogoutUserMutationVariables = Exact<{ [key: string]: never }>;
 
-export type LogoutUserMutationVariables = Exact<{ [key: string]: never; }>;
-
-
-export type LogoutUserMutation = { __typename?: 'Mutation', logoutUser: boolean };
+export type LogoutUserMutation = { __typename?: 'Mutation'; logoutUser: boolean };
 
 export type SignupUserMutationVariables = Exact<{
   input: SignupUserInput;
 }>;
 
+export type SignupUserMutation = {
+  __typename?: 'Mutation';
+  signupUser: { __typename?: 'SignupUserResult'; message: string };
+};
 
-export type SignupUserMutation = { __typename?: 'Mutation', signupUser: { __typename?: 'SignupUserResult', message: string } };
+export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never }>;
 
-export type AuthenticatedUserQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AuthenticatedUserQuery = { __typename?: 'Query', authenticatedUser: { __typename: 'User', id: string, email: string, isEnabled: boolean, name: string, pictureUrl?: string | null, username?: string | null, role: { __typename: 'Role', name: RoleName }, rootFolder: { __typename: 'Folder', id: string } } };
+export type AuthenticatedUserQuery = {
+  __typename?: 'Query';
+  authenticatedUser: {
+    __typename: 'User';
+    id: string;
+    email: string;
+    isEnabled: boolean;
+    name: string;
+    pictureUrl?: string | null;
+    username?: string | null;
+    role: { __typename: 'Role'; name: RoleName };
+    rootFolder: { __typename: 'Folder'; id: string };
+  };
+};
