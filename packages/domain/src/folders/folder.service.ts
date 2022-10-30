@@ -4,7 +4,7 @@ import SharinganError, { errors } from '@sharingan/utils';
 import CreateFolderDto from './dtos/create-folder-dto';
 import CreateUserRootFolderDto from './dtos/create-user-root-folder-dto';
 import UpdateFolderDto from './dtos/update-folder-dto';
-import { isFoldersBelongToUser, isFoldersContainRoot } from './utils/folders';
+import { isFoldersContainRoot } from './utils/folders';
 
 export default class FolderService {
   async createUserRootFolder(dto: CreateUserRootFolderDto): Promise<Folder> {
@@ -91,10 +91,6 @@ export default class FolderService {
         userId,
       },
     });
-
-    if (!isFoldersBelongToUser(foldersToDelete, userId)) {
-      throw new SharinganError(errors.FOLDERS_DONT_BELONG_TO_USER, 'FOLDERS_DONT_BELONG_TO_USER');
-    }
 
     if (isFoldersContainRoot(foldersToDelete)) {
       throw new SharinganError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER');

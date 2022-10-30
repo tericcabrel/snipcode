@@ -1,7 +1,7 @@
-import SharinganError, { errors } from '@sharingan/utils';
+import { Folder } from '@sharingan/database';
+import SharinganError, { errors, generateRandomId } from '@sharingan/utils';
 
-import { folderService, roleService } from '../../../index';
-import { CreateUserRootFolderDto } from '../../../index';
+import { CreateUserRootFolderDto, folderService, roleService } from '../../../index';
 import CreateFolderDto from '../../../src/folders/dtos/create-folder-dto';
 import {
   createManyTestFolders,
@@ -10,6 +10,7 @@ import {
   createUserWithRootFolder,
   deleteTestFoldersById,
   deleteTestUsersById,
+  updateTestFolderDto,
 } from '../../setup/test-utils';
 
 describe('Test Folder service', () => {
@@ -250,6 +251,25 @@ describe('Test Folder service', () => {
     await deleteTestUsersById([user2.id]);
   });
 
+  it('should not delete folders because we cannot delete a root folder', async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+    const [myGistFolder] = await createManyTestFolders({
+      folderNames: ['My gist'],
+      parentId: rootFolder.id,
+      userId: user.id,
+    });
+
+    // WHEN
+    // THEN
+    await expect(async () => {
+      await folderService.deleteMany([myGistFolder.id, rootFolder.id], user.id);
+    }).rejects.toThrow(new SharinganError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER'));
+
+    await deleteTestFoldersById([myGistFolder.id, rootFolder.id]);
+    await deleteTestUsersById([user.id]);
+  });
+
   it('should generate the breadcrumb path of a folder', async () => {
     // GIVEN
     const [user, rootFolder] = await createUserWithRootFolder();
@@ -291,5 +311,111 @@ describe('Test Folder service', () => {
 
     await deleteTestFoldersById([rootFolder.id]);
     await deleteTestUsersById([user.id]);
+  });
+
+  it('should found no folder given the ID provided', async () => {
+    // GIVEN
+    const folderId = generateRandomId();
+
+    // WHEN
+    // THEN
+    await expect(async () => {
+      await folderService.findById(folderId);
+    }).rejects.toThrow(new SharinganError(errors.FOLDER_NOT_FOUND(folderId), 'FOLDER_NOT_FOUND'));
+  });
+
+  it('should update an existing folder in the specified folder', async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+    const [folder] = await createManyTestFolders({
+      folderNames: ['My gist'],
+      parentId: rootFolder.id,
+      userId: user.id,
+    });
+
+    const updateFolderDto = updateTestFolderDto({ folderId: folder.id, name: 'The Gist', userId: user.id });
+
+    // WHEN
+    const updatedFolder = await folderService.update(updateFolderDto);
+
+    // THEN
+    const folderToUpdate = updateFolderDto.toFolder(folder);
+
+    expect(updatedFolder).toMatchObject<Folder>({
+      createdAt: expect.any(Date),
+      id: folder.id,
+      isFavorite: false,
+      name: folderToUpdate.name,
+      parentId: rootFolder.id,
+      path: folder.path,
+      updatedAt: expect.any(Date),
+      userId: user.id,
+    });
+
+    await deleteTestFoldersById([updatedFolder.id, rootFolder.id]);
+    await deleteTestUsersById([user.id]);
+  });
+
+  it('should not update an existing folder in the specified folder because another folder with the updated name already exists in the folder', async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+    const [folder1, folder2] = await createManyTestFolders({
+      folderNames: ['folder-one', 'folder-two'],
+      parentId: rootFolder.id,
+      userId: user.id,
+    });
+
+    const updateFolderDto = updateTestFolderDto({ folderId: folder1.id, name: 'folder-two', userId: user.id });
+
+    // WHEN
+    // THEN
+    await expect(async () => {
+      await folderService.update(updateFolderDto);
+    }).rejects.toThrow(new SharinganError(errors.FOLDER_ALREADY_EXIST(updateFolderDto.name), 'FOLDER_ALREADY_EXIST'));
+
+    await deleteTestFoldersById([folder1.id, folder2.id]);
+    await deleteTestFoldersById([rootFolder.id]);
+    await deleteTestUsersById([user.id]);
+  });
+
+  it('should not update an existing folder in the specified folder because it belongs to other user', async () => {
+    // GIVEN
+    const [user1, rootFolder1] = await createUserWithRootFolder();
+    const [user2, rootFolder2] = await createUserWithRootFolder();
+    const [folderUser2] = await createManyTestFolders({
+      folderNames: ['folder-user-two'],
+      parentId: rootFolder2.id,
+      userId: user2.id,
+    });
+
+    const updateFolderDto = updateTestFolderDto({ folderId: folderUser2.id, userId: user1.id });
+
+    // WHEN
+    // THEN
+    await expect(async () => {
+      await folderService.update(updateFolderDto);
+    }).rejects.toThrow(
+      new SharinganError(errors.CANT_EDIT_FOLDER(updateFolderDto.creatorId, folderUser2.id), 'CANT_EDIT_FOLDER'),
+    );
+
+    await deleteTestFoldersById([folderUser2.id]);
+    await deleteTestFoldersById([rootFolder1.id, rootFolder2.id]);
+    await deleteTestUsersById([user1.id, user2.id]);
+  });
+
+  it('should not update the user root folder', async () => {
+    // GIVEN
+    const [user1, rootFolder] = await createUserWithRootFolder();
+
+    const updateFolderDto = updateTestFolderDto({ folderId: rootFolder.id, name: 'new-root-folder', userId: user1.id });
+
+    // WHEN
+    // THEN
+    await expect(async () => {
+      await folderService.update(updateFolderDto);
+    }).rejects.toThrow(new SharinganError(errors.CANT_RENAME_ROOT_FOLDER, 'CANT_RENAME_ROOT_FOLDER'));
+
+    await deleteTestFoldersById([rootFolder.id]);
+    await deleteTestUsersById([user1.id]);
   });
 });
