@@ -59,3 +59,5 @@ export const THEME_BACKGROUND_COLOR_MAP: Record<string, string> = {
   monokai: '#272822',
   'one-dark-pro': '#282c34',
 };
+
+export const SNIPPET_ITEM_PER_PAGE = 10;

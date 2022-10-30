@@ -5,11 +5,8 @@
   "foldingStopMarker": "(?x)\n(</(?i:head|body|table|thead|tbody|tfoot|tr|div|select|fieldset|style|script|ul|ol|li|form|dl)>\n|^(?!.*?<!--).*?--\\s*>\n|^<!--\\ end\\ tminclude\\ -->$\n|<\\?(?:php)?.*\\bend(if|for(each)?|while)\\b\n|\\{\\{?/(if|foreach|capture|literal|foreach|php|section|strip)\n|^[^{]*\\}\n)",
   "keyEquivalent": "^~H",
   "name": "astro",
-  "scopeName": "text.html.astro",
+  "scopeName": "source.astro",
   "patterns": [
-    {
-      "include": "#astro:markdown"
-    },
     {
       "include": "#astro:expressions"
     },
@@ -26,7 +23,10 @@
       "include": "#astro:fragment"
     },
     {
-      "include": "#astro:lang"
+      "include": "#astro:lang-scripts"
+    },
+    {
+      "include": "#astro:lang-styles"
     },
     {
       "include": "#astro:component"
@@ -65,25 +65,64 @@
       ]
     },
     "astro:component": {
-      "name": "meta.tag.component.astro",
-      "begin": "(</?)([$A-Z_][^/?!\\s<>]*|[^/?!\\s<>.]+\\.[^/?!\\s<>]+)\\b",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.astro"
-        },
-        "2": {
-          "name": "entity.name.tag.astro support.class.component.astro"
-        }
-      },
-      "end": "(/?>)",
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.end.astro"
-        }
-      },
       "patterns": [
         {
-          "include": "#astro:attribute"
+          "name": "meta.tag.component.astro astro.component.raw",
+          "begin": "(<)([$A-Z_][^/?!\\s<>]*|[^/?!\\s<>.]+\\.[^/?!\\s<>]+)(.+is:raw.*?)(>)",
+          "end": "(</)([$A-Z_][^/?!\\s<>]*|[^/?!\\s<>.]+\\.[^/?!\\s<>]+)(?=\\s|/?>)(>)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.astro"
+            },
+            "2": {
+              "name": "entity.name.tag.astro support.class.component.astro"
+            },
+            "3": {
+              "patterns": [
+                {
+                  "include": "#astro:attribute"
+                }
+              ]
+            },
+            "4": {
+              "name": "punctuation.definition.tag.end.astro"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.astro"
+            },
+            "2": {
+              "name": "entity.name.tag.astro support.class.component.astro"
+            },
+            "3": {
+              "name": "punctuation.definition.tag.end.astro"
+            }
+          },
+          "contentName": "source.unknown"
+        },
+        {
+          "name": "meta.tag.component.astro",
+          "begin": "(</?)([$A-Z_][^/?!\\s<>]*|[^/?!\\s<>.]+\\.[^/?!\\s<>]+)\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.astro"
+            },
+            "2": {
+              "name": "entity.name.tag.astro support.class.component.astro"
+            }
+          },
+          "end": "(/?>)",
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.end.astro"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#astro:attribute"
+            }
+          ]
         }
       ]
     },
@@ -102,35 +141,26 @@
         }
       }
     },
-    "astro:lang": {
-      "begin": "(<)(?:(S(?i:cript|tyle))|((?i:script|style)))(?![\\w:-])",
+    "astro:lang-scripts": {
+      "begin": "(<)(script)",
+      "end": "(</)(script)\\s*(>)|(/>)",
       "beginCaptures": {
-        "0": {
-          "name": "meta.tag.metadata.$2$3.start.html"
-        },
         "1": {
           "name": "punctuation.definition.tag.begin.html"
         },
         "2": {
-          "name": "entity.name.tag.astro support.class.component.astro"
-        },
-        "3": {
           "name": "entity.name.tag.html"
         }
       },
-      "end": "(</)(?:(S(?i:cript|tyle))|((?i:script|style)))(?![\\w:-])\\s*(>)",
       "endCaptures": {
-        "0": {
-          "name": "meta.tag.metadata.$2$3.end.html"
-        },
         "1": {
           "name": "punctuation.definition.tag.begin.html"
         },
         "2": {
-          "name": "entity.name.tag.astro support.class.component.astro"
+          "name": "entity.name.tag.html"
         },
         "3": {
-          "name": "entity.name.tag.html"
+          "name": "punctuation.definition.tag.end.html"
         },
         "4": {
           "name": "punctuation.definition.tag.end.html"
@@ -138,32 +168,120 @@
       },
       "patterns": [
         {
-          "begin": "\\G",
-          "end": "(>)",
-          "endCaptures": {
-            "1": {
-              "name": "punctuation.definition.tag.end.html"
-            }
-          },
+          "comment": "Treat script tag with application/ld+json as JSON. This needs to be higher than is:raw since it's a very possible situation to have is:raw on a JSON script tag",
+          "begin": "\\G(?=\\s*[^>]*?type\\s*=\\s*(['\"]|)(?i:application/ld\\+json)\\1)",
+          "end": "(?=</|/>)",
           "patterns": [
             {
-              "include": "#astro:attribute"
+              "begin": "(?<=>)(?!</)",
+              "end": "(?=</)",
+              "contentName": "source.json",
+              "patterns": [
+                {
+                  "include": "source.json"
+                }
+              ]
+            },
+            {
+              "include": "#html:tag-attributes"
             }
           ]
         },
         {
-          "begin": "(?<=(?i:lang)=(['\"`]?)(?i:css)\\1[^>]*>)(?!\\G)",
-          "end": "(?=</[\\w:-])",
-          "contentName": "source.css",
+          "comment": "Treat script tag with JS-compatible types as JS",
+          "begin": "\\G(?=\\s*[^>]*?type\\s*=\\s*(['\"]|)(?i:module|(?:text/javascript|text/partytown|application/node|application/javascript))\\1)",
+          "end": "(?=</|/>)",
           "patterns": [
             {
-              "include": "source.css"
+              "begin": "(?<=>)(?!</)",
+              "end": "(?=</)",
+              "contentName": "source.js",
+              "patterns": [
+                {
+                  "include": "source.js"
+                }
+              ]
+            },
+            {
+              "include": "#html:tag-attributes"
             }
           ]
         },
         {
-          "begin": "(?<=(?i:lang)=(['\"`]?)(?i:jsx?)\\1[^>]*>)(?!\\G)",
-          "end": "(?=</[\\w:-])",
+          "comment": "Treat anything with an unknown type as unknown",
+          "begin": "\\G(?=\\s*[^>]*?type\\s*=\\s*(['\"]|)\\1)",
+          "end": "(?=</|/>)",
+          "patterns": [
+            {
+              "begin": "(?<=>)(?!</)",
+              "end": "(?=</)",
+              "name": "source.unknown"
+            },
+            {
+              "include": "#html:tag-attributes"
+            }
+          ]
+        },
+        {
+          "begin": "\\G(?=\\s*[^>]*?lang\\s*=\\s*(['\"]|)(?i:jsx?|javascript)\\1)",
+          "end": "(?=</|/>)",
+          "patterns": [
+            {
+              "begin": "(?<=>)(?!</)",
+              "end": "(?=</)",
+              "contentName": "source.js",
+              "patterns": [
+                {
+                  "include": "source.js"
+                }
+              ]
+            },
+            {
+              "include": "#html:tag-attributes"
+            }
+          ]
+        },
+        {
+          "begin": "\\G(?=\\s*[^>]*?lang\\s*=\\s*(['\"]|)(?i:ts|typescript)\\1)",
+          "end": "(?=</|/>)",
+          "patterns": [
+            {
+              "begin": "(?<=>)(?!</)",
+              "end": "(?=</)",
+              "contentName": "source.ts",
+              "patterns": [
+                {
+                  "include": "source.ts"
+                }
+              ]
+            },
+            {
+              "include": "#html:tag-attributes"
+            }
+          ]
+        },
+        {
+          "begin": "\\G(?=\\s*[^>]*?lang\\s*=\\s*(['\"]|)(?i:tsx)\\1)",
+          "end": "(?=</|/>)",
+          "patterns": [
+            {
+              "begin": "(?<=>)(?!</)",
+              "end": "(?=</)",
+              "contentName": "source.tsx",
+              "patterns": [
+                {
+                  "include": "source.tsx"
+                }
+              ]
+            },
+            {
+              "include": "#html:tag-attributes"
+            }
+          ]
+        },
+        {
+          "begin": "(?<=>)(?!</)",
+          "end": "(?=</)",
           "contentName": "source.js",
           "patterns": [
             {
@@ -172,90 +290,149 @@
           ]
         },
         {
-          "begin": "(?<=(?i:lang)=(['\"`]?)(?i:less)\\1[^>]*>)(?!\\G)",
-          "end": "(?=</[\\w:-])",
-          "contentName": "source.css.css",
+          "include": "#html:tag-attributes"
+        }
+      ]
+    },
+    "astro:lang-styles": {
+      "begin": "(<)(style)",
+      "end": "(</)(style)\\s*(>)|(/>)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "entity.name.tag.html"
+        }
+      },
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.html"
+        },
+        "2": {
+          "name": "entity.name.tag.html"
+        },
+        "3": {
+          "name": "punctuation.definition.tag.end.html"
+        },
+        "4": {
+          "name": "punctuation.definition.tag.end.html"
+        }
+      },
+      "patterns": [
+        {
+          "begin": "\\G(?=\\s*[^>]*?lang\\s*=\\s*(['\"]|)(?i:css)\\1)",
+          "end": "(?=</|/>)",
           "patterns": [
             {
-              "include": "source.css.less"
+              "begin": "(?<=>)(?!</)",
+              "end": "(?=</)",
+              "contentName": "source.css",
+              "patterns": [
+                {
+                  "include": "source.css"
+                }
+              ]
+            },
+            {
+              "include": "#html:tag-attributes"
             }
           ]
         },
         {
-          "begin": "(?<=(?i:lang)=(['\"`]?)(?i:sass)\\1[^>]*>)(?!\\G)",
-          "end": "(?=</[\\w:-])",
-          "contentName": "source.sass",
+          "begin": "\\G(?=\\s*[^>]*?lang\\s*=\\s*(['\"]|)(?i:less)\\1)",
+          "end": "(?=</|/>)",
           "patterns": [
             {
-              "include": "source.sass"
+              "begin": "(?<=>)(?!</)",
+              "end": "(?=</)",
+              "contentName": "source.css.less",
+              "patterns": [
+                {
+                  "include": "source.css.less"
+                }
+              ]
+            },
+            {
+              "include": "#html:tag-attributes"
             }
           ]
         },
         {
-          "begin": "(?<=(?i:lang)=(['\"`]?)(?i:scss)\\1[^>]*>)(?!\\G)",
-          "end": "(?=</[\\w:-])",
-          "contentName": "source.css.scss",
+          "begin": "\\G(?=\\s*[^>]*?lang\\s*=\\s*(['\"]|)(?i:sass)\\1)",
+          "end": "(?=</|/>)",
           "patterns": [
             {
-              "include": "source.css.scss"
+              "begin": "(?<=>)(?!</)",
+              "end": "(?=</)",
+              "contentName": "source.sass",
+              "patterns": [
+                {
+                  "include": "source.sass"
+                }
+              ]
+            },
+            {
+              "include": "#html:tag-attributes"
             }
           ]
         },
         {
-          "begin": "(?<=(?i:lang)=(['\"`]?)(?i:styl(?:us)?)\\1[^>]*>)(?!\\G)",
-          "end": "(?=</[\\w:-])",
-          "contentName": "source.stylus",
+          "begin": "\\G(?=\\s*[^>]*?lang\\s*=\\s*(['\"]|)(?i:scss)\\1)",
+          "end": "(?=</|/>)",
           "patterns": [
             {
-              "include": "source.stylus"
+              "begin": "(?<=>)(?!</)",
+              "end": "(?=</)",
+              "contentName": "source.css.scss",
+              "patterns": [
+                {
+                  "include": "source.css.scss"
+                }
+              ]
+            },
+            {
+              "include": "#html:tag-attributes"
             }
           ]
         },
         {
-          "begin": "(?<=(?i:lang)=(['\"`]?)(?i:ts)\\1[^>]*>)(?!\\G)",
-          "end": "(?=</[\\w:-])",
-          "contentName": "source.ts",
+          "begin": "\\G(?=\\s*[^>]*?lang\\s*=\\s*(['\"]|)(?i:styl(?:us)?)\\1)",
+          "end": "(?=</|/>)",
           "patterns": [
             {
-              "include": "source.ts"
+              "begin": "(?<=>)(?!</)",
+              "end": "(?=</)",
+              "contentName": "source.stylus",
+              "patterns": [
+                {
+                  "include": "source.stylus"
+                }
+              ]
+            },
+            {
+              "include": "#html:tag-attributes"
             }
           ]
         },
         {
-          "begin": "(?<=(?i:lang)=(['\"`]?)(?i:tsx)\\1[^>]*>)(?!\\G)",
-          "end": "(?=</[\\w:-])",
-          "contentName": "source.tsx",
-          "patterns": [
-            {
-              "include": "source.tsx"
-            }
-          ]
-        },
-        {
-          "begin": "(?<=<(?i:script)[^>]*>)(?!\\G)",
-          "end": "(?=</[\\w:-])",
-          "contentName": "source.js",
-          "patterns": [
-            {
-              "include": "source.js"
-            }
-          ]
-        },
-        {
-          "begin": "(?<=<(?i:style)[^>]*>)(?!\\G)",
-          "end": "(?=</[\\w:-])",
+          "begin": "(?<=>)(?!</)",
+          "end": "(?=</)",
           "contentName": "source.css",
           "patterns": [
             {
               "include": "source.css"
             }
           ]
+        },
+        {
+          "include": "#html:tag-attributes"
         }
       ]
     },
     "html:attribute": {
       "name": "meta.attribute.$1.html",
-      "match": "\\b(@?[a-zA-Z\\-:]+)(=?)",
+      "match": "([a-zA-Z\\-:@_.]+)(=?)",
       "captures": {
         "1": {
           "name": "entity.other.attribute-name.html"
@@ -264,6 +441,20 @@
           "name": "punctuation.separator.key-value.html"
         }
       }
+    },
+    "html:tag-attributes": {
+      "begin": "\\G",
+      "end": "(?=/>)|>",
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.tag.end.html"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#astro:attribute"
+        }
+      ]
     },
     "html:comment": {
       "name": "comment.block.html",
@@ -331,6 +522,41 @@
     },
     "html:element": {
       "patterns": [
+        {
+          "name": "astro.element.raw",
+          "begin": "(<)([^/?!\\s<>]+)(.+is:raw.*?)(>)",
+          "end": "(</)([^/?!\\s<>]+)(?=\\s|/?>)(>)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.html"
+            },
+            "2": {
+              "name": "entity.name.tag.html"
+            },
+            "3": {
+              "patterns": [
+                {
+                  "include": "#astro:attribute"
+                }
+              ]
+            },
+            "4": {
+              "name": "punctuation.definition.tag.end.html"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.tag.begin.html"
+            },
+            "2": {
+              "name": "entity.name.tag.html"
+            },
+            "3": {
+              "name": "punctuation.definition.tag.end.html"
+            }
+          },
+          "contentName": "source.unknown"
+        },
         {
           "name": "meta.tag.any.$2.start.html",
           "begin": "(<)([^/?!\\s<>]+)(?=\\s|/?>)",
@@ -409,16 +635,16 @@
           "begin": "\\{",
           "beginCaptures": {
             "0": {
-              "name": "punctuation.definition.generic.begin.html"
+              "name": "punctuation.section.embedded.begin.tsx"
             }
           },
           "end": "\\}",
           "endCaptures": {
             "0": {
-              "name": "punctuation.definition.generic.end.html"
+              "name": "punctuation.section.embedded.end.tsx"
             }
           },
-          "name": "expression.embbeded.astro",
+          "name": "expression.embedded.astro",
           "contentName": "source.tsx",
           "patterns": [
             {
@@ -428,43 +654,12 @@
         }
       ]
     },
-    "astro:markdown": {
-      "name": "text.html.astro.markdown",
-      "begin": "(<)(Markdown)(>)",
-      "beginCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.html"
-        },
-        "2": {
-          "name": "entity.name.tag.html"
-        },
-        "3": {
-          "name": "punctuation.definition.tag.end.html"
-        }
-      },
-      "end": "(</)(Markdown)(>)",
-      "endCaptures": {
-        "1": {
-          "name": "punctuation.definition.tag.begin.html"
-        },
-        "2": {
-          "name": "entity.name.tag.html"
-        },
-        "3": {
-          "name": "punctuation.definition.tag.end.html"
-        }
-      },
-      "patterns": [
-        {
-          "include": "text.html.markdown.astro"
-        }
-      ]
-    },
     "frontmatter": {
+      "comment": "The frontmatter is treated as comments in order to get the \"faded\" look",
       "begin": "\\A(-{3})\\s*$",
       "beginCaptures": {
         "1": {
-          "name": "comment.block.html"
+          "name": "comment"
         }
       },
       "contentName": "source.ts",
@@ -476,7 +671,7 @@
       "end": "(^|\\G)(-{3})|\\.{3}\\s*$",
       "endCaptures": {
         "2": {
-          "name": "comment.block.html"
+          "name": "comment"
         }
       }
     },

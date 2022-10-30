@@ -82,10 +82,13 @@ export default class SnippetService {
       },
     });
 
+    const hasMore = snippets.length === limitPlusOne;
+    const nextCursor = snippets.length > 0 ? snippets[snippets.length - 1].createdAt.getTime().toString() : null;
+
     return {
-      hasMore: snippets.length === limitPlusOne,
+      hasMore,
       items: snippets.slice(0, limit),
-      nextCursor: snippets.length > 0 ? snippets[snippets.length - 1].createdAt.getTime().toString() : null,
+      nextCursor: hasMore ? nextCursor : null,
     };
   }
 

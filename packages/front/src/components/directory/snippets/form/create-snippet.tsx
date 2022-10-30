@@ -26,18 +26,7 @@ const CreateSnippetContainer = ({ closeModal, folderId, open }: Props) => {
 
   const formMethods = useForm<SnippetFormValues>({
     defaultValues: {
-      code: `@ExceptionHandler(ConstraintViolationException.class)
-public ResponseEntity<?> constraintViolationException(ConstraintViolationException ex, WebRequest request) {
-  List<String> errors = new ArrayList<>();
-
-  ex.getConstraintViolations().forEach(cv -> errors.add(cv.getMessage()));
-
-  Map<String, List<String>> result = new HashMap<>();
-
-  result.put("errors", errors);
-  return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
-}
-`,
+      code: `\n`,
       codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
       isPrivate: true,
       lineHighlight: [],

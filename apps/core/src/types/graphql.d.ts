@@ -216,6 +216,7 @@ export type Snippet = {
   language: Scalars['String'];
   lineHighlight?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  shortContent: Scalars['String'];
   size: Scalars['Int'];
   theme: Scalars['String'];
   updatedAt: Scalars['Date'];
@@ -592,6 +593,7 @@ export type SnippetResolvers<
   language?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   lineHighlight?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  shortContent?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   theme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;

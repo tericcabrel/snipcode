@@ -12,7 +12,6 @@ export const useCodeHighlighter = () => {
       shiki.setCDN('/assets/shiki/');
 
       return shiki.getHighlighter({
-        langs: ['javascript', 'html', 'css', 'typescript', 'java', 'c', 'cpp', 'c#', 'php', 'python'],
         theme: 'monokai',
         themes: ['one-dark-pro', 'dracula', 'dark-plus', 'monokai', 'github-dark', 'github-light'],
       });
