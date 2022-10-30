@@ -29,17 +29,21 @@ type CreateManyTestFoldersArgs = {
 };
 
 type CreateTestUserDtoArgs = {
+  email?: string;
   isEnabled?: boolean;
   oauthProvider?: OauthProvider;
   password?: string | null;
   roleId: string;
+  username?: string | null;
 };
 
 type CreateTestUserArgs = {
+  email?: string;
   isEnabled?: boolean;
   oauthProvider?: OauthProvider;
   password?: string | null;
   roleName?: RoleName;
+  username?: string | null;
 };
 
 export const findTestRole = async (name: RoleName): Promise<Role> => {
@@ -53,20 +57,22 @@ export const findTestRole = async (name: RoleName): Promise<Role> => {
 };
 
 export const createTestUserDto = ({
+  email,
   isEnabled,
   oauthProvider,
   password,
   roleId,
+  username = randUserName(),
 }: CreateTestUserDtoArgs): CreateUserDto => {
   const dto = new CreateUserDto({
-    email: randEmail(),
+    email: email ?? randEmail(),
     name: randFullName(),
     oauthProvider: oauthProvider ?? 'github',
     password: password ?? null,
     pictureUrl: randImg({ category: 'people' }),
     roleId,
     timezone: randTimeZone(),
-    username: randUserName(),
+    username,
   });
 
   dto.isEnabled = Boolean(isEnabled);
@@ -75,14 +81,16 @@ export const createTestUserDto = ({
 };
 
 export const createTestUser = async ({
+  email,
   isEnabled,
   oauthProvider,
   password,
   roleName = 'user',
+  username,
 }: CreateTestUserArgs): Promise<User> => {
   const role = await findTestRole(roleName);
 
-  const createUserDto = createTestUserDto({ isEnabled, oauthProvider, password, roleId: role.id });
+  const createUserDto = createTestUserDto({ email, isEnabled, oauthProvider, password, roleId: role.id, username });
 
   return dbClient.user.create({ data: createUserDto.toUser() });
 };
