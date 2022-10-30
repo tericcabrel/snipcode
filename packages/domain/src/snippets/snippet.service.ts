@@ -129,6 +129,7 @@ export default class SnippetService {
     return dbClient.snippet.update({
       data: {
         content: input.content,
+        contentHtml: input.contentHtml,
         description: input.description,
         language: input.language,
         lineHighlight: input.lineHighlight,

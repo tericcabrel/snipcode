@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import Button from '../../../../forms/button';
-import { useCodeHighlighter } from '../../../../hooks/use-code-highlighter';
+import { useCodeHighlighter } from '../../../../hooks';
 import { useUpdateSnippet } from '../../../../services/snippets/update-snippet';
 import { SnippetItem } from '../../../../typings/queries';
 import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../utils/constants';
@@ -31,6 +31,7 @@ const ViewSnippet = ({ snippet }: Props) => {
     defaultValues: {
       code: snippet.content,
       codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
+      codeHighlighted: snippet.contentHighlighted,
       description: snippet.description ?? undefined,
       isPrivate: snippet.isPrivate,
       lineHighlight: snippet.lineHighLight,
@@ -45,6 +46,7 @@ const ViewSnippet = ({ snippet }: Props) => {
       id: snippet.id,
       input: {
         content: values.code,
+        contentHighlighted: values.codeHighlighted,
         description: values.description,
         language: extractLanguageFromName(values.name),
         lineHighlight: lineHighlightToString(values.lineHighlight),

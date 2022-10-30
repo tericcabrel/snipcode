@@ -360,6 +360,7 @@ export type FindSnippetQuery = {
       lineHighlight?: string | null;
       visibility: SnippetVisibility;
       content: string;
+      contentHighlighted?: string | null;
       theme: string;
       createdAt: any;
       updatedAt: any;

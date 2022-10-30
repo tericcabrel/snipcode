@@ -54,6 +54,7 @@ export type FindFolderData = {
 
 export type SnippetItem = {
   content: string;
+  contentHighlighted: string;
   createdAt: number;
   description: string | null;
   folderId: string;
