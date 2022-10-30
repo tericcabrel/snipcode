@@ -20,6 +20,7 @@ export default class SnippetService {
     return dbClient.snippet.create({
       data: {
         content: input.content,
+        contentHtml: input.contentHtml,
         description: input.description,
         folderId: input.folderId,
         id: input.id,

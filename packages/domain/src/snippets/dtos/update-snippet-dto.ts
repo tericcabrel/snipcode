@@ -2,6 +2,7 @@ import { Snippet, SnippetVisibility } from '@sharingan/database';
 
 type Input = {
   content: string;
+  contentHighlighted: string;
   creatorId: string;
   description: string | null;
   language: string;
@@ -31,6 +32,7 @@ export default class UpdateSnippetDto {
     return {
       ...currentSnippet,
       content: this._input.content,
+      contentHtml: this._input.contentHighlighted,
       description: this._input.description,
       language: this._input.language,
       lineHighlight: this._input.lineHighlight,

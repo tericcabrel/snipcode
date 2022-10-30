@@ -27,6 +27,7 @@ describe('Test Snippet service', () => {
     // THEN
     expect(expectedSnippet).toMatchObject<Snippet>({
       content: createSnippetDto.toSnippet().content,
+      contentHtml: createSnippetDto.toSnippet().contentHtml,
       createdAt: expect.any(Date),
       description: createSnippetDto.toSnippet().description,
       folderId: rootFolder.id,
@@ -64,7 +65,7 @@ describe('Test Snippet service', () => {
     await deleteTestUsersById([user.id]);
   });
 
-  it('should find all public snippets', async () => {
+  it('should retrieve all public snippets', async () => {
     // GIVEN
     const [user, rootFolder] = await createUserWithRootFolder();
     const existingSnippets = await Promise.all([
@@ -77,10 +78,37 @@ describe('Test Snippet service', () => {
     ]);
 
     // WHEN
-    const publicSnippets = await snippetService.findPublicSnippet();
+    const publicSnippets = await snippetService.findPublicSnippet({ itemPerPage: 10 });
 
     // THEN
-    await expect(publicSnippets).toHaveLength(4);
+    await expect(publicSnippets.hasMore).toEqual(false);
+    await expect(publicSnippets.nextCursor).toEqual(null);
+    await expect(publicSnippets.items).toHaveLength(4);
+
+    await deleteTestSnippetsById(existingSnippets.map((snippet) => snippet.id));
+    await deleteTestFoldersById([rootFolder.id]);
+    await deleteTestUsersById([user.id]);
+  });
+
+  it('should retrieve a subset of public snippets', async () => {
+    // GIVEN
+    const [user, rootFolder] = await createUserWithRootFolder();
+    const existingSnippets = await Promise.all([
+      createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'public' }),
+      createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'private' }),
+      createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'public' }),
+      createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'private' }),
+      createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'public' }),
+      createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'public' }),
+    ]);
+
+    // WHEN
+    const publicSnippets = await snippetService.findPublicSnippet({ itemPerPage: 3 });
+
+    // THEN
+    await expect(publicSnippets.hasMore).toEqual(true);
+    await expect(publicSnippets.nextCursor).toEqual(expect.any(String));
+    await expect(publicSnippets.items).toHaveLength(3);
 
     await deleteTestSnippetsById(existingSnippets.map((snippet) => snippet.id));
     await deleteTestFoldersById([rootFolder.id]);
