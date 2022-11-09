@@ -10,11 +10,12 @@ type Props = {
   label?: string;
   onChange: (value: SelectOption) => void;
   options: SelectOption[];
+  placeholder?: string;
   value?: SelectOption;
 };
 
 const SelectInput = forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { className = 'w-40', label, onChange, options, value: selectedValue } = props;
+  const { className = 'w-40', label, onChange, options, placeholder = 'Select value...', value: selectedValue } = props;
 
   const generateOptionClasses = (isActive: boolean) => {
     return classNames(
@@ -35,7 +36,9 @@ const SelectInput = forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
             {label && <Listbox.Label className="block text-sm font-medium text-gray-700">{label}</Listbox.Label>}
             <div className="mt-1 relative">
               <Listbox.Button className="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default sm:text-sm">
-                <span className="block truncate">{selectedValue?.label}</span>
+                <span className={`block truncate ${selectedValue?.label ? '' : 'text-gray-400'}`}>
+                  {selectedValue?.label ?? placeholder}
+                </span>
                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                   <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                 </span>

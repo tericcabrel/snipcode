@@ -26,6 +26,7 @@ export type EditorFormValues = {
   codeHighlighted: string;
   description: string;
   isPrivate: boolean;
+  language: SelectOption;
   lineHighlight: Array<[number, string]>;
   name: string;
   theme: SelectOption;

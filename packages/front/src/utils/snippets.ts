@@ -4,7 +4,7 @@ export const lineHighlightToString = (value: Array<[number, string]>) => {
 
 export const extractLanguageFromName = (name: string): string => {
   if (!name.includes('.')) {
-    return 'plain';
+    return 'txt';
   }
 
   const nameArrayPart = name.split('.');

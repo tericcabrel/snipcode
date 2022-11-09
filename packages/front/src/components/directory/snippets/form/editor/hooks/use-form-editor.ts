@@ -20,11 +20,12 @@ export const useFormEditor = () => {
   const code = watch('code');
   const name = watch('name');
   const theme = watch('theme');
+  const language = watch('language');
   const lineHighlight = watch('lineHighlight');
   const codeHighlight = watch('codeHighlight');
   const isSnippetPrivate = watch('isPrivate');
 
-  const language = getLanguageFromExtension(name);
+  const codeLanguage = language?.id ?? getLanguageFromExtension(name);
 
   useEffect(() => {
     const lineHighlightClone = new Map(lineHighlight);
@@ -56,7 +57,7 @@ export const useFormEditor = () => {
   }, [codeHighlight]);
 
   const onHighlight = (highlighter?: Highlighter) => (code: string) => {
-    return highlightSnippet({ code, highlighter, language, lineHighlight, theme: theme.id });
+    return highlightSnippet({ code, highlighter, language: codeLanguage, lineHighlight, theme: theme.id });
   };
 
   return {

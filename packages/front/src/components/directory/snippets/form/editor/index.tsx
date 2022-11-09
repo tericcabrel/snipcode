@@ -13,10 +13,11 @@ import { useFormEditor } from './hooks/use-form-editor';
 type Props = {
   codeHighlightOptions: SelectOption[];
   highlighter?: Highlighter;
+  languageOptions: SelectOption[];
   themeOptions: SelectOption[];
 };
 
-const SnippetTextEditor = ({ codeHighlightOptions, highlighter, themeOptions }: Props) => {
+const SnippetTextEditor = ({ codeHighlightOptions, highlighter, languageOptions, themeOptions }: Props) => {
   const { control, setValue } = useFormContext<EditorFormValues>();
   const { code, handleEditorSelect, isSnippetPrivate, onHighlight, theme } = useFormEditor();
 
@@ -55,6 +56,13 @@ const SnippetTextEditor = ({ codeHighlightOptions, highlighter, themeOptions }: 
             />
           </div>
           <div className="flex space-x-3">
+            <Controller
+              name="language"
+              control={control}
+              render={({ field }) => (
+                <SelectInput className="w-36" options={languageOptions} placeholder="Language" {...field} />
+              )}
+            />
             <Controller
               name="codeHighlight"
               control={control}

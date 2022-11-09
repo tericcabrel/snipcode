@@ -11,6 +11,7 @@ import { extractLanguageFromName, lineHighlightToString } from '../../../../util
 import { useToast } from '../../../toast/provider';
 import { SnippetTextEditor } from './editor';
 import { SnippetFormValues, formSchema } from './form-schema';
+import { generateSnippetLanguageOptions } from './utils';
 
 type Props = {
   closeModal: () => void;
@@ -65,7 +66,7 @@ console.log(content);`,
         contentHighlighted: values.codeHighlighted,
         description: values.description,
         folderId,
-        language: extractLanguageFromName(values.name),
+        language: values.language?.id ?? extractLanguageFromName(values.name),
         lineHighlight: lineHighlightToString(values.lineHighlight),
         name: values.name,
         theme: values.theme.id,
@@ -117,6 +118,7 @@ console.log(content);`,
                       <FormProvider {...formMethods}>
                         <SnippetTextEditor
                           highlighter={highlighter}
+                          languageOptions={generateSnippetLanguageOptions()}
                           codeHighlightOptions={CODE_HIGHLIGHT_OPTIONS}
                           themeOptions={THEME_OPTIONS}
                         />
