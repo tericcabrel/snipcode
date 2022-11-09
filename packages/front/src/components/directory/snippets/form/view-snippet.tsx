@@ -10,6 +10,7 @@ import { extractLanguageFromName, lineHighlightToString } from '../../../../util
 import { useToast } from '../../../toast/provider';
 import { SnippetTextEditor } from './editor';
 import { SnippetFormValues, formSchema } from './form-schema';
+import { generateSnippetLanguageOptions } from './utils';
 
 type Props = {
   snippet: SnippetItem;
@@ -42,13 +43,15 @@ const ViewSnippet = ({ snippet }: Props) => {
   });
 
   const submitUpdateSnippet = async (values: SnippetFormValues) => {
+    console.log('Values => ', values);
+
     await updateSnippet({
       id: snippet.id,
       input: {
         content: values.code,
         contentHighlighted: values.codeHighlighted,
         description: values.description,
-        language: extractLanguageFromName(values.name),
+        language: values.language?.id ?? extractLanguageFromName(values.name),
         lineHighlight: lineHighlightToString(values.lineHighlight),
         name: values.name,
         theme: values.theme.id,
@@ -68,6 +71,7 @@ const ViewSnippet = ({ snippet }: Props) => {
       <FormProvider {...formMethods}>
         <SnippetTextEditor
           highlighter={highlighter}
+          languageOptions={generateSnippetLanguageOptions()}
           codeHighlightOptions={CODE_HIGHLIGHT_OPTIONS}
           themeOptions={THEME_OPTIONS}
         />
