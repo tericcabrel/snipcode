@@ -4,6 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Button from '../../../../forms/button';
 import { useCodeHighlighter } from '../../../../hooks';
 import { useUpdateSnippet } from '../../../../services/snippets/update-snippet';
+import { SelectOption } from '../../../../typings/components';
 import { SnippetItem } from '../../../../typings/queries';
 import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../utils/constants';
 import { extractLanguageFromName, lineHighlightToString } from '../../../../utils/snippets';
@@ -22,11 +23,16 @@ const selectCodeHighlightOptionValue = (theme: string) => {
   return themeOption ?? THEME_OPTIONS[0];
 };
 
+const selectLanguageOptionValue = (options: SelectOption[], language: string) => {
+  return options.find((option) => option.id === language);
+};
+
 const ViewSnippet = ({ snippet }: Props) => {
   const { highlighter } = useCodeHighlighter();
   const { toastError, toastSuccess } = useToast();
 
   const { isLoading, updateSnippet } = useUpdateSnippet(snippet.folderId);
+  const languageOptions = generateSnippetLanguageOptions();
 
   const formMethods = useForm<SnippetFormValues>({
     defaultValues: {
@@ -35,6 +41,7 @@ const ViewSnippet = ({ snippet }: Props) => {
       codeHighlighted: snippet.contentHighlighted,
       description: snippet.description ?? undefined,
       isPrivate: snippet.isPrivate,
+      language: selectLanguageOptionValue(languageOptions, snippet.language),
       lineHighlight: snippet.lineHighLight,
       name: snippet.name,
       theme: selectCodeHighlightOptionValue(snippet.theme),
@@ -43,8 +50,6 @@ const ViewSnippet = ({ snippet }: Props) => {
   });
 
   const submitUpdateSnippet = async (values: SnippetFormValues) => {
-    console.log('Values => ', values);
-
     await updateSnippet({
       id: snippet.id,
       input: {
@@ -71,7 +76,7 @@ const ViewSnippet = ({ snippet }: Props) => {
       <FormProvider {...formMethods}>
         <SnippetTextEditor
           highlighter={highlighter}
-          languageOptions={generateSnippetLanguageOptions()}
+          languageOptions={languageOptions}
           codeHighlightOptions={CODE_HIGHLIGHT_OPTIONS}
           themeOptions={THEME_OPTIONS}
         />
