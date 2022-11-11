@@ -27,12 +27,7 @@ const CreateSnippetContainer = ({ closeModal, folderId, open }: Props) => {
 
   const formMethods = useForm<SnippetFormValues>({
     defaultValues: {
-      code: `import fs from "fs";
-import path from "path";
-
-const content= fs.readFileSync(path.resolve(__dirname, 'file.json'), { encoding: "utf-8" });
-
-console.log(content);`,
+      code: `// Write your code here...\n`,
       codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
       codeHighlighted: '',
       isPrivate: true,
@@ -45,7 +40,7 @@ console.log(content);`,
   const handleCloseModal = () => {
     closeModal();
     formMethods.reset({
-      code: '',
+      code: '// Write your code here...\n',
       codeHighlight: CODE_HIGHLIGHT_OPTIONS[0],
       codeHighlighted: '',
       description: '',
@@ -58,8 +53,6 @@ console.log(content);`,
   };
 
   const submitCreateSnippet = async (values: SnippetFormValues) => {
-    console.log('Values => ', values);
-
     await createSnippet({
       input: {
         content: values.code,

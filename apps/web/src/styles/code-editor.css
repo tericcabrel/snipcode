@@ -4,7 +4,6 @@
 
 .code-editor-container textarea {
   outline: 0;
-  caret-color: white;
   font-family: 'Inter', monospace !important;
   font-size: 14px;
   padding-left: 50px !important;
