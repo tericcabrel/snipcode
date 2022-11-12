@@ -1,4 +1,4 @@
-import { PublicSnippetResult, useCodeHighlighter } from '@sharingan/front';
+import { PublicSnippetResult } from '@sharingan/front';
 import { NextSeo } from 'next-seo';
 
 import Layout from '@/components/layout/private/layout';
@@ -9,8 +9,6 @@ type Props = {
 };
 
 const Browse = ({ data }: Props) => {
-  const { highlighter } = useCodeHighlighter();
-
   console.log(data);
 
   const snippets = data.items;
@@ -29,7 +27,7 @@ const Browse = ({ data }: Props) => {
             <div className="px-4 py-8 sm:px-0">
               <div className="space-y-3 min-h-96">
                 {snippets.map((snippet) => (
-                  <PublicSnippet highlighter={highlighter} key={snippet.id} snippet={snippet} />
+                  <PublicSnippet key={snippet.id} snippet={snippet} />
                 ))}
               </div>
             </div>

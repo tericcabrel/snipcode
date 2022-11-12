@@ -18,7 +18,7 @@ export const formatPublicSnippetsResult = (data?: PublicSnippetsQuery): PublicSn
     hasMore,
     itemPerPage,
     items: items.map((snippet) => ({
-      content: snippet.shortContent,
+      content: snippet.contentHighlighted,
       createdAt: snippet.createdAt,
       description: snippet.description ?? null,
       id: snippet.id,

@@ -60,8 +60,7 @@ export default gql`
     id: ID!
     name: String!
     content: String!
-    contentHighlighted: String
-    shortContent: String!
+    contentHighlighted: String!
     language: String!
     lineHighlight: String
     size: Int!
