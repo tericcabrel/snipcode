@@ -21,7 +21,7 @@ export const findPublicSnippetsQuery = gql`
         description
         language
         lineHighlight
-        shortContent
+        contentHighlighted
         theme
         createdAt
         user {

@@ -210,7 +210,7 @@ export type SignupUserResult = {
 export type Snippet = {
   __typename?: 'Snippet';
   content: Scalars['String'];
-  contentHighlighted?: Maybe<Scalars['String']>;
+  contentHighlighted: Scalars['String'];
   createdAt: Scalars['Date'];
   description?: Maybe<Scalars['String']>;
   folder: Folder;
@@ -218,7 +218,6 @@ export type Snippet = {
   language: Scalars['String'];
   lineHighlight?: Maybe<Scalars['String']>;
   name: Scalars['String'];
-  shortContent: Scalars['String'];
   size: Scalars['Int'];
   theme: Scalars['String'];
   updatedAt: Scalars['Date'];
@@ -589,7 +588,7 @@ export type SnippetResolvers<
   ParentType extends ResolversParentTypes['Snippet'] = ResolversParentTypes['Snippet'],
 > = {
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  contentHighlighted?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  contentHighlighted?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   folder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType>;
@@ -597,7 +596,6 @@ export type SnippetResolvers<
   language?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   lineHighlight?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  shortContent?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   theme?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;

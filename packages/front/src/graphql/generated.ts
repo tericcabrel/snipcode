@@ -198,7 +198,7 @@ export type SignupUserResult = {
 export type Snippet = {
   __typename?: 'Snippet';
   content: Scalars['String'];
-  contentHighlighted?: Maybe<Scalars['String']>;
+  contentHighlighted: Scalars['String'];
   createdAt: Scalars['Date'];
   description?: Maybe<Scalars['String']>;
   folder: Folder;
@@ -360,7 +360,7 @@ export type FindSnippetQuery = {
       lineHighlight?: string | null;
       visibility: SnippetVisibility;
       content: string;
-      contentHighlighted?: string | null;
+      contentHighlighted: string;
       theme: string;
       createdAt: any;
       updatedAt: any;
@@ -387,7 +387,7 @@ export type PublicSnippetsQuery = {
       description?: string | null;
       language: string;
       lineHighlight?: string | null;
-      shortContent: string;
+      contentHighlighted: string;
       theme: string;
       createdAt: any;
       user: { __typename?: 'User'; id: string; username?: string | null; name: string; pictureUrl?: string | null };

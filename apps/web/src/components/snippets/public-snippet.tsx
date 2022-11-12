@@ -1,22 +1,13 @@
-import { Highlighter, Link, PublicSnippetResult, UserAvatar } from '@sharingan/front';
-import { useEditor } from '@sharingan/front/src/components/directory/snippets/form/editor/hooks/use-editor';
+import { Link, PublicSnippetResult, UserAvatar } from '@sharingan/front';
 
 type Props = {
-  highlighter?: Highlighter;
   snippet: PublicSnippetResult['items'][number];
 };
 
-export const PublicSnippet = ({ highlighter, snippet }: Props) => {
-  const { highlightSnippet } = useEditor();
+export const PublicSnippet = ({ snippet }: Props) => {
   const { user } = snippet;
 
-  const htmlCode = highlightSnippet({
-    code: snippet.content,
-    highlighter,
-    language: snippet.language,
-    lineHighlight: snippet.lineHighLight,
-    theme: snippet.theme,
-  });
+  const htmlCode = snippet.content;
 
   return (
     <div className="rounded-md border border-gray-300 shadow-sm rounded p-3 bg-white">
