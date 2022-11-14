@@ -25,7 +25,7 @@ const Browse = ({ data }: Props) => {
         <main>
           <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div className="px-4 py-8 sm:px-0">
-              <div className="space-y-3 min-h-96">
+              <div className="space-y-6 min-h-96">
                 {snippets.map((snippet) => (
                   <PublicSnippet key={snippet.id} snippet={snippet} />
                 ))}

@@ -10,7 +10,7 @@ export const PublicSnippet = ({ snippet }: Props) => {
   const htmlCode = snippet.content;
 
   return (
-    <div className="rounded-md border border-gray-300 shadow-sm rounded p-3 bg-white">
+    <div className="rounded-md border border-gray-300 shadow-sm rounded p-3 bg-gray-50">
       <div className="flex justify-between w-full">
         <div className="flex items-center">
           <div>
@@ -43,13 +43,12 @@ export const PublicSnippet = ({ snippet }: Props) => {
         </div>
       </div>
       <div className="ml-12">{snippet.description}</div>
-      <div>
-        <pre
-          dangerouslySetInnerHTML={{
-            __html: htmlCode,
-          }}
-        ></pre>
-      </div>
+      <div
+        className="code-snippet-view code-snippet-preview mt-3 relative w-full overflow-auto"
+        dangerouslySetInnerHTML={{
+          __html: htmlCode,
+        }}
+      />
     </div>
   );
 };
