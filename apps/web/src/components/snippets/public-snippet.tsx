@@ -33,14 +33,6 @@ export const PublicSnippet = ({ snippet }: Props) => {
             <div className="text-xs text-gray-400">{snippet.createdAt}</div>
           </div>
         </div>
-        <div>
-          <button
-            className="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50"
-            type="button"
-          >
-            0 Stars
-          </button>
-        </div>
       </div>
       <div className="ml-12">{snippet.description}</div>
       <div
