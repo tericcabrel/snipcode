@@ -1,4 +1,4 @@
-import { useAuthenticatedUser, useLazyListDirectory } from '@sharingan/front';
+import { useAuthenticatedUser, useLazyListDirectory } from '@sharingan/front/services';
 import { useRouter } from 'next/router';
 
 export const useFolderDirectory = () => {

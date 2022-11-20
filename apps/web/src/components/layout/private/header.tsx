@@ -1,4 +1,9 @@
-import { Disclosure, Icon, Link, Menu, Transition, UserAvatar, classNames, useLogoutUser } from '@sharingan/front';
+import { Disclosure, Menu, Transition } from '@sharingan/front';
+import { Link } from '@sharingan/front/components/link';
+import { UserAvatar } from '@sharingan/front/components/user-avatar';
+import { LogoIcon, LogoLightIcon, MenuIcon, XIcon } from '@sharingan/front/icons';
+import { useLogoutUser } from '@sharingan/front/services';
+import { classNames } from '@sharingan/front/utils/classnames';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 
@@ -37,8 +42,8 @@ const Header = () => {
             <div className="flex justify-between h-16">
               <div className="flex">
                 <div className="flex-shrink-0 flex items-center">
-                  <Icon.LogoLight className="block lg:hidden h-8 w-auto" />
-                  <Icon.Logo className="hidden lg:block h-8 w-auto" />
+                  <LogoLightIcon className="block lg:hidden h-8 w-auto" />
+                  <LogoIcon className="hidden lg:block h-8 w-auto" />
                 </div>
                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                   {navigation.map((item) => (
@@ -98,9 +103,9 @@ const Header = () => {
                 <Disclosure.Button className="bg-white inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
-                    <Icon.X aria-hidden="true" className="block h-6 w-6" />
+                    <XIcon aria-hidden="true" className="block h-6 w-6" />
                   ) : (
-                    <Icon.Menu aria-hidden="true" className="block h-6 w-6" />
+                    <MenuIcon aria-hidden="true" className="block h-6 w-6" />
                   )}
                 </Disclosure.Button>
               </div>
@@ -157,4 +162,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export { Header };

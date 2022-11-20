@@ -18,4 +18,4 @@ const useSetAuthenticatedUser = () => {
   }, [router.query]);
 };
 
-export default useSetAuthenticatedUser;
+export { useSetAuthenticatedUser };

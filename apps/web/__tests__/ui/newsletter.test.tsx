@@ -1,11 +1,11 @@
 import { MockedProvider } from '@apollo/client/testing';
-import { subscribeNewsletterMutation } from '@sharingan/front';
+import { subscribeNewsletterMutation } from '@sharingan/front/graphql';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 
-import NewsletterForm from '@/components/home/newsletter/newsletter-form';
+import { NewsletterForm } from '@/components/home/newsletter/newsletter-form';
 
 describe('Newsletter Form', () => {
   beforeEach(() => {
@@ -38,7 +38,7 @@ describe('Newsletter Form', () => {
     ];
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider addTypename={false} mocks={mocks}>
         <NewsletterForm />
       </MockedProvider>,
     );
@@ -81,7 +81,7 @@ describe('Newsletter Form', () => {
     ];
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider addTypename={false} mocks={mocks}>
         <NewsletterForm />
       </MockedProvider>,
     );

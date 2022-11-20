@@ -1,6 +1,6 @@
 import { NextSeo } from 'next-seo';
 
-import Layout from '@/components/layout/private/layout';
+import { Layout } from '@/components/layout/private/layout';
 
 const Profile = () => {
   return (
@@ -26,4 +26,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export { Profile };

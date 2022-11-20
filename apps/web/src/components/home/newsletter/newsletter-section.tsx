@@ -1,4 +1,4 @@
-import NewsletterForm from '@/components/home/newsletter/newsletter-form';
+import { NewsletterForm } from '@/components/home/newsletter/newsletter-form';
 
 const NewsletterSection = () => {
   return (
@@ -32,4 +32,4 @@ const NewsletterSection = () => {
   );
 };
 
-export default NewsletterSection;
+export { NewsletterSection };

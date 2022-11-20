@@ -10,4 +10,4 @@ const useBooleanState = (initialState = false) => {
   return [boolean, setToTrue, setToFalse] as const;
 };
 
-export default useBooleanState;
+export { useBooleanState };

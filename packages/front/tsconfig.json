@@ -18,6 +18,16 @@
     "resolveJsonModule": true,
     "typeRoots": ["../../node_modules/@types"]
   },
-  "include": ["./src/**/*", "index.tsx"],
+  "include": [
+    "index.tsx",
+    "./components/**/*",
+    "./forms/**/*",
+    "./graphql/**/*",
+    "./hooks/**/*",
+    "./icons/**/*",
+    "./services/**/*",
+    "./typings/**/*",
+    "./utils/**/*",
+  ],
   "exclude": ["dist", "build", "node_modules"]
 }

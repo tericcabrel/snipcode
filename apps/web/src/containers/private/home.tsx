@@ -1,10 +1,11 @@
-import { FolderDirectory, useAuthenticatedUser } from '@sharingan/front';
+import { Directory } from '@sharingan/front/components/directory';
+import { useAuthenticatedUser } from '@sharingan/front/services';
 import { NextSeo } from 'next-seo';
 
-import Layout from '@/components/layout/private/layout';
+import { Layout } from '@/components/layout/private/layout';
 import { useFolderDirectory } from '@/hooks/use-folder-directory';
 
-const Home = () => {
+const PrivateHome = () => {
   const { data: user } = useAuthenticatedUser();
   const { handleBreadcrumbClick, navigateToFolder, openSnippet, rootFolderId } = useFolderDirectory();
 
@@ -12,17 +13,17 @@ const Home = () => {
     <Layout>
       <NextSeo title="Home" />
       <div className="py-10">
-        <FolderDirectory
+        <Directory
           folderId={rootFolderId}
+          rootFolderId={rootFolderId}
+          title={`Welcome, ${user?.name}`}
           onBreadcrumbPathClick={handleBreadcrumbClick}
           onNavigateToFolder={navigateToFolder}
           onSnippetClick={openSnippet}
-          rootFolderId={rootFolderId}
-          title={`Welcome, ${user?.name}`}
         />
       </div>
     </Layout>
   );
 };
 
-export default Home;
+export { PrivateHome };

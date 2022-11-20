@@ -1,5 +1,5 @@
 import { useApolloClient } from '@apollo/client';
-import { useAuthenticatedUser } from '@sharingan/front';
+import { useAuthenticatedUser } from '@sharingan/front/services';
 import { addDayToDate } from '@sharingan/utils';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';

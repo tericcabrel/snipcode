@@ -1,4 +1,4 @@
-import { authenticatedUserQuery } from '@sharingan/front';
+import { authenticatedUserQuery } from '@sharingan/front/graphql';
 import { GetServerSidePropsContext } from 'next';
 import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
