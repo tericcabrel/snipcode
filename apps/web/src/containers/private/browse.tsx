@@ -1,10 +1,12 @@
-import { Button, Icon, PublicSnippetResult } from '@sharingan/front';
-import SelectInput from '@sharingan/front/src/forms/select-input';
-import { SelectOption } from '@sharingan/front/src/typings/components';
+import { Button } from '@sharingan/front/forms/button';
+import { SelectInput } from '@sharingan/front/forms/select-input';
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, SearchIcon } from '@sharingan/front/icons';
+import { SelectOption } from '@sharingan/front/typings/components';
+import { PublicSnippetResult } from '@sharingan/front/typings/queries';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 
-import Layout from '@/components/layout/private/layout';
+import { Layout } from '@/components/layout/private/layout';
 import { PublicSnippet } from '@/components/snippets/public-snippet';
 
 type Props = {
@@ -40,7 +42,7 @@ const Browse = ({ data }: Props) => {
                   type="text"
                 />
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                  <Icon.OutlineSearch className="h-5 w-5 text-gray-400" />
+                  <SearchIcon className="h-5 w-5 text-gray-400" />
                 </div>
               </div>
               <SelectInput
@@ -58,12 +60,12 @@ const Browse = ({ data }: Props) => {
               </div>
               <div className="w-full flex justify-center mt-10 space-x-4">
                 <Button className="bg-gray-200 w-auto items-center" color="white-gray">
-                  <Icon.ChevronDoubleLeftIcon className="w-6 h-4" />
+                  <ChevronDoubleLeftIcon className="w-6 h-4" />
                   Previous
                 </Button>
                 <Button className="bg-gray-200 w-auto items-center" color="white-gray">
                   Next
-                  <Icon.ChevronDoubleRightIcon className="w-6 h-4" />
+                  <ChevronDoubleRightIcon className="w-6 h-4" />
                 </Button>
               </div>
             </div>
@@ -74,4 +76,4 @@ const Browse = ({ data }: Props) => {
   );
 };
 
-export default Browse;
+export { Browse };

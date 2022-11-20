@@ -45,4 +45,4 @@ const GlobalSeo = () => {
   );
 };
 
-export default GlobalSeo;
+export { GlobalSeo };

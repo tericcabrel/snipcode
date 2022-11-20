@@ -1,10 +1,10 @@
-import { useAuthenticatedUser } from '@sharingan/front';
-import { ToastProvider } from '@sharingan/front';
+import { ToastProvider } from '@sharingan/front/components/toast/provider';
+import { useAuthenticatedUser } from '@sharingan/front/services';
 import { ReactNode } from 'react';
 
 import { Loader } from '@/components/common/loader';
 import { Redirect } from '@/components/common/redirect';
-import Header from '@/components/layout/private/header';
+import { Header } from '@/components/layout/private/header';
 
 type Props = {
   children?: ReactNode;
@@ -35,4 +35,4 @@ const Layout = ({ children }: Props) => {
   );
 };
 
-export default Layout;
+export { Layout };

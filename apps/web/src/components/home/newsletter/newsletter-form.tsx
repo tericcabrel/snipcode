@@ -1,8 +1,9 @@
-import { Icon, useSubscribeToNewsletter } from '@sharingan/front';
+import { SpinnerIcon } from '@sharingan/front/icons';
+import { useSubscribeToNewsletter } from '@sharingan/front/services';
 import { useState } from 'react';
 
-import NewsletterAlert from '@/components/home/newsletter/newsletter-alert';
-import useBooleanState from '@/hooks/use-boolean-state';
+import { NewsletterAlert } from '@/components/home/newsletter/newsletter-alert';
+import { useBooleanState } from '@/hooks/use-boolean-state';
 import { REGEX_EMAIL } from '@/utils/constants';
 
 const isEmailValid = (email: string) => REGEX_EMAIL.test(email);
@@ -54,7 +55,7 @@ const NewsletterForm = () => {
           className="inline-flex items-center justify-center w-full px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent sm:w-auto sm:py-3 hover:bg-opacity-90 rounded-xl"
           onClick={handleSubscribe}
         >
-          {isLoading && <Icon.Spinner />}
+          {isLoading && <SpinnerIcon />}
           Get updates
         </button>
       </div>
@@ -62,4 +63,4 @@ const NewsletterForm = () => {
   );
 };
 
-export default NewsletterForm;
+export { NewsletterForm };

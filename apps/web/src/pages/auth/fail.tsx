@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
 
-import AuthAlert from '@/components/auth/auth-alert';
-import PublicLayout from '@/components/layout/public/public-layout';
+import { AuthAlert } from '@/components/auth/auth-alert';
+import { PublicLayout } from '@/components/layout/public/public-layout';
 
 const AuthErrorPage: NextPage = () => {
   return (

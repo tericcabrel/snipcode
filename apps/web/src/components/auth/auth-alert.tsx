@@ -32,4 +32,4 @@ const AuthAlert = ({ ctaLabel, descriptionElement, redirectLink, title }: Props)
   );
 };
 
-export default AuthAlert;
+export { AuthAlert };

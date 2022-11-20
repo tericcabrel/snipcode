@@ -1,12 +1,16 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Button, Icon, TextInput, useLoginUser } from '@sharingan/front';
+import { Alert } from '@sharingan/front/components/alert';
+import { Button } from '@sharingan/front/forms/button';
+import { TextInput } from '@sharingan/front/forms/text-input';
+import { GithubIcon, GoogleIcon } from '@sharingan/front/icons';
+import { useLoginUser } from '@sharingan/front/services';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import PublicLayout from '@/components/layout/public/public-layout';
+import { PublicLayout } from '@/components/layout/public/public-layout';
 import { useAuth } from '@/hooks/authentication/use-auth';
 import { FORM_ERRORS } from '@/utils/constants';
 
@@ -66,13 +70,13 @@ const Login = () => {
                   <h1 className="text-2xl font-bold text-gray-900">Sign in for Sharingan</h1>
 
                   <div className="flex justify-between">
-                    <Button color="white-gray" className="w-[45%]">
-                      <Icon.Github />
+                    <Button className="w-[45%]" color="white-gray">
+                      <GithubIcon />
                       <span className="ml-4">GitHub</span>
                     </Button>
 
-                    <Button color="white-gray" className="w-[45%]">
-                      <Icon.Google />
+                    <Button className="w-[45%]" color="white-gray">
+                      <GoogleIcon />
                       <span className="ml-4">Google</span>
                     </Button>
                   </div>
@@ -81,14 +85,14 @@ const Login = () => {
                 </div>
 
                 <FormProvider {...formMethods}>
-                  <form onSubmit={formMethods.handleSubmit(handleLogin)} className="mt-8">
+                  <form className="mt-8" onSubmit={formMethods.handleSubmit(handleLogin)}>
                     {loginError && <Alert message={loginError} type="error" />}
 
-                    <TextInput label="Email" type="email" name="email" placeholder="teco@email.com" />
+                    <TextInput label="Email" name="email" placeholder="teco@email.com" type="email" />
 
-                    <TextInput label="Password" type="password" name="password" />
+                    <TextInput label="Password" name="password" type="password" />
 
-                    <Button className="mt-10 py-3" type="submit" isLoading={isLoading}>
+                    <Button className="mt-10 py-3" isLoading={isLoading} type="submit">
                       Sign in
                     </Button>
                   </form>
@@ -97,7 +101,7 @@ const Login = () => {
                 <p className="mt-5 text-base font-normal text-center text-gray-900">
                   Don&apos;t have an account?{' '}
                   <Link href="/signup">
-                    <a title="Sign in" className="font-bold rounded hover:underline">
+                    <a className="font-bold rounded hover:underline" title="Sign in">
                       Create an account now
                     </a>
                   </Link>

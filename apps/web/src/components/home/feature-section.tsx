@@ -1,39 +1,46 @@
-import { Icon } from '@sharingan/front';
+import {
+  CollectionIcon,
+  DocumentSearchIcon,
+  EmbedIcon,
+  ExtensionIcon,
+  ImportIcon,
+  ShareIcon,
+} from '@sharingan/front/icons';
 
 const features = [
   {
     description: 'Organize related code snippets into folders the same way you manage your file on the computer.',
-    icon: <Icon.Collection />,
+    icon: <CollectionIcon />,
     id: 'organize-snippets',
     title: 'Organize your snippets',
   },
   {
     description: 'Quickly find a code snippet in your whole directory and access it.',
-    icon: <Icon.DocumentSearch />,
+    icon: <DocumentSearchIcon />,
     id: 'find-snippets',
     title: 'Find your snippets',
   },
   {
     description: 'You can easily import all your code snippets from GitHub Gist to keep them all in one place.',
-    icon: <Icon.Import />,
+    icon: <ImportIcon />,
     id: 'import-snippets',
     title: 'Import from GitHub Gist',
   },
   {
     description: 'Share your code snippets with other developers. Give them the ability to interact and improve.',
-    icon: <Icon.Share />,
+    icon: <ShareIcon />,
     id: 'share-snippets',
     title: 'Share your snippets',
   },
   {
     description: 'For content creators, you can embed your snippet on a blog post or a post on social networks.',
-    icon: <Icon.Embed />,
+    icon: <EmbedIcon />,
     id: 'embed-snippets',
     title: 'Embed your snippets',
   },
   {
     description: 'Easily capture and save code snippets while you are browsing on the web.',
-    icon: <Icon.Extension />,
+    icon: <ExtensionIcon />,
     id: 'browser-extensions',
     title: 'Browser extensions',
   },
@@ -66,4 +73,4 @@ const FeatureSection = () => {
   );
 };
 
-export default FeatureSection;
+export { FeatureSection };

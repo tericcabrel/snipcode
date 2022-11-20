@@ -1,13 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Button, Icon, TextInput, useSignupUser } from '@sharingan/front';
+import { Alert } from '@sharingan/front/components/alert';
+import { Link } from '@sharingan/front/components/link';
+import { Button } from '@sharingan/front/forms/button';
+import { TextInput } from '@sharingan/front/forms/text-input';
+import { GithubIcon, GoogleIcon } from '@sharingan/front/icons';
+import { useSignupUser } from '@sharingan/front/services';
 import { NextSeo } from 'next-seo';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import PublicLayout from '@/components/layout/public/public-layout';
+import { PublicLayout } from '@/components/layout/public/public-layout';
 import { FORM_ERRORS } from '@/utils/constants';
 
 const MIN_PASSWORD_LENGTH = 8;
@@ -79,13 +83,13 @@ const Signup = () => {
                   <h1 className="text-2xl font-bold text-gray-900 font-pj">Sign up for Sharingan</h1>
 
                   <div className="flex justify-between">
-                    <Button color="white-gray" className="w-[47%]">
-                      <Icon.Github />
+                    <Button className="w-[47%]" color="white-gray">
+                      <GithubIcon />
                       <span className="ml-4">GitHub</span>
                     </Button>
 
-                    <Button color="white-gray" className="w-[47%]">
-                      <Icon.Google />
+                    <Button className="w-[47%]" color="white-gray">
+                      <GoogleIcon />
                       <span className="ml-4">Google</span>
                     </Button>
                   </div>
@@ -94,25 +98,25 @@ const Signup = () => {
                 </div>
 
                 <FormProvider {...formMethods}>
-                  <form onSubmit={formMethods.handleSubmit(handleSignup)} className="mt-8">
+                  <form className="mt-8" onSubmit={formMethods.handleSubmit(handleSignup)}>
                     {signupError && <Alert message={signupError} type="error" />}
 
-                    <TextInput label="Name" type="text" name="name" placeholder="John Doe" />
+                    <TextInput label="Name" name="name" placeholder="John Doe" type="text" />
 
-                    <TextInput label="Email" type="email" name="email" placeholder="teco@email.com" />
+                    <TextInput label="Email" name="email" placeholder="teco@email.com" type="email" />
 
                     <TextInput
                       label="Password"
-                      type="password"
                       name="password"
                       placeholder={`Password (min. ${MIN_PASSWORD_LENGTH} characters)`}
+                      type="password"
                     />
 
                     <TextInput
                       label="Confirm password"
-                      type="password"
                       name="confirmPassword"
                       placeholder={`Password (min. ${MIN_PASSWORD_LENGTH} characters)`}
+                      type="password"
                     />
 
                     <Button className="mt-10 py-3" isLoading={isLoading} type="submit">
@@ -124,7 +128,7 @@ const Signup = () => {
                 <p className="mt-5 text-base font-normal text-center text-gray-900">
                   Already have an account?{' '}
                   <Link href="/signin">
-                    <a title="Sign in" className="font-bold rounded hover:underline">
+                    <a className="font-bold rounded hover:underline" title="Sign in">
                       Sign in now
                     </a>
                   </Link>

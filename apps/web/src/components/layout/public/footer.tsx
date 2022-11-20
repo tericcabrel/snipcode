@@ -1,20 +1,20 @@
-import { Icon } from '@sharingan/front';
+import { GithubIcon, LogoIcon, ProductHuntIcon, TwitterIcon } from '@sharingan/front/icons';
 
 const socialIcons = [
   {
-    icon: <Icon.Github />,
+    icon: <GithubIcon />,
     link: 'https://github.com/tericcabrel/sharingan',
     name: 'GitHub',
     target: '_blank',
   },
   {
-    icon: <Icon.Twitter />,
+    icon: <TwitterIcon />,
     link: 'https://twitter.com/sharingan_dev',
     name: 'Twitter',
     target: '_blank',
   },
   {
-    icon: <Icon.ProductHunt />,
+    icon: <ProductHuntIcon />,
     link: '#',
     name: 'Product Hunt',
     target: '_self',
@@ -42,7 +42,7 @@ const PublicFooter = () => {
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="lg:flex lg:items-center lg:justify-between mt-14 lg:mt-24">
           <div className="xs:flex xs:justify-center">
-            <Icon.Logo />
+            <LogoIcon />
           </div>
 
           <ul className="flex items-center justify-center mt-8 space-x-5 sm:mt-12 lg:justify-end lg:mt-0">
@@ -87,4 +87,4 @@ const PublicFooter = () => {
   );
 };
 
-export default PublicFooter;
+export { PublicFooter };

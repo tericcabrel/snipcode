@@ -1,4 +1,4 @@
-import { Icon } from '@sharingan/front';
+import { LogoIcon } from '@sharingan/front/icons';
 import Link from 'next/link';
 import { MouseEvent, useState } from 'react';
 
@@ -38,7 +38,7 @@ const PublicHeader = () => {
         <div className="flex items-center justify-between">
           <div className="flex-shrink-0">
             <a className="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2" href="/">
-              <Icon.Logo />
+              <LogoIcon />
             </a>
           </div>
 
@@ -186,4 +186,4 @@ const PublicHeader = () => {
   );
 };
 
-export default PublicHeader;
+export { PublicHeader };

@@ -19,4 +19,4 @@ const MainLayout = ({ children }: Props) => {
   );
 };
 
-export default MainLayout;
+export { MainLayout };

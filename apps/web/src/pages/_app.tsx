@@ -1,7 +1,7 @@
 import { ApolloProvider } from '@apollo/client';
 import type { AppProps } from 'next/app';
 
-import GlobalSeo from '@/components/seo/seo';
+import { GlobalSeo } from '@/components/seo/seo';
 import { useApollo } from '@/utils/apollo-client';
 import '@/styles/globals.css';
 

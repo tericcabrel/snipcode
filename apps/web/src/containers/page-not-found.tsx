@@ -1,4 +1,4 @@
-import { Icon } from '@sharingan/front';
+import { LogoIcon } from '@sharingan/front/icons';
 import Link from 'next/link';
 
 const PageNotFound = () => {
@@ -6,8 +6,8 @@ const PageNotFound = () => {
     <div className="h-screen pt-16 pb-12 flex flex-col">
       <main className="flex-grow flex flex-col justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex-shrink-0 flex justify-center">
-          <a href="/" className="inline-flex">
-            <Icon.Logo />
+          <a className="inline-flex" href="/">
+            <LogoIcon />
           </a>
         </div>
         <div className="py-16">
@@ -30,22 +30,22 @@ const PageNotFound = () => {
           <Link href="mailto:support@sharingan.dev">
             <a className="text-sm font-medium text-gray-500 hover:text-gray-600">Support</a>
           </Link>
-          <span className="inline-block border-l border-gray-300" aria-hidden="true" />
+          <span aria-hidden="true" className="inline-block border-l border-gray-300" />
           <Link href="https://github.com/tericcabrel/sharingan">
             <a
               className="text-sm font-medium text-gray-500 hover:text-gray-600"
-              target="_blank"
               rel="noopener noreferrer"
+              target="_blank"
             >
               GitHub
             </a>
           </Link>
-          <span className="inline-block border-l border-gray-300" aria-hidden="true" />
+          <span aria-hidden="true" className="inline-block border-l border-gray-300" />
           <Link href="https://twitter.com/sharingandev">
             <a
               className="text-sm font-medium text-gray-500 hover:text-gray-600"
-              target="_blank"
               rel="noopener noreferrer"
+              target="_blank"
             >
               Twitter
             </a>

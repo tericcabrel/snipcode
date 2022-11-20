@@ -1,7 +1,7 @@
 {
   "name": "@sharingan/front",
   "version": "1.0.0",
-  "main": "./index.tsx",
+  "main": "index-old.tsx",
   "types": "./index.tsx",
   "license": "MIT",
   "scripts": {

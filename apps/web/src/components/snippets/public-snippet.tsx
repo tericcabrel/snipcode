@@ -1,10 +1,12 @@
-import { Link, PublicSnippetResult, UserAvatar } from '@sharingan/front';
+import { Link } from '@sharingan/front/components/link';
+import { UserAvatar } from '@sharingan/front/components/user-avatar';
+import { PublicSnippetResult } from '@sharingan/front/typings/queries';
 
 type Props = {
   snippet: PublicSnippetResult['items'][number];
 };
 
-export const PublicSnippet = ({ snippet }: Props) => {
+const PublicSnippet = ({ snippet }: Props) => {
   const { user } = snippet;
 
   const htmlCode = snippet.content;
@@ -44,3 +46,5 @@ export const PublicSnippet = ({ snippet }: Props) => {
     </div>
   );
 };
+
+export { PublicSnippet };

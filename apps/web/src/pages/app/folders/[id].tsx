@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 
-import FolderView from '@/containers/private/folders/view';
+import { FolderView } from '@/containers/private/folders/view';
 
 const PrivateFolderViewPage: NextPage = () => {
   return <FolderView />;

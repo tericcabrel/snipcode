@@ -1,12 +1,10 @@
-import {
-  PublicSnippetResult,
-  SNIPPET_ITEM_PER_PAGE,
-  findPublicSnippetsQuery,
-  formatPublicSnippetsResult,
-} from '@sharingan/front';
+import { findPublicSnippetsQuery } from '@sharingan/front/graphql';
+import { formatPublicSnippetsResult } from '@sharingan/front/services';
+import { PublicSnippetResult } from '@sharingan/front/typings/queries';
+import { SNIPPET_ITEM_PER_PAGE } from '@sharingan/front/utils/constants';
 import type { GetServerSidePropsContext, NextPage } from 'next';
 
-import Browse from '@/containers/private/browse';
+import { Browse } from '@/containers/private/browse';
 import { addApolloState, initializeApollo } from '@/utils/apollo-client';
 
 type Props = {
