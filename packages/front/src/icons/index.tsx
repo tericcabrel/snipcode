@@ -1,6 +1,8 @@
 import {
   CalendarIcon,
   ChartBarIcon,
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
   ChevronDownIcon,
   DocumentAddIcon,
   FolderAddIcon,
@@ -8,6 +10,7 @@ import {
   HomeIcon,
   InboxIcon,
   MenuIcon,
+  SearchIcon,
   UsersIcon,
   XIcon,
 } from '@heroicons/react/outline';
@@ -32,6 +35,8 @@ export default {
   Calendar: CalendarIcon,
   ChartBart: ChartBarIcon,
   Check: CheckIcon,
+  ChevronDoubleLeftIcon,
+  ChevronDoubleRightIcon,
   ChevronDown: ChevronDownIcon,
   Collection: CollectionIcon,
   Cross: CrossIcon,
@@ -49,6 +54,7 @@ export default {
   Logo: LogoIcon,
   LogoLight: LogoLightIcon,
   Menu: MenuIcon,
+  OutlineSearch: SearchIcon,
   ProductHunt: ProductHuntIcon,
   Share: ShareIcon,
   Spinner: SpinnerIcon,
