@@ -1,5 +1,5 @@
 import { PublicSnippetsQuery } from '../../graphql/generated';
-import { usePublicSnippetsQuery } from '../../graphql/snippets/queries/public-snippets';
+import { useLazyPublicSnippetsQuery } from '../../graphql/snippets/queries/public-snippets';
 import { PublicSnippetResult } from '../../typings/queries';
 
 type UsePublicSnippetsArgs = {
@@ -36,13 +36,23 @@ export const formatPublicSnippetsResult = (data?: PublicSnippetsQuery): PublicSn
   };
 };
 
-export const usePublicSnippets = (args: UsePublicSnippetsArgs) => {
-  const query = usePublicSnippetsQuery(args);
+export const usePublicSnippets = () => {
+  const [query] = useLazyPublicSnippetsQuery();
 
-  const data = formatPublicSnippetsResult(query.data);
+  // const data = formatPublicSnippetsResult(query.data);
+
+  const findPublicSnippets = (args: UsePublicSnippetsArgs) => {
+    return query({
+      variables: {
+        args: {
+          itemPerPage: args.itemPerPage,
+          nextToken: args.nextToken,
+        },
+      },
+    });
+  };
 
   return {
-    data,
-    isLoading: query.loading && !query.error && !query.data,
+    findPublicSnippets,
   };
 };

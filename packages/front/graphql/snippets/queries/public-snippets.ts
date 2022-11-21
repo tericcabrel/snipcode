@@ -1,11 +1,6 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useLazyQuery } from '@apollo/client';
 
 import { PublicSnippetsQuery, PublicSnippetsQueryVariables } from '../../generated';
-
-type UsePublicSnippetsQueryArgs = {
-  itemPerPage?: number | null;
-  nextToken?: string | null;
-};
 
 export const findPublicSnippetsQuery = gql`
   query publicSnippets($args: PublicSnippetsArgs!) {
@@ -35,13 +30,8 @@ export const findPublicSnippetsQuery = gql`
   }
 `;
 
-export const usePublicSnippetsQuery = (args: UsePublicSnippetsQueryArgs) => {
-  return useQuery<PublicSnippetsQuery, PublicSnippetsQueryVariables>(findPublicSnippetsQuery, {
-    variables: {
-      args: {
-        itemPerPage: args.itemPerPage,
-        nextToken: args.nextToken,
-      },
-    },
+export const useLazyPublicSnippetsQuery = () => {
+  return useLazyQuery<PublicSnippetsQuery, PublicSnippetsQueryVariables>(findPublicSnippetsQuery, {
+    fetchPolicy: 'network-only',
   });
 };
