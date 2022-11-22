@@ -2,9 +2,10 @@ import { PublicSnippetsQuery } from '../../graphql/generated';
 import { useLazyPublicSnippetsQuery } from '../../graphql/snippets/queries/public-snippets';
 import { PublicSnippetResult } from '../../typings/queries';
 
-type UsePublicSnippetsArgs = {
+type FindPublicSnippetsArgs = {
   itemPerPage?: number | null;
   nextToken?: string | null;
+  onCompleted: (result?: PublicSnippetResult) => void;
 };
 
 export const formatPublicSnippetsResult = (data?: PublicSnippetsQuery): PublicSnippetResult | undefined => {
@@ -37,12 +38,13 @@ export const formatPublicSnippetsResult = (data?: PublicSnippetsQuery): PublicSn
 };
 
 export const usePublicSnippets = () => {
-  const [query] = useLazyPublicSnippetsQuery();
+  const [query, { data, loading }] = useLazyPublicSnippetsQuery();
 
-  // const data = formatPublicSnippetsResult(query.data);
-
-  const findPublicSnippets = (args: UsePublicSnippetsArgs) => {
+  const findPublicSnippets = (args: FindPublicSnippetsArgs) => {
     return query({
+      onCompleted: (data) => {
+        args.onCompleted(formatPublicSnippetsResult(data));
+      },
       variables: {
         args: {
           itemPerPage: args.itemPerPage,
@@ -53,6 +55,8 @@ export const usePublicSnippets = () => {
   };
 
   return {
+    data: formatPublicSnippetsResult(data),
     findPublicSnippets,
+    isLoading: loading,
   };
 };

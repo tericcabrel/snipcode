@@ -1,13 +1,15 @@
 import { Button } from '@sharingan/front/forms/button';
 import { SelectInput } from '@sharingan/front/forms/select-input';
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, SearchIcon } from '@sharingan/front/icons';
+import { usePublicSnippets } from '@sharingan/front/services';
 import { SelectOption } from '@sharingan/front/typings/components';
-import { PublicSnippetResult } from '@sharingan/front/typings/queries';
+import { PublicSnippetItem, PublicSnippetResult } from '@sharingan/front/typings/queries';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 
 import { Layout } from '@/components/layout/private/layout';
 import { PublicSnippet } from '@/components/snippets/public-snippet';
+import { usePaginationToken } from '@/hooks/usePaginationToken';
 
 type Props = {
   data: PublicSnippetResult;
@@ -19,12 +21,70 @@ const sortOptions: SelectOption[] = [
 ];
 
 const Browse = ({ data }: Props) => {
+  const [snippetList, setSnippetList] = useState<PublicSnippetItem[]>(data.items);
   const [sortOption, setSortOption] = useState<SelectOption>(sortOptions[0]);
   const [search, setSearch] = useState<string | undefined>();
+  const { addPageFromNext, addPageFromPrevious, canGoBack, canGoForward, getPage } = usePaginationToken(
+    data.nextToken ?? null,
+  );
 
-  console.log(data);
+  const { findPublicSnippets, isLoading } = usePublicSnippets();
 
-  const snippets = data.items;
+  const onSearchChange = (value: string) => {
+    setSearch(value);
+
+    console.log('Search => ', search);
+
+    // TODO make request
+  };
+
+  const onSortOptionChange = (option: SelectOption) => {
+    setSortOption(option);
+
+    console.log('Sort option => ', sortOption);
+
+    // TODO make request
+  };
+
+  const onNextItemClick = async () => {
+    const page = getPage();
+
+    await findPublicSnippets({
+      itemPerPage: data.itemPerPage,
+      nextToken: page?.nextToken,
+      // keyword: search,
+      // sort: sortOption.id,
+      onCompleted: (data) => {
+        console.log('Result Next => ', data);
+
+        if (!data) {
+          return;
+        }
+        setSnippetList(data.items);
+        addPageFromNext(data.nextToken ?? null);
+      },
+    });
+  };
+
+  const onPreviousItemClick = async () => {
+    const page = getPage();
+
+    await findPublicSnippets({
+      itemPerPage: data.itemPerPage,
+      nextToken: page?.previousToken,
+      // keyword: search,
+      // sort: sortOption.id,
+      onCompleted: (data) => {
+        console.log('Result Previous => ', data);
+
+        if (!data) {
+          return;
+        }
+        setSnippetList(data.items);
+        addPageFromPrevious(data.nextToken ?? null);
+      },
+    });
+  };
 
   return (
     <Layout>
@@ -40,6 +100,7 @@ const Browse = ({ data }: Props) => {
                   name="account-number"
                   placeholder="Search..."
                   type="text"
+                  onChange={(e) => onSearchChange(e.target.value)}
                 />
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                   <SearchIcon className="h-5 w-5 text-gray-400" />
@@ -49,21 +110,31 @@ const Browse = ({ data }: Props) => {
                 className="w-1/5 cursor-pointer"
                 options={sortOptions}
                 value={sortOption}
-                onChange={setSortOption}
+                onChange={onSortOptionChange}
               />
             </div>
             <div className="px-4 py-8 sm:px-0">
               <div className="space-y-6 min-h-96">
-                {snippets.map((snippet) => (
+                {snippetList.map((snippet) => (
                   <PublicSnippet key={snippet.id} snippet={snippet} />
                 ))}
               </div>
               <div className="w-full flex justify-center mt-10 space-x-4">
-                <Button className="bg-gray-200 w-auto items-center" color="white-gray">
+                <Button
+                  className="bg-gray-200 w-auto items-center"
+                  color="white-gray"
+                  disabled={!canGoBack}
+                  onClick={onPreviousItemClick}
+                >
                   <ChevronDoubleLeftIcon className="w-6 h-4" />
                   Previous
                 </Button>
-                <Button className="bg-gray-200 w-auto items-center" color="white-gray">
+                <Button
+                  className="bg-gray-200 w-auto items-center"
+                  color="white-gray"
+                  disabled={!canGoForward}
+                  onClick={onNextItemClick}
+                >
                   Next
                   <ChevronDoubleRightIcon className="w-6 h-4" />
                 </Button>
