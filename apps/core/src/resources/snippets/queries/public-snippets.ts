@@ -1,13 +1,15 @@
 import { QueryResolvers } from '../../../types/graphql';
 
-export const publicSnippets: QueryResolvers['publicSnippets'] = async (_parent, input, context) => {
+export const publicSnippets: QueryResolvers['publicSnippets'] = async (_parent, args, context) => {
   const {
-    args: { itemPerPage, nextToken },
-  } = input;
+    input: { itemPerPage, keyword, nextToken, sortMethod },
+  } = args;
 
   const result = await context.db.snippet.findPublicSnippet({
     cursor: nextToken,
     itemPerPage: itemPerPage ?? 10,
+    keyword: keyword ?? undefined,
+    sortMethod: sortMethod ?? 'recently_created',
   });
 
   return {

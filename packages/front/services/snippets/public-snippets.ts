@@ -3,8 +3,12 @@ import { useLazyPublicSnippetsQuery } from '../../graphql/snippets/queries/publi
 import { PublicSnippetResult } from '../../typings/queries';
 
 type FindPublicSnippetsArgs = {
-  itemPerPage?: number | null;
-  nextToken?: string | null;
+  input: {
+    itemPerPage?: number | null;
+    keyword?: string;
+    nextToken?: string | null;
+    sortMethod: 'recently_updated' | 'recently_created';
+  };
   onCompleted: (result?: PublicSnippetResult) => void;
 };
 
@@ -46,9 +50,11 @@ export const usePublicSnippets = () => {
         args.onCompleted(formatPublicSnippetsResult(data));
       },
       variables: {
-        args: {
-          itemPerPage: args.itemPerPage,
-          nextToken: args.nextToken,
+        input: {
+          itemPerPage: args.input.itemPerPage,
+          keyword: args.input.keyword,
+          nextToken: args.input.nextToken,
+          sortMethod: args.input.sortMethod,
         },
       },
     });

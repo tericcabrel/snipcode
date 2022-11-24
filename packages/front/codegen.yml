@@ -1,8 +1,8 @@
 overwrite: true
 schema: "http://localhost:7501/graphql"
-documents: "src/graphql/**/*.ts"
+documents: "graphql/**/*.ts"
 generates:
-  src/graphql/generated.ts:
+  graphql/generated.ts:
     config:
       enumsAsConst: true
     plugins:

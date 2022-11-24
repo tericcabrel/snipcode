@@ -7,6 +7,11 @@ import UpdateSnippetDto from './dtos/update-snippet-dto';
 
 const MAX_ITEM_PER_PAGE = 50;
 
+const sortMethodMap: Record<'recently_updated' | 'recently_created', 'createdAt' | 'updatedAt'> = {
+  recently_created: 'createdAt',
+  recently_updated: 'updatedAt',
+};
+
 export default class SnippetService {
   async create(createSnippetDto: CreateSnippetDto): Promise<Snippet> {
     const isSnippetExist = await this.isSnippetExistInFolder(createSnippetDto.folderId, createSnippetDto.name);
@@ -62,8 +67,10 @@ export default class SnippetService {
   async findPublicSnippet(args: {
     cursor?: string | null;
     itemPerPage: number;
+    keyword?: string;
+    sortMethod?: 'recently_updated' | 'recently_created';
   }): Promise<{ hasMore: boolean; items: Snippet[]; nextCursor: string | null }> {
-    const { cursor, itemPerPage } = args;
+    const { cursor, itemPerPage, keyword, sortMethod = 'recently_created' } = args;
 
     const limit = Math.min(MAX_ITEM_PER_PAGE, itemPerPage);
 
@@ -71,9 +78,10 @@ export default class SnippetService {
     const limitPlusOne = limit + 1;
 
     const snippets = await dbClient.snippet.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { [sortMethodMap[sortMethod]]: 'desc' },
       take: limitPlusOne,
       where: {
+        content: keyword ? { contains: keyword } : undefined,
         createdAt: cursor
           ? {
               lt: new Date(parseInt(cursor, 10)),

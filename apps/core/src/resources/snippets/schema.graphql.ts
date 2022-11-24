@@ -1,6 +1,11 @@
 import { gql } from 'apollo-server-core';
 
 export default gql`
+  enum SnippetSortMethod {
+    recently_created
+    recently_updated
+  }
+
   type SnippetInfo {
     snippet: Snippet!
     paths: [Folder!]!
@@ -36,9 +41,11 @@ export default gql`
     theme: String!
   }
 
-  input PublicSnippetsArgs {
+  input PublicSnippetsInput {
     nextToken: String
     itemPerPage: Int
+    sortMethod: SnippetSortMethod
+    keyword: String
   }
 
   extend type Mutation {
@@ -48,7 +55,7 @@ export default gql`
   }
 
   extend type Query {
-    publicSnippets(args: PublicSnippetsArgs!): PublicSnippetsResult!
+    publicSnippets(input: PublicSnippetsInput!): PublicSnippetsResult!
     mySnippets: [Snippet!]!
     findSnippet(snippetId: String!): SnippetInfo!
   }
