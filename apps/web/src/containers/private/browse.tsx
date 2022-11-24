@@ -11,13 +11,15 @@ import { Layout } from '@/components/layout/private/layout';
 import { PublicSnippet } from '@/components/snippets/public-snippet';
 import { usePaginationToken } from '@/hooks/usePaginationToken';
 
+type SortMethod = 'recently_updated' | 'recently_created';
+
 type Props = {
   data: PublicSnippetResult;
 };
 
 const sortOptions: SelectOption[] = [
-  { id: 'recently-created', label: 'Sort: recently created' },
-  { id: 'recently-updated', label: 'Sort: recently updated' },
+  { id: 'recently_created', label: 'Sort: recently created' },
+  { id: 'recently_updated', label: 'Sort: recently updated' },
 ];
 
 const Browse = ({ data }: Props) => {
@@ -50,10 +52,12 @@ const Browse = ({ data }: Props) => {
     const page = getPage();
 
     await findPublicSnippets({
-      itemPerPage: data.itemPerPage,
-      nextToken: page?.nextToken,
-      // keyword: search,
-      // sort: sortOption.id,
+      input: {
+        itemPerPage: data.itemPerPage,
+        keyword: search,
+        nextToken: page?.nextToken,
+        sortMethod: sortOption.id as SortMethod,
+      },
       onCompleted: (data) => {
         console.log('Result Next => ', data);
 
@@ -70,10 +74,12 @@ const Browse = ({ data }: Props) => {
     const page = getPage();
 
     await findPublicSnippets({
-      itemPerPage: data.itemPerPage,
-      nextToken: page?.previousToken,
-      // keyword: search,
-      // sort: sortOption.id,
+      input: {
+        itemPerPage: data.itemPerPage,
+        keyword: search,
+        nextToken: page?.nextToken,
+        sortMethod: sortOption.id as SortMethod,
+      },
       onCompleted: (data) => {
         console.log('Result Previous => ', data);
 

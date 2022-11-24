@@ -3,8 +3,8 @@ import { gql, useLazyQuery } from '@apollo/client';
 import { PublicSnippetsQuery, PublicSnippetsQueryVariables } from '../../generated';
 
 export const findPublicSnippetsQuery = gql`
-  query publicSnippets($args: PublicSnippetsArgs!) {
-    publicSnippets(args: $args) {
+  query publicSnippets($input: PublicSnippetsInput!) {
+    publicSnippets(input: $input) {
       __typename
       hasMore
       itemPerPage

@@ -21,7 +21,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   try {
     const queryResult = await apolloClient.query({
       query: findPublicSnippetsQuery,
-      variables: { args: { itemPerPage: SNIPPET_ITEM_PER_PAGE } },
+      variables: { input: { itemPerPage: SNIPPET_ITEM_PER_PAGE } },
     });
 
     return addApolloState(apolloClient, {

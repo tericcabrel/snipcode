@@ -127,9 +127,11 @@ export const OauthProvider = {
 } as const;
 
 export type OauthProvider = typeof OauthProvider[keyof typeof OauthProvider];
-export type PublicSnippetsArgs = {
+export type PublicSnippetsInput = {
   itemPerPage?: InputMaybe<Scalars['Int']>;
+  keyword?: InputMaybe<Scalars['String']>;
   nextToken?: InputMaybe<Scalars['String']>;
+  sortMethod?: InputMaybe<SnippetSortMethod>;
 };
 
 export type PublicSnippetsResult = {
@@ -172,7 +174,7 @@ export type QueryListFoldersArgs = {
 };
 
 export type QueryPublicSnippetsArgs = {
-  args: PublicSnippetsArgs;
+  input: PublicSnippetsInput;
 };
 
 export type Result = {
@@ -231,6 +233,12 @@ export type SnippetInfo = {
   snippet: Snippet;
 };
 
+export const SnippetSortMethod = {
+  RecentlyCreated: 'recently_created',
+  RecentlyUpdated: 'recently_updated',
+} as const;
+
+export type SnippetSortMethod = typeof SnippetSortMethod[keyof typeof SnippetSortMethod];
 export const SnippetVisibility = {
   Private: 'private',
   Public: 'public',
@@ -351,7 +359,7 @@ export type ResolversTypes = {
   LoginResult: ResolverTypeWrapper<LoginResult>;
   Mutation: ResolverTypeWrapper<{}>;
   OauthProvider: OauthProvider;
-  PublicSnippetsArgs: PublicSnippetsArgs;
+  PublicSnippetsInput: PublicSnippetsInput;
   PublicSnippetsResult: ResolverTypeWrapper<
     Omit<PublicSnippetsResult, 'items'> & { items: Array<ResolversTypes['Snippet']> }
   >;
@@ -368,6 +376,7 @@ export type ResolversTypes = {
       snippet: ResolversTypes['Snippet'];
     }
   >;
+  SnippetSortMethod: SnippetSortMethod;
   SnippetVisibility: SnippetVisibility;
   String: ResolverTypeWrapper<Scalars['String']>;
   UpdateFolderInput: UpdateFolderInput;
@@ -391,7 +400,7 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   LoginResult: LoginResult;
   Mutation: {};
-  PublicSnippetsArgs: PublicSnippetsArgs;
+  PublicSnippetsInput: PublicSnippetsInput;
   PublicSnippetsResult: Omit<PublicSnippetsResult, 'items'> & { items: Array<ResolversParentTypes['Snippet']> };
   Query: {};
   Result: Result;
@@ -550,7 +559,7 @@ export type QueryResolvers<
     ResolversTypes['PublicSnippetsResult'],
     ParentType,
     ContextType,
-    RequireFields<QueryPublicSnippetsArgs, 'args'>
+    RequireFields<QueryPublicSnippetsArgs, 'input'>
   >;
 };
 
