@@ -37,6 +37,7 @@ COPY --chown=node:node --from=schema-builder /app/node_modules/.prisma/client/li
 
 RUN yarn init -y
 
+
 EXPOSE 7501
 
 CMD ["node", "index.js"]

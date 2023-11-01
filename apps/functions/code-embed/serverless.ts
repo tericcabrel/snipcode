@@ -40,6 +40,7 @@ const serverlessConfiguration: AWS = {
       target: 'node16',
     },
   },
+  deprecationNotificationMode: 'warn:summary',
   frameworkVersion: '3',
   functions: { renderer },
   layers: {
