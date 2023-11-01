@@ -17,7 +17,7 @@ const serverlessConfiguration: AWS = {
       certificateName: '${self:custom.domains.${self:provider.stage}.certificateName}',
       createRoute53Record: false,
       domainName: '${self:custom.domains.${self:provider.stage}.domainName}',
-      endpointType: 'edge',
+      endpointType: 'regional',
     },
     domains: {
       dev: {
