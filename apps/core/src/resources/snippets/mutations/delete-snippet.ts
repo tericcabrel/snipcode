@@ -1,4 +1,4 @@
-import { DeleteSnippetDto } from '@sharingan/domain';
+import { DeleteSnippetDto } from '@snipcode/domain';
 
 import { getAuthenticatedUser } from '../../../configs/authentication';
 import { logger } from '../../../configs/logger';

@@ -1,4 +1,4 @@
-import { Snippet } from '@sharingan/database';
+import { Snippet } from '@snipcode/database';
 import { Lang } from 'shiki';
 
 import { Shiki } from '../types';
@@ -7,7 +7,7 @@ import { generateLineHighlightOptions, parseHTMLSnippetCode } from './utils';
 export const generateNoSnippetHtmlContent = (webAppUrl: string) => {
   return `<div class="no-content">
             <h3>Oops! Snippet not found!</h3>
-            <div>Go to <a href="${webAppUrl}" target="_blank">Sharingan</a> to ensure it exists and is accessible</div>
+            <div>Go to <a href="${webAppUrl}" target="_blank">Snipcode</a> to ensure it exists and is accessible</div>
           </div>`;
 };
 

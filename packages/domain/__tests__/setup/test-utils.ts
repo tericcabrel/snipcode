@@ -10,7 +10,7 @@ import {
   User,
   dbClient,
   dbId,
-} from '@sharingan/database';
+} from '@snipcode/database';
 
 import { CreateUserDto } from '../../index';
 import CreateFolderDto from '../../src/folders/dtos/create-folder-dto';

@@ -1,7 +1,7 @@
-import { findPublicSnippetsQuery } from '@sharingan/front/graphql';
-import { formatPublicSnippetsResult } from '@sharingan/front/services';
-import { PublicSnippetResult } from '@sharingan/front/typings/queries';
-import { SNIPPET_ITEM_PER_PAGE } from '@sharingan/front/utils/constants';
+import { findPublicSnippetsQuery } from '@snipcode/front/graphql';
+import { formatPublicSnippetsResult } from '@snipcode/front/services';
+import { PublicSnippetResult } from '@snipcode/front/typings/queries';
+import { SNIPPET_ITEM_PER_PAGE } from '@snipcode/front/utils/constants';
 import type { GetServerSidePropsContext, NextPage } from 'next';
 
 import { Browse } from '@/containers/private/browse';

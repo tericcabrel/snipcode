@@ -1,4 +1,4 @@
-import { Role, RoleName, dbId } from '@sharingan/database';
+import { Role, RoleName, dbId } from '@snipcode/database';
 
 type Input = {
   description: string | null;

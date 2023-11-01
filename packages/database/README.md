@@ -1,4 +1,4 @@
-# Sharingan Database
+# Snipcode Database
 
 This package contains all the entities and data access layer that can be used in the Backend or Lambda functions.
 We use Prisma as the ORM to create database migrations and entities.
@@ -10,8 +10,8 @@ We use Prisma as the ORM to create database migrations and entities.
 
 ## Prerequisites
 Make sure you have this tools installed before running the project
-* Node.js 14+
-* NPM or Yarn
+* Node.js 18+
+* Yarn
 * [PlanetScale CLI](https://planetscale.com/cli)
 
 ## Set up the project

@@ -1,5 +1,5 @@
-import { Snippet } from '@sharingan/database';
-import SharinganError, { errors, generateRandomId } from '@sharingan/utils';
+import { Snippet } from '@snipcode/database';
+import SnipcodeError, { errors, generateRandomId } from '@snipcode/utils';
 
 import { roleService, snippetService } from '../../../index';
 import {
@@ -59,7 +59,7 @@ describe('Test Snippet service', () => {
     // WHEN
     // THEN
     await expect(() => snippetService.create(sameCreateSnippetDto)).rejects.toThrow(
-      new SharinganError(errors.SNIPPET_ALREADY_EXIST(sameCreateSnippetDto.name), 'SNIPPET_ALREADY_EXIST'),
+      new SnipcodeError(errors.SNIPPET_ALREADY_EXIST(sameCreateSnippetDto.name), 'SNIPPET_ALREADY_EXIST'),
     );
 
     await deleteTestSnippetsById([snippet.id]);
@@ -174,7 +174,7 @@ describe('Test Snippet service', () => {
     // THEN
     await expect(async () => {
       await snippetService.findById(snippetId);
-    }).rejects.toThrow(new SharinganError(errors.SNIPPET_NOT_FOUND(snippetId), 'SNIPPET_NOT_FOUND'));
+    }).rejects.toThrow(new SnipcodeError(errors.SNIPPET_NOT_FOUND(snippetId), 'SNIPPET_NOT_FOUND'));
   });
 
   it('should delete an existing snippet belonging to a user', async () => {
@@ -219,7 +219,7 @@ describe('Test Snippet service', () => {
     await expect(async () => {
       await snippetService.delete(deleteSnippetDto);
     }).rejects.toThrow(
-      new SharinganError(errors.CANT_EDIT_SNIPPET(deleteSnippetDto.creatorId, snippet1.id), 'CANT_EDIT_SNIPPET'),
+      new SnipcodeError(errors.CANT_EDIT_SNIPPET(deleteSnippetDto.creatorId, snippet1.id), 'CANT_EDIT_SNIPPET'),
     );
 
     const user1FolderSnippets = await snippetService.findByFolder(rootFolder1.id);
@@ -284,9 +284,7 @@ describe('Test Snippet service', () => {
     // THEN
     await expect(async () => {
       await snippetService.update(updateSnippetDto);
-    }).rejects.toThrow(
-      new SharinganError(errors.SNIPPET_ALREADY_EXIST(updateSnippetDto.name), 'SNIPPET_ALREADY_EXIST'),
-    );
+    }).rejects.toThrow(new SnipcodeError(errors.SNIPPET_ALREADY_EXIST(updateSnippetDto.name), 'SNIPPET_ALREADY_EXIST'));
 
     await deleteTestSnippetsById([snippet.id]);
     await deleteTestFoldersById([rootFolder.id]);
@@ -308,7 +306,7 @@ describe('Test Snippet service', () => {
     await expect(async () => {
       await snippetService.update(updateSnippetDto);
     }).rejects.toThrow(
-      new SharinganError(errors.CANT_EDIT_SNIPPET(updateSnippetDto.creatorId, snippet.id), 'CANT_EDIT_SNIPPET'),
+      new SnipcodeError(errors.CANT_EDIT_SNIPPET(updateSnippetDto.creatorId, snippet.id), 'CANT_EDIT_SNIPPET'),
     );
 
     await deleteTestSnippetsById([snippet.id]);

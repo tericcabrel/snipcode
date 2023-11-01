@@ -1,4 +1,4 @@
-# Sharingan code snippet renderer
+# Snipcode code snippet renderer
 This project take a snippet ID and generate the HTML content to be embedded in a web page.
 
 ## Tech stack
@@ -9,8 +9,8 @@ This project take a snippet ID and generate the HTML content to be embedded in a
 
 ## Prerequisites
 Make sure you have this tools installed before running the project
-* Node.js 16+
-* NPM or Yarn
+* Node.js 18+
+* Yarn
 * AWS CLI v2
 
 ## Packages dependencies
@@ -18,8 +18,8 @@ We use Yarn workspace to create packages we can share with other applications.
 These packages are located in the folder `packages`, so you might need to change the code of one or many packages to implement a feature.
 Here are the packages used in this project:
 
-* [@sharingan/database](../../../packages/database)
-* [@sharingan/embed](../../../packages/embed)
+* [@snipcode/database](../../../packages/database)
+* [@snipcode/embed](../../../packages/embed)
 
 ## Set up
 > **Note**: This repo requires a connection to the database, follow the instructions in the **database** packages before going to the next step.
@@ -58,7 +58,7 @@ There are two ways to test the Lambda function local:
 * **Invocation in the CLI**
 You can invoke the function locally for that
 1. Edit the `pathParameters` property in the file `src/functions/renderer/mock.json` to set the ID of snippet you want to render
-2. run the command below the see to result:
+2. Run the command below the see to result:
 
 ```shell
 yarn invoke:local
@@ -73,7 +73,7 @@ If you want to see a visual result of the generated HTML, run the command below:
 yarn offline
 ```
 
-Open your brwoser and navigate to [http://localhost:3000/dev/snippets/{id}](http://localhost:3000/dev/snippets/{id})
+Open your browser and navigate to [http://localhost:3000/dev/snippets/{id}](http://localhost:3000/dev/snippets/{id})
 
 Replace the parameter `{id}` with the ID of snippet you want to preview.
 
@@ -97,8 +97,8 @@ If you don't want to manage environment variable locally, you can:
 
 ## Lambda Layers
 This function use two Lambda layers:
-* **Prisma layer**: contain the Prisma client with the models to interact to our database
-* **Shiki layer**: contains the node_modules dependencies for highlighting the code
+* **Prisma layer**: contains the Prisma client with the models to interact to our database.
+* **Shiki layer**: contains the node_modules dependencies for highlighting the code.
 
 Using them as layers reduce the bundle size of the Lambda and thus improve the cold start.
 

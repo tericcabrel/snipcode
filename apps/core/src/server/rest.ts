@@ -19,7 +19,7 @@ export const setupRestEndpoints = (app: Application) => {
   app.use('/', snippetRoute());
 
   app.get('/', (_req: Request, res: Response) => {
-    res.json({ message: 'Hello from Sharingan!' });
+    res.json({ message: 'Hello from Snipcode!' });
   });
 
   app.use(notFoundMiddleware);

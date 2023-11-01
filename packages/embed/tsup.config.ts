@@ -11,14 +11,14 @@ const copyFile = async (isProd: boolean) => {
   const buildScriptPath = path.resolve(__dirname, 'build', 'script.js');
 
   const serverPublicFolderPath = path.resolve(__dirname, 'src/server/public');
-  const shariganPublicFolderPath = path.resolve(serverPublicFolderPath, 'sharingan');
+  const snipcodePublicFolderPath = path.resolve(serverPublicFolderPath, 'snipcode');
 
-  if (!fs.existsSync(shariganPublicFolderPath)) {
-    fs.mkdirSync(shariganPublicFolderPath);
+  if (!fs.existsSync(snipcodePublicFolderPath)) {
+    fs.mkdirSync(snipcodePublicFolderPath, { recursive: true });
   }
 
-  fs.cpSync(buildStylePath, path.resolve(shariganPublicFolderPath, 'style.css'));
-  fs.cpSync(buildScriptPath, path.resolve(shariganPublicFolderPath, 'script.js'));
+  fs.cpSync(buildStylePath, path.resolve(snipcodePublicFolderPath, 'style.css'));
+  fs.cpSync(buildScriptPath, path.resolve(snipcodePublicFolderPath, 'script.js'));
 };
 
 export default defineConfig((options) => {

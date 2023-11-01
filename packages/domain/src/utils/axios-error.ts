@@ -1,4 +1,4 @@
-import SharinganError, { ErrorCode } from '@sharingan/utils';
+import SnipcodeError, { ErrorCode } from '@snipcode/utils';
 import { AxiosError } from 'axios';
 
 export const handleRequestError = (errorCode: ErrorCode) => (error: AxiosError) => {
@@ -8,5 +8,5 @@ export const handleRequestError = (errorCode: ErrorCode) => (error: AxiosError) 
     status: error.response?.status,
   };
 
-  throw new SharinganError(JSON.stringify(errorInfo, null, 2), errorCode);
+  throw new SnipcodeError(JSON.stringify(errorInfo, null, 2), errorCode);
 };

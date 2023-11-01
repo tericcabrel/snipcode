@@ -1,9 +1,9 @@
-import { Button } from '@sharingan/front/forms/button';
-import { SelectInput } from '@sharingan/front/forms/select-input';
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, SearchIcon } from '@sharingan/front/icons';
-import { usePublicSnippets } from '@sharingan/front/services';
-import { SelectOption } from '@sharingan/front/typings/components';
-import { PublicSnippetItem, PublicSnippetResult } from '@sharingan/front/typings/queries';
+import { Button } from '@snipcode/front/forms/button';
+import { SelectInput } from '@snipcode/front/forms/select-input';
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, SearchIcon } from '@snipcode/front/icons';
+import { usePublicSnippets } from '@snipcode/front/services';
+import { SelectOption } from '@snipcode/front/typings/components';
+import { PublicSnippetItem, PublicSnippetResult } from '@snipcode/front/typings/queries';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 

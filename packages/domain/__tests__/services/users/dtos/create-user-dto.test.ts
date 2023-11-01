@@ -1,4 +1,4 @@
-import { User } from '@sharingan/database';
+import { User } from '@snipcode/database';
 
 import { CreateUserDto } from '../../../../index';
 

@@ -1,4 +1,4 @@
-import { LogoIcon } from '@sharingan/front/icons';
+import { LogoIcon } from '@snipcode/front/icons';
 import Link from 'next/link';
 
 const PageNotFound = () => {
@@ -27,11 +27,11 @@ const PageNotFound = () => {
       </main>
       <footer className="flex-shrink-0 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex justify-center space-x-4">
-          <Link href="mailto:support@sharingan.dev">
+          <Link href="mailto:contact@snipcode.dev">
             <a className="text-sm font-medium text-gray-500 hover:text-gray-600">Support</a>
           </Link>
           <span aria-hidden="true" className="inline-block border-l border-gray-300" />
-          <Link href="https://github.com/tericcabrel/sharingan">
+          <Link href="https://github.com/tericcabrel/snipcode">
             <a
               className="text-sm font-medium text-gray-500 hover:text-gray-600"
               rel="noopener noreferrer"
@@ -41,7 +41,7 @@ const PageNotFound = () => {
             </a>
           </Link>
           <span aria-hidden="true" className="inline-block border-l border-gray-300" />
-          <Link href="https://twitter.com/sharingandev">
+          <Link href="https://twitter.com/snipcode_dev">
             <a
               className="text-sm font-medium text-gray-500 hover:text-gray-600"
               rel="noopener noreferrer"

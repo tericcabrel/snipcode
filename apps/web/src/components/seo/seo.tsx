@@ -5,7 +5,7 @@ const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 const GlobalSeo = () => {
   const description =
     'Easily create and organize your code snippets. Share them with others developers around the world.';
-  const title = 'Sharingan';
+  const title = 'Snipcode';
 
   return (
     <DefaultSeo
@@ -35,11 +35,11 @@ const GlobalSeo = () => {
         url: baseUrl,
       }}
       title={title}
-      titleTemplate="Sharingan - %s"
+      titleTemplate="Snipcode - %s"
       twitter={{
         cardType: 'summary_large_image',
-        handle: '@sharinganapp',
-        site: '@sharinganapp',
+        handle: '@snipcode_dev',
+        site: '@snipcode_dev',
       }}
     />
   );

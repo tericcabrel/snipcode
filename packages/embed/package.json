@@ -1,8 +1,8 @@
 {
-  "name": "@sharingan/embed",
+  "name": "@snipcode/embed",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "repository": " https://github.com/tericcabrel/sharingan.git",
+  "repository": " https://github.com/tericcabrel/snipcode.git",
   "author": "Eric Cabrel TIOGO <tericcabrel@yahoo.com>",
   "license": "MIT",
   "scripts": {
@@ -18,14 +18,14 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@sharingan/database": "*",
+    "@snipcode/database": "*",
     "@types/express": "^4.17.13",
     "@types/jest": "^29.1.2",
     "@types/node": "^18.7.11",
     "express": "^4.18.1",
     "jest": "^29.1.2",
     "nodemon": "^2.0.19",
-    "serve": "^14.0.1",
+    "serve": "^14.2.1",
     "shiki": "^0.11.1",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",

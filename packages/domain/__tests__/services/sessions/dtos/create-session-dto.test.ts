@@ -1,5 +1,5 @@
-import { Session } from '@sharingan/database';
-import { isValidUUIDV4 } from '@sharingan/utils';
+import { Session } from '@snipcode/database';
+import { isValidUUIDV4 } from '@snipcode/utils';
 
 import { CreateSessionDto } from '../../../../index';
 import { generateTestId } from '../../../setup/test-utils';

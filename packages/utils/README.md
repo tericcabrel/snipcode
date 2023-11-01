@@ -1,4 +1,4 @@
-# Sharingan Common
+# Snipcode Common
 
 This package holds utilities functions that can be used in the Backend or Frontend application
 

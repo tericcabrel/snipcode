@@ -15,7 +15,7 @@ const AuthErrorPage: NextPage = () => {
             An error occurred while authenticating
             <br />
             Please contact the{' '}
-            <a className="text-blue-500" href="mailto:contact@sharingan.dev">
+            <a className="text-blue-500" href="mailto:contact@snipcode.dev">
               support
             </a>{' '}
             if the error persist.

@@ -1,4 +1,4 @@
-import { errors } from '@sharingan/utils';
+import { errors } from '@snipcode/utils';
 
 import { AppContext } from '../types/common';
 import AppError from '../utils/errors/app-error';

@@ -1,4 +1,4 @@
-import { LogoIcon } from '@sharingan/front/icons';
+import { LogoIcon } from '@snipcode/front/icons';
 import Link from 'next/link';
 import { MouseEvent, useState } from 'react';
 

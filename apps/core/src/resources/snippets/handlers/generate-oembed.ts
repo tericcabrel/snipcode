@@ -1,5 +1,5 @@
-import { snippetService } from '@sharingan/domain';
-import { generateOembedMetadata } from '@sharingan/embed';
+import { snippetService } from '@snipcode/domain';
+import { generateOembedMetadata } from '@snipcode/embed';
 import { Request, Response } from 'express';
 
 import { env } from '../../../configs/env';

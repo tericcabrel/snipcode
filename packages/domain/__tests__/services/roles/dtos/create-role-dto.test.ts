@@ -1,4 +1,4 @@
-import { Role } from '@sharingan/database';
+import { Role } from '@snipcode/database';
 
 import { CreateRoleDto } from '../../../../index';
 

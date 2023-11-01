@@ -1,5 +1,5 @@
-import { ToastProvider } from '@sharingan/front/components/toast/provider';
-import { useAuthenticatedUser } from '@sharingan/front/services';
+import { ToastProvider } from '@snipcode/front/components/toast/provider';
+import { useAuthenticatedUser } from '@snipcode/front/services';
 import { ReactNode } from 'react';
 
 import { Loader } from '@/components/common/loader';

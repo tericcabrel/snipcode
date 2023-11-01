@@ -1,4 +1,4 @@
-import { Snippet } from '@sharingan/database';
+import { Snippet } from '@snipcode/database';
 
 import { UpdateSnippetDto } from '../../../../index';
 import { createTestSnippetDto, generateTestId } from '../../../setup/test-utils';

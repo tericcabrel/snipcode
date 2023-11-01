@@ -1,8 +1,8 @@
-# Sharingan Web
+# Snipcode Web
 
-This project is about the front end of Sharingan. It holds the website landing page, the web application, and the blog pages.
+This project is about the front end of Snipcode. It holds the website landing page, the web application, and the blog pages.
 
-[![Website](https://sharingan.dev/assets/og.png)](https://sharingan.dev)
+[![Website](https://snipcode.dev/assets/og.png)](https://snipcode.dev)
 
 ## Tech Stack
 * Next.js
@@ -19,8 +19,8 @@ We use Yarn workspace to create packages we can share with other applications.
 These packages are located in the folder `packages`, so you might need to change the code of one or many packages to implement a feature.
 Here are the packages used in the front-end application:
 
-* [@sharingan/utils](../../packages/utils)
-* [@sharingan/front](../../packages/front)
+* [@snipcode/utils](../../packages/utils)
+* [@snipcode/front](../../packages/front)
 
 ## Set up the project
 Delete the existing folders output from build commands

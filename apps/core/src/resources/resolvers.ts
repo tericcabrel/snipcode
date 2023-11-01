@@ -49,7 +49,7 @@ const resolvers: Resolvers = {
     authenticatedUser,
     findFolder,
     findSnippet,
-    hello: () => 'Hello from Sharingan',
+    hello: () => 'Hello from Snipcode',
     listDirectory,
     listFolders,
     mySnippets,

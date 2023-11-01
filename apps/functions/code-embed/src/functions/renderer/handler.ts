@@ -1,5 +1,5 @@
-import { dbClient } from '@sharingan/database';
-import { renderSnippetToHtml } from '@sharingan/embed';
+import { dbClient } from '@snipcode/database';
+import { renderSnippetToHtml } from '@snipcode/embed';
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Handler } from 'aws-lambda';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires

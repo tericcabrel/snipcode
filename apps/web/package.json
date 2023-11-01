@@ -1,5 +1,5 @@
 {
-  "name": "@sharingan/web",
+  "name": "@snipcode/web",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -16,8 +16,8 @@
     "@headlessui/react": "^1.6.5",
     "@hookform/resolvers": "^2.9.6",
     "@sentry/nextjs": "^7.5.0",
-    "@sharingan/front": "*",
-    "@sharingan/utils": "*",
+    "@snipcode/front": "*",
+    "@snipcode/utils": "*",
     "classnames": "^2.3.1",
     "graphql": "^16.3.0",
     "next": "12.2.0",

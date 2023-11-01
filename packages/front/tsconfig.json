@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
-  "display": "Sharingan UI",
+  "display": "Snipcode UI",
   "compilerOptions": {
     "jsx": "preserve",
     "noEmit": true,

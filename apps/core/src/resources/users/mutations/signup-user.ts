@@ -1,4 +1,4 @@
-import { CreateUserDto, CreateUserRootFolderDto } from '@sharingan/domain';
+import { CreateUserDto, CreateUserRootFolderDto } from '@snipcode/domain';
 
 import { logger } from '../../../configs/logger';
 import { MutationResolvers } from '../../../types/graphql';

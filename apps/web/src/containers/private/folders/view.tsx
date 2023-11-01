@@ -1,5 +1,5 @@
-import { Directory } from '@sharingan/front/components/directory';
-import { useFindFolder } from '@sharingan/front/services';
+import { Directory } from '@snipcode/front/components/directory';
+import { useFindFolder } from '@snipcode/front/services';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 

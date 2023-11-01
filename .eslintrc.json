@@ -26,7 +26,7 @@
     "space-in-parens": "warn",
     "no-multiple-empty-lines": "warn",
     "prefer-const": "warn",
-    "no-use-before-define": "warn",
+    "no-use-before-define": "error",
     "max-len": [
       "warn", 120, {
         "ignoreComments": true,

@@ -1,4 +1,4 @@
-# Sharingan Domain
+# Snipcode Domain
 
 This package contains all the business logic of the project
 
@@ -8,8 +8,8 @@ This package contains all the business logic of the project
 
 ## Prerequisites
 Make sure you have this tools installed before running the project
-* Node.js 14+
-* NPM or Yarn
+* Node.js 18+
+* Yarn
 * Docker
 
 ## Set up the project
@@ -49,14 +49,15 @@ yarn db:test:migration
 ```
 
 There are three command to run tests where each command has a specific purpose:
-- `yarn test:unit`: use this command when you want to test unit functions
+- `yarn test:unit`: use this command when you want to test unit functions with no external dependencies (db, message broker, etc...)
 
 
 - `yarn test`: use this command to run functions that require database or not. Everytime you run a test, the migration will be executed against the database
-which add 5-10 seconds on test execution time. This command is appropriate inside a CI Pipeline
+  (in the jest global setup) which add 5-10 seconds on test execution time. This command runs inside the CI Pipeline.
 
 
-- `yarn test:db:local`: This command run functions that require database or not but, it doesn't execute the migration, so it is faster than the former.
+- `yarn test:db:local`: This command run functions that require database or not but, it doesn't execute the migration before running the test, so it is faster than the former.
+However, ensure you ran `yarn db:test:migration` before to 
 
 To run a specific test file, append the filename after the command:
 ```shell

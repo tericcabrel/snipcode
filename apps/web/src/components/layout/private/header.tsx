@@ -1,9 +1,9 @@
-import { Disclosure, Menu, Transition } from '@sharingan/front';
-import { Link } from '@sharingan/front/components/link';
-import { UserAvatar } from '@sharingan/front/components/user-avatar';
-import { LogoIcon, LogoLightIcon, MenuIcon, XIcon } from '@sharingan/front/icons';
-import { useLogoutUser } from '@sharingan/front/services';
-import { classNames } from '@sharingan/front/utils/classnames';
+import { Disclosure, Menu, Transition } from '@snipcode/front';
+import { Link } from '@snipcode/front/components/link';
+import { UserAvatar } from '@snipcode/front/components/user-avatar';
+import { LogoIcon, LogoLightIcon, MenuIcon, XIcon } from '@snipcode/front/icons';
+import { useLogoutUser } from '@snipcode/front/services';
+import { classNames } from '@snipcode/front/utils/classnames';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 

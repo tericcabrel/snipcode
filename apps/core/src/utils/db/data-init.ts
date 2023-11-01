@@ -1,4 +1,4 @@
-import { roleService, userService } from '@sharingan/domain';
+import { roleService, userService } from '@snipcode/domain';
 
 import { env } from '../../configs/env';
 

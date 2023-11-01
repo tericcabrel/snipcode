@@ -3,7 +3,7 @@ import { generateNoSnippetHtmlContent } from '../../../src/renderer/content/html
 describe('Test HTML generator functions', () => {
   it.only('should generates html content for a non existing code snippet', () => {
     // GIVEN
-    const WEB_APP_URL = 'https://sharingan.dev';
+    const WEB_APP_URL = 'https://snipcode.dev';
 
     // WHEN
     const result = generateNoSnippetHtmlContent(WEB_APP_URL);
@@ -12,7 +12,7 @@ describe('Test HTML generator functions', () => {
     expect(result).toMatchInlineSnapshot(`
       "<div class="no-content">
                   <h3>Oops! Snippet not found!</h3>
-                  <div>Go to <a href="https://sharingan.dev" target="_blank">Sharingan</a> to ensure it exists and is accessible</div>
+                  <div>Go to <a href="https://snipcode.dev" target="_blank">Snipcode</a> to ensure it exists and is accessible</div>
                 </div>"
     `);
   });

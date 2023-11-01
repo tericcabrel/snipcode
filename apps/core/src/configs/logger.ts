@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { fileLogger } from '@sharingan/logger';
+import { fileLogger } from '@snipcode/logger';
 
 import { env } from './env';
 

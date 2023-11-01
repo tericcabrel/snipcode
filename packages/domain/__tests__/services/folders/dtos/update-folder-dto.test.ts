@@ -1,4 +1,4 @@
-import { Folder } from '@sharingan/database';
+import { Folder } from '@snipcode/database';
 
 import { UpdateFolderDto } from '../../../../index';
 import { createTestFolderDto, generateTestId } from '../../../setup/test-utils';

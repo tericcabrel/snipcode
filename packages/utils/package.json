@@ -1,7 +1,7 @@
 {
-  "name": "@sharingan/utils",
+  "name": "@snipcode/utils",
   "version": "1.0.0",
-  "description": "Sharingan utilities functions",
+  "description": "Snipcode utilities functions",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",

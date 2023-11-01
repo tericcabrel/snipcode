@@ -1,5 +1,5 @@
-import { Role, User, dbClient } from '@sharingan/database';
-import SharinganError, { errors } from '@sharingan/utils';
+import { Role, User, dbClient } from '@snipcode/database';
+import SnipcodeError, { errors } from '@snipcode/utils';
 import bcrypt from 'bcryptjs';
 import { generateFromEmail } from 'unique-username-generator';
 
@@ -12,7 +12,7 @@ export default class UserService {
     const user = await this.findByEmail(createUserDto.email);
 
     if (user) {
-      throw new SharinganError(errors.EMAIL_ALREADY_TAKEN, 'EMAIL_ALREADY_TAKEN');
+      throw new SnipcodeError(errors.EMAIL_ALREADY_TAKEN, 'EMAIL_ALREADY_TAKEN');
     }
 
     const username = await this.generateUsername(createUserDto.email, createUserDto.username);
@@ -56,7 +56,7 @@ export default class UserService {
 
   async loadAdminUser(role: Role, adminPassword: string): Promise<void> {
     const userAdminDto = new CreateUserDto({
-      email: 'teco@sharingan.dev',
+      email: 'teco@snipcode.dev',
       name: 'Eric Teco',
       oauthProvider: 'email',
       password: adminPassword,
@@ -117,17 +117,17 @@ export default class UserService {
     const user = await this.findByEmail(email);
 
     if (!user) {
-      throw new SharinganError(errors.LOGIN_FAILED, 'LOGIN_FAILED');
+      throw new SnipcodeError(errors.LOGIN_FAILED, 'LOGIN_FAILED');
     }
 
     const isPasswordValid = user.password ? bcrypt.compareSync(password, user.password) : false;
 
     if (!isPasswordValid) {
-      throw new SharinganError(errors.LOGIN_FAILED, 'LOGIN_FAILED');
+      throw new SnipcodeError(errors.LOGIN_FAILED, 'LOGIN_FAILED');
     }
 
     if (!user.isEnabled) {
-      throw new SharinganError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED');
+      throw new SnipcodeError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED');
     }
 
     return user;

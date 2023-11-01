@@ -1,5 +1,5 @@
-import { SpinnerIcon } from '@sharingan/front/icons';
-import { useSubscribeToNewsletter } from '@sharingan/front/services';
+import { SpinnerIcon } from '@snipcode/front/icons';
+import { useSubscribeToNewsletter } from '@snipcode/front/services';
 import { useState } from 'react';
 
 import { NewsletterAlert } from '@/components/home/newsletter/newsletter-alert';

@@ -5,7 +5,7 @@ import {
   sessionService,
   snippetService,
   userService,
-} from '@sharingan/domain';
+} from '@snipcode/domain';
 import { Request, Response } from 'express';
 
 import { env } from '../../configs/env';

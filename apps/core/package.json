@@ -1,7 +1,7 @@
 {
-  "name": "@sharingan/core",
+  "name": "@snipcode/core",
   "version": "1.0.1",
-  "description": "Sharingan core backend",
+  "description": "Snipcode core backend",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
@@ -15,11 +15,11 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "^8.5.0",
-    "@sharingan/database": "*",
-    "@sharingan/domain": "*",
-    "@sharingan/embed": "*",
-    "@sharingan/logger": "*",
-    "@sharingan/utils": "*",
+    "@snipcode/database": "*",
+    "@snipcode/domain": "*",
+    "@snipcode/embed": "*",
+    "@snipcode/logger": "*",
+    "@snipcode/utils": "*",
     "apollo-server-core": "^3.9.0",
     "apollo-server-express": "^3.9.0",
     "axios": "^0.27.2",

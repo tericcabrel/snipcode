@@ -1,4 +1,4 @@
-import { errors } from '@sharingan/utils';
+import { errors } from '@snipcode/utils';
 import { NextFunction, Request, Response } from 'express';
 
 import { logger } from '../../configs/logger';

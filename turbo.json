@@ -1,6 +1,5 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "baseBranch": "origin/main",
   "globalDependencies": [
     "tsconfig.json",
     "package.json",
@@ -16,7 +15,7 @@
         "dist/**"
       ]
     },
-    "@sharingan/core#build": {
+    "@snipcode/core#build": {
       "dependsOn": [
         "^build"
       ],
@@ -36,7 +35,7 @@
         "DATABASE_URL"
       ]
     },
-    "@sharingan/web#build": {
+    "@snipcode/web#build": {
       "dependsOn": [
         "^build"
       ],

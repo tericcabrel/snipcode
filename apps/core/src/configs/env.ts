@@ -1,4 +1,4 @@
-import { getEnv } from '@sharingan/utils';
+import { getEnv } from '@snipcode/utils';
 import dotenv from 'dotenv';
 
 import { AppEnvironmentVariables } from '../types/common';

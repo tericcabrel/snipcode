@@ -26,7 +26,7 @@ describe('Test generateHTMLPreview()', () => {
       scriptUrl: 'https://cdn.com/sharigan/script.js',
       styleUrl: 'https://cdn.com/sharigan/style.css',
       title: 'helpers.ts',
-      webAppUrl: 'https://sharingan.dev',
+      webAppUrl: 'https://snipcode.dev',
     };
 
     // WHEN
@@ -41,14 +41,14 @@ describe('Test generateHTMLPreview()', () => {
               <meta charset="utf-8">
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <meta name="robots" content="noindex,nofollow">
-              <title>Sharingan - helpers.ts</title>
+              <title>Snipcode - helpers.ts</title>
               <link rel="stylesheet" type="text/css" href="https://cdn.com/sharigan/style.css" />
           </head>
           <body data-id="random-id">
               <div class="ctner">
                 <div class="ctner-header">
                   <div>helpers.ts</div>
-                  <div>view on <a href="https://sharingan.dev" target="_blank">Sharingan</a></div>
+                  <div>view on <a href="https://snipcode.dev" target="_blank">Snipcode</a></div>
                 </div>
                 <textarea id="raw-code-random-id" class="hidden" rows="1" cols="1">export const hashPassword = (password: string): string => {
         const SALT_ROUNDS = 10;
