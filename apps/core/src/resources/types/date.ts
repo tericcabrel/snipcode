@@ -1,4 +1,4 @@
-import { errors } from '@sharingan/utils';
+import { errors } from '@snipcode/utils';
 import { ApolloError } from 'apollo-server-express';
 import { GraphQLScalarType, Kind } from 'graphql';
 

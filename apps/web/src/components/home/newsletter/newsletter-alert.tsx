@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { CheckIcon, CrossIcon } from '@sharingan/front/icons';
+import { CheckIcon, CrossIcon } from '@snipcode/front/icons';
 import classNames from 'classnames';
 import React, { Fragment, useState } from 'react';
 

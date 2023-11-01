@@ -7,7 +7,7 @@ const serverlessConfiguration: AWS = {
   custom: {
     customCertificate: {
       certificateName: '${self:custom.domains.${self:provider.stage}.certificateName}',
-      hostedZoneNames: 'sharingan.dev.',
+      hostedZoneNames: 'snipcode.dev.',
       region: '${self:provider.region}',
     },
     customDomain: {
@@ -21,12 +21,12 @@ const serverlessConfiguration: AWS = {
     },
     domains: {
       dev: {
-        certificateName: 'embedstaging.sharingan.dev',
-        domainName: 'embedstaging.sharingan.dev',
+        certificateName: 'embedstaging.snipcode.dev',
+        domainName: 'embedstaging.snipcode.dev',
       },
       prod: {
-        certificateName: 'embed.sharingan.dev',
-        domainName: 'embed.sharingan.dev',
+        certificateName: 'embed.snipcode.dev',
+        domainName: 'embed.snipcode.dev',
       },
     },
     esbuild: {

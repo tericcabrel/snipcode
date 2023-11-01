@@ -1,8 +1,8 @@
-# Sharingan
+# Snipcode
 
-Sharingan is an open-source code-sharing platform that makes it easy to create code snippets and sharing it with the world.
+Snipcode is an open-source code-sharing platform that makes it easy to create code snippets and sharing it with the world.
 
-[![Website](https://sharingan.dev/assets/og.png)](https://sharingan.dev)
+[![Website](https://snipcode.dev/assets/og.png)](https://snipcode.dev)
 
 
 ## Key Features
@@ -24,7 +24,7 @@ Sharingan is an open-source code-sharing platform that makes it easy to create c
 
 ## Project Structure
 ```text
-sharingan
+snipcode
 ├─ apps
 │  ├─ core
 │  ├─ functions
@@ -45,7 +45,7 @@ vercel.json
 ```
 
 ## Contributing
-Kindly read our [Contributing Guide](./CONTRIBUTING.md) to learn and understand about our development process, how to propose bug fixes and improvements, and how to build and test your changes to Sharingan. 
+Kindly read our [Contributing Guide](./CONTRIBUTING.md) to learn and understand about our development process, how to propose bug fixes and improvements, and how to build and test your changes to Snipcode. 
 
 ## License
 

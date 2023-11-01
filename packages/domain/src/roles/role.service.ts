@@ -1,5 +1,5 @@
-import { Role, RoleName, dbClient } from '@sharingan/database';
-import SharinganError, { errors } from '@sharingan/utils';
+import { Role, RoleName, dbClient } from '@snipcode/database';
+import SnipcodeError, { errors } from '@snipcode/utils';
 
 import CreateRoleDto from './dtos/create-role-dto';
 
@@ -38,7 +38,7 @@ export default class RoleService {
     const role = await dbClient.role.findUnique({ where: { name } });
 
     if (!role) {
-      throw new SharinganError(errors.ROLE_USER_NOT_FOUND, 'ROLE_USER_NOT_FOUND');
+      throw new SnipcodeError(errors.ROLE_USER_NOT_FOUND, 'ROLE_USER_NOT_FOUND');
     }
 
     return role;

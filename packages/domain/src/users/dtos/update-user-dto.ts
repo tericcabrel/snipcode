@@ -1,4 +1,4 @@
-import { OauthProvider, User } from '@sharingan/database';
+import { OauthProvider, User } from '@snipcode/database';
 
 type Input = {
   name: string;

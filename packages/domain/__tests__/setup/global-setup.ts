@@ -2,7 +2,7 @@
 import { execSync } from 'child_process';
 import * as path from 'path';
 
-import { getEnv } from '@sharingan/utils';
+import { getEnv } from '@snipcode/utils';
 import dotenv from 'dotenv';
 
 dotenv.config();

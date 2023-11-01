@@ -1,5 +1,5 @@
-import { Session, dbId } from '@sharingan/database';
-import { generateRandomId } from '@sharingan/utils';
+import { Session, dbId } from '@snipcode/database';
+import { generateRandomId } from '@snipcode/utils';
 
 type Input = {
   expireDate: Date;

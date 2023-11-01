@@ -1,4 +1,4 @@
-import { UpdateFolderDto } from '@sharingan/domain';
+import { UpdateFolderDto } from '@snipcode/domain';
 
 import { getAuthenticatedUser } from '../../../configs/authentication';
 import { logger } from '../../../configs/logger';

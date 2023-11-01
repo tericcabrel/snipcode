@@ -1,6 +1,6 @@
-import { Session } from '@sharingan/database';
-import { CreateSessionDto, sessionService } from '@sharingan/domain';
-import { addDayToDate } from '@sharingan/utils';
+import { Session } from '@snipcode/database';
+import { CreateSessionDto, sessionService } from '@snipcode/domain';
+import { addDayToDate } from '@snipcode/utils';
 
 import { env } from '../../configs/env';
 

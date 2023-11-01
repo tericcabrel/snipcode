@@ -1,4 +1,4 @@
-import { OauthProvider, User, dbId } from '@sharingan/database';
+import { OauthProvider, User, dbId } from '@snipcode/database';
 
 import { hashPassword } from '../../utils/helpers';
 

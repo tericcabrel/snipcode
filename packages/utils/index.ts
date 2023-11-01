@@ -1,4 +1,4 @@
-import SharinganError from './src/errors/sharingan-error';
+import SnipcodeError from './src/errors/snipcode-error';
 
 export * as constants from './src/common/constants';
 export * as errors from './src/errors/messages';
@@ -9,4 +9,4 @@ export * from './src/date/date';
 
 export type { Language } from './src/types/snippet';
 
-export default SharinganError;
+export default SnipcodeError;

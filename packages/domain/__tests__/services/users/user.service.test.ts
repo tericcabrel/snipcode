@@ -1,5 +1,5 @@
-import { User } from '@sharingan/database';
-import SharinganError, { errors, generateRandomId } from '@sharingan/utils';
+import { User } from '@snipcode/database';
+import SnipcodeError, { errors, generateRandomId } from '@snipcode/utils';
 
 import { roleService, userService } from '../../../index';
 import {
@@ -21,7 +21,7 @@ describe('Test User service', () => {
 
     await userService.loadAdminUser(roleAdmin, adminPassword);
 
-    const adminUser = await userService.findByEmail('teco@sharingan.dev');
+    const adminUser = await userService.findByEmail('teco@snipcode.dev');
 
     expect(adminUser).toBeDefined();
 
@@ -137,7 +137,7 @@ describe('Test User service', () => {
     // THEN
     await expect(async () => {
       await userService.create(createUserDto);
-    }).rejects.toThrow(new SharinganError(errors.EMAIL_ALREADY_TAKEN, 'EMAIL_ALREADY_TAKEN'));
+    }).rejects.toThrow(new SnipcodeError(errors.EMAIL_ALREADY_TAKEN, 'EMAIL_ALREADY_TAKEN'));
 
     await deleteTestUsersById([user.id]);
   });
@@ -179,7 +179,7 @@ describe('Test User service', () => {
     // WHEN
     // THEN
     await expect(() => userService.login(userEmail, userPassword)).rejects.toThrow(
-      new SharinganError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
+      new SnipcodeError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
     );
   });
 
@@ -192,7 +192,7 @@ describe('Test User service', () => {
     // WHEN
     // THEN
     await expect(() => userService.login(user.email, userBadPassword)).rejects.toThrow(
-      new SharinganError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
+      new SnipcodeError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
     );
 
     await deleteTestUsersById([user.id]);
@@ -206,7 +206,7 @@ describe('Test User service', () => {
     // WHEN
     // THEN
     await expect(() => userService.login(user.email, userPassword)).rejects.toThrow(
-      new SharinganError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED'),
+      new SnipcodeError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED'),
     );
 
     await deleteTestUsersById([user.id]);

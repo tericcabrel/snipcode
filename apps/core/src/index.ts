@@ -1,6 +1,6 @@
 import http from 'http';
 
-import { dbClient } from '@sharingan/database';
+import { dbClient } from '@snipcode/database';
 import express from 'express';
 
 import { env } from './configs/env';

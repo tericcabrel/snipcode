@@ -1,4 +1,4 @@
-import { Snippet } from '@sharingan/database';
+import { Snippet } from '@snipcode/database';
 
 import CreateSessionDto from '../../../../src/snippets/dtos/create-snippet-dto';
 import { generateTestId } from '../../../setup/test-utils';

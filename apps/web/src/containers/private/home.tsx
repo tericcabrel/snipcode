@@ -1,5 +1,5 @@
-import { Directory } from '@sharingan/front/components/directory';
-import { useAuthenticatedUser } from '@sharingan/front/services';
+import { Directory } from '@snipcode/front/components/directory';
+import { useAuthenticatedUser } from '@snipcode/front/services';
 import { NextSeo } from 'next-seo';
 
 import { Layout } from '@/components/layout/private/layout';

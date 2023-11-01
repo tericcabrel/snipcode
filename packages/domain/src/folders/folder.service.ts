@@ -1,5 +1,5 @@
-import { Folder, dbClient } from '@sharingan/database';
-import SharinganError, { errors } from '@sharingan/utils';
+import { Folder, dbClient } from '@snipcode/database';
+import SnipcodeError, { errors } from '@snipcode/utils';
 
 import CreateFolderDto from './dtos/create-folder-dto';
 import CreateUserRootFolderDto from './dtos/create-user-root-folder-dto';
@@ -28,7 +28,7 @@ export default class FolderService {
     });
 
     if (isFolderExist) {
-      throw new SharinganError(errors.FOLDER_ALREADY_EXIST(createFolderDto.name), 'FOLDER_ALREADY_EXIST');
+      throw new SnipcodeError(errors.FOLDER_ALREADY_EXIST(createFolderDto.name), 'FOLDER_ALREADY_EXIST');
     }
 
     const input = createFolderDto.toFolder();
@@ -54,7 +54,7 @@ export default class FolderService {
     const folder = await dbClient.folder.findUnique({ where: { id } });
 
     if (!folder) {
-      throw new SharinganError(errors.FOLDER_NOT_FOUND(id), 'FOLDER_NOT_FOUND');
+      throw new SnipcodeError(errors.FOLDER_NOT_FOUND(id), 'FOLDER_NOT_FOUND');
     }
 
     return folder;
@@ -66,7 +66,7 @@ export default class FolderService {
     const rootFolder = folders.find((folder) => folder.parentId === null);
 
     if (!rootFolder) {
-      throw new SharinganError(errors.USER_ROOT_FOLDER_NOT_FOUND(userId), 'USER_ROOT_FOLDER_NOT_FOUND');
+      throw new SnipcodeError(errors.USER_ROOT_FOLDER_NOT_FOUND(userId), 'USER_ROOT_FOLDER_NOT_FOUND');
     }
 
     return rootFolder;
@@ -93,7 +93,7 @@ export default class FolderService {
     });
 
     if (isFoldersContainRoot(foldersToDelete)) {
-      throw new SharinganError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER');
+      throw new SnipcodeError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER');
     }
 
     const ids = foldersToDelete.map((folder) => folder.id);
@@ -137,11 +137,11 @@ export default class FolderService {
     const folder = await this.findById(updateFolderDto.folderId);
 
     if (folder.userId !== updateFolderDto.creatorId) {
-      throw new SharinganError(errors.CANT_EDIT_FOLDER(updateFolderDto.creatorId, folder.id), 'CANT_EDIT_FOLDER');
+      throw new SnipcodeError(errors.CANT_EDIT_FOLDER(updateFolderDto.creatorId, folder.id), 'CANT_EDIT_FOLDER');
     }
 
     if (!folder.parentId) {
-      throw new SharinganError(errors.CANT_RENAME_ROOT_FOLDER, 'CANT_RENAME_ROOT_FOLDER');
+      throw new SnipcodeError(errors.CANT_RENAME_ROOT_FOLDER, 'CANT_RENAME_ROOT_FOLDER');
     }
 
     const isFolderExist = await this.isFolderExistInParentFolder({
@@ -151,7 +151,7 @@ export default class FolderService {
     });
 
     if (isFolderExist) {
-      throw new SharinganError(errors.FOLDER_ALREADY_EXIST(updateFolderDto.name), 'FOLDER_ALREADY_EXIST');
+      throw new SnipcodeError(errors.FOLDER_ALREADY_EXIST(updateFolderDto.name), 'FOLDER_ALREADY_EXIST');
     }
 
     const input = updateFolderDto.toFolder(folder);

@@ -1,4 +1,4 @@
-import { Session, dbClient } from '@sharingan/database';
+import { Session, dbClient } from '@snipcode/database';
 
 import CreateSessionDto from './dtos/create-session-dto';
 

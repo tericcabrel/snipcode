@@ -1,7 +1,7 @@
 {
-  "name": "@sharingan/logger",
+  "name": "@snipcode/logger",
   "version": "1.0.0",
-  "description": "Sharingan logger",
+  "description": "Snipcode logger",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",

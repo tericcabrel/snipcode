@@ -1,4 +1,4 @@
-import { User } from '@sharingan/database';
+import { User } from '@snipcode/database';
 import {
   CreateUserDto,
   CreateUserRootFolderDto,
@@ -6,8 +6,8 @@ import {
   folderService,
   roleService,
   userService,
-} from '@sharingan/domain';
-import { errors } from '@sharingan/utils';
+} from '@snipcode/domain';
+import { errors } from '@snipcode/utils';
 import { AxiosRequestConfig } from 'axios';
 import { Response } from 'express';
 

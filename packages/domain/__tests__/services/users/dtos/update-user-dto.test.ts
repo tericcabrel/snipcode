@@ -1,4 +1,4 @@
-import { User } from '@sharingan/database';
+import { User } from '@snipcode/database';
 
 import { UpdateUserDto } from '../../../../index';
 import { createTestUserDto, generateTestId } from '../../../setup/test-utils';

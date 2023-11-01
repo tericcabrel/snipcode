@@ -8,7 +8,7 @@ mkdir -p layers/shiki-layer/nodejs/node_modules
 
 cd ../../..
 
-yarn workspace @sharingan/database db:generate
+yarn workspace @snipcode/database db:generate
 
 cp -r node_modules/.prisma apps/functions/code-embed/layers/prisma-layer/nodejs/node_modules
 

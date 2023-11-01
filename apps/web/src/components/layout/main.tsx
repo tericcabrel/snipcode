@@ -9,7 +9,7 @@ const MainLayout = ({ children }: Props) => {
   return (
     <Fragment>
       <Head>
-        <title>Sharingan</title>
+        <title>Snipcode</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="Create and share your code snippets with the world." name="description" />
         <link href="/favicon.ico" rel="icon" />

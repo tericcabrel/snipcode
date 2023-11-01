@@ -1,5 +1,5 @@
-import { Folder } from '@sharingan/database';
-import SharinganError, { errors, generateRandomId } from '@sharingan/utils';
+import { Folder } from '@snipcode/database';
+import SnipcodeError, { errors, generateRandomId } from '@snipcode/utils';
 
 import { CreateUserRootFolderDto, folderService, roleService } from '../../../index';
 import CreateFolderDto from '../../../src/folders/dtos/create-folder-dto';
@@ -80,7 +80,7 @@ describe('Test Folder service', () => {
     // WHEN
     // THEN
     await expect(() => folderService.create(createFolderDto)).rejects.toThrow(
-      new SharinganError(errors.FOLDER_ALREADY_EXIST(createFolderDto.name), 'FOLDER_ALREADY_EXIST'),
+      new SnipcodeError(errors.FOLDER_ALREADY_EXIST(createFolderDto.name), 'FOLDER_ALREADY_EXIST'),
     );
 
     await deleteTestFoldersById([firstFolder.id, secondFolder.id, rootFolder.id]);
@@ -114,7 +114,7 @@ describe('Test Folder service', () => {
     // WHEN
     // THEN
     await expect(() => folderService.findUserRootFolder(user.id)).rejects.toThrow(
-      new SharinganError(errors.USER_ROOT_FOLDER_NOT_FOUND(user.id), 'USER_ROOT_FOLDER_NOT_FOUND'),
+      new SnipcodeError(errors.USER_ROOT_FOLDER_NOT_FOUND(user.id), 'USER_ROOT_FOLDER_NOT_FOUND'),
     );
 
     await deleteTestUsersById([user.id]);
@@ -264,7 +264,7 @@ describe('Test Folder service', () => {
     // THEN
     await expect(async () => {
       await folderService.deleteMany([myGistFolder.id, rootFolder.id], user.id);
-    }).rejects.toThrow(new SharinganError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER'));
+    }).rejects.toThrow(new SnipcodeError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER'));
 
     await deleteTestFoldersById([myGistFolder.id, rootFolder.id]);
     await deleteTestUsersById([user.id]);
@@ -321,7 +321,7 @@ describe('Test Folder service', () => {
     // THEN
     await expect(async () => {
       await folderService.findById(folderId);
-    }).rejects.toThrow(new SharinganError(errors.FOLDER_NOT_FOUND(folderId), 'FOLDER_NOT_FOUND'));
+    }).rejects.toThrow(new SnipcodeError(errors.FOLDER_NOT_FOUND(folderId), 'FOLDER_NOT_FOUND'));
   });
 
   it('should update an existing folder in the specified folder', async () => {
@@ -371,7 +371,7 @@ describe('Test Folder service', () => {
     // THEN
     await expect(async () => {
       await folderService.update(updateFolderDto);
-    }).rejects.toThrow(new SharinganError(errors.FOLDER_ALREADY_EXIST(updateFolderDto.name), 'FOLDER_ALREADY_EXIST'));
+    }).rejects.toThrow(new SnipcodeError(errors.FOLDER_ALREADY_EXIST(updateFolderDto.name), 'FOLDER_ALREADY_EXIST'));
 
     await deleteTestFoldersById([folder1.id, folder2.id]);
     await deleteTestFoldersById([rootFolder.id]);
@@ -395,7 +395,7 @@ describe('Test Folder service', () => {
     await expect(async () => {
       await folderService.update(updateFolderDto);
     }).rejects.toThrow(
-      new SharinganError(errors.CANT_EDIT_FOLDER(updateFolderDto.creatorId, folderUser2.id), 'CANT_EDIT_FOLDER'),
+      new SnipcodeError(errors.CANT_EDIT_FOLDER(updateFolderDto.creatorId, folderUser2.id), 'CANT_EDIT_FOLDER'),
     );
 
     await deleteTestFoldersById([folderUser2.id]);
@@ -413,7 +413,7 @@ describe('Test Folder service', () => {
     // THEN
     await expect(async () => {
       await folderService.update(updateFolderDto);
-    }).rejects.toThrow(new SharinganError(errors.CANT_RENAME_ROOT_FOLDER, 'CANT_RENAME_ROOT_FOLDER'));
+    }).rejects.toThrow(new SnipcodeError(errors.CANT_RENAME_ROOT_FOLDER, 'CANT_RENAME_ROOT_FOLDER'));
 
     await deleteTestFoldersById([rootFolder.id]);
     await deleteTestUsersById([user1.id]);

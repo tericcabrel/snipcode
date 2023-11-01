@@ -5,7 +5,7 @@ import {
   SessionService,
   SnippetService,
   UserService,
-} from '@sharingan/domain';
+} from '@snipcode/domain';
 import { Request, Response } from 'express';
 import { Query, Send } from 'express-serve-static-core';
 

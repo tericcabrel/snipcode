@@ -1,4 +1,4 @@
-import { Session } from '@sharingan/database';
+import { Session } from '@snipcode/database';
 
 import { sessionService } from '../../../index';
 import {

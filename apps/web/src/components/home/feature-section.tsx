@@ -5,7 +5,7 @@ import {
   ExtensionIcon,
   ImportIcon,
   ShareIcon,
-} from '@sharingan/front/icons';
+} from '@snipcode/front/icons';
 
 const features = [
   {

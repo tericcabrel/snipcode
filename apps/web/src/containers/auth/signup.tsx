@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert } from '@sharingan/front/components/alert';
-import { Link } from '@sharingan/front/components/link';
-import { Button } from '@sharingan/front/forms/button';
-import { TextInput } from '@sharingan/front/forms/text-input';
-import { GithubIcon, GoogleIcon } from '@sharingan/front/icons';
-import { useSignupUser } from '@sharingan/front/services';
+import { Alert } from '@snipcode/front/components/alert';
+import { Link } from '@snipcode/front/components/link';
+import { Button } from '@snipcode/front/forms/button';
+import { TextInput } from '@snipcode/front/forms/text-input';
+import { GithubIcon, GoogleIcon } from '@snipcode/front/icons';
+import { useSignupUser } from '@snipcode/front/services';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -80,7 +80,7 @@ const Signup = () => {
             <div className="relative overflow-hidden bg-white rounded-2xl lg:rounded-3xl">
               <div className="px-8 py-8">
                 <div className="text-center">
-                  <h1 className="text-2xl font-bold text-gray-900 font-pj">Sign up for Sharingan</h1>
+                  <h1 className="text-2xl font-bold text-gray-900 font-pj">Sign up for Snipcode</h1>
 
                   <div className="flex justify-between">
                     <Button className="w-[47%]" color="white-gray">

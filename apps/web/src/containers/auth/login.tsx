@@ -1,9 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert } from '@sharingan/front/components/alert';
-import { Button } from '@sharingan/front/forms/button';
-import { TextInput } from '@sharingan/front/forms/text-input';
-import { GithubIcon, GoogleIcon } from '@sharingan/front/icons';
-import { useLoginUser } from '@sharingan/front/services';
+import { Alert } from '@snipcode/front/components/alert';
+import { Button } from '@snipcode/front/forms/button';
+import { TextInput } from '@snipcode/front/forms/text-input';
+import { GithubIcon, GoogleIcon } from '@snipcode/front/icons';
+import { useLoginUser } from '@snipcode/front/services';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -67,7 +67,7 @@ const Login = () => {
             <div className="relative overflow-hidden bg-white rounded-2xl lg:rounded-3xl">
               <div className="px-8 py-8">
                 <div className="text-center">
-                  <h1 className="text-2xl font-bold text-gray-900">Sign in for Sharingan</h1>
+                  <h1 className="text-2xl font-bold text-gray-900">Sign in for Snipcode</h1>
 
                   <div className="flex justify-between">
                     <Button className="w-[45%]" color="white-gray">

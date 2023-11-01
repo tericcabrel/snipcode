@@ -1,4 +1,4 @@
-import { Snippet } from '@sharingan/database';
+import { Snippet } from '@snipcode/database';
 
 import { generateNoSnippetHtmlContent, generateSnippetHtmlContent } from './content/html-generator';
 import { generateHTMLPreview } from './content/preview-template';

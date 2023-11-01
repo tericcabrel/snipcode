@@ -1,4 +1,4 @@
-import { Folder, dbId } from '@sharingan/database';
+import { Folder, dbId } from '@snipcode/database';
 
 export default class CreateUserRootFolderDto {
   private readonly folderId: string;

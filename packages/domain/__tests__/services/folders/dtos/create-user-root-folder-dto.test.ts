@@ -1,4 +1,4 @@
-import { Folder } from '@sharingan/database';
+import { Folder } from '@snipcode/database';
 
 import { CreateUserRootFolderDto } from '../../../../index';
 

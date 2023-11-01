@@ -1,4 +1,4 @@
-import { Snippet, SnippetVisibility } from '@sharingan/database';
+import { Snippet, SnippetVisibility } from '@snipcode/database';
 
 type Input = {
   content: string;

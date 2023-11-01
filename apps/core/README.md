@@ -1,6 +1,6 @@
-# Sharingan Core
+# Snipcode Core
 
-This is the core backend of Sharingan. All the business logic behind this application is implemented here. 
+This is the core backend of Snipcode. All the business logic behind this application is implemented here. 
 
 ## Tech Stack
 * Node.js
@@ -21,10 +21,10 @@ We use Yarn workspace to create packages we can share with other applications.
 These packages are located in the folder `packages`, so you might need to change the code of one or many packages to implement a feature.
 Here are the packages used in this project:
 
-* [@sharingan/database](../../packages/database)
-* [@sharingan/domain](../../packages/domain)
-* [@sharingan/logger](../../packages/logger)
-* [@sharingan/utils](../../packages/utils)
+* [@snipcode/database](../../packages/database)
+* [@snipcode/domain](../../packages/domain)
+* [@snipcode/logger](../../packages/logger)
+* [@snipcode/utils](../../packages/utils)
 
 ## Set up the project
 Delete the existing folders output from build commands

@@ -1,6 +1,6 @@
-import { Link } from '@sharingan/front/components/link';
-import { UserAvatar } from '@sharingan/front/components/user-avatar';
-import { PublicSnippetResult } from '@sharingan/front/typings/queries';
+import { Link } from '@snipcode/front/components/link';
+import { UserAvatar } from '@snipcode/front/components/user-avatar';
+import { PublicSnippetResult } from '@snipcode/front/typings/queries';
 
 type Props = {
   snippet: PublicSnippetResult['items'][number];

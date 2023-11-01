@@ -31,14 +31,14 @@ export const generateHTMLPreview = ({
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noindex,nofollow">
-        <title>Sharingan - ${title}</title>
+        <title>Snipcode - ${title}</title>
         <link rel="stylesheet" type="text/css" href="${styleUrl}" />
     </head>
     <body data-id="${id}">
         <div class="ctner">
           <div class="ctner-header">
             <div>${title}</div>
-            <div>view on <a href="${webAppUrl}" target="_blank">Sharingan</a></div>
+            <div>view on <a href="${webAppUrl}" target="_blank">Snipcode</a></div>
           </div>
           <textarea id="raw-code-${id}" class="hidden" rows="1" cols="1">${rawCode}</textarea>
           <div class="code-editor-container" id="code-${id}" style="border: solid 1px ${color}; background-color: ${color}">

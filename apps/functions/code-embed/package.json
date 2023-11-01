@@ -1,5 +1,5 @@
 {
-  "name": "@sharingan/code-embed",
+  "name": "@snipcode/code-embed",
   "version": "1.0.0",
   "description": "Generate the HTML page from a code snippet",
   "main": "serverless.ts",
@@ -18,8 +18,8 @@
     "node": ">=16.14.0"
   },
   "dependencies": {
-    "@sharingan/database": "*",
-    "@sharingan/embed": "*",
+    "@snipcode/database": "*",
+    "@snipcode/embed": "*",
     "shiki": "^0.11.1"
   },
   "devDependencies": {

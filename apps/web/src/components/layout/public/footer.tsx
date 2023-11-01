@@ -1,15 +1,15 @@
-import { GithubIcon, LogoIcon, ProductHuntIcon, TwitterIcon } from '@sharingan/front/icons';
+import { GithubIcon, LogoIcon, ProductHuntIcon, TwitterIcon } from '@snipcode/front/icons';
 
 const socialIcons = [
   {
     icon: <GithubIcon />,
-    link: 'https://github.com/tericcabrel/sharingan',
+    link: 'https://github.com/tericcabrel/snipcode',
     name: 'GitHub',
     target: '_blank',
   },
   {
     icon: <TwitterIcon />,
-    link: 'https://twitter.com/sharingan_dev',
+    link: 'https://twitter.com/snipcode_dev',
     name: 'Twitter',
     target: '_blank',
   },

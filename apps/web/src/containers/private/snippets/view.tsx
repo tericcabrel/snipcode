@@ -1,6 +1,6 @@
-import { BreadCrumb } from '@sharingan/front/components/directory/breadcrumb';
-import { ViewSnippet } from '@sharingan/front/components/directory/snippets/form/view-snippet';
-import { useFindSnippet } from '@sharingan/front/services';
+import { BreadCrumb } from '@snipcode/front/components/directory/breadcrumb';
+import { ViewSnippet } from '@snipcode/front/components/directory/snippets/form/view-snippet';
+import { useFindSnippet } from '@snipcode/front/services';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 

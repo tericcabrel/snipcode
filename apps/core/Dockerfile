@@ -1,4 +1,4 @@
-FROM node:16-buster as builder
+FROM node:18-buster as builder
 
 RUN mkdir app
 
@@ -14,7 +14,7 @@ WORKDIR /app/apps/core
 
 RUN yarn build:prod
 
-FROM node:16-alpine as schema-builder
+FROM node:18-alpine as schema-builder
 
 WORKDIR /app
 
@@ -24,7 +24,7 @@ COPY --chown=node:node --from=builder /app/packages/database/prisma/schema.prism
 RUN npx prisma generate --schema=./app/prisma/schema.prisma
 
 
-FROM node:16-alpine AS sharingan
+FROM node:18-alpine AS snipcode
 
 ENV NODE_ENV=production
 

@@ -1,5 +1,5 @@
 import { MockedProvider } from '@apollo/client/testing';
-import { subscribeNewsletterMutation } from '@sharingan/front/graphql';
+import { subscribeNewsletterMutation } from '@snipcode/front/graphql';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';

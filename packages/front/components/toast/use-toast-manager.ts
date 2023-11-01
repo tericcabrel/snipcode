@@ -1,4 +1,4 @@
-import { generateRandomId } from '@sharingan/utils';
+import { generateRandomId } from '@snipcode/utils';
 import { useState } from 'react';
 
 import { AddToastArgs, ToastContextType, ToastData, ToastShowArgs } from './types';

@@ -1,4 +1,4 @@
-import SharinganError from '@sharingan/utils';
+import SnipcodeError from '@snipcode/utils';
 import nock from 'nock';
 
 import NewsletterService from '../../../src/newsletters/newsletter.service';
@@ -14,7 +14,7 @@ describe('Test the newsletter service', () => {
   test('Add the email address to the newsletter subscribers', async () => {
     // GIVEN
     const emailToSubscribe = 'user@email.com';
-    const tags = ['sharingan'];
+    const tags = ['snipcode'];
     const formId = 'formId';
 
     const scope = nock(baseURL)
@@ -41,7 +41,7 @@ describe('Test the newsletter service', () => {
   test('Handle HTTP error when the request to add the email address to the newsletter subscribers fails', async () => {
     // GIVEN
     const emailToSubscribe = 'user@email.com';
-    const tags = ['sharingan'];
+    const tags = ['snipcode'];
     const formId = 'formId';
 
     nock(baseURL)
@@ -66,9 +66,7 @@ describe('Test the newsletter service', () => {
 
     await expect(async () => {
       await newsletterService.subscribe(emailToSubscribe, tags);
-    }).rejects.toThrow(
-      new SharinganError(JSON.stringify(catchErrorsFormatted, null, 2), 'NEWSLETTER_SUBSCRIBE_FAILED'),
-    );
+    }).rejects.toThrow(new SnipcodeError(JSON.stringify(catchErrorsFormatted, null, 2), 'NEWSLETTER_SUBSCRIBE_FAILED'));
 
     nock.cleanAll();
   });

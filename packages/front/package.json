@@ -1,5 +1,5 @@
 {
-  "name": "@sharingan/front",
+  "name": "@snipcode/front",
   "version": "1.0.0",
   "main": "index-old.tsx",
   "types": "./index.tsx",

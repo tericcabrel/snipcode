@@ -1,5 +1,5 @@
-import { Snippet, SnippetVisibility, dbClient } from '@sharingan/database';
-import SharinganError, { errors } from '@sharingan/utils';
+import { Snippet, SnippetVisibility, dbClient } from '@snipcode/database';
+import SnipcodeError, { errors } from '@snipcode/utils';
 
 import CreateSnippetDto from './dtos/create-snippet-dto';
 import DeleteSnippetDto from './dtos/delete-snippet-dto';
@@ -17,7 +17,7 @@ export default class SnippetService {
     const isSnippetExist = await this.isSnippetExistInFolder(createSnippetDto.folderId, createSnippetDto.name);
 
     if (isSnippetExist) {
-      throw new SharinganError(errors.SNIPPET_ALREADY_EXIST(createSnippetDto.name), 'SNIPPET_ALREADY_EXIST');
+      throw new SnipcodeError(errors.SNIPPET_ALREADY_EXIST(createSnippetDto.name), 'SNIPPET_ALREADY_EXIST');
     }
 
     const input = createSnippetDto.toSnippet();
@@ -44,7 +44,7 @@ export default class SnippetService {
     const snippet = await dbClient.snippet.findUnique({ where: { id } });
 
     if (!snippet) {
-      throw new SharinganError(errors.SNIPPET_NOT_FOUND(id), 'SNIPPET_NOT_FOUND');
+      throw new SnipcodeError(errors.SNIPPET_NOT_FOUND(id), 'SNIPPET_NOT_FOUND');
     }
 
     return snippet;
@@ -105,7 +105,7 @@ export default class SnippetService {
     const snippet = await this.findById(deleteSnippetDto.snippetId);
 
     if (snippet.userId !== deleteSnippetDto.creatorId) {
-      throw new SharinganError(errors.CANT_EDIT_SNIPPET(deleteSnippetDto.creatorId, snippet.id), 'CANT_EDIT_SNIPPET');
+      throw new SnipcodeError(errors.CANT_EDIT_SNIPPET(deleteSnippetDto.creatorId, snippet.id), 'CANT_EDIT_SNIPPET');
     }
 
     await dbClient.snippet.delete({ where: { id: deleteSnippetDto.snippetId } });
@@ -121,14 +121,14 @@ export default class SnippetService {
     const snippet = await this.findById(updateSnippetDto.snippetId);
 
     if (snippet.userId !== updateSnippetDto.creatorId) {
-      throw new SharinganError(errors.CANT_EDIT_SNIPPET(updateSnippetDto.creatorId, snippet.id), 'CANT_EDIT_SNIPPET');
+      throw new SnipcodeError(errors.CANT_EDIT_SNIPPET(updateSnippetDto.creatorId, snippet.id), 'CANT_EDIT_SNIPPET');
     }
 
     if (snippet.name !== updateSnippetDto.name) {
       const isSnippetExist = await this.isSnippetExistInFolder(snippet.folderId, updateSnippetDto.name);
 
       if (isSnippetExist) {
-        throw new SharinganError(errors.SNIPPET_ALREADY_EXIST(updateSnippetDto.name), 'SNIPPET_ALREADY_EXIST');
+        throw new SnipcodeError(errors.SNIPPET_ALREADY_EXIST(updateSnippetDto.name), 'SNIPPET_ALREADY_EXIST');
       }
     }
 

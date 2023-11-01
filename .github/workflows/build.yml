@@ -1,4 +1,4 @@
-name: Sharingan Build
+name: Snipcode Build
 on:
   pull_request:
     branches: [ main ]
@@ -24,10 +24,10 @@ jobs:
       CONVERTKIT_FORM_ID: form_id
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Node 16
+      - name: Set up Node 18
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
 
       - name: Install projects dependencies
         uses: bahmutov/npm-install@v1

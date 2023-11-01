@@ -5,7 +5,7 @@ import { GlobalSeo } from '@/components/seo/seo';
 import { useApollo } from '@/utils/apollo-client';
 import '@/styles/globals.css';
 
-const SharinganApp = ({ Component, pageProps }: AppProps) => {
+const SnipcodeApp = ({ Component, pageProps }: AppProps) => {
   const apolloClient = useApollo(pageProps);
 
   return (
@@ -16,4 +16,4 @@ const SharinganApp = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-export default SharinganApp;
+export default SnipcodeApp;

@@ -1,18 +1,18 @@
-# Sharingan Embed
+# Snipcode Embed
 This package contains the code related to generate the embeddable code snippet as HTML.
 For a snippet's id, It's generate the HTML code you can embed on your website through an Iframe
 
 ## How it works?
-- We build the HTML page using the CSS and Javascript.
+- We build the HTML page using the CSS and JavaScript.
 - Preview the result in the browser
 - Once the page is great, we publish the CSS and JS on NPM, so we can serve it through a CDN ([JSdelivr.com](https://jsdelivr.com))
 
 ## Prerequisites
 Make sure you have this tools installed before running the project
-* Node.js 16+
-* NPM or Yarn
+* Node.js 18+
+* Yarn
 
-> **Note**: This repo requires a connection to the database, follow the instructions in the **database** packages before going to the next step. 
+> **Note**: This repo requires a connection to the database; the command to setup the database is located in the **[database package](../database/README.md)**. 
 
 ## Set up the project
 Delete the existing folders output from build commands
@@ -31,9 +31,9 @@ cp .env.template .env
 nano .env
 ```
 
-Start the database locally, go to the [database's package](../database) and run the command
+Start the database locally
 ```shell
-yarn db:dev
+yarn workspace @snipcode/database db:dev
 ```
 
 ## Start the watcher for the CSS and JS
@@ -50,7 +50,7 @@ yarn build:cdn:watch
 ```
 
 ## Preview a snippet
-To preview the snippet embed page, start the Node.js server:
+To preview the snippet embed page, start the Node.js server in a new terminal.
 ```shell
 yarn dev
 ```
@@ -59,14 +59,14 @@ The `:id` must replaced with the snippet's id you want to preview.<br/>
 Use a GUI DB client to find an ID in the snippets table.
 
 ### Preview the snippet in an Iframe
-To see how the snippet looks like in an iframe, edit the file [src/server/static/index.html](./src/server/static/index.html) to set the URL of iframe
-save. The URL follows this pattern: `http://localhost:7502/snippets/:id`.
+To see how the snippet looks like in an iframe, edit the file [src/server/static/index.html](./src/server/static/index.html) to set the Iframe's source
+to an URL following this pattern `http://localhost:7502/snippets/:id` and save.
 
 Run the command below:
 ```shell
 yarn iframe:preview
 ```
-Navigate to the URL `http://localhost:7503` to see the result.
+Navigate to the URL [http://localhost:7503](http://localhost:7503) to see the result.
 
 ## Publish the assets on NPM
 This part is handled inside the CI/CD, so it will not be useful to do it locally:

@@ -1,4 +1,4 @@
-import { Folder } from '@sharingan/database';
+import { Folder } from '@snipcode/database';
 
 import { isFoldersContainRoot } from '../../../../src/folders/utils/folders';
 import { createTestFolderDto, generateTestId } from '../../../setup/test-utils';
