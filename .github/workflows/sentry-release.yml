@@ -1,4 +1,4 @@
-name: Sentry release source maps
+name: Release Source maps to Sentry
 on:
   push:
     branches:

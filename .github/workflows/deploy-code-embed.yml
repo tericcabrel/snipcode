@@ -1,4 +1,4 @@
-name: Snipcode Deploy Code Embed
+name: Deploy Code Embed
 on:
   push:
     branches:

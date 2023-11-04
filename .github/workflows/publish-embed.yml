@@ -1,4 +1,4 @@
-name: Publish Snipcode Embed assets to NPM
+name: Publish Embed assets to NPM
 on:
   push:
     branches: [main]

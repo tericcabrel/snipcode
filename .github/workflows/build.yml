@@ -1,4 +1,4 @@
-name: Snipcode Build
+name: Build Project
 on:
   pull_request:
     branches: [ main ]

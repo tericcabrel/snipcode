@@ -1,4 +1,4 @@
-name: Snipcode Deploy Core
+name: Deploy Core Backend
 on:
   push:
     branches:
