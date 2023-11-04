@@ -1,7 +1,15 @@
 {
-  "name": "snipcode-embed",
-  "version": "1.1.0",
-  "repository": "https://github.com/tericcabrel/snipcode.git",
-  "author": "Eric Cabrel TIOGO <tericcabrel@yahoo.com>",
-  "license": "MIT"
+  "name": "@snipcode/embed",
+  "version": "1.1.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tericcabrel/snipcode.git"
+  },
+  "homepage": "https://github.com/tericcabrel/snipcode/blob/main/packages/embed/README.md",
+  "author": "Eric Cabrel TIOGO",
+  "license": "MIT",
+  "keywords": ["code snippet", "snipcode", "snippets", "embed"],
+  "contributors": [
+    "Eric Cabrel TIOGO (https://github.com/tericcabrel)"
+  ]
 }

@@ -69,14 +69,17 @@ yarn iframe:preview
 Navigate to the URL [http://localhost:7503](http://localhost:7503) to see the result.
 
 ## Publish the assets on NPM
-This part is handled inside the CI/CD, so it will not be useful to do it locally:
+This part is handled inside the CI/CD, so it will not be useful to do it locally.
+You will need the NPM access token; ask it to [@tericcabrel](https://github.com/tericcabrel))
+
 ```shell
 # Generate the assets optimized for production
 yarn build:cdn
 cp package.publish.json build/package.json
+cp README.publish.md build/README.md
 cd build
-# Authenticate to NPM
-npm adduser
+# Store the NPM access token 
+npm config set //registry.npmjs.org/:_authToken <npm_token>
 # Publish the package on NPM
 npm publish --access=public
 ```

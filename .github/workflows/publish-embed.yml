@@ -1,4 +1,4 @@
-name: Publish Snipcode embed assets to npmjs
+name: Publish Snipcode Embed assets to NPM
 on:
   push:
     branches: [main]
@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
@@ -21,11 +20,11 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: Publish to NPM
+        working-directory: packages/embed
         run: |
           yarn build:cdn
           cp package.publish.json build/package.json
+          cp README.publish.md build/README.md
           cd build
-          yarn publish
-        working-directory: packages/embed
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+          yarn publish:lib
