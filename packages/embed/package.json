@@ -1,7 +1,7 @@
 {
   "name": "@snipcode/embed",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "description": "Build the script and style assets for code snippet rendering in an embed.",
   "repository": " https://github.com/tericcabrel/snipcode.git",
   "author": "Eric Cabrel TIOGO <tericcabrel@yahoo.com>",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/server/index.ts",
     "lint": "eslint src",
     "iframe:preview": "serve ./src/server/static -l 7503",
-    "push": "cp package.publish.json build/package.json && cd build && npm publish --access=public",
+    "publish:lib": "cp package.publish.json build/package.json && cp README.publish.md build/README.md && cd build && npm publish --access=public",
     "test": "jest"
   },
   "devDependencies": {
