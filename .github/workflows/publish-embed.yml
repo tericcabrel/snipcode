@@ -5,6 +5,8 @@ on:
     paths:
       - 'packages/embed/src/scripts/**'
       - 'packages/embed/src/styles/**'
+      - 'packages/embed/package.publish.json'
+      - 'packages/embed/README.publish.md'
 
 jobs:
   build:
