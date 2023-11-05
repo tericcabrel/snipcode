@@ -1,5 +1,7 @@
 name: Publish Embed assets to NPM
 on:
+  pull_request:
+    branches: [ main ]
   push:
     branches: [main]
     paths:
@@ -9,7 +11,7 @@ on:
       - 'packages/embed/README.publish.md'
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -29,4 +31,4 @@ jobs:
           cp README.publish.md build/README.md
           cd build
           npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
-          yarn publish:lib
+          npm publish --access=public

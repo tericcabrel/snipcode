@@ -7,7 +7,8 @@
     "composite": true,
     "sourceMap": false,
     "lib": ["es2021", "dom"],
-    "target": "es2021"
+    "target": "es2021",
+    "emitDecoratorMetadata": false
   },
   "files": ["env.d.ts"],
   "include": ["src", "__tests__", "index.ts"],
