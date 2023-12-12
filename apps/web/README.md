@@ -27,10 +27,12 @@ Delete the existing folders output from build commands
 ```shell
 yarn clean
 ```
+
 Install node modules
 ````shell
 yarn install
 ````
+
 Create configuration file from the template
 ```shell
 cp .env.template .env.local
@@ -58,14 +60,17 @@ Run the command below to run all the tests
 ```shell
 yarn test
 ```
+
 To run a specific test file, append the filename after the command
 ```shell
 yarn test home.test.ts
 ```
 
+
 ## Lint the project
 ESLint and Prettier are used to normalize the code style across the project.
 Linting the code make sure there is no error
+
 ```shell
 yarn lint
 ```
