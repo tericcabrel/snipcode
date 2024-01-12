@@ -1,5 +1,6 @@
 {
   "name": "@snipcode/front",
+  "private": true,
   "version": "1.0.0",
   "main": "index-old.tsx",
   "types": "./index.tsx",

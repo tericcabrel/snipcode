@@ -24,13 +24,26 @@ jobs:
       CONVERTKIT_FORM_ID: form_id
     steps:
       - uses: actions/checkout@v3
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/*.yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+
       - name: Set up Node 18
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
+      - name: Install Yarn 4
+        run: |
+          corepack enable
+          yarn set version berry
+
       - name: Install projects dependencies
-        uses: bahmutov/npm-install@v1
+        run: yarn install
 
       - name: Lint the projects
         run: yarn lint

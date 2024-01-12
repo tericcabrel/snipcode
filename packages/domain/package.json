@@ -17,8 +17,8 @@
     "test:db:local": "TEST_WITH_DB=true IS_LOCAL=true jest"
   },
   "dependencies": {
-    "@snipcode/database": "*",
-    "@snipcode/utils": "*",
+    "@snipcode/database": "workspace:*",
+    "@snipcode/utils": "workspace:*",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "unique-username-generator": "^1.1.1"

@@ -18,8 +18,8 @@
     "node": ">=16.14.0"
   },
   "dependencies": {
-    "@snipcode/database": "*",
-    "@snipcode/embed": "*",
+    "@snipcode/database": "workspace:*",
+    "@snipcode/embed": "workspace:*",
     "shiki": "^0.11.1"
   },
   "devDependencies": {

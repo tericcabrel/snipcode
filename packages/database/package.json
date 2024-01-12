@@ -1,11 +1,13 @@
 {
   "name": "@snipcode/database",
   "version": "1.0.0",
+  "private": true,
   "description": "This package contains all the entities and data access layer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
+    "prebuild": "yarn db:generate",
     "build": "tsc --project tsconfig.prod.json",
     "clean": "rm -rf .turbo dist",
     "lint": "eslint src index.ts",

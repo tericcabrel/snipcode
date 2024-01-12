@@ -1,6 +1,7 @@
 {
   "name": "@snipcode/logger",
   "version": "1.0.0",
+  "private": true,
   "description": "Snipcode logger",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
