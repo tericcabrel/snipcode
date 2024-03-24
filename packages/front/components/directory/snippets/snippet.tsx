@@ -1,4 +1,11 @@
-import { ClipboardIcon, CodeIcon, DocumentIcon, PencilAltIcon, ShareIcon, TrashIcon } from '@heroicons/react/solid';
+import {
+  ClipboardIcon,
+  CodeBracketIcon,
+  DocumentIcon,
+  PencilIcon,
+  ShareIcon,
+  TrashIcon,
+} from '@heroicons/react/20/solid';
 import React from 'react';
 
 import { useCopyToClipboard } from '../../../hooks/use-copy-to-clipboard';
@@ -43,27 +50,27 @@ const Snippet = ({ item, onClick, onDeleteClick }: Props) => {
 
   const menuActions: MenuItemAction[] = [
     {
-      icon: <PencilAltIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
+      icon: <PencilIcon className="mr-3 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
       label: 'Edit',
       onClick: () => onClick(item),
     },
     {
-      icon: <ShareIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
+      icon: <ShareIcon className="mr-3 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
       label: 'Copy shareable link',
       onClick: handleCopyShareableLink,
     },
     {
-      icon: <CodeIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
+      icon: <CodeBracketIcon className="mr-3 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
       label: 'Copy embeddable link',
       onClick: handleEmbeddableLink,
     },
     {
-      icon: <ClipboardIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
+      icon: <ClipboardIcon className="mr-3 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
       label: 'Copy to clipboard',
       onClick: handleCopyToClipboard,
     },
     {
-      icon: <TrashIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
+      icon: <TrashIcon className="mr-3 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
       label: 'Delete',
       onClick: () => onDeleteClick(item),
     },

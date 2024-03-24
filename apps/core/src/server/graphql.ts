@@ -9,12 +9,12 @@ import {
 import { ApolloServer } from 'apollo-server-express';
 import { Application } from 'express';
 
+import { buildGraphQLContext } from './config/build-context';
 import { env } from '../configs/env';
 import resolvers from '../resources/resolvers';
 import schemas from '../resources/schemas';
 import { AppContext } from '../types/common';
 import { CORS_APOLLO_STUDIO_URL } from '../utils/constants';
-import { buildGraphQLContext } from './config/build-context';
 
 const explorerPlugin: PluginDefinition[] = env.IS_PROD
   ? []

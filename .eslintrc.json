@@ -4,13 +4,15 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
-    "plugin:typescript-sort-keys/recommended"
+    "plugin:typescript-sort-keys/recommended",
+    "plugin:jest/recommended"
   ],
   "plugins": [
     "sort-destructure-keys",
     "sort-keys-fix",
     "typescript-sort-keys",
-    "import"
+    "import",
+    "jest"
   ],
   "env": {
     "es6": true,
@@ -139,6 +141,8 @@
         "next": "case",
         "prev": ["case", "default"]
       }
-    ]
+    ],
+    "jest/prefer-expect-resolves": "error",
+    "jest/prefer-hooks-in-order": "error"
   }
 }

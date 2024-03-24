@@ -10,7 +10,7 @@
     "clean": "rm -rf .turbo dist",
     "lint": "eslint --fix",
     "db:test": "docker run -d --rm -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=snipcode --name snipcode-test-db -p 3313:3306 mysql:8.0.34",
-    "db:test:stop": "docker container kill snipcodedb && docker container prune -f",
+    "db:test:stop": "docker container kill snipcode-test-db && docker container prune -f",
     "db:test:migration": "npx prisma migrate dev --schema=../database/prisma/schema.test.prisma",
     "test": "TEST_WITH_DB=true IS_LOCAL=false jest",
     "test:unit": "jest",
@@ -19,17 +19,13 @@
   "dependencies": {
     "@snipcode/database": "workspace:*",
     "@snipcode/utils": "workspace:*",
-    "axios": "^0.27.2",
-    "bcryptjs": "^2.4.3",
-    "unique-username-generator": "^1.1.1"
+    "axios": "1.6.8",
+    "bcryptjs": "2.4.3",
+    "unique-username-generator": "1.3.0"
   },
   "devDependencies": {
-    "@ngneat/falso": "^6.0.3",
-    "@types/bcryptjs": "^2.4.2",
-    "@types/jest": "^28.1.4",
-    "jest": "^28.1.2",
-    "nock": "^13.2.9",
-    "ts-jest": "^28.0.5",
-    "typescript": "4.8.4"
+    "@ngneat/falso": "7.2.0",
+    "@types/bcryptjs": "2.4.6",
+    "nock": "13.5.4"
   }
 }

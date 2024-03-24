@@ -1,8 +1,8 @@
 import { BreadCrumb } from '@snipcode/front/components/directory/breadcrumb';
 import { ViewSnippet } from '@snipcode/front/components/directory/snippets/form/view-snippet';
 import { useFindSnippet } from '@snipcode/front/services';
-import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 
 import { Layout } from '@/components/layout/private/layout';
 import { useFolderDirectory } from '@/hooks/use-folder-directory';

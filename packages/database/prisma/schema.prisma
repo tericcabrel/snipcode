@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  previewFeatures = []
   binaryTargets   = ["native", "linux-musl", "rhel-openssl-1.0.x"]
 }
 
@@ -8,7 +8,7 @@ datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
   shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
-  referentialIntegrity = "prisma"
+  relationMode         = "prisma"
 }
 
 enum RoleName {

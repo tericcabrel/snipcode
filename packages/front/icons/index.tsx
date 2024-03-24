@@ -4,16 +4,16 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
   ChevronDownIcon,
-  DocumentAddIcon,
-  FolderAddIcon,
+  DocumentPlusIcon as DocumentAddIcon,
+  FolderPlusIcon as FolderAddIcon,
   FolderIcon,
   HomeIcon,
   InboxIcon,
-  MenuIcon,
-  SearchIcon,
+  Bars3Icon as MenuIcon,
+  MagnifyingGlassIcon as SearchIcon,
   UsersIcon,
-  XIcon,
-} from '@heroicons/react/outline';
+  XMarkIcon as XIcon,
+} from '@heroicons/react/24/outline';
 
 import CheckIcon from './check';
 import CollectionIcon from './collection';

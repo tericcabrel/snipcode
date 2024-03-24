@@ -1,8 +1,4 @@
-import type { AWS } from '@serverless/typescript';
-
 import { handlerPath } from '@/libs/handler-resolver';
-
-type LambdaEventHandler = Pick<AWS['functions'][number], 'events' | 'handler' | 'layers'>;
 
 export default {
   events: [
@@ -29,4 +25,4 @@ export default {
       Ref: 'ShikiLambdaLayer',
     },
   ],
-} as LambdaEventHandler;
+};

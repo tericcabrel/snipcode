@@ -1,7 +1,7 @@
 import { Directory } from '@snipcode/front/components/directory';
 import { useFindFolder } from '@snipcode/front/services';
-import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 
 import { Layout } from '@/components/layout/private/layout';
 import { useFolderDirectory } from '@/hooks/use-folder-directory';

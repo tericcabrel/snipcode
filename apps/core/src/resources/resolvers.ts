@@ -1,4 +1,3 @@
-import { Resolvers } from '../types/graphql';
 import { createFolder } from './folders/mutations/create-folder';
 import { deleteFolders } from './folders/mutations/delete-folders';
 import { updateFolder } from './folders/mutations/update-folder';
@@ -18,6 +17,7 @@ import { loginUser } from './users/mutations/login-user';
 import { logoutUser } from './users/mutations/logout-user';
 import { signupUser } from './users/mutations/signup-user';
 import { authenticatedUser } from './users/queries/authenticated-user';
+import { Resolvers } from '../types/graphql';
 
 const resolvers: Resolvers = {
   Date: dateScalar,

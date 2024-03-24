@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 import { Layout } from '@/components/layout/private/layout';
 import { PublicSnippet } from '@/components/snippets/public-snippet';
-import { usePaginationToken } from '@/hooks/usePaginationToken';
+import { usePaginationToken } from '@/hooks/use-pagination-token';
 
 type SortMethod = 'recently_updated' | 'recently_created';
 
@@ -30,7 +30,7 @@ const Browse = ({ data }: Props) => {
     data.nextToken ?? null,
   );
 
-  const { findPublicSnippets, isLoading } = usePublicSnippets();
+  const { findPublicSnippets } = usePublicSnippets();
 
   const onSearchChange = (value: string) => {
     setSearch(value);
@@ -87,7 +87,7 @@ const Browse = ({ data }: Props) => {
           return;
         }
         setSnippetList(data.items);
-        addPageFromPrevious(data.nextToken ?? null);
+        addPageFromPrevious();
       },
     });
   };

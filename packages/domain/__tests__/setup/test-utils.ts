@@ -69,7 +69,7 @@ export const createTestUserDto = ({
     name: randFullName(),
     oauthProvider: oauthProvider ?? 'github',
     password: password ?? null,
-    pictureUrl: randImg({ category: 'people' }),
+    pictureUrl: randImg(),
     roleId,
     timezone: randTimeZone(),
     username,
@@ -107,16 +107,15 @@ export const deleteTestUsersById = async (userIds: Array<string | undefined>): P
   return Promise.all(promises);
 };
 
-export const deleteTestFoldersById = async (folderIds: Array<string | undefined>): Promise<void[]> => {
-  const promises = folderIds.map(async (folderId) => {
+export const deleteTestFoldersById = async (folderIds: Array<string | undefined>): Promise<void> => {
+  for (const folderId of folderIds) {
     if (!folderId) {
       return;
     }
 
+    // eslint-disable-next-line no-await-in-loop
     await dbClient.folder.delete({ where: { id: folderId } });
-  });
-
-  return Promise.all(promises);
+  }
 };
 
 export const createUserWithRootFolder = async (): Promise<[User, Folder]> => {
@@ -207,7 +206,7 @@ export const updateTestUserDto = (roleId: string): UpdateUserDto => {
   return new UpdateUserDto({
     name: randFullName(),
     oauthProvider: providers[index],
-    pictureUrl: randImg({ category: 'arch' }),
+    pictureUrl: randImg(),
     roleId,
     timezone: randTimeZone(),
   });

@@ -75,55 +75,50 @@ const PublicHeader = () => {
           </div>
 
           <nav className="hidden lg:items-center lg:ml-16 lg:mr-auto lg:space-x-10 lg:flex">
-            <Link href="/snippets">
-              <a
-                className="text-base font-medium text-gray-900 transition-all duration-200 rounded font-pj hover:text-opacity-50"
-                title="Browse code snippets"
-              >
-                Snippets
-              </a>
+            <Link
+              className="text-base font-medium text-gray-900 transition-all duration-200 rounded font-pj hover:text-opacity-50"
+              href="/snippets"
+              title="Browse code snippets"
+            >
+              Snippets
             </Link>
 
-            <Link href="/resources">
-              <a
-                className="text-base font-medium text-gray-900 transition-all duration-200 rounded font-pj hover:text-opacity-50"
-                title="Resources"
-              >
-                Resources
-              </a>
+            <Link
+              className="text-base font-medium text-gray-900 transition-all duration-200 rounded font-pj hover:text-opacity-50"
+              href="/resources"
+              title="Resources"
+            >
+              Resources
             </Link>
 
-            <Link href="/blog">
-              <a
-                className="text-base font-medium text-gray-900 transition-all duration-200 rounded font-pj hover:text-opacity-50"
-                title="Blog"
-              >
-                Blog
-              </a>
+            <Link
+              className="text-base font-medium text-gray-900 transition-all duration-200 rounded font-pj hover:text-opacity-50"
+              href="/blog"
+              title="Blog"
+            >
+              Blog
             </Link>
           </nav>
 
           <nav className="hidden lg:flex lg:items-center lg:justify-end lg:space-x-10">
-            <Link href="/signin">
+            <Link
+              className="text-base font-medium text-gray-900 transition-all duration-200 rounded font-pj hover:text-opacity-50"
+              href="/signin"
+              title="Sign in"
+              onClick={redirectToSignInIfAuthenticated}
+            >
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a
-                className="text-base font-medium text-gray-900 transition-all duration-200 rounded font-pj hover:text-opacity-50"
-                title="Sign in"
-                onClick={redirectToSignInIfAuthenticated}
-              >
-                Sign in
-              </a>
+              Sign in
             </Link>
 
-            <Link href="/signup">
+            <Link
+              className="inline-flex items-center justify-center px-6 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj"
+              href="/signup"
+              title="Get started"
+              onClick={redirectToSignupIfAuthenticated}
+            >
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a
-                className="inline-flex items-center justify-center px-6 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj"
-                title="Get started"
-                onClick={redirectToSignupIfAuthenticated}
-              >
-                Get started
-              </a>
+              Get started
             </Link>
           </nav>
         </div>
@@ -156,26 +151,24 @@ const PublicHeader = () => {
                   Blog
                 </a>
 
-                <Link href="/signin">
+                <Link
+                  className="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50"
+                  href="/signin"
+                  title="Sign in"
+                  onClick={redirectToSignInIfAuthenticated}
+                >
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <a
-                    className="flex items-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50"
-                    title="Sign in"
-                    onClick={redirectToSignInIfAuthenticated}
-                  >
-                    Sign in
-                  </a>
+                  Sign in
                 </Link>
 
-                <Link href="/signup">
+                <Link
+                  className="inline-flex items-center justify-center px-6 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600"
+                  href="/signup"
+                  title="Get started"
+                  onClick={redirectToSignupIfAuthenticated}
+                >
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <a
-                    className="inline-flex items-center justify-center px-6 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600"
-                    title="Get started"
-                    onClick={redirectToSignupIfAuthenticated}
-                  >
-                    Get started
-                  </a>
+                  Get started
                 </Link>
               </div>
             </div>

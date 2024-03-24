@@ -5,15 +5,23 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, Handler } from 'aws-lambda
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const shiki = require('shiki');
 
-export const main: Handler<APIGatewayProxyEvent, APIGatewayProxyResult> = async (event) => {
-  const snippetId = event.pathParameters['id'];
+const findSnippet = async (id?: string | null) => {
+  if (!id) {
+    return null;
+  }
 
-  const snippet = await dbClient.snippet.findFirst({
+  return dbClient.snippet.findFirst({
     where: {
-      id: snippetId,
+      id,
       visibility: 'public',
     },
   });
+};
+
+export const main: Handler<APIGatewayProxyEvent, APIGatewayProxyResult> = async (event) => {
+  const snippetId = event.pathParameters ? event.pathParameters['id'] : null;
+
+  const snippet = await findSnippet(snippetId);
 
   const content = await renderSnippetToHtml({
     options: {
