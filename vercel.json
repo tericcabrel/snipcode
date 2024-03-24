@@ -1,6 +1,7 @@
 {
-  "github": {
-    "enabled": true,
-    "silent": true
-  }
+  "git": {
+    "deploymentEnabled": false
+  },
+  "buildCommand": "yarn build",
+  "outputDirectory": "apps/web/.next"
 }
