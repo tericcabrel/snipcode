@@ -23,17 +23,17 @@ jobs:
       CONVERTKIT_API_KEY: api_key
       CONVERTKIT_FORM_ID: form_id
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Cache Node.js modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/*.yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-
 
       - name: Set up Node 20
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
 
