@@ -1,4 +1,4 @@
-name: Deploy Core Backend
+name: Deploy the backend
 on:
   push:
     branches:
@@ -18,10 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Copy the core Dockerfile in the root repository
         run: cp apps/core/Dockerfile .
-
       - name: Build, tag, and push docker image to Amazon ECR
         env:
           REGISTRY: public.ecr.aws/x9y5g9l2

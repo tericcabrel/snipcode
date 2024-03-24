@@ -1,6 +1,7 @@
 {
-  "github": {
-    "enabled": true,
-    "silent": true
-  }
+  "git": {
+    "deploymentEnabled": false
+  },
+  "buildCommand": "yarn build --filter=...@snipcode/web",
+  "outputDirectory": "apps/web/.next"
 }
