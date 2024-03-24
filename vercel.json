@@ -2,6 +2,6 @@
   "git": {
     "deploymentEnabled": false
   },
-  "buildCommand": "yarn build",
+  "buildCommand": "yarn build --filter=...@snipcode/web",
   "outputDirectory": "apps/web/.next"
 }
