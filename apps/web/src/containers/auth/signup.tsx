@@ -5,8 +5,8 @@ import { Button } from '@snipcode/front/forms/button';
 import { TextInput } from '@snipcode/front/forms/text-input';
 import { GithubIcon, GoogleIcon } from '@snipcode/front/icons';
 import { useSignupUser } from '@snipcode/front/services';
-import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -17,7 +17,7 @@ import { FORM_ERRORS } from '@/utils/constants';
 const MIN_PASSWORD_LENGTH = 8;
 const MIN_NAME_LENGTH = 2;
 const formSchema = yup.object().shape({
-  confirmPassword: yup.string().oneOf([yup.ref('password'), null], FORM_ERRORS.passwordNotMatch),
+  confirmPassword: yup.string().oneOf([yup.ref('password'), ''], FORM_ERRORS.passwordNotMatch),
   email: yup.string().required(FORM_ERRORS.fieldRequired).email(FORM_ERRORS.emailInvalid),
   name: yup
     .string()
@@ -127,10 +127,8 @@ const Signup = () => {
 
                 <p className="mt-5 text-base font-normal text-center text-gray-900">
                   Already have an account?{' '}
-                  <Link href="/signin">
-                    <a className="font-bold rounded hover:underline" title="Sign in">
-                      Sign in now
-                    </a>
+                  <Link className="font-bold rounded hover:underline" href="/signin" title="Sign in">
+                    Sign in now
                   </Link>
                 </p>
               </div>

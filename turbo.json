@@ -7,6 +7,9 @@
     ".eslintignore"
   ],
   "pipeline": {
+    "prebuild": {
+      "outputs": []
+    },
     "build": {
       "dependsOn": [
         "^build"
@@ -33,6 +36,12 @@
       "env": [
         "NODE_ENV",
         "DATABASE_URL"
+      ]
+    },
+    "@snipcode/database#build": {
+      "dependsOn": [
+        "^build",
+        "prebuild"
       ]
     },
     "@snipcode/web#build": {

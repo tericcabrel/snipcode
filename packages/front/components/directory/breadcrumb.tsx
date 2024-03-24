@@ -1,4 +1,4 @@
-import { ChevronRightIcon, HomeIcon } from '@heroicons/react/solid';
+import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid';
 
 import { FilePath } from '../../typings/components';
 import { classNames } from '../../utils/classnames';
@@ -27,9 +27,9 @@ const BreadcrumbItem = ({ isCurrent, isHome, label }: BreadcrumbItemProps) => {
     <div className={classes}>
       <div className="flex items-center">
         {isHome ? (
-          <HomeIcon className="flex-shrink-0 h-5 w-5" aria-hidden="true" />
+          <HomeIcon className="flex-shrink-0" aria-hidden="true" />
         ) : (
-          <ChevronRightIcon className="flex-shrink-0 h-5 w-5 text-gray-400 mr-4" aria-hidden="true" />
+          <ChevronRightIcon className="flex-shrink-0 text-gray-400 mr-4" aria-hidden="true" />
         )}
         <span className={isHome ? 'sr-only' : ''}>{label}</span>
       </div>

@@ -24,10 +24,10 @@ export type EditorFormValues = {
   code: string;
   codeHighlight: SelectOption;
   codeHighlighted: string;
-  description: string;
+  description?: string;
   isPrivate: boolean;
   language: SelectOption;
-  lineHighlight: Array<[number, string]>;
+  lineHighlight?: Array<[number, string]>;
   name: string;
   theme: SelectOption;
 };

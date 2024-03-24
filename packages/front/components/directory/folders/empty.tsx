@@ -1,4 +1,4 @@
-import { PlusIcon } from '@heroicons/react/solid';
+import { PlusIcon } from '@heroicons/react/20/solid';
 
 import { Button } from '../../../forms/button';
 
@@ -33,7 +33,7 @@ const EmptyFolder = ({ handleCreateFolder, handleCreateSnippet }: Props) => {
           New Snippet
         </Button>
         <Button className="mt-4 w-2/5" onClick={handleCreateFolder}>
-          <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+          <PlusIcon className="-ml-1 mr-2" aria-hidden="true" />
           New Folder
         </Button>
       </div>

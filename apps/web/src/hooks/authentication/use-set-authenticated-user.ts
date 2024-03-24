@@ -15,7 +15,7 @@ const useSetAuthenticatedUser = () => {
     }
 
     void redirectToDashboard();
-  }, [router.query]);
+  }, [redirectToDashboard, router.query, saveToken]);
 };
 
 export { useSetAuthenticatedUser };

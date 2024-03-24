@@ -1,6 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { SnippetTextEditor } from './editor';
+import { SnippetFormValues, formSchema } from './form-schema';
+import { generateSnippetLanguageOptions } from './utils';
 import { Button } from '../../../../forms/button';
 import { useCodeHighlighter } from '../../../../hooks';
 import { useUpdateSnippet } from '../../../../services/snippets/update-snippet';
@@ -9,9 +12,6 @@ import { SnippetItem } from '../../../../typings/queries';
 import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../utils/constants';
 import { extractLanguageFromName, lineHighlightToString } from '../../../../utils/snippets';
 import { useToast } from '../../../toast/provider';
-import { SnippetTextEditor } from './editor';
-import { SnippetFormValues, formSchema } from './form-schema';
-import { generateSnippetLanguageOptions } from './utils';
 
 type Props = {
   snippet: SnippetItem;
@@ -57,7 +57,7 @@ const ViewSnippet = ({ snippet }: Props) => {
         contentHighlighted: values.codeHighlighted,
         description: values.description,
         language: values.language?.id ?? extractLanguageFromName(values.name),
-        lineHighlight: lineHighlightToString(values.lineHighlight),
+        lineHighlight: values.lineHighlight ? lineHighlightToString(values.lineHighlight) : undefined,
         name: values.name,
         theme: values.theme.id,
         visibility: values.isPrivate ? 'private' : 'public',

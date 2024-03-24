@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react';
-import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon } from '@heroicons/react/outline';
-import { XIcon } from '@heroicons/react/solid';
+import { XMarkIcon } from '@heroicons/react/20/solid';
+import { CheckCircleIcon, ExclamationCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { Fragment } from 'react';
 
 import { ToastType } from './types';
@@ -59,7 +59,7 @@ const Toast = ({ message, onClose, title, type }: Props) => {
                 onClick={onClose}
               >
                 <span className="sr-only">Close</span>
-                <XIcon className="h-5 w-5" aria-hidden="true" />
+                <XMarkIcon aria-hidden="true" />
               </button>
             </div>
           </div>

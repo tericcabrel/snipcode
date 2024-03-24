@@ -246,7 +246,7 @@ describe('Test Folder service', () => {
     expect(user2SubFolders).toHaveLength(2);
     expect(user2SubFolders.map((folder) => folder.name)).toEqual(['project', 'snippet']);
 
-    await deleteTestFoldersById([snippetFolder.id, blogsFolder.id, rootFolder1.id, rootFolder2.id]);
+    await deleteTestFoldersById([snippetFolder.id, projectFolder.id, blogsFolder.id, rootFolder1.id, rootFolder2.id]);
     await deleteTestUsersById([user1.id]);
     await deleteTestUsersById([user2.id]);
   });

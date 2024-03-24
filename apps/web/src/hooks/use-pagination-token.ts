@@ -28,7 +28,7 @@ export const usePaginationToken = (nextToken: string | null) => {
     setCanGoForward(!!newPage.nextToken);
   };
 
-  const addPageFromPrevious = (token: string | null) => {
+  const addPageFromPrevious = () => {
     // should do nothing ???
     const lastPage = pages.length > 0 ? pages[pages.length - 1] : undefined;
 

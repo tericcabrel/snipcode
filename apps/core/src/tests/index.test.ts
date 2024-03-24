@@ -1,5 +1,5 @@
 describe('Test Suites', () => {
-  test('Test case', () => {
+  test('default tests', () => {
     expect(true).toEqual(true);
   });
 });

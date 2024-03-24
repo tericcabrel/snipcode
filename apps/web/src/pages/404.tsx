@@ -1,5 +1,5 @@
-import { NextSeo } from 'next-seo';
 import dynamic from 'next/dynamic';
+import { NextSeo } from 'next-seo';
 
 const PageNotFound = dynamic(() => import('@/containers/page-not-found'));
 

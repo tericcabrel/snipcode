@@ -4,8 +4,8 @@ import { Button } from '@snipcode/front/forms/button';
 import { TextInput } from '@snipcode/front/forms/text-input';
 import { GithubIcon, GoogleIcon } from '@snipcode/front/icons';
 import { useLoginUser } from '@snipcode/front/services';
-import { NextSeo } from 'next-seo';
 import Link from 'next/link';
+import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -100,10 +100,8 @@ const Login = () => {
 
                 <p className="mt-5 text-base font-normal text-center text-gray-900">
                   Don&apos;t have an account?{' '}
-                  <Link href="/signup">
-                    <a className="font-bold rounded hover:underline" title="Sign in">
-                      Create an account now
-                    </a>
+                  <Link className="font-bold rounded hover:underline" href="/signup" title="Sign in">
+                    Create an account now
                   </Link>
                 </p>
               </div>

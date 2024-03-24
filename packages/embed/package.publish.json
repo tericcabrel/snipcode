@@ -1,6 +1,7 @@
 {
   "name": "@snipcode/embed",
   "version": "1.1.3",
+  "privvate": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/tericcabrel/snipcode.git"

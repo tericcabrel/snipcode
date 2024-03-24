@@ -1,9 +1,9 @@
 import express, { Application, Request, Response } from 'express';
 
-import { authenticationRoute } from '../resources/authentication/routes';
-import { snippetRoute } from '../resources/snippets/routes';
 import { errorHandlerMiddleware } from './middleware/error-middleware';
 import { notFoundMiddleware } from './middleware/not-found-middleware';
+import { authenticationRoute } from '../resources/authentication/routes';
+import { snippetRoute } from '../resources/snippets/routes';
 
 export const setupRestEndpoints = (app: Application) => {
   const router = express.Router();

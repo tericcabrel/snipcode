@@ -1,5 +1,5 @@
 import { Menu, Transition } from '@headlessui/react';
-import { DotsVerticalIcon } from '@heroicons/react/solid';
+import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
 import React, { Fragment } from 'react';
 
 import { MenuItemAction } from '../../typings/components';
@@ -40,7 +40,7 @@ const DotMenu = ({ data }: Props) => {
       <div>
         <Menu.Button className="bg-transparent rounded-full flex items-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500">
           <span className="sr-only">Open options</span>
-          <DotsVerticalIcon className="h-5 w-5" aria-hidden="true" />
+          <EllipsisVerticalIcon aria-hidden="true" />
         </Menu.Button>
       </div>
 

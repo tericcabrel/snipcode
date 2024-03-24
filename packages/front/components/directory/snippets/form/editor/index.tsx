@@ -75,6 +75,7 @@ const SnippetTextEditor = ({ codeHighlightOptions, highlighter, languageOptions,
             />
           </div>
         </div>
+        {/* @ts-ignore */}
         <Editor
           value={code}
           onValueChange={(code) => setValue('code', code)}

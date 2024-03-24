@@ -1,4 +1,4 @@
-import { FolderIcon, FolderOpenIcon, PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
+import { FolderIcon, FolderOpenIcon, PencilIcon, TrashIcon } from '@heroicons/react/20/solid';
 
 import { useHover } from '../../../hooks/use-hover';
 import { FolderItem, MenuItemAction } from '../../../typings/components';
@@ -23,17 +23,17 @@ const Folder = ({ item, onDeleteClick, onNavigate, onRenameClick }: Props) => {
 
   const menuActions: MenuItemAction[] = [
     {
-      icon: <FolderOpenIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
+      icon: <FolderOpenIcon className="mr-3 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
       label: 'Open',
       onClick: handleDoubleClick,
     },
     {
-      icon: <PencilAltIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
+      icon: <PencilIcon className="mr-3 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
       label: 'Rename',
       onClick: () => onRenameClick(item),
     },
     {
-      icon: <TrashIcon className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
+      icon: <TrashIcon className="mr-3 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />,
       label: 'Delete',
       onClick: () => onDeleteClick(item),
     },

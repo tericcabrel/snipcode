@@ -1,8 +1,8 @@
 import { Snippet } from '@snipcode/database';
 import { Lang } from 'shiki';
 
-import { Shiki } from '../types';
 import { generateLineHighlightOptions, parseHTMLSnippetCode } from './utils';
+import { Shiki } from '../types';
 
 export const generateNoSnippetHtmlContent = (webAppUrl: string) => {
   return `<div class="no-content">

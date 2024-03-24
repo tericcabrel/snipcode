@@ -1,5 +1,5 @@
 import { Listbox, Transition } from '@headlessui/react';
-import { SelectorIcon } from '@heroicons/react/solid';
+import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { Fragment, forwardRef } from 'react';
 
 import { SelectOption } from '../typings/components';
@@ -40,7 +40,7 @@ const SelectInput = forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
                   {selectedValue?.label ?? placeholder}
                 </span>
                 <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                  <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                  <ChevronUpDownIcon className="text-gray-400" aria-hidden="true" />
                 </span>
               </Listbox.Button>
 
