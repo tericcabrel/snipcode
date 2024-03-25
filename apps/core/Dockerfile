@@ -1,10 +1,12 @@
-FROM node:18-buster as builder
+FROM node:20-buster as builder
 
 RUN mkdir app
 
 WORKDIR /app
 
 COPY . .
+
+RUN corepack enable && yarn set version berry
 
 RUN yarn install
 
@@ -14,7 +16,7 @@ WORKDIR /app/apps/core
 
 RUN yarn build:prod
 
-FROM node:18-alpine as schema-builder
+FROM node:20-alpine as schema-builder
 
 WORKDIR /app
 
@@ -24,7 +26,7 @@ COPY --chown=node:node --from=builder /app/packages/database/prisma/schema.prism
 RUN npx prisma generate --schema=./app/prisma/schema.prisma
 
 
-FROM node:18-alpine AS snipcode
+FROM node:20-alpine AS snipcode
 
 ENV NODE_ENV=production
 
