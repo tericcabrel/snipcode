@@ -11,7 +11,7 @@ This is the core backend of Snipcode. All the business logic behind this applica
 
 ## Prerequisites
 Make sure you have this tools installed before running the project
-* Node.js 16+
+* Node.js 20+
 * NPM or Yarn
 * Docker
 * AWS CLI v2
