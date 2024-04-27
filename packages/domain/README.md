@@ -4,11 +4,11 @@ This package contains all the business logic of the project
 
 ## Tech Stack
 * Node.js
-* Typescript
+* TypeScript
 
 ## Prerequisites
 Make sure you have this tools installed before running the project
-* Node.js 18+
+* Node.js 20+
 * Yarn
 * Docker
 
@@ -52,7 +52,7 @@ There are three command to run tests where each command has a specific purpose:
 - `yarn test:unit`: use this command when you want to test unit functions with no external dependencies (db, message broker, etc...)
 
 
-- `yarn test`: use this command to run functions that require database or not. Everytime you run a test, the migration will be executed against the database
+- `yarn test`: use this command to run functions that require database or not. Every time you run a test, the migration will be executed against the database
   (in the jest global setup) which add 5-10 seconds on test execution time. This command runs inside the CI Pipeline.
 
 

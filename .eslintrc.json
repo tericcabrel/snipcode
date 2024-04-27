@@ -76,7 +76,7 @@
     ],
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "sort-destructure-keys/sort-destructure-keys": 2,
+    "sort-destructure-keys/sort-destructure-keys": "error",
     "@typescript-eslint/member-ordering": "warn",
     "@typescript-eslint/prefer-nullish-coalescing": "error",
     "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
