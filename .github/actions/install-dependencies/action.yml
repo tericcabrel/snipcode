@@ -1,0 +1,31 @@
+name: Install Node and package dependencies
+description: 'Install project dependencies'
+inputs:
+  REPO_NAME:
+    description: 'Repository name'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Cache Node.js modules
+      uses: actions/cache@v4
+      with:
+        path: node_modules
+        key: "${{ runner.os }}-yarn-${{ hashFiles('**/*.yarn.lock') }}"
+        restore-keys: ${{ runner.os }}-yarn-
+
+    - name: Set up Node 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Install Yarn 4
+      shell: bash
+      run: |
+        corepack enable
+        yarn set version 4.2.1
+
+    - name: Install projects dependencies
+      shell: bash
+      run: yarn install

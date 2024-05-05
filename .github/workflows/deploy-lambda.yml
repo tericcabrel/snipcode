@@ -2,13 +2,19 @@ name: Deploy Code Embed
 on:
   push:
     branches:
-      - main
       - dev
     paths:
       - 'packages/database/prisma/**'
       - 'packages/database/src/**'
       - 'apps/functions/code-embed/src/**'
       - 'apps/functions/code-embed/serverless.ts'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New version of the lambda to release'
+        type: string
+        required: true
+        default: 'latest'
 
 jobs:
   deploy:
@@ -26,13 +32,9 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Node 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
 
-      - name: Install projects dependencies
-        uses: bahmutov/npm-install@v1
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
 
       - name: Deploy the application in staging
         working-directory: 'apps/functions/code-embed'

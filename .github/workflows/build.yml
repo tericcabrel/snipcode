@@ -10,7 +10,7 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  group: "${{ github.workflow }}-${{ github.head_ref || github.run_id }}"
   cancel-in-progress: true
 
 jobs:
@@ -25,28 +25,13 @@ jobs:
       ADMIN_PASSWORD: admin_password
       CONVERTKIT_API_KEY: api_key
       CONVERTKIT_FORM_ID: form_id
+    outputs:
+      releasedPackages: ${{ steps.releasedPackages.outputs.versions }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Cache Node.js modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/*.yarn.lock') }}
-          restore-keys: ${{ runner.os }}-yarn-
-
-      - name: Set up Node 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Yarn 4
-        run: |
-          corepack enable
-          yarn set version berry
-
-      - name: Install projects dependencies
-        run: yarn install
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
 
       - name: Lint the projects
         run: yarn lint
@@ -67,15 +52,22 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@v4
+
       - name: Install Yarn 4
         run: |
           corepack enable
-          yarn set version berry
+          yarn set version 4.2.1
+
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
+
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
       - name: Build Project Artifacts
+        env:
+          APP_VERSION:
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
