@@ -1,0 +1,31 @@
+name: Publish Embed assets to NPM
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New version of the embed to release'
+        type: string
+        required: true
+        default: 'latest'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Publish to NPM
+        working-directory: packages/embed
+        env:
+          NEW_VERSION: ${{ inputs.version }}
+        run: |
+          yarn build:cdn
+          cp package.publish.json build/package.json
+          cp README.publish.md build/README.md
+          cd build
+          jq --arg newVersion "$NEW_VERSION" '.version = $newVersion' package.json > tmp.json && mv tmp.json package.json
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+          npm publish --access=public

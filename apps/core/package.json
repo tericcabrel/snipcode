@@ -1,6 +1,7 @@
 {
   "name": "@snipcode/core",
   "version": "1.0.1",
+  "private": true,
   "description": "Snipcode core backend",
   "main": "dist/index.js",
   "license": "MIT",

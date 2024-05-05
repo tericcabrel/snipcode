@@ -1,6 +1,7 @@
 {
   "name": "@snipcode/domain",
   "version": "1.0.0",
+  "private": true,
   "description": "This package contains all the business logic of the project",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

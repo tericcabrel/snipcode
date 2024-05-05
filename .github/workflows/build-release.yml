@@ -1,0 +1,156 @@
+name: Build and release project
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**.md'
+      - '!.changeset/**'
+      - 'LICENSE'
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  REPO_NAME: snipcode
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.head_ref || github.run_id }}"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_PORT: 3306
+      DATABASE_URL: mysql://root:root@127.0.0.1:3306/test
+      ADMIN_PASSWORD: admin_password
+      CONVERTKIT_API_KEY: api_key
+      CONVERTKIT_FORM_ID: form_id
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Lint the projects
+        run: yarn lint
+
+      - name: Build the projects
+        run: yarn build
+
+      - name: Start MySQL server
+        run: sudo systemctl start mysql.service
+
+      - name: Run tests
+        run: yarn test
+
+  version:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    outputs:
+      hasChangesets: ${{ steps.changesets.outputs.hasChangesets }}
+      releaseArtifactId: ${{ steps.artifact-release-upload.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Print Released Packages
+        id: releasedPackages
+        run: yarn changeset status --output=release.json
+
+      - name: Upload Release File
+        uses: actions/upload-artifact@v4
+        id: artifact-release-upload
+        with:
+          name: released-packages
+          path: release.json
+
+      - name: Create Release Pull Request
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          commit: 'chore: update versions'
+          title: 'chore: update versions'
+          createGithubReleases: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_PAT }}
+      GH_BRANCH: ${{ github.head_ref || github.ref_name }}
+    needs:
+      - version
+    if: needs.version.outputs.hasChangesets == 'true'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Release File
+        uses: actions/download-artifact@v4
+        with:
+          name: released-packages
+
+      - name: Trigger Backend Release
+        run: |
+          BACKEND_VERSION=$(jq -r '.releases[] | select(.name == "@snipcode/core") | .newVersion' release.json)
+          if [ -n "$BACKEND_VERSION" ]; then
+            echo "Ready to release Backend version $BACKEND_VERSION"
+            gh workflow run deploy-backend.yml -r "${{ secrets.GH_BRANCH }}" -f version=$BACKEND_VERSION
+          else
+            echo "No Backend Release"
+          fi
+
+      - name: Trigger Frontend Release
+        continue-on-error: true
+        run: |
+          FRONTEND_VERSION=$(jq -r '.releases[] | select(.name == "@snipcode/web") | .newVersion' release.json)
+          if [ -n "$FRONTEND_VERSION" ]; then
+            echo "Ready to release Frontend version $FRONTEND_VERSION"
+            gh workflow run deploy-frontend.yml -r "${{ secrets.GH_BRANCH }}" -f version=$FRONTEND_VERSION
+          else
+            echo "No Frontend Release"
+          fi
+
+      - name: Trigger Embed Release
+        continue-on-error: true
+        run: |
+          EMBED_VERSION=$(jq -r '.releases[] | select(.name == "@snipcode/embed") | .newVersion' release.json)
+          if [ -n "$EMBED_VERSION" ]; then
+            echo "Ready to release Embed version $EMBED_VERSION"
+            gh workflow run deploy-embed.yml -r "${{ secrets.GH_BRANCH }}" -f version=$EMBED_VERSION
+          else
+            echo "No Embed Release"
+          fi
+
+      - name: Trigger Lambda Release
+        continue-on-error: true
+        run: |
+          LAMBDA_VERSION=$(jq -r '.releases[] | select(.name == "@snipcode/code-embed") | .newVersion' release.json)
+          if [ -n "$LAMBDA_VERSION" ]; then
+            echo "Ready to release Lambda version $LAMBDA_VERSION"
+            gh workflow run deploy-lambda.yml -r "${{ secrets.GH_BRANCH }}" -f version=$LAMBDA_VERSION
+          else
+            echo "No Lambda Release"
+          fi
+
+      - name: Delete Release File
+        if: ${{ success() }}
+        env:
+          ARTIFACT_ID: ${{ needs.version.outputs.releaseArtifactId }}
+        run: |
+          set -e
+          echo "Deleting artefact $ARTIFACT_ID"
+          curl -L \
+            -X DELETE \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GH_PAT }}"\
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/tericcabrel/$REPO_NAME/actions/artifacts/$ARTIFACT_ID
