@@ -1,9 +1,10 @@
-import { Role, RoleName, dbClient } from '@snipcode/database';
 import SnipcodeError, { errors } from '@snipcode/utils';
 
-import CreateRoleDto from './dtos/create-role-dto';
+import { CreateRoleDto } from './dtos/create-role-dto';
+import { Role, RoleName } from '../entities/role';
+import { prisma } from '../utils/prisma';
 
-export default class RoleService {
+export class RoleService {
   async loadRoles(): Promise<void> {
     const roleAdminDto = new CreateRoleDto({
       description: 'can do everything in the application',
@@ -13,12 +14,12 @@ export default class RoleService {
     const roleUserDto = new CreateRoleDto({ description: "can't do everything", level: 100, name: 'user' });
 
     const promises = [roleAdminDto, roleUserDto].map(async (roleDto) => {
-      const role = await dbClient.role.findUnique({ where: { name: roleDto.name } });
+      const role = await prisma.role.findUnique({ where: { name: roleDto.name } });
 
       if (!role) {
         const input = roleDto.toRole();
 
-        return dbClient.role.create({
+        return prisma.role.create({
           data: {
             description: input.description,
             id: input.id,
@@ -35,7 +36,7 @@ export default class RoleService {
   }
 
   async findByName(name: RoleName): Promise<Role> {
-    const role = await dbClient.role.findUnique({ where: { name } });
+    const role = await prisma.role.findUnique({ where: { name } });
 
     if (!role) {
       throw new SnipcodeError(errors.ROLE_USER_NOT_FOUND, 'ROLE_USER_NOT_FOUND');
@@ -45,10 +46,10 @@ export default class RoleService {
   }
 
   async findById(id: string): Promise<Role | null> {
-    return dbClient.role.findUnique({ where: { id } });
+    return prisma.role.findUnique({ where: { id } });
   }
 
   async findAll(): Promise<Role[]> {
-    return dbClient.role.findMany({ orderBy: { level: 'desc' } });
+    return prisma.role.findMany({ orderBy: { level: 'desc' } });
   }
 }

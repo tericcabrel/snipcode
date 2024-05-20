@@ -1,12 +1,12 @@
-import { Session, dbClient } from '@snipcode/database';
+import { CreateSessionDto } from './dtos/create-session-dto';
+import { Session } from '../entities/session';
+import { prisma } from '../utils/prisma';
 
-import CreateSessionDto from './dtos/create-session-dto';
-
-export default class SessionService {
+export class SessionService {
   async create(createSessionDto: CreateSessionDto): Promise<Session> {
     const input = createSessionDto.toSession();
 
-    return dbClient.session.create({
+    return prisma.session.create({
       data: {
         expires: input.expires,
         id: input.id,
@@ -17,10 +17,10 @@ export default class SessionService {
   }
 
   async deleteUserSessions(userId: string): Promise<void> {
-    await dbClient.session.deleteMany({ where: { userId } });
+    await prisma.session.deleteMany({ where: { userId } });
   }
 
   async findByToken(token: string): Promise<Session | null> {
-    return dbClient.session.findUnique({ where: { token } });
+    return prisma.session.findUnique({ where: { token } });
   }
 }

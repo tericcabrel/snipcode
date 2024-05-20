@@ -1,4 +1,5 @@
-import { Role, RoleName, dbId } from '@snipcode/database';
+import { Role, RoleName } from '../../entities/role';
+import { dbID } from '../../utils/id';
 
 type Input = {
   description: string | null;
@@ -6,11 +7,11 @@ type Input = {
   name: RoleName;
 };
 
-export default class CreateRoleDto {
+export class CreateRoleDto {
   private readonly roleId: string;
 
   constructor(private _input: Input) {
-    this.roleId = dbId.generate();
+    this.roleId = dbID.generate();
   }
 
   get name(): RoleName {

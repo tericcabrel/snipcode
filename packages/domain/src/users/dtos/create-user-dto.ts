@@ -1,6 +1,6 @@
-import { OauthProvider, User, dbId } from '@snipcode/database';
-
+import { OauthProvider, User } from '../../entities/user';
 import { hashPassword } from '../../utils/helpers';
+import { dbID } from '../../utils/id';
 
 type Input = {
   email: string;
@@ -13,14 +13,14 @@ type Input = {
   username: string | null;
 };
 
-export default class CreateUserDto {
+export class CreateUserDto {
   readonly hashedPassword: string | null;
 
   private readonly userId: string;
   private enabled = false;
 
   constructor(private _input: Input) {
-    this.userId = dbId.generate();
+    this.userId = dbID.generate();
     this.hashedPassword = this._input.password ? hashPassword(this._input.password) : null;
   }
 

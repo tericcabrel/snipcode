@@ -3,7 +3,7 @@ type Input = {
   snippetId: string;
 };
 
-export default class DeleteSnippetDto {
+export class DeleteSnippetDto {
   constructor(private _input: Input) {}
 
   get snippetId(): string {

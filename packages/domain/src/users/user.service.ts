@@ -1,13 +1,15 @@
-import { Role, User, dbClient } from '@snipcode/database';
 import SnipcodeError, { errors } from '@snipcode/utils';
 import bcrypt from 'bcryptjs';
 import { generateFromEmail } from 'unique-username-generator';
 
-import CreateUserRootFolderDto from '../folders/dtos/create-user-root-folder-dto';
-import CreateUserDto from './dtos/create-user-dto';
-import UpdateUserDto from './dtos/update-user-dto';
+import { CreateUserDto } from './dtos/create-user-dto';
+import { UpdateUserDto } from './dtos/update-user-dto';
+import { Role } from '../entities/role';
+import { User } from '../entities/user';
+import { CreateUserRootFolderDto } from '../folders/dtos/create-user-root-folder-dto';
+import { prisma } from '../utils/prisma';
 
-export default class UserService {
+export class UserService {
   async create(createUserDto: CreateUserDto): Promise<User> {
     const user = await this.findByEmail(createUserDto.email);
 
@@ -21,7 +23,7 @@ export default class UserService {
 
     const input = createUserDto.toUser();
 
-    return dbClient.user.create({
+    return prisma.user.create({
       data: {
         email: input.email,
         id: input.id,
@@ -40,7 +42,7 @@ export default class UserService {
   async update(currentUser: User, updateUserDto: UpdateUserDto): Promise<User> {
     const input = updateUserDto.toUser(currentUser);
 
-    return dbClient.user.update({
+    return prisma.user.update({
       data: {
         isEnabled: input.isEnabled,
         name: input.name,
@@ -76,7 +78,7 @@ export default class UserService {
 
     const userInput = userAdminDto.toUser();
 
-    const user = await dbClient.user.create({
+    const user = await prisma.user.create({
       data: {
         email: userInput.email,
         id: userInput.id,
@@ -95,7 +97,7 @@ export default class UserService {
 
     const folderInput = createUserRootFolderDto.toFolder();
 
-    await dbClient.folder.create({
+    await prisma.folder.create({
       data: {
         id: folderInput.id,
         name: folderInput.name,
@@ -106,11 +108,11 @@ export default class UserService {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return dbClient.user.findUnique({ where: { email } });
+    return prisma.user.findUnique({ where: { email } });
   }
 
   async findById(id: string): Promise<User | null> {
-    return dbClient.user.findUnique({ where: { id } });
+    return prisma.user.findUnique({ where: { id } });
   }
 
   async login(email: string, password: string): Promise<User> {
@@ -138,7 +140,7 @@ export default class UserService {
       return generateFromEmail(email, 3);
     }
 
-    const user = await dbClient.user.findFirst({
+    const user = await prisma.user.findFirst({
       where: {
         username,
       },

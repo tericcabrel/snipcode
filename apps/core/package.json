@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "10.0.3",
-    "@snipcode/database": "workspace:*",
     "@snipcode/domain": "workspace:*",
     "@snipcode/embed": "workspace:*",
     "@snipcode/logger": "workspace:*",

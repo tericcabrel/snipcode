@@ -17,7 +17,6 @@
     "cache:disable": "turbo unlink"
   },
   "workspaces": [
-    "packages/database",
     "packages/domain",
     "packages/embed",
     "packages/front",
@@ -67,5 +66,5 @@
     "turbo": "1.13.0",
     "typescript": "5.4.3"
   },
-  "packageManager": "yarn@4.2.1"
+  "packageManager": "yarn@4.2.2"
 }

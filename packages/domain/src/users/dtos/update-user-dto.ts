@@ -1,4 +1,4 @@
-import { OauthProvider, User } from '@snipcode/database';
+import { OauthProvider, User } from '../../entities/user';
 
 type Input = {
   name: string;
@@ -8,7 +8,7 @@ type Input = {
   timezone: string | null;
 };
 
-export default class UpdateUserDto {
+export class UpdateUserDto {
   private enabled = false;
 
   constructor(private _input: Input) {}
