@@ -10,8 +10,8 @@
     "ecmaVersion": 2021,
     "sourceType": "module",
     "project": [
-      "./apps/web/tsconfig.json",
-      "tsconfig.json"
+      "tsconfig.json",
+      "./apps/web/tsconfig.json"
     ]
   },
   "rules": {

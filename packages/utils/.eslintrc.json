@@ -6,8 +6,8 @@
     "ecmaVersion": 2023,
     "sourceType": "module",
     "project": [
-      "./packages/utils/tsconfig.json",
-      "tsconfig.json"
+      "tsconfig.json",
+      "./packages/utils/tsconfig.json"
     ]
   }
 }

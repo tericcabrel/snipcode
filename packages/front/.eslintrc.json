@@ -9,8 +9,8 @@
     "ecmaVersion": 2023,
     "sourceType": "module",
     "project": [
-      "./packages/logger/tsconfig.json",
-      "tsconfig.json"
+      "tsconfig.json",
+      "./packages/logger/tsconfig.json"
     ]
   }
 }

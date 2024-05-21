@@ -11,8 +11,8 @@
     "ecmaVersion": 2023,
     "sourceType": "module",
     "project": [
-      "./packages/embed/tsconfig.json",
-      "tsconfig.json"
+      "tsconfig.json",
+      "./packages/embed/tsconfig.json"
     ]
   }
 }

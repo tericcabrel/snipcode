@@ -4,8 +4,8 @@
     "ecmaVersion": 2023,
     "sourceType": "module",
     "project": [
-      "./apps/functions/code-embed/tsconfig.json",
-      "tsconfig.json"
+      "tsconfig.json",
+      "./apps/functions/code-embed/tsconfig.json"
     ]
   }
 }
