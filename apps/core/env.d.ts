@@ -1,5 +1,6 @@
 export type EnvironmentVariables = {
   ADMIN_PASSWORD: string;
+  APP_VERSION: string;
   CONVERTKIT_API_KEY: string;
   CONVERTKIT_FORM_ID: string;
   CONVERTKIT_TAG_ID: string;

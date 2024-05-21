@@ -1,7 +1,7 @@
 import http from 'http';
 import path from 'path';
 
-import { dbClient } from '@snipcode/database';
+import { dbClient } from '@snipcode/domain';
 import dotenv from 'dotenv';
 import express from 'express';
 

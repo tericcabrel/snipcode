@@ -1,8 +1,14 @@
 {
-  "ignorePatterns": ["graphql.d.ts", "jest.config.ts"],
+  "ignorePatterns": [
+    "graphql.d.ts",
+    "jest.config.ts"
+  ],
   "parserOptions": {
-    "ecmaVersion": 2021,
+    "ecmaVersion": 2023,
     "sourceType": "module",
-    "project": "tsconfig.json"
+    "project": [
+      "./apps/core/tsconfig.json",
+      "tsconfig.json"
+    ]
   }
 }

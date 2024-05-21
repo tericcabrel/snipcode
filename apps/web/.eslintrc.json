@@ -9,7 +9,10 @@
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module",
-    "project": "tsconfig.json"
+    "project": [
+      "./apps/web/tsconfig.json",
+      "tsconfig.json"
+    ]
   },
   "rules": {
     "camelcase": "off",

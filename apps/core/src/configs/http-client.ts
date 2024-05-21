@@ -2,9 +2,9 @@ import axios from 'axios';
 
 import { logger } from './logger';
 
-const client = axios.create();
+const httpClient = axios.create();
 
-client.interceptors.response.use(
+httpClient.interceptors.response.use(
   (res) => res,
   (err) => {
     const {
@@ -19,4 +19,4 @@ client.interceptors.response.use(
   },
 );
 
-export default client;
+export { httpClient };

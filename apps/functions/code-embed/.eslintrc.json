@@ -1,8 +1,11 @@
 {
   "ignorePatterns": [],
   "parserOptions": {
-    "ecmaVersion": 2021,
+    "ecmaVersion": 2023,
     "sourceType": "module",
-    "project": "tsconfig.json"
+    "project": [
+      "./apps/functions/code-embed/tsconfig.json",
+      "tsconfig.json"
+    ]
   }
 }

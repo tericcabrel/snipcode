@@ -7,6 +7,7 @@ dotenv.config({ override: true });
 
 export const env: AppEnvironmentVariables = {
   ADMIN_PASSWORD: getEnv('ADMIN_PASSWORD'),
+  APP_VERSION: getEnv('APP_VERSION'),
   CONVERTKIT_API_KEY: getEnv('CONVERTKIT_API_KEY'),
   CONVERTKIT_FORM_ID: getEnv('CONVERTKIT_FORM_ID'),
   CONVERTKIT_TAG_ID: getEnv('CONVERTKIT_TAG_ID'),

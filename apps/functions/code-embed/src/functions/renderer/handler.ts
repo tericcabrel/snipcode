@@ -1,4 +1,4 @@
-import { dbClient } from '@snipcode/database';
+import { dbClient } from '@snipcode/domain';
 import { renderSnippetToHtml } from '@snipcode/embed';
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Handler } from 'aws-lambda';
 

@@ -1,8 +1,16 @@
 {
-  "ignorePatterns": ["postcss.config.js", "tailwind.config.js", "jest.config.ts", "generated.ts"],
+  "ignorePatterns": [
+    "postcss.config.js",
+    "tailwind.config.js",
+    "jest.config.ts",
+    "generated.ts"
+  ],
   "parserOptions": {
-    "ecmaVersion": 2021,
+    "ecmaVersion": 2023,
     "sourceType": "module",
-    "project": "tsconfig.json"
+    "project": [
+      "./packages/logger/tsconfig.json",
+      "tsconfig.json"
+    ]
   }
 }
