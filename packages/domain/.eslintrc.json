@@ -1,13 +1,12 @@
 {
+  "root": true,
+  "extends": "../../.eslintrc.json",
   "ignorePatterns": [
     "jest.config.ts"
   ],
   "parserOptions": {
     "ecmaVersion": 2023,
     "sourceType": "module",
-    "project": [
-      "./packages/domain/tsconfig.json",
-      "tsconfig.json"
-    ]
+    "project": "tsconfig.json"
   }
 }

@@ -8,5 +8,7 @@ export const handleRequestError = (errorCode: ErrorCode) => (error: AxiosError) 
     status: error.response?.status,
   };
 
+  console.log(errorInfo);
+
   throw new SnipcodeError(JSON.stringify(errorInfo, null, 2), errorCode);
 };
