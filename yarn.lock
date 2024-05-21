@@ -5430,7 +5430,7 @@ __metadata:
     apollo-server-express: "npm:3.13.0"
     axios: "npm:1.6.8"
     cors: "npm:2.8.5"
-    esbuild: "npm:0.20.2"
+    dotenv: "npm:16.4.5"
     express: "npm:4.19.1"
     graphql: "npm:16.8.1"
     nodemon: "npm:3.1.0"

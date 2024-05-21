@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@bugsnag/cuid": "3.1.1",
+    "@prisma/client": "5.14.0",
     "@snipcode/utils": "workspace:*",
     "axios": "1.6.8",
     "bcryptjs": "2.4.3",
@@ -34,7 +35,6 @@
   },
   "devDependencies": {
     "@ngneat/falso": "7.2.0",
-    "@prisma/client": "5.14.0",
     "@types/bcryptjs": "2.4.6",
     "nock": "13.5.4",
     "prisma": "5.14.0",
