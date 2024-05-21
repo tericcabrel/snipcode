@@ -1,11 +1,10 @@
 {
+  "root": true,
+  "extends": "../../../.eslintrc.json",
   "ignorePatterns": [],
   "parserOptions": {
     "ecmaVersion": 2023,
     "sourceType": "module",
-    "project": [
-      "tsconfig.json",
-      "./apps/functions/code-embed/tsconfig.json"
-    ]
+    "project": "tsconfig.json"
   }
 }

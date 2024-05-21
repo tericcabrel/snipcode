@@ -1,4 +1,6 @@
 {
+  "root": true,
+  "extends": "../../.eslintrc.json",
   "ignorePatterns": [
     "postcss.config.js",
     "tailwind.config.js",
@@ -8,9 +10,6 @@
   "parserOptions": {
     "ecmaVersion": 2023,
     "sourceType": "module",
-    "project": [
-      "tsconfig.json",
-      "./packages/logger/tsconfig.json"
-    ]
+    "project": "tsconfig.json"
   }
 }

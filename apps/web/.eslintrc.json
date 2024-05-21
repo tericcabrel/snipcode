@@ -1,18 +1,20 @@
 {
   "plugins": [],
-  "extends": ["next", "next/core-web-vitals"],
+  "root": true,
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "../../.eslintrc.json"
+  ],
   "settings": {
     "next": {
       "rootDir": "."
     }
   },
   "parserOptions": {
-    "ecmaVersion": 2021,
+    "ecmaVersion": 2023,
     "sourceType": "module",
-    "project": [
-      "tsconfig.json",
-      "./apps/web/tsconfig.json"
-    ]
+    "project": "tsconfig.json"
   },
   "rules": {
     "camelcase": "off",

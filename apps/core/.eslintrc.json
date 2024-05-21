@@ -1,4 +1,6 @@
 {
+  "root": true,
+  "extends": "../../.eslintrc.json",
   "ignorePatterns": [
     "graphql.d.ts",
     "jest.config.ts"
@@ -6,9 +8,6 @@
   "parserOptions": {
     "ecmaVersion": 2023,
     "sourceType": "module",
-    "project": [
-      "tsconfig.json",
-      "./apps/core/tsconfig.json"
-    ]
+    "project": "tsconfig.json"
   }
 }
