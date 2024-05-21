@@ -14,7 +14,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "cache:login": "turbo login",
     "cache:link": "turbo link",
-    "cache:disable": "turbo unlink"
+    "cache:disable": "turbo unlink",
+    "pre-release": "changeset"
   },
   "workspaces": [
     "packages/domain",
