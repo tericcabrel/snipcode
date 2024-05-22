@@ -1,12 +1,12 @@
 # Snipcode Core
 
-This is the core backend of Snipcode. All the business logic behind this application is implemented here. 
+This is the backend of Snipcode, containing the business logics related to  . 
 
 ## Tech Stack
 * Node.js
-* Typescript
+* TypeScript
 * GraphQL
-* MySQL 8 through PlanetScale
+* MySQL
 * Prisma
 
 ## Prerequisites
@@ -15,13 +15,13 @@ Make sure you have this tools installed before running the project
 * NPM or Yarn
 * Docker
 * AWS CLI v2
+* MySQL 8 on PlanetScale
 
 ## Packages dependencies
 We use Yarn workspace to create packages we can share with other applications.
 These packages are located in the folder `packages`, so you might need to change the code of one or many packages to implement a feature.
 Here are the packages used in this project:
 
-* [@snipcode/database](../../packages/database)
 * [@snipcode/domain](../../packages/domain)
 * [@snipcode/logger](../../packages/logger)
 * [@snipcode/utils](../../packages/utils)

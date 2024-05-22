@@ -33,7 +33,7 @@ nano .env
 
 Start the database locally
 ```shell
-yarn workspace @snipcode/database db:dev
+yarn workspace @snipcode/domain db:dev
 ```
 
 ## Start the watcher for the CSS and JS

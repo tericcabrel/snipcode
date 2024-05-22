@@ -5459,6 +5459,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@snipcode/embed@workspace:packages/embed"
   dependencies:
+    "@snipcode/domain": "workspace:*"
     "@types/express": "npm:4.17.21"
     express: "npm:4.19.1"
     nodemon: "npm:2.0.22"

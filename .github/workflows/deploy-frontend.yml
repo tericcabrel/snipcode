@@ -22,7 +22,7 @@ jobs:
       - name: Install Yarn 4
         run: |
           corepack enable
-          yarn set version 4.2.1
+          yarn set version 4.2.2
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest

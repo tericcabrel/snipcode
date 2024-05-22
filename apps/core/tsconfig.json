@@ -23,8 +23,5 @@
     {
       "path": "../../packages/domain"
     },
-    {
-      "path": "../../packages/database"
-    }
   ]
 }
