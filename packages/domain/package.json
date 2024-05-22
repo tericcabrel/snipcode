@@ -1,6 +1,6 @@
 {
   "name": "@snipcode/domain",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "This package contains the database definition and the business logic of the project",
   "main": "dist/index.js",
