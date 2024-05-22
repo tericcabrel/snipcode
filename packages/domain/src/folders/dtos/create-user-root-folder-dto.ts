@@ -1,10 +1,11 @@
-import { Folder, dbId } from '@snipcode/database';
+import { Folder } from '../../entities/folder';
+import { dbID } from '../../utils/id';
 
-export default class CreateUserRootFolderDto {
+export class CreateUserRootFolderDto {
   private readonly folderId: string;
 
   constructor(private _userId: string) {
-    this.folderId = dbId.generate();
+    this.folderId = dbID.generate();
   }
 
   toFolder(): Folder {

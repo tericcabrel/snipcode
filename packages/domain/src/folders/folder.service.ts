@@ -1,16 +1,17 @@
-import { Folder, dbClient } from '@snipcode/database';
 import SnipcodeError, { errors } from '@snipcode/utils';
 
-import CreateFolderDto from './dtos/create-folder-dto';
-import CreateUserRootFolderDto from './dtos/create-user-root-folder-dto';
-import UpdateFolderDto from './dtos/update-folder-dto';
+import { CreateFolderDto } from './dtos/create-folder-dto';
+import { CreateUserRootFolderDto } from './dtos/create-user-root-folder-dto';
+import { UpdateFolderDto } from './dtos/update-folder-dto';
 import { isFoldersContainRoot } from './utils/folders';
+import { Folder } from '../entities/folder';
+import { prisma } from '../utils/prisma';
 
-export default class FolderService {
+export class FolderService {
   async createUserRootFolder(dto: CreateUserRootFolderDto): Promise<Folder> {
     const input = dto.toFolder();
 
-    return dbClient.folder.create({
+    return prisma.folder.create({
       data: {
         id: input.id,
         name: input.name,
@@ -35,7 +36,7 @@ export default class FolderService {
 
     const parentFolder = await this.findById(createFolderDto.parentFolderId);
 
-    return dbClient.folder.create({
+    return prisma.folder.create({
       data: {
         id: input.id,
         name: input.name,
@@ -47,11 +48,11 @@ export default class FolderService {
   }
 
   async findUserFolders(userId: string): Promise<Folder[]> {
-    return dbClient.folder.findMany({ orderBy: { name: 'asc' }, where: { userId } });
+    return prisma.folder.findMany({ orderBy: { name: 'asc' }, where: { userId } });
   }
 
   async findById(id: string): Promise<Folder> {
-    const folder = await dbClient.folder.findUnique({ where: { id } });
+    const folder = await prisma.folder.findUnique({ where: { id } });
 
     if (!folder) {
       throw new SnipcodeError(errors.FOLDER_NOT_FOUND(id), 'FOLDER_NOT_FOUND');
@@ -83,7 +84,7 @@ export default class FolderService {
   }
 
   async deleteMany(folderIds: string[], userId: string): Promise<void> {
-    const foldersToDelete = await dbClient.folder.findMany({
+    const foldersToDelete = await prisma.folder.findMany({
       where: {
         id: {
           in: folderIds,
@@ -98,7 +99,7 @@ export default class FolderService {
 
     const ids = foldersToDelete.map((folder) => folder.id);
 
-    await dbClient.folder.deleteMany({
+    await prisma.folder.deleteMany({
       where: {
         id: {
           in: ids,
@@ -116,7 +117,7 @@ export default class FolderService {
       return [];
     }
 
-    const parentFoldersOrdered = await dbClient.folder.findMany({
+    const parentFoldersOrdered = await prisma.folder.findMany({
       orderBy: {
         createdAt: 'asc',
       },
@@ -156,7 +157,7 @@ export default class FolderService {
 
     const input = updateFolderDto.toFolder(folder);
 
-    return dbClient.folder.update({
+    return prisma.folder.update({
       data: {
         name: input.name,
       },
@@ -175,7 +176,7 @@ export default class FolderService {
   }
 
   private findFolderSubFolders(folderId: string, userId: string): Promise<Folder[]> {
-    return dbClient.folder.findMany({
+    return prisma.folder.findMany({
       where: {
         parentId: folderId,
         userId,

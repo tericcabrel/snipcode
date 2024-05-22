@@ -4,6 +4,7 @@
     "sourceMap": false
   },
   "exclude": [
-    "__tests__"
+    "tests",
+    "**/*.test.ts"
   ]
 }

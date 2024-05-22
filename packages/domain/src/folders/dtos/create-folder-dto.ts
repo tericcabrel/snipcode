@@ -1,4 +1,5 @@
-import { Folder, dbId } from '@snipcode/database';
+import { Folder } from '../../entities/folder';
+import { dbID } from '../../utils/id';
 
 type Input = {
   name: string;
@@ -6,11 +7,11 @@ type Input = {
   userId: string;
 };
 
-export default class CreateFolderDto {
+export class CreateFolderDto {
   private readonly folderId: string;
 
   constructor(private _input: Input) {
-    this.folderId = dbId.generate();
+    this.folderId = dbID.generate();
   }
 
   get name(): string {

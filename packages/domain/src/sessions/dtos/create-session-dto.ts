@@ -1,17 +1,19 @@
-import { Session, dbId } from '@snipcode/database';
 import { generateRandomId } from '@snipcode/utils';
+
+import { Session } from '../../entities/session';
+import { dbID } from '../../utils/id';
 
 type Input = {
   expireDate: Date;
   userId: string;
 };
 
-export default class CreateSessionDto {
+export class CreateSessionDto {
   private readonly sessionId: string;
   private readonly token: string;
 
   constructor(private _input: Input) {
-    this.sessionId = dbId.generate();
+    this.sessionId = dbID.generate();
     this.token = generateRandomId();
   }
 

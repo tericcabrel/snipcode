@@ -1,9 +1,10 @@
-import { Snippet, SnippetVisibility, dbClient } from '@snipcode/database';
 import SnipcodeError, { errors } from '@snipcode/utils';
 
-import CreateSnippetDto from './dtos/create-snippet-dto';
-import DeleteSnippetDto from './dtos/delete-snippet-dto';
-import UpdateSnippetDto from './dtos/update-snippet-dto';
+import { CreateSnippetDto } from './dtos/create-snippet-dto';
+import { DeleteSnippetDto } from './dtos/delete-snippet-dto';
+import { UpdateSnippetDto } from './dtos/update-snippet-dto';
+import { Snippet, SnippetVisibility } from '../entities/snippet';
+import { prisma } from '../utils/prisma';
 
 const MAX_ITEM_PER_PAGE = 50;
 
@@ -12,7 +13,7 @@ const sortMethodMap: Record<'recently_updated' | 'recently_created', 'createdAt'
   recently_updated: 'updatedAt',
 };
 
-export default class SnippetService {
+export class SnippetService {
   async create(createSnippetDto: CreateSnippetDto): Promise<Snippet> {
     const isSnippetExist = await this.isSnippetExistInFolder(createSnippetDto.folderId, createSnippetDto.name);
 
@@ -22,7 +23,7 @@ export default class SnippetService {
 
     const input = createSnippetDto.toSnippet();
 
-    return dbClient.snippet.create({
+    return prisma.snippet.create({
       data: {
         content: input.content,
         contentHtml: input.contentHtml,
@@ -41,7 +42,7 @@ export default class SnippetService {
   }
 
   async findById(id: string): Promise<Snippet> {
-    const snippet = await dbClient.snippet.findUnique({ where: { id } });
+    const snippet = await prisma.snippet.findUnique({ where: { id } });
 
     if (!snippet) {
       throw new SnipcodeError(errors.SNIPPET_NOT_FOUND(id), 'SNIPPET_NOT_FOUND');
@@ -51,11 +52,11 @@ export default class SnippetService {
   }
 
   async findByUser(userId: string): Promise<Snippet[]> {
-    return dbClient.snippet.findMany({ orderBy: { createdAt: 'desc' }, where: { userId } });
+    return prisma.snippet.findMany({ orderBy: { createdAt: 'desc' }, where: { userId } });
   }
 
   async findByFolder(folderId: string, visibility?: SnippetVisibility): Promise<Snippet[]> {
-    return dbClient.snippet.findMany({
+    return prisma.snippet.findMany({
       orderBy: { createdAt: 'desc' },
       where: {
         folderId,
@@ -77,7 +78,7 @@ export default class SnippetService {
     // If the use has 20 we fetch 21 which help to know if there still more in the table
     const limitPlusOne = limit + 1;
 
-    const snippets = await dbClient.snippet.findMany({
+    const snippets = await prisma.snippet.findMany({
       orderBy: { [sortMethodMap[sortMethod]]: 'desc' },
       take: limitPlusOne,
       where: {
@@ -108,7 +109,7 @@ export default class SnippetService {
       throw new SnipcodeError(errors.CANT_EDIT_SNIPPET(deleteSnippetDto.creatorId, snippet.id), 'CANT_EDIT_SNIPPET');
     }
 
-    await dbClient.snippet.delete({ where: { id: deleteSnippetDto.snippetId } });
+    await prisma.snippet.delete({ where: { id: deleteSnippetDto.snippetId } });
   }
 
   async isSnippetExistInFolder(folderId: string, snippetName: string): Promise<boolean> {
@@ -134,7 +135,7 @@ export default class SnippetService {
 
     const input = updateSnippetDto.toSnippet(snippet);
 
-    return dbClient.snippet.update({
+    return prisma.snippet.update({
       data: {
         content: input.content,
         contentHtml: input.contentHtml,

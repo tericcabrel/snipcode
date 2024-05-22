@@ -1,4 +1,5 @@
-import { Snippet, SnippetVisibility, dbId } from '@snipcode/database';
+import { Snippet, SnippetVisibility } from '../../entities/snippet';
+import { dbID } from '../../utils/id';
 
 type Input = {
   content: string;
@@ -13,11 +14,11 @@ type Input = {
   visibility: SnippetVisibility;
 };
 
-export default class CreateSnippetDto {
+export class CreateSnippetDto {
   private readonly snippetId: string;
 
   constructor(private _input: Input) {
-    this.snippetId = dbId.generate();
+    this.snippetId = dbID.generate();
   }
 
   get folderId(): string {

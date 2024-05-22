@@ -38,7 +38,7 @@
         "DATABASE_URL"
       ]
     },
-    "@snipcode/database#build": {
+    "@snipcode/domain#build": {
       "dependsOn": [
         "^build",
         "prebuild"

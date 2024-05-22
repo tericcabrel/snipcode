@@ -1,0 +1,47 @@
+import { CreateSnippetDto } from './create-snippet-dto';
+import { generateTestId } from '../../../tests/helpers';
+import { Snippet } from '../../entities/snippet';
+
+describe('Test Create Snippet DTO', () => {
+  it('should return a valid snippet', () => {
+    const folderId = generateTestId();
+    const userId = generateTestId();
+
+    // GIVEN
+    const dto = new CreateSnippetDto({
+      content: 'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n};',
+      contentHighlighted:
+        'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n}; highlighted',
+      description: 'Basic react component',
+      folderId,
+      language: 'tsx',
+      lineHighlight: null,
+      name: 'app.tsx',
+      theme: 'github-dark',
+      userId,
+      visibility: 'public',
+    });
+
+    // WHEN
+    const folder = dto.toSnippet();
+
+    // THEN
+    expect(folder).toMatchObject<Snippet>({
+      content: 'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n};',
+      contentHtml:
+        'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n}; highlighted',
+      createdAt: expect.any(Date),
+      description: 'Basic react component',
+      folderId,
+      id: expect.any(String),
+      language: 'tsx',
+      lineHighlight: null,
+      name: 'app.tsx',
+      size: expect.any(Number),
+      theme: 'github-dark',
+      updatedAt: expect.any(Date),
+      userId,
+      visibility: 'public',
+    });
+  });
+});

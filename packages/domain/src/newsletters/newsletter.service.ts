@@ -1,9 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
 
-import { handleRequestError } from '../utils/axios-error';
 import { NewsletterOption, SubscribeData, SubscribeInput } from './types';
+import { handleRequestError } from '../utils/axios-error';
 
-export default class NewsletterService {
+export class NewsletterService {
   private httpClient: AxiosInstance = axios.create();
   private readonly options: NewsletterOption;
 

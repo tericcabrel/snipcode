@@ -6,18 +6,17 @@
   "scripts": {
     "build": "turbo run build",
     "build:prod": "turbo run build:prod",
-    "build:backend": "turbo run build --filter=!@snipcode/web",
     "dev": "turbo run dev --no-cache --parallel --continue",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "clean": "turbo run clean && rm -rf .turbo",
+    "clean": "turbo run clean --force && rm -rf .turbo",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "cache:login": "turbo login",
     "cache:link": "turbo link",
-    "cache:disable": "turbo unlink"
+    "cache:disable": "turbo unlink",
+    "pre-release": "changeset"
   },
   "workspaces": [
-    "packages/database",
     "packages/domain",
     "packages/embed",
     "packages/front",
@@ -67,5 +66,5 @@
     "turbo": "1.13.0",
     "typescript": "5.4.3"
   },
-  "packageManager": "yarn@4.2.1"
+  "packageManager": "yarn@4.2.2"
 }

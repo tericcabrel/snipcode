@@ -1,4 +1,4 @@
-import { User } from '@snipcode/database';
+import { User } from '@snipcode/domain';
 import {
   CreateUserDto,
   CreateUserRootFolderDto,
@@ -12,7 +12,7 @@ import { AxiosRequestConfig } from 'axios';
 import { Response } from 'express';
 
 import { env } from '../../../configs/env';
-import httpClient from '../../../configs/http-client';
+import { httpClient } from '../../../configs/http-client';
 import { logger } from '../../../configs/logger';
 import { GitHubUserResponse } from '../../../types/auth';
 import { ExpressRequestQuery } from '../../../types/common';
@@ -118,7 +118,7 @@ export const authenticateWithGitHub = async (req: ExpressRequestQuery<{ code: st
     const session = await createUserSession(createdUser.id);
 
     return res.redirect(authSuccessURL(session.token));
-  } catch (e: any) {
+  } catch (e: unknown) {
     logger.error(e);
 
     return res.redirect(env.WEB_AUTH_ERROR_URL);

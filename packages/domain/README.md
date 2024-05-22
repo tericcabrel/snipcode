@@ -1,71 +1,99 @@
 # Snipcode Domain
 
-This package contains all the business logic of the project
+This package contains:
+* The entities and data access layer that can be used in the Backend.
+* The business logic of the project
+* The database migrations and entities managed by the ORM Prisma
 
-## Tech Stack
-* Node.js
-* TypeScript
 
 ## Prerequisites
 Make sure you have this tools installed before running the project
 * Node.js 20+
-* Yarn
+* Yarn 4
 * Docker
+* [The PlanetScale CLI](https://planetscale.com/cli)
 
 ## Set up the project
 Delete the existing folders output from build commands
 ```shell
 yarn clean
 ```
-Install node modules
+
+Install the Node modules
 ````shell
 yarn install
 ````
+
 Create the .env file from the template. This file is useful for test executions, so you don't have to edit any properties in the file.
 ```shell
 cp .env.template .env
 ```
 
-Build the package to generate types declaration required to provide autocompletion while using the functions in the core or web applications
+### Connect to the local database locally
+This project uses PlanetScale as the database.<br>
+To connect to the database locally, you must authenticate first (Ask the credentials to [@tericcabrel](https://github.com/tericcabrel)).<br>
+Once authenticated from the terminal, execute the commands below on two separate terminals.
+```shell
+# On a first terminal
+yarn db:dev
+# On a second terminal (only necessary if you update the prisma schema)
+yarn db:shadow
+```
+
+The shadow database runs on Docker, you can stop it when you don't need it
+```shell
+yarn db:shadow:stop
+```
+
+### Run the database migration, generate Prisma types and seed the database with default data
+```shell
+yarn db:generate
+yarn db:migrate
+yarn db:seed
+```
+
+### Generate a database migration
+To create a database migration that generate the SQL file, run the command below:
+```shell
+yarn db:migrate --name <migration-name>
+```
+
+### Others Prisma commands
+- Reset the database without seeding: `db:reset`
+- Reset the database with seeding: `db:reset:seed`
+- Open Prisma Studio to browse your database: `db:view`
+- Lint the Prisma schema file: `db:format`
+
+### Create a deployment request
+To publish the database schema changes in production, you must create a deployment request. Run the command below to do that
+```shell
+yarn db:deploy:create
+```
+
+Build the package to generate types declaration required to provide autocompletion while using the functions in the core or Lambda functions
 ```bash
 yarn build
 ```
 A `dist` folder will be generated.
 
+
 ## Running tests
-If you are running tests that require a database, you must start one with Docker.
+The command to run tests starts a Docker container of a MySQL database, it is required to execute functional tests.
+After the container has started, we execute the database migration or reset all the database tables.
 
-Start the Docker database
+Run command below to execute tests
 ```shell
-yarn db:test
+yarn test
 ```
-If you want to stop the Docker database
-```shell
-yarn db:test:stop
-```
-Run the migration to load the database schema
-```shell
-yarn db:test:migration
-```
-
-There are three command to run tests where each command has a specific purpose:
-- `yarn test:unit`: use this command when you want to test unit functions with no external dependencies (db, message broker, etc...)
-
-
-- `yarn test`: use this command to run functions that require database or not. Every time you run a test, the migration will be executed against the database
-  (in the jest global setup) which add 5-10 seconds on test execution time. This command runs inside the CI Pipeline.
-
-
-- `yarn test:db:local`: This command run functions that require database or not but, it doesn't execute the migration before running the test, so it is faster than the former.
-However, ensure you ran `yarn db:test:migration` before to 
 
 To run a specific test file, append the filename after the command:
 ```shell
 yarn test user.service.test.ts
-# or
-yarn test:unit user.service.test.ts
-# or
-yarn test:db:local user.service.test.ts
+```
+
+Run the command below to stop the Docker container for the database
+```shell
+yarn db:test:stop
 ```
 
 ## Lint the project

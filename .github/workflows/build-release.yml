@@ -46,7 +46,9 @@ jobs:
         run: sudo systemctl start mysql.service
 
       - name: Run tests
-        run: yarn test
+        run: |
+          yarn prisma migrate dev --schema=packages/domain/prisma/schema.prisma
+          yarn test
 
   version:
     runs-on: ubuntu-latest

@@ -1,4 +1,4 @@
-import { Snippet, SnippetVisibility } from '@snipcode/database';
+import { Snippet, SnippetVisibility } from '../../entities/snippet';
 
 type Input = {
   content: string;
@@ -13,7 +13,7 @@ type Input = {
   visibility: SnippetVisibility;
 };
 
-export default class UpdateSnippetDto {
+export class UpdateSnippetDto {
   constructor(private _input: Input) {}
 
   get name(): string {

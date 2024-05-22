@@ -1,4 +1,4 @@
-import { Folder } from '@snipcode/database';
+import { Folder } from '../../entities/folder';
 
 type Input = {
   creatorId: string;
@@ -6,7 +6,7 @@ type Input = {
   name: string;
 };
 
-export default class UpdateFolderDto {
+export class UpdateFolderDto {
   constructor(private _input: Input) {}
 
   get name(): string {

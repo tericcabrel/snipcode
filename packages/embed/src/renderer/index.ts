@@ -1,4 +1,4 @@
-import { Snippet } from '@snipcode/database';
+import { Snippet } from '@snipcode/domain';
 
 import { generateNoSnippetHtmlContent, generateSnippetHtmlContent } from './content/html-generator';
 import { generateHTMLPreview } from './content/preview-template';

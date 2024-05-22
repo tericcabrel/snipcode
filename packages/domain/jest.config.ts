@@ -10,8 +10,6 @@ const config: Config.InitialOptions = {
   snapshotFormat: {
     printBasicPrototype: false,
   },
-  globalSetup: './__tests__/setup/global-setup.ts',
-  setupFilesAfterEnv: ['./__tests__/setup/test-setup.ts'],
   coverageDirectory: 'coverage',
   collectCoverage: false, // When set to true, coverage is performed even if coverage flag isn't provided
   collectCoverageFrom: ['src/**/*.ts', '!src/index.ts'],

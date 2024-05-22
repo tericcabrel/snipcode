@@ -1,6 +1,6 @@
 import http from 'http';
 
-import { dbClient } from '@snipcode/database';
+import { dbClient } from '@snipcode/domain';
 import express from 'express';
 
 import { env } from './configs/env';
