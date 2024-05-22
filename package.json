@@ -1,7 +1,7 @@
 {
   "name": "snipcode",
   "version": "1.0.0",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -14,7 +14,8 @@
     "cache:login": "turbo login",
     "cache:link": "turbo link",
     "cache:disable": "turbo unlink",
-    "pre-release": "changeset"
+    "prerelease": "changeset",
+    "branch:create": "pscale branch create core-db $(git rev-parse --abbrev-ref HEAD)"
   },
   "workspaces": [
     "packages/domain",
@@ -23,6 +24,7 @@
     "packages/logger",
     "packages/utils",
     "apps/core",
+    "apps/backend",
     "apps/web",
     "apps/functions/**"
   ],
@@ -63,7 +65,7 @@
     "prettier": "3.2.5",
     "prisma": "5.11.0",
     "ts-jest": "29.1.2",
-    "turbo": "1.13.0",
+    "turbo": "1.13.3",
     "typescript": "5.4.3"
   },
   "packageManager": "yarn@4.2.2"
