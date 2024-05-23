@@ -2,12 +2,14 @@ import { registerAs } from '@nestjs/config';
 import { z } from 'zod';
 
 export default registerAs('app', () => ({
+  databaseUrl: process.env.DATABASE_URL,
   env: process.env.NODE_ENV,
   host: process.env.HOST,
   port: parseInt(process.env.PORT ?? '7501', 10),
 }));
 
 const EnvironmentVariablesSchema = z.object({
+  DATABASE_URL: z.string(),
   HOST: z.string(),
   NODE_ENV: z.union([z.literal('development'), z.literal('production'), z.literal('test')]),
   PORT: z.number({ coerce: true }).min(7000).max(8000),

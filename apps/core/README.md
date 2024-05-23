@@ -23,7 +23,7 @@ These packages are located in the folder `packages`, so you might need to change
 Here are the packages used in this project:
 
 * [@snipcode/domain](../../packages/domain)
-* [@snipcode/logger](../../packages/logger)
+* [@snipcode/logger](../../packages/logger-old)
 * [@snipcode/utils](../../packages/utils)
 
 ## Set up the project

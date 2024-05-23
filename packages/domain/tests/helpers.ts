@@ -1,26 +1,21 @@
 import { randEmail, randFullName, randImg, randNumber, randTimeZone, randUserName, randWord } from '@ngneat/falso';
 
-import {
-  Folder,
-  OauthProvider,
-  Role,
-  RoleName,
-  Session,
-  Snippet,
-  SnippetVisibility,
-  User,
-  dbClient,
-  dbID,
-} from '../index';
-import { CreateFolderDto } from '../src/folders/dtos/create-folder-dto';
-import { CreateUserRootFolderDto } from '../src/folders/dtos/create-user-root-folder-dto';
-import { UpdateFolderDto } from '../src/folders/dtos/update-folder-dto';
-import { CreateSessionDto } from '../src/sessions/dtos/create-session-dto';
-import { CreateSnippetDto } from '../src/snippets/dtos/create-snippet-dto';
-import { DeleteSnippetDto } from '../src/snippets/dtos/delete-snippet-dto';
-import { UpdateSnippetDto } from '../src/snippets/dtos/update-snippet-dto';
-import { CreateUserDto } from '../src/users/dtos/create-user-dto';
-import { UpdateUserDto } from '../src/users/dtos/update-user-dto';
+import { PrismaService } from '../src/prisma.service';
+import { Folder } from '../src/services/folders/folder.entity';
+import { CreateFolderInput } from '../src/services/folders/inputs/create-folder-input';
+import { CreateUserRootFolderInput } from '../src/services/folders/inputs/create-user-root-folder-input';
+import { UpdateFolderInput } from '../src/services/folders/inputs/update-folder-input';
+import { Role, RoleName } from '../src/services/roles/role.entity';
+import { CreateSessionInput } from '../src/services/sessions/inputs/create-session-input';
+import { Session } from '../src/services/sessions/session.entity';
+import { CreateSnippetInput } from '../src/services/snippets/inputs/create-snippet-input';
+import { DeleteSnippetInput } from '../src/services/snippets/inputs/delete-snippet-input';
+import { UpdateSnippetInput } from '../src/services/snippets/inputs/update-snippet-input';
+import { Snippet, SnippetVisibility } from '../src/services/snippets/snippet.entity';
+import { CreateUserInput } from '../src/services/users/inputs/create-user-input';
+import { UpdateUserInput } from '../src/services/users/inputs/update-user-input';
+import { OauthProvider, User } from '../src/services/users/user.entity';
+import { dbID } from '../src/utils/db-id';
 
 type CreateManyTestFoldersArgs = {
   folderNames: string[];
@@ -28,7 +23,7 @@ type CreateManyTestFoldersArgs = {
   userId: string;
 };
 
-type CreateTestUserDtoArgs = {
+type CreateTestUserInputArgs = {
   email?: string;
   isEnabled?: boolean;
   oauthProvider?: OauthProvider;
@@ -46,228 +41,237 @@ type CreateTestUserArgs = {
   username?: string | null;
 };
 
-export const findTestRole = async (name: RoleName): Promise<Role> => {
-  const role = await dbClient.role.findUnique({ where: { name } });
+export class TestHelper {
+  constructor(private readonly prisma: PrismaService) {}
 
-  if (!role) {
-    throw new Error(`Role with the name "${name}" not found!`);
+  static generateTestId(): string {
+    return dbID.generate();
   }
 
-  return role;
-};
+  async findTestRole(name: RoleName): Promise<Role> {
+    const role = await this.prisma.role.findUnique({ where: { name } });
 
-export const createTestUserDto = ({
-  email,
-  isEnabled,
-  oauthProvider,
-  password,
-  roleId,
-  username = randUserName(),
-}: CreateTestUserDtoArgs): CreateUserDto => {
-  const dto = new CreateUserDto({
-    email: email ?? randEmail(),
-    name: randFullName(),
-    oauthProvider: oauthProvider ?? 'github',
-    password: password ?? null,
-    pictureUrl: randImg(),
+    if (!role) {
+      throw new Error(`Role with the name "${name}" not found!`);
+    }
+
+    return role;
+  }
+
+  static createTestUserInput({
+    email,
+    isEnabled,
+    oauthProvider,
+    password,
     roleId,
-    timezone: randTimeZone(),
-    username,
-  });
-
-  dto.isEnabled = Boolean(isEnabled);
-
-  return dto;
-};
-
-export const createTestUser = async ({
-  email,
-  isEnabled,
-  oauthProvider,
-  password,
-  roleName = 'user',
-  username,
-}: CreateTestUserArgs): Promise<User> => {
-  const role = await findTestRole(roleName);
-
-  const createUserDto = createTestUserDto({ email, isEnabled, oauthProvider, password, roleId: role.id, username });
-
-  return dbClient.user.create({ data: createUserDto.toUser() });
-};
-
-export const deleteTestUsersById = async (userIds: Array<string | undefined>): Promise<void[]> => {
-  const promises = userIds.map(async (userId) => {
-    if (!userId) {
-      return;
-    }
-
-    await dbClient.user.delete({ where: { id: userId } });
-  });
-
-  return Promise.all(promises);
-};
-
-export const deleteTestFoldersById = async (folderIds: Array<string | undefined>): Promise<void> => {
-  for (const folderId of folderIds) {
-    if (!folderId) {
-      return;
-    }
-
-    // eslint-disable-next-line no-await-in-loop
-    await dbClient.folder.delete({ where: { id: folderId } });
-  }
-};
-
-export const createUserWithRootFolder = async (): Promise<[User, Folder]> => {
-  const user = await createTestUser({});
-  const rootFolder = await dbClient.folder.create({ data: new CreateUserRootFolderDto(user.id).toFolder() });
-
-  return [user, rootFolder];
-};
-
-export const createManyTestFolders = async ({
-  folderNames,
-  parentId,
-  userId,
-}: CreateManyTestFoldersArgs): Promise<Folder[]> => {
-  const promises = folderNames.map((name) => {
-    const createFolderDto = new CreateFolderDto({
-      name,
-      parentId,
-      userId,
+    username = randUserName(),
+  }: CreateTestUserInputArgs): CreateUserInput {
+    const input = new CreateUserInput({
+      email: email ?? randEmail(),
+      name: randFullName(),
+      oauthProvider: oauthProvider ?? 'github',
+      password: password ?? null,
+      pictureUrl: randImg(),
+      roleId,
+      timezone: randTimeZone(),
+      username,
     });
 
-    return dbClient.folder.create({ data: createFolderDto.toFolder() });
-  });
+    input.isEnabled = Boolean(isEnabled);
 
-  return Promise.all(promises);
-};
+    return input;
+  }
 
-export const generateTestId = (): string => dbID.generate();
+  async createTestUser({
+    email,
+    isEnabled,
+    oauthProvider,
+    password,
+    roleName = 'user',
+    username,
+  }: CreateTestUserArgs): Promise<User> {
+    const role = await this.findTestRole(roleName);
 
-export const createTestFolderDto = (args?: { name?: string; parentId?: string; userId?: string }): CreateFolderDto => {
-  return new CreateFolderDto({
-    name: args?.name ?? randWord(),
-    parentId: args?.parentId ?? generateTestId(),
-    userId: args?.userId ?? generateTestId(),
-  });
-};
+    const createUserInput = TestHelper.createTestUserInput({
+      email,
+      isEnabled,
+      oauthProvider,
+      password,
+      roleId: role.id,
+      username,
+    });
 
-export const createTestSnippetDto = (
-  args: { folderId?: string; name?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
-): CreateSnippetDto => {
-  const languages = ['java', 'js', 'ts', 'c', 'c++', 'python', 'go', 'php', 'csharp'];
-  const extensions = ['java', 'js', 'ts', 'c', 'cpp', 'py', 'go', 'php', 'cs'];
-  const themes = ['one-dark-pro', 'dracula', 'dark-plus', 'monokai', 'github-dark', 'github-light'];
+    return this.prisma.user.create({ data: createUserInput.toUser() });
+  }
 
-  const languageIndex = randNumber({ max: languages.length - 1, min: 0 });
-  const themeIndex = randNumber({ max: themes.length - 1, min: 0 });
+  async deleteTestUsersById(userIds: Array<string | undefined>): Promise<void[]> {
+    const promises = userIds.map(async (userId) => {
+      if (!userId) {
+        return;
+      }
 
-  const snippetContent = randWord({ length: randNumber({ max: 30, min: 5 }) }).join('\n');
+      await this.prisma.user.delete({ where: { id: userId } });
+    });
 
-  return new CreateSnippetDto({
-    content: snippetContent,
-    contentHighlighted: `${snippetContent} highlighted`,
-    description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
-    folderId: args?.folderId ?? generateTestId(),
-    language: languages[languageIndex],
-    lineHighlight: null,
-    name: args?.name ?? `${randWord()}.${extensions[languageIndex]}`,
-    theme: themes[themeIndex],
-    userId: args?.userId ?? generateTestId(),
-    visibility: args?.visibility ?? 'public',
-  });
-};
+    return Promise.all(promises);
+  }
 
-export const deleteTestSnippetsById = async (snippetIds: Array<string | undefined>): Promise<void[]> => {
-  const promises = snippetIds.map(async (snippetId) => {
-    if (!snippetId) {
-      return;
+  static updateTestUserInput(roleId: string): UpdateUserInput {
+    const providers: OauthProvider[] = ['email', 'google', 'github', 'stackoverflow'];
+    const index = randNumber({ max: 2, min: 0 });
+
+    return new UpdateUserInput({
+      name: randFullName(),
+      oauthProvider: providers[index],
+      pictureUrl: randImg(),
+      roleId,
+      timezone: randTimeZone(),
+    });
+  }
+
+  async deleteTestFoldersById(folderIds: Array<string | undefined>): Promise<void> {
+    for (const folderId of folderIds) {
+      if (!folderId) {
+        return;
+      }
+
+      // eslint-disable-next-line no-await-in-loop
+      await this.prisma.folder.delete({ where: { id: folderId } });
     }
+  }
 
-    await dbClient.snippet.delete({ where: { id: snippetId } });
-  });
+  async createUserWithRootFolder(): Promise<[User, Folder]> {
+    const user = await this.createTestUser({});
+    const rootFolder = await this.prisma.folder.create({ data: new CreateUserRootFolderInput(user.id).toFolder() });
 
-  return Promise.all(promises);
-};
+    return [user, rootFolder];
+  }
 
-export const createTestSnippet = async (
-  args: { folderId?: string; name?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
-): Promise<Snippet> => {
-  const createSnippetDto = createTestSnippetDto(args);
+  async createManyTestFolders({ folderNames, parentId, userId }: CreateManyTestFoldersArgs): Promise<Folder[]> {
+    const promises = folderNames.map((name) => {
+      const createFolderInput = new CreateFolderInput({
+        name,
+        parentId,
+        userId,
+      });
 
-  return dbClient.snippet.create({ data: createSnippetDto.toSnippet() });
-};
+      return this.prisma.folder.create({ data: createFolderInput.toFolder() });
+    });
 
-export const updateTestUserDto = (roleId: string): UpdateUserDto => {
-  const providers: OauthProvider[] = ['email', 'google', 'github', 'stackoverflow'];
-  const index = randNumber({ max: 2, min: 0 });
+    return Promise.all(promises);
+  }
 
-  return new UpdateUserDto({
-    name: randFullName(),
-    oauthProvider: providers[index],
-    pictureUrl: randImg(),
-    roleId,
-    timezone: randTimeZone(),
-  });
-};
+  static createTestFolderInput(args?: { name?: string; parentId?: string; userId?: string }): CreateFolderInput {
+    return new CreateFolderInput({
+      name: args?.name ?? randWord(),
+      parentId: args?.parentId ?? TestHelper.generateTestId(),
+      userId: args?.userId ?? TestHelper.generateTestId(),
+    });
+  }
 
-export const createTestSessionDto = (userId: string): CreateSessionDto => {
-  return new CreateSessionDto({
-    expireDate: new Date(),
-    userId,
-  });
-};
+  static updateTestFolderInput(
+    args: { folderId?: string; name?: string; userId?: string } | undefined,
+  ): UpdateFolderInput {
+    return new UpdateFolderInput({
+      creatorId: args?.userId ?? TestHelper.generateTestId(),
+      folderId: args?.folderId ?? TestHelper.generateTestId(),
+      name: args?.name ?? `${randWord()}`,
+    });
+  }
 
-export const createTestSession = async (args: { userId: string }): Promise<Session> => {
-  const createSessionDto = createTestSessionDto(args.userId);
+  static createTestSnippetInput(
+    args: { folderId?: string; name?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
+  ): CreateSnippetInput {
+    const languages = ['java', 'js', 'ts', 'c', 'c++', 'python', 'go', 'php', 'csharp'];
+    const extensions = ['java', 'js', 'ts', 'c', 'cpp', 'py', 'go', 'php', 'cs'];
+    const themes = ['one-dark-pro', 'dracula', 'dark-plus', 'monokai', 'github-dark', 'github-light'];
 
-  return dbClient.session.create({ data: createSessionDto.toSession() });
-};
+    const languageIndex = randNumber({ max: languages.length - 1, min: 0 });
+    const themeIndex = randNumber({ max: themes.length - 1, min: 0 });
 
-export const deleteTestUserSessions = async (userId: string): Promise<void> => {
-  await dbClient.session.deleteMany({ where: { userId } });
-};
+    const snippetContent = randWord({ length: randNumber({ max: 30, min: 5 }) }).join('\n');
 
-export const deleteTestSnippetDto = (args: { snippetId: string; userId: string }): DeleteSnippetDto => {
-  return new DeleteSnippetDto({
-    creatorId: args.userId,
-    snippetId: args.snippetId,
-  });
-};
+    return new CreateSnippetInput({
+      content: snippetContent,
+      contentHighlighted: `${snippetContent} highlighted`,
+      description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
+      folderId: args?.folderId ?? TestHelper.generateTestId(),
+      language: languages[languageIndex],
+      lineHighlight: null,
+      name: args?.name ?? `${randWord()}.${extensions[languageIndex]}`,
+      theme: themes[themeIndex],
+      userId: args?.userId ?? TestHelper.generateTestId(),
+      visibility: args?.visibility ?? 'public',
+    });
+  }
 
-export const updateTestSnippetDto = (
-  args: { name?: string; snippetId?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
-): UpdateSnippetDto => {
-  const languages = ['java', 'js', 'ts', 'c', 'c++', 'python', 'go', 'php', 'csharp'];
-  const extensions = ['java', 'js', 'ts', 'c', 'cpp', 'py', 'go', 'php', 'cs'];
-  const themes = ['one-dark-pro', 'dracula', 'dark-plus', 'monokai', 'github-dark', 'github-light'];
+  async deleteTestSnippetsById(snippetIds: Array<string | undefined>): Promise<void[]> {
+    const promises = snippetIds.map(async (snippetId) => {
+      if (!snippetId) {
+        return;
+      }
 
-  const languageIndex = randNumber({ max: languages.length - 1, min: 0 });
-  const themeIndex = randNumber({ max: themes.length - 1, min: 0 });
+      await this.prisma.snippet.delete({ where: { id: snippetId } });
+    });
 
-  const snippetContent = randWord({ length: randNumber({ max: 30, min: 5 }) }).join('\n');
+    return Promise.all(promises);
+  }
 
-  return new UpdateSnippetDto({
-    content: snippetContent,
-    contentHighlighted: `${snippetContent} highlighted`,
-    creatorId: args?.userId ?? generateTestId(),
-    description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
-    language: languages[languageIndex],
-    lineHighlight: null,
-    name: args?.name ?? `${randWord()}.${extensions[languageIndex]}`,
-    snippetId: args?.snippetId ?? generateTestId(),
-    theme: themes[themeIndex],
-    visibility: args?.visibility ?? 'public',
-  });
-};
+  async createTestSnippet(
+    args: { folderId?: string; name?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
+  ): Promise<Snippet> {
+    const createSnippetInput = TestHelper.createTestSnippetInput(args);
 
-export const updateTestFolderDto = (
-  args: { folderId?: string; name?: string; userId?: string } | undefined,
-): UpdateFolderDto => {
-  return new UpdateFolderDto({
-    creatorId: args?.userId ?? generateTestId(),
-    folderId: args?.folderId ?? generateTestId(),
-    name: args?.name ?? `${randWord()}`,
-  });
-};
+    return this.prisma.snippet.create({ data: createSnippetInput.toSnippet() });
+  }
+
+  static updateTestSnippetInput(
+    args: { name?: string; snippetId?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
+  ): UpdateSnippetInput {
+    const languages = ['java', 'js', 'ts', 'c', 'c++', 'python', 'go', 'php', 'csharp'];
+    const extensions = ['java', 'js', 'ts', 'c', 'cpp', 'py', 'go', 'php', 'cs'];
+    const themes = ['one-dark-pro', 'dracula', 'dark-plus', 'monokai', 'github-dark', 'github-light'];
+
+    const languageIndex = randNumber({ max: languages.length - 1, min: 0 });
+    const themeIndex = randNumber({ max: themes.length - 1, min: 0 });
+
+    const snippetContent = randWord({ length: randNumber({ max: 30, min: 5 }) }).join('\n');
+
+    return new UpdateSnippetInput({
+      content: snippetContent,
+      contentHighlighted: `${snippetContent} highlighted`,
+      creatorId: args?.userId ?? TestHelper.generateTestId(),
+      description: randWord({ length: randNumber({ max: 20, min: 10 }) }).join(' '),
+      language: languages[languageIndex],
+      lineHighlight: null,
+      name: args?.name ?? `${randWord()}.${extensions[languageIndex]}`,
+      snippetId: args?.snippetId ?? TestHelper.generateTestId(),
+      theme: themes[themeIndex],
+      visibility: args?.visibility ?? 'public',
+    });
+  }
+
+  static deleteTestSnippetInput(args: { snippetId: string; userId: string }): DeleteSnippetInput {
+    return new DeleteSnippetInput({
+      creatorId: args.userId,
+      snippetId: args.snippetId,
+    });
+  }
+
+  static createTestSessionInput(userId: string): CreateSessionInput {
+    return new CreateSessionInput({
+      expireDate: new Date(),
+      userId,
+    });
+  }
+
+  async createTestSession(args: { userId: string }): Promise<Session> {
+    const createSessionInput = TestHelper.createTestSessionInput(args.userId);
+
+    return this.prisma.session.create({ data: createSessionInput.toSession() });
+  }
+
+  async deleteTestUserSessions(userId: string): Promise<void> {
+    await this.prisma.session.deleteMany({ where: { userId } });
+  }
+}

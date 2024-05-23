@@ -1,53 +1,14 @@
-import { Folder } from './src/entities/folder';
-import { Role, RoleName } from './src/entities/role';
-import { Session } from './src/entities/session';
-import { Snippet, SnippetVisibility } from './src/entities/snippet';
-import { OauthProvider, User } from './src/entities/user';
-import { CreateFolderDto } from './src/folders/dtos/create-folder-dto';
-import { CreateUserRootFolderDto } from './src/folders/dtos/create-user-root-folder-dto';
-import { UpdateFolderDto } from './src/folders/dtos/update-folder-dto';
-import { FolderService } from './src/folders/folder.service';
-import { NewsletterService } from './src/newsletters/newsletter.service';
-import { CreateRoleDto } from './src/roles/dtos/create-role-dto';
-import { RoleService } from './src/roles/role.service';
-import { CreateSessionDto } from './src/sessions/dtos/create-session-dto';
-import { SessionService } from './src/sessions/session.service';
-import { CreateSnippetDto } from './src/snippets/dtos/create-snippet-dto';
-import { DeleteSnippetDto } from './src/snippets/dtos/delete-snippet-dto';
-import { UpdateSnippetDto } from './src/snippets/dtos/update-snippet-dto';
-import { SnippetService } from './src/snippets/snippet.service';
-import { CreateUserDto } from './src/users/dtos/create-user-dto';
-import { UpdateUserDto } from './src/users/dtos/update-user-dto';
-import { UserService } from './src/users/user.service';
-import { dbID } from './src/utils/id';
-
-export { dbID };
-export { PrismaClient, prisma as dbClient } from './src/utils/prisma';
-export type { Role, RoleName, User, OauthProvider, Folder, Session, Snippet, SnippetVisibility };
-
-const roleService = new RoleService();
-const userService = new UserService();
-const folderService = new FolderService();
-const snippetService = new SnippetService();
-const sessionService = new SessionService();
-
-export {
-  folderService,
-  roleService,
-  sessionService,
-  snippetService,
-  userService,
-  CreateRoleDto,
-  CreateSessionDto,
-  CreateUserDto,
-  DeleteSnippetDto,
-  UpdateUserDto,
-  CreateFolderDto,
-  CreateSnippetDto,
-  CreateUserRootFolderDto,
-  NewsletterService,
-  UpdateSnippetDto,
-  UpdateFolderDto,
-};
-
-export type { RoleService, UserService, FolderService, SessionService, SnippetService };
+export { DomainModule } from './src/domain.module';
+export { PrismaService } from './src/prisma.service';
+export { UserService } from './src/services/users/user.service';
+export { RoleService } from './src/services/roles/role.service';
+export { FolderService } from './src/services/folders/folder.service';
+export { SnippetService } from './src/services/snippets/snippet.service';
+export { SessionService } from './src/services/sessions/session.service';
+export { NewsletterService } from './src/services/newsletters/newsletter.service';
+export { Folder } from './src/services/folders/folder.entity';
+export { Role, RoleName } from './src/services/roles/role.entity';
+export { Session } from './src/services/sessions/session.entity';
+export { Snippet, SnippetVisibility } from './src/services/snippets/snippet.entity';
+export { OauthProvider, User } from './src/services/users/user.entity';
+export { dbID } from './src/utils/db-id';

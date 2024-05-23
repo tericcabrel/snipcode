@@ -1,4 +1,4 @@
-import SnipcodeError, { ErrorCode } from '@snipcode/utils';
+import { ErrorCode, SnipcodeError } from '@snipcode/utils';
 import { AxiosError } from 'axios';
 
 export const handleRequestError = (errorCode: ErrorCode) => (error: AxiosError) => {

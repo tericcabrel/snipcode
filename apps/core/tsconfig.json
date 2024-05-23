@@ -18,7 +18,7 @@
       "path": "../../packages/utils"
     },
     {
-      "path": "../../packages/logger"
+      "path": "../../packages/logger-old"
     },
     {
       "path": "../../packages/domain"

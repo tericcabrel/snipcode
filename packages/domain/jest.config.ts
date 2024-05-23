@@ -1,18 +1,12 @@
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
-  roots: ['.'],
-  preset: 'ts-jest',
-  testMatch: ['**/?(*.)+(spec|test).[jt]s'],
-  testEnvironment: 'node',
   clearMocks: true,
-  maxWorkers: 1,
-  snapshotFormat: {
-    printBasicPrototype: false,
-  },
-  coverageDirectory: 'coverage',
-  collectCoverage: false, // When set to true, coverage is performed even if coverage flag isn't provided
+  collectCoverage: false,
+  // When set to true, coverage is performed even if coverage flag isn't provided
   collectCoverageFrom: ['src/**/*.ts', '!src/index.ts'],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['json', 'lcov', 'text', 'text-summary'],
   coverageThreshold: {
     global: {
       branches: 40,
@@ -21,7 +15,15 @@ const config: Config.InitialOptions = {
       statements: 60,
     },
   },
-  coverageReporters: ['json', 'lcov', 'text', 'text-summary'],
+  maxWorkers: 1,
+  preset: 'ts-jest',
+  roots: ['.'],
+  snapshotFormat: {
+    printBasicPrototype: false,
+  },
+  testEnvironment: 'node',
+  testMatch: ['**/?(*.)+(spec|test).[jt]s'],
+  testPathIgnorePatterns: ['dist'],
 };
 
 export default config;
