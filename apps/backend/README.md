@@ -1,73 +1,92 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Snipcode Core
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is the backend of Snipcode, containing the business logics related to  . 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Tech Stack
+* Node.js
+* TypeScript
+* GraphQL
+* MySQL
+* Prisma
 
-## Description
+## Prerequisites
+Make sure you have this tools installed before running the project
+* Node.js 20+
+* NPM or Yarn
+* Docker
+* AWS CLI v2
+* MySQL 8 on PlanetScale
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Packages dependencies
+We use Yarn workspace to create packages we can share with other applications.
+These packages are located in the folder `packages`, so you might need to change the code of one or many packages to implement a feature.
+Here are the packages used in this project:
 
-## Installation
+* [@snipcode/domain](../../packages/domain)
+* [@snipcode/logger](../../packages/logger-old)
+* [@snipcode/utils](../../packages/utils)
 
-```bash
-$ yarn install
+## Set up the project
+Delete the existing folders output from build commands
+```shell
+yarn clean
+```
+Install node modules
+````shell
+yarn install
+````
+Create configuration file from the template
+```shell
+cp .env.template .env
+
+# Edit configuration to match your local environment and save
+nano .env
 ```
 
-## Running the app
+**Environment variables list**
 
+| Variable             | Description                                                              |
+|----------------------|--------------------------------------------------------------------------|
+| NODE_ENV             | Node.js environment (default: development)                               |
+| HOST                 | Host name where the application is running (default: http://localhost)   |
+| PORT                 | Port number of the application (default: 7501)                           |
+| ENABLE_INTROSPECTION | Enable/Disable GraphQL introspection (must `false` in production)        |
+| DATABASE_URL         | URL of the database                                                      |
+| ADMIN_PASSWORD       | Password of the default admin user.                                      |
+| CONVERTKIT_API_KEY   | ConvertKit API key                                                       |
+| CONVERTKIT_FORM_ID   | ConvertKit Form ID                                                       |
+| CONVERTKIT_TAG_ID    | ConvertKit Tag ID                                                        |
+| REQUEST_TIMEOUT      | Max duration of a request (default: 30 seconds)                          |
+| GITHUB_CLIENT_ID     | GitHub application client ID for authentication with GitHub              |
+| GITHUB_CLIENT_SECRET | GitHub application client secret for authentication with GitHub          |
+| WEB_APP_URL          | URL of the frontend the application that communicates with this app      |
+| WEB_AUTH_SUCCESS_URL | Callback URL of the frontend application when the authentication succeed |
+| WEB_AUTH_ERROR_URL   | Callback URL of the frontend application when the authentication failed  |
+| SESSION_LIFETIME     | The session's lifetime when a user authenticate (default: 90 days)       |
+| SENTRY_DSN           | Sentry DSN                                                               |
+| SENTRY_ENABLED       | Enable/Disable Sentry                                                    |
+
+Start the application
 ```bash
-# development
-$ yarn run start
+yarn dev
+```
+The application will be launched by [Nodemon](https://nodemon.com).
 
-# watch mode
-$ yarn run start:dev
+Open [http://localhost:7501/graphql](http://localhost:7501/graphql) in your browser and use Apollo studio explorer to test your GraphQL queries and mutations.
 
-# production mode
-$ yarn run start:prod
+## Running tests
+Run the command below to run all the tests
+```shell
+yarn test
+```
+To run a specific test file, append the filename after the command
+```shell
+yarn test controller.test.ts
 ```
 
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+## Lint the project
+ESLint and Prettier are used to normalize the code style across the project. 
+Linting the code make sure there is no error
+```shell
+yarn lint
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).

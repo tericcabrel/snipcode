@@ -2,8 +2,8 @@
   "name": "@snipcode/backend",
   "version": "1.1.0",
   "private": true,
-  "description": "Snipcode core backend",
-  "main": "dist/index.js",
+  "description": "Core backend of the application",
+  "main": "dist/src/main.js",
   "license": "AGPL-3.0",
   "scripts": {
     "build": "nest build",
