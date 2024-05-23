@@ -6,8 +6,8 @@ import { generateFromEmail } from 'unique-username-generator';
 import { CreateUserInput } from './inputs/create-user-input';
 import { UpdateUserInput } from './inputs/update-user-input';
 import { User } from './user.entity';
-import { PrismaService } from '../../prisma.service';
 import { CreateUserRootFolderInput } from '../folders/inputs/create-user-root-folder-input';
+import { PrismaService } from '../prisma.service';
 import { Role } from '../roles/role.entity';
 
 @Injectable()

@@ -37,34 +37,36 @@ yarn install
 ````
 Create configuration file from the template
 ```shell
-cp .env.template .env
+cp .env.template .env.local
 
 # Edit configuration to match your local environment and save
-nano .env
+nano .env.local
 ```
 
 **Environment variables list**
 
-| Variable             | Description                                                              |
-|----------------------|--------------------------------------------------------------------------|
-| NODE_ENV             | Node.js environment (default: development)                               |
-| HOST                 | Host name where the application is running (default: http://localhost)   |
-| PORT                 | Port number of the application (default: 7501)                           |
-| ENABLE_INTROSPECTION | Enable/Disable GraphQL introspection (must `false` in production)        |
-| DATABASE_URL         | URL of the database                                                      |
-| ADMIN_PASSWORD       | Password of the default admin user.                                      |
-| CONVERTKIT_API_KEY   | ConvertKit API key                                                       |
-| CONVERTKIT_FORM_ID   | ConvertKit Form ID                                                       |
-| CONVERTKIT_TAG_ID    | ConvertKit Tag ID                                                        |
-| REQUEST_TIMEOUT      | Max duration of a request (default: 30 seconds)                          |
-| GITHUB_CLIENT_ID     | GitHub application client ID for authentication with GitHub              |
-| GITHUB_CLIENT_SECRET | GitHub application client secret for authentication with GitHub          |
-| WEB_APP_URL          | URL of the frontend the application that communicates with this app      |
-| WEB_AUTH_SUCCESS_URL | Callback URL of the frontend application when the authentication succeed |
-| WEB_AUTH_ERROR_URL   | Callback URL of the frontend application when the authentication failed  |
-| SESSION_LIFETIME     | The session's lifetime when a user authenticate (default: 90 days)       |
-| SENTRY_DSN           | Sentry DSN                                                               |
-| SENTRY_ENABLED       | Enable/Disable Sentry                                                    |
+| Variable                 | Description                                                                          |
+|--------------------------|--------------------------------------------------------------------------------------|
+| NODE_ENV                 | Node.js environment (default: development)                                           |
+| APP_VERSION              | The current version of the application                                               |
+| HOST                     | Host name where the application is running (default: http://localhost)               |
+| PORT                     | Port number of the application (default: 7501)                                       |
+| ENABLE_INTROSPECTION     | Enable/Disable GraphQL introspection (must `false` in production)                    |
+| DATABASE_URL             | URL of the database                                                                  |
+| ADMIN_PASSWORD           | Password of the default admin user.                                                  |
+| CONVERTKIT_API_KEY       | ConvertKit API key                                                                   |
+| CONVERTKIT_FORM_ID       | ConvertKit Form ID                                                                   |
+| CONVERTKIT_TAG_ID        | ConvertKit Tag ID                                                                    |
+| REQUEST_TIMEOUT          | Max duration of a request (default: 30 seconds)                                      |
+| GITHUB_CLIENT_ID         | GitHub application client ID for authentication with GitHub                          |
+| GITHUB_CLIENT_SECRET     | GitHub application client secret for authentication with GitHub                      |
+| WEB_APP_URL              | URL of the frontend the application that communicates with this app                  |
+| WEB_AUTH_SUCCESS_URL     | Callback URL of the frontend application when the authentication succeed             |
+| WEB_AUTH_ERROR_URL       | Callback URL of the frontend application when the authentication failed              |
+| SESSION_LIFETIME         | The session's lifetime when a user authenticate (default: 90 days)                   |
+| SENTRY_DSN               | Sentry DSN                                                                           |
+| SENTRY_ENABLED           | Enable/Disable Sentry                                                                |
+| SNIPPET_RENDERER_API_URL | Base URL of the API (the current one) for generating the html content from a snippet |
 
 Start the application
 ```bash

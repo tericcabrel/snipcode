@@ -1,10 +1,10 @@
 import { randEmail, randFullName, randImg, randNumber, randTimeZone, randUserName, randWord } from '@ngneat/falso';
 
-import { PrismaService } from '../src/prisma.service';
 import { Folder } from '../src/services/folders/folder.entity';
 import { CreateFolderInput } from '../src/services/folders/inputs/create-folder-input';
 import { CreateUserRootFolderInput } from '../src/services/folders/inputs/create-user-root-folder-input';
 import { UpdateFolderInput } from '../src/services/folders/inputs/update-folder-input';
+import { PrismaService } from '../src/services/prisma.service';
 import { Role, RoleName } from '../src/services/roles/role.entity';
 import { CreateSessionInput } from '../src/services/sessions/inputs/create-session-input';
 import { Session } from '../src/services/sessions/session.entity';

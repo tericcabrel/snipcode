@@ -7,7 +7,7 @@ import { CreateFolderInput } from './inputs/create-folder-input';
 import { CreateUserRootFolderInput } from './inputs/create-user-root-folder-input';
 import { TestHelper } from '../../../tests/helpers';
 import { DomainModule } from '../../domain.module';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../prisma.service';
 import { RoleService } from '../roles/role.service';
 
 describe('Test Folder service', () => {

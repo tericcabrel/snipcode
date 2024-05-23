@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { CreateSessionInput } from './inputs/create-session-input';
 import { Session } from './session.entity';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class SessionService {

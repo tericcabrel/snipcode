@@ -5,7 +5,7 @@ import { User } from './user.entity';
 import { UserService } from './user.service';
 import { TestHelper } from '../../../tests/helpers';
 import { DomainModule } from '../../domain.module';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../prisma.service';
 import { RoleService } from '../roles/role.service';
 
 describe('Test User service', () => {
