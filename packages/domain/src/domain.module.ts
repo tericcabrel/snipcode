@@ -1,9 +1,9 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 
 import { DOMAIN_SERVICES_OPTIONS } from './constants';
-import { PrismaService } from './prisma.service';
 import { FolderService } from './services/folders/folder.service';
 import { NewsletterService } from './services/newsletters/newsletter.service';
+import { PrismaService } from './services/prisma.service';
 import { RoleService } from './services/roles/role.service';
 import { SessionService } from './services/sessions/session.service';
 import { SnippetService } from './services/snippets/snippet.service';

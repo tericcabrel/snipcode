@@ -6,13 +6,21 @@ export default registerAs('app', () => ({
   env: process.env.NODE_ENV,
   host: process.env.HOST,
   port: parseInt(process.env.PORT ?? '7501', 10),
+  sentry: {
+    dsn: process.env.SENTRY_DSN,
+    enabled: process.env.SENTRY_ENABLED,
+  },
+  version: process.env.APP_VERSION,
 }));
 
 const EnvironmentVariablesSchema = z.object({
+  APP_VERSION: z.string(),
   DATABASE_URL: z.string(),
   HOST: z.string(),
   NODE_ENV: z.union([z.literal('development'), z.literal('production'), z.literal('test')]),
   PORT: z.number({ coerce: true }).min(7000).max(8000),
+  SENTRY_DSN: z.string(),
+  SENTRY_ENABLED: z.boolean({ coerce: true }),
 });
 
 export type EnvironmentVariables = z.infer<typeof EnvironmentVariablesSchema>;

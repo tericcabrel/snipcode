@@ -5,7 +5,7 @@ import { CreateSnippetInput } from './inputs/create-snippet-input';
 import { DeleteSnippetInput } from './inputs/delete-snippet-input';
 import { UpdateSnippetInput } from './inputs/update-snippet-input';
 import { Snippet, SnippetVisibility } from './snippet.entity';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../prisma.service';
 
 const MAX_ITEM_PER_PAGE = 50;
 

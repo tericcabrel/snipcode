@@ -1,5 +1,5 @@
 export { DomainModule } from './src/domain.module';
-export { PrismaService } from './src/prisma.service';
+export { PrismaService } from './src/services/prisma.service';
 export { UserService } from './src/services/users/user.service';
 export { RoleService } from './src/services/roles/role.service';
 export { FolderService } from './src/services/folders/folder.service';

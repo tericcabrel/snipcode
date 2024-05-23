@@ -10,7 +10,7 @@ import appConfig, { EnvironmentVariables, validate } from './configs/environment
   controllers: [AppController],
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env', '.env.test'],
+      envFilePath: ['.env.local', '.env.test'],
       isGlobal: true,
       load: [appConfig],
       validate,

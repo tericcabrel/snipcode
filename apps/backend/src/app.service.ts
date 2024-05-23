@@ -16,6 +16,10 @@ export class AppService {
 
     const roles = await this.roleService.findAll();
 
+    if (Math.random() > 0.5) {
+      throw new Error('[Data Loader]: Role administrator not found');
+    }
+
     this.logger.log(roles);
 
     return 'Hello World!';

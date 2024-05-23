@@ -6,7 +6,7 @@ import { CreateFolderInput } from './inputs/create-folder-input';
 import { CreateUserRootFolderInput } from './inputs/create-user-root-folder-input';
 import { UpdateFolderInput } from './inputs/update-folder-input';
 import { isFoldersContainRoot } from './utils/folders';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class FolderService {

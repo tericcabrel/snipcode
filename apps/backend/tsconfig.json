@@ -8,6 +8,7 @@
     "composite": true,
     "strictNullChecks": true
   },
+  "files": ["env.d.ts"],
   "include": [
     "./src/**/*"
   ],
@@ -20,7 +21,7 @@
       "path": "../../packages/utils"
     },
     {
-      "path": "../../packages/logger-old"
+      "path": "../../packages/domain"
     }
   ]
 }

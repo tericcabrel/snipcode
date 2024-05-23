@@ -4,7 +4,7 @@ import { Session } from './session.entity';
 import { SessionService } from './session.service';
 import { TestHelper } from '../../../tests/helpers';
 import { DomainModule } from '../../domain.module';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../prisma.service';
 
 describe('Test Session Service', function () {
   let sessionService: SessionService;

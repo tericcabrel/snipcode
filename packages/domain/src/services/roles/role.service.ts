@@ -3,7 +3,7 @@ import { SnipcodeError, errors } from '@snipcode/utils';
 
 import { CreateRoleInput } from './inputs/create-role-input';
 import { Role, RoleName } from './role.entity';
-import { PrismaService } from '../../prisma.service';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class RoleService {
