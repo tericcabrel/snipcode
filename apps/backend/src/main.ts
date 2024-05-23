@@ -16,6 +16,13 @@ const bootstrap = async () => {
 
   await app.listen(port, () => {
     logger.log(`Server ready at ${host}:${port}`);
+    const object = {
+      age: 23,
+      birthDate: new Date(),
+      name: 'marion',
+    };
+
+    logger.log(object);
     // logger.log(`Server ready at ${host}:${port}${graphqlServer.graphqlPath}`);
   });
 };

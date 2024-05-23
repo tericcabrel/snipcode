@@ -1,16 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./dist",
     "declaration": true,
     "composite": true,
-    "sourceMap": true
   },
+  "exclude": ["node_modules", "dist"],
   "files": ["env.d.ts"],
-  "include": ["src", "tests", "index.ts"],
-  "exclude": [
-    "node_modules"
-  ],
+  "include": ["src", "tests", "index.ts", "jest.config.ts"],
   "references": [
     {
       "path": "../../packages/utils"

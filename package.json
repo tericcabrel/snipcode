@@ -14,8 +14,7 @@
     "cache:login": "turbo login",
     "cache:link": "turbo link",
     "cache:disable": "turbo unlink",
-    "prerelease": "changeset",
-    "branch:create": "pscale branch create core-db $(git rev-parse --abbrev-ref HEAD)"
+    "prerelease": "changeset"
   },
   "workspaces": [
     "packages/domain",

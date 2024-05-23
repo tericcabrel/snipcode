@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { Logger, Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { DomainModule } from '@snipcode/domain';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import appConfig, { validate } from './configs/environment';
+import appConfig, { EnvironmentVariables, validate } from './configs/environment';
 
 @Module({
   controllers: [AppController],
@@ -14,7 +15,20 @@ import appConfig, { validate } from './configs/environment';
       load: [appConfig],
       validate,
     }),
+    DomainModule.forRootAsync({
+      inject: [ConfigService],
+      isGlobal: true,
+      useFactory: (configService: ConfigService<EnvironmentVariables, true>) => {
+        return {
+          convertKit: {
+            apiKey: '',
+            formId: '',
+          },
+          databaseUrl: configService.get('DATABASE_URL'),
+        };
+      },
+    }),
   ],
-  providers: [AppService],
+  providers: [Logger, AppService],
 })
 export class AppModule {}
