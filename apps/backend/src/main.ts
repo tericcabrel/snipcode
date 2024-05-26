@@ -8,6 +8,7 @@ import * as Sentry from '@sentry/node';
 import { AppModule } from './app.module';
 import { ApplicationExceptionFilter } from './configs/exception.filter';
 import { EnvironmentVariables } from './types/common';
+import { CORS_APOLLO_STUDIO_URL } from './utils/constants';
 
 const bootstrap = async () => {
   const app = await NestFactory.create(AppModule);
@@ -16,9 +17,15 @@ const bootstrap = async () => {
 
   Sentry.setupNestErrorHandler(app, new ApplicationExceptionFilter(httpAdapter));
 
+  const configService = app.get(ConfigService<EnvironmentVariables, true>);
+
+  app.enableCors({
+    credentials: true,
+    origin: [configService.get('WEB_APP_URL'), CORS_APOLLO_STUDIO_URL],
+  });
+
   app.enableShutdownHooks();
 
-  const configService = app.get(ConfigService<EnvironmentVariables, true>);
   const logger = new Logger('NestApplication');
 
   const port = configService.get<number>('PORT');

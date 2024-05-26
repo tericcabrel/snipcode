@@ -6,9 +6,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { DomainModule } from '@snipcode/domain';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { EnvironmentVariables, validate } from './configs/environment';
+import { AppController } from './features/app/app.controller';
+import { AppService } from './features/app/app.service';
 import { AuthFeatureModule } from './features/auth/auth.module';
 import { FolderFeatureModule } from './features/folders/folder.module';
 import { SnippetFeatureModule } from './features/snippets/snippet.module';
