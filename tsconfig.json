@@ -10,12 +10,6 @@
       "path": "./packages/utils"
     },
     {
-      "path": "./packages/logger-old"
-    },
-    {
-      "path": "./packages/database"
-    },
-    {
       "path": "./packages/domain"
     },
     {

@@ -7,7 +7,7 @@ type Args = {
   webAppURL: string;
 };
 
-type Result = {
+export type OEmbedResult = {
   height: number;
   html: string;
   provider_name: string;
@@ -21,7 +21,7 @@ type Result = {
   width: number;
 };
 
-export const generateOembedMetadata = ({ snippet, snippetRendererURL, webAppURL }: Args): Result => {
+export const generateOembedMetadata = ({ snippet, snippetRendererURL, webAppURL }: Args): OEmbedResult => {
   const embedUrl = `${snippetRendererURL}/snippets/${snippet.id}`;
 
   return {

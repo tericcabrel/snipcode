@@ -1,4 +1,3 @@
-// import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
 
 import { NewsletterOption, SubscribeData, SubscribeInput } from './types';

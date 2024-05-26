@@ -22,7 +22,6 @@
     "packages/front",
     "packages/logger",
     "packages/utils",
-    "apps/core",
     "apps/backend",
     "apps/web",
     "apps/functions/**"
