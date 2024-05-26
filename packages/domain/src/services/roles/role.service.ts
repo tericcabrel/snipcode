@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SnipcodeError, errors } from '@snipcode/utils';
+import { AppError, errors } from '@snipcode/utils';
 
 import { CreateRoleInput } from './inputs/create-role-input';
 import { Role, RoleName } from './role.entity';
@@ -43,7 +43,7 @@ export class RoleService {
     const role = await this.prisma.role.findUnique({ where: { name } });
 
     if (!role) {
-      throw new SnipcodeError(errors.ROLE_USER_NOT_FOUND, 'ROLE_USER_NOT_FOUND');
+      throw new AppError(errors.ROLE_USER_NOT_FOUND, 'ROLE_USER_NOT_FOUND');
     }
 
     return role;

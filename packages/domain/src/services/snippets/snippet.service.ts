@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SnipcodeError, errors } from '@snipcode/utils';
+import { AppError, errors } from '@snipcode/utils';
 
 import { CreateSnippetInput } from './inputs/create-snippet-input';
 import { DeleteSnippetInput } from './inputs/delete-snippet-input';
@@ -22,7 +22,7 @@ export class SnippetService {
     const isSnippetExist = await this.isSnippetExistInFolder(createSnippetInput.folderId, createSnippetInput.name);
 
     if (isSnippetExist) {
-      throw new SnipcodeError(errors.SNIPPET_ALREADY_EXIST(createSnippetInput.name), 'SNIPPET_ALREADY_EXIST');
+      throw new AppError(errors.SNIPPET_ALREADY_EXIST(createSnippetInput.name), 'SNIPPET_ALREADY_EXIST');
     }
 
     const input = createSnippetInput.toSnippet();
@@ -49,7 +49,7 @@ export class SnippetService {
     const snippet = await this.prisma.snippet.findUnique({ where: { id } });
 
     if (!snippet) {
-      throw new SnipcodeError(errors.SNIPPET_NOT_FOUND(id), 'SNIPPET_NOT_FOUND');
+      throw new AppError(errors.SNIPPET_NOT_FOUND(id), 'SNIPPET_NOT_FOUND');
     }
 
     return snippet;
@@ -110,7 +110,7 @@ export class SnippetService {
     const snippet = await this.findById(deleteSnippetInput.snippetId);
 
     if (snippet.userId !== deleteSnippetInput.creatorId) {
-      throw new SnipcodeError(errors.CANT_EDIT_SNIPPET(deleteSnippetInput.creatorId, snippet.id), 'CANT_EDIT_SNIPPET');
+      throw new AppError(errors.CANT_EDIT_SNIPPET(deleteSnippetInput.creatorId, snippet.id), 'CANT_EDIT_SNIPPET');
     }
 
     await this.prisma.snippet.delete({ where: { id: deleteSnippetInput.snippetId } });
@@ -126,14 +126,14 @@ export class SnippetService {
     const snippet = await this.findById(updateSnippetInput.snippetId);
 
     if (snippet.userId !== updateSnippetInput.creatorId) {
-      throw new SnipcodeError(errors.CANT_EDIT_SNIPPET(updateSnippetInput.creatorId, snippet.id), 'CANT_EDIT_SNIPPET');
+      throw new AppError(errors.CANT_EDIT_SNIPPET(updateSnippetInput.creatorId, snippet.id), 'CANT_EDIT_SNIPPET');
     }
 
     if (snippet.name !== updateSnippetInput.name) {
       const isSnippetExist = await this.isSnippetExistInFolder(snippet.folderId, updateSnippetInput.name);
 
       if (isSnippetExist) {
-        throw new SnipcodeError(errors.SNIPPET_ALREADY_EXIST(updateSnippetInput.name), 'SNIPPET_ALREADY_EXIST');
+        throw new AppError(errors.SNIPPET_ALREADY_EXIST(updateSnippetInput.name), 'SNIPPET_ALREADY_EXIST');
       }
     }
 

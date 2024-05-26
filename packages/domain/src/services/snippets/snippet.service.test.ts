@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SnipcodeError, errors, generateRandomId } from '@snipcode/utils';
+import { AppError, errors, generateRandomId } from '@snipcode/utils';
 
 import { Snippet } from './snippet.entity';
 import { SnippetService } from './snippet.service';
@@ -78,7 +78,7 @@ describe('Test Snippet service', () => {
     // WHEN
     // THEN
     await expect(() => snippetService.create(sameCreateSnippetInput)).rejects.toThrow(
-      new SnipcodeError(errors.SNIPPET_ALREADY_EXIST(sameCreateSnippetInput.name), 'SNIPPET_ALREADY_EXIST'),
+      new AppError(errors.SNIPPET_ALREADY_EXIST(sameCreateSnippetInput.name), 'SNIPPET_ALREADY_EXIST'),
     );
 
     await testHelper.deleteTestSnippetsById([snippet.id]);
@@ -195,7 +195,7 @@ describe('Test Snippet service', () => {
     // THEN
     await expect(async () => {
       await snippetService.findById(snippetId);
-    }).rejects.toThrow(new SnipcodeError(errors.SNIPPET_NOT_FOUND(snippetId), 'SNIPPET_NOT_FOUND'));
+    }).rejects.toThrow(new AppError(errors.SNIPPET_NOT_FOUND(snippetId), 'SNIPPET_NOT_FOUND'));
   });
 
   it('should delete an existing snippet belonging to a user', async () => {
@@ -240,7 +240,7 @@ describe('Test Snippet service', () => {
     await expect(async () => {
       await snippetService.delete(deleteSnippetInput);
     }).rejects.toThrow(
-      new SnipcodeError(errors.CANT_EDIT_SNIPPET(deleteSnippetInput.creatorId, snippet1.id), 'CANT_EDIT_SNIPPET'),
+      new AppError(errors.CANT_EDIT_SNIPPET(deleteSnippetInput.creatorId, snippet1.id), 'CANT_EDIT_SNIPPET'),
     );
 
     const user1FolderSnippets = await snippetService.findByFolder(rootFolder1.id);
@@ -316,9 +316,7 @@ describe('Test Snippet service', () => {
     // THEN
     await expect(async () => {
       await snippetService.update(updateSnippetInput);
-    }).rejects.toThrow(
-      new SnipcodeError(errors.SNIPPET_ALREADY_EXIST(updateSnippetInput.name), 'SNIPPET_ALREADY_EXIST'),
-    );
+    }).rejects.toThrow(new AppError(errors.SNIPPET_ALREADY_EXIST(updateSnippetInput.name), 'SNIPPET_ALREADY_EXIST'));
 
     await testHelper.deleteTestSnippetsById([snippet.id]);
     await testHelper.deleteTestFoldersById([rootFolder.id]);
@@ -342,7 +340,7 @@ describe('Test Snippet service', () => {
     await expect(async () => {
       await snippetService.update(updateSnippetInput);
     }).rejects.toThrow(
-      new SnipcodeError(errors.CANT_EDIT_SNIPPET(updateSnippetInput.creatorId, snippet.id), 'CANT_EDIT_SNIPPET'),
+      new AppError(errors.CANT_EDIT_SNIPPET(updateSnippetInput.creatorId, snippet.id), 'CANT_EDIT_SNIPPET'),
     );
 
     await testHelper.deleteTestSnippetsById([snippet.id]);

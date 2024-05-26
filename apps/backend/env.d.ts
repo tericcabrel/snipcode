@@ -5,10 +5,10 @@ export type EnvironmentVariables = {
   CONVERTKIT_FORM_ID: string;
   CONVERTKIT_TAG_ID: string;
   DATABASE_URL: string;
-  ENABLE_INTROSPECTION: string;
   GITHUB_CLIENT_ID: string;
   GITHUB_CLIENT_SECRET: string;
   HOST: string;
+  INTROSPECTION_ENABLED: string;
   NODE_ENV: string;
   PORT: string;
   REQUEST_TIMEOUT: string;

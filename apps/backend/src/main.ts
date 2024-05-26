@@ -2,10 +2,11 @@ import './configs/instrument';
 
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { BaseExceptionFilter, HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import * as Sentry from '@sentry/node';
 
 import { AppModule } from './app.module';
+import { ApplicationExceptionFilter } from './configs/exception.filter';
 import { EnvironmentVariables } from './types/common';
 
 const bootstrap = async () => {
@@ -13,7 +14,9 @@ const bootstrap = async () => {
 
   const { httpAdapter } = app.get(HttpAdapterHost);
 
-  Sentry.setupNestErrorHandler(app, new BaseExceptionFilter(httpAdapter));
+  Sentry.setupNestErrorHandler(app, new ApplicationExceptionFilter(httpAdapter));
+
+  app.enableShutdownHooks();
 
   const configService = app.get(ConfigService<EnvironmentVariables, true>);
   const logger = new Logger('NestApplication');
@@ -22,8 +25,7 @@ const bootstrap = async () => {
   const host = configService.get<string>('HOST');
 
   await app.listen(port, () => {
-    logger.log(`Server ready at ${host}:${port}`);
-    // logger.log(`Server ready at ${host}:${port}${graphqlServer.graphqlPath}`);
+    logger.log(`Application ready at ${host}:${port}/graphql`);
   });
 };
 

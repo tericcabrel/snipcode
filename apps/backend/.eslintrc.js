@@ -3,7 +3,8 @@ module.exports = {
   extends: '../../.eslintrc.json',
   ignorePatterns: [
     'jest.config.ts',
-    '.eslintrc.js'
+    '.eslintrc.js',
+    'graphql.schema.ts'
   ],
   parserOptions: {
     ecmaVersion: 2023,

@@ -1,26 +1,18 @@
-import { registerAs } from '@nestjs/config';
 import { z } from 'zod';
-
-export default registerAs('app', () => ({
-  databaseUrl: process.env.DATABASE_URL,
-  env: process.env.NODE_ENV,
-  host: process.env.HOST,
-  port: parseInt(process.env.PORT ?? '7501', 10),
-  sentry: {
-    dsn: process.env.SENTRY_DSN,
-    enabled: process.env.SENTRY_ENABLED,
-  },
-  version: process.env.APP_VERSION,
-}));
 
 const EnvironmentVariablesSchema = z.object({
   APP_VERSION: z.string(),
+  CONVERTKIT_API_KEY: z.string(),
+  CONVERTKIT_FORM_ID: z.string(),
+  CONVERTKIT_TAG_ID: z.string(),
   DATABASE_URL: z.string(),
   HOST: z.string(),
+  INTROSPECTION_ENABLED: z.boolean({ coerce: true }),
   NODE_ENV: z.union([z.literal('development'), z.literal('production'), z.literal('test')]),
   PORT: z.number({ coerce: true }).min(7000).max(8000),
   SENTRY_DSN: z.string(),
   SENTRY_ENABLED: z.boolean({ coerce: true }),
+  SESSION_LIFETIME: z.number({ coerce: true }).min(1),
 });
 
 export type EnvironmentVariables = z.infer<typeof EnvironmentVariablesSchema>;

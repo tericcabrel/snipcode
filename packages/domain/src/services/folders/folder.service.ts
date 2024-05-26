@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SnipcodeError, errors } from '@snipcode/utils';
+import { AppError, errors } from '@snipcode/utils';
 
 import { Folder } from './folder.entity';
 import { CreateFolderInput } from './inputs/create-folder-input';
@@ -33,7 +33,7 @@ export class FolderService {
     });
 
     if (isFolderExist) {
-      throw new SnipcodeError(errors.FOLDER_ALREADY_EXIST(createFolderInput.name), 'FOLDER_ALREADY_EXIST');
+      throw new AppError(errors.FOLDER_ALREADY_EXIST(createFolderInput.name), 'FOLDER_ALREADY_EXIST');
     }
 
     const input = createFolderInput.toFolder();
@@ -59,7 +59,7 @@ export class FolderService {
     const folder = await this.prisma.folder.findUnique({ where: { id } });
 
     if (!folder) {
-      throw new SnipcodeError(errors.FOLDER_NOT_FOUND(id), 'FOLDER_NOT_FOUND');
+      throw new AppError(errors.FOLDER_NOT_FOUND(id), 'FOLDER_NOT_FOUND');
     }
 
     return folder;
@@ -71,7 +71,7 @@ export class FolderService {
     const rootFolder = folders.find((folder) => folder.parentId === null);
 
     if (!rootFolder) {
-      throw new SnipcodeError(errors.USER_ROOT_FOLDER_NOT_FOUND(userId), 'USER_ROOT_FOLDER_NOT_FOUND');
+      throw new AppError(errors.USER_ROOT_FOLDER_NOT_FOUND(userId), 'USER_ROOT_FOLDER_NOT_FOUND');
     }
 
     return rootFolder;
@@ -98,7 +98,7 @@ export class FolderService {
     });
 
     if (isFoldersContainRoot(foldersToDelete)) {
-      throw new SnipcodeError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER');
+      throw new AppError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER');
     }
 
     const ids = foldersToDelete.map((folder) => folder.id);
@@ -142,11 +142,11 @@ export class FolderService {
     const folder = await this.findById(updateFolderInput.folderId);
 
     if (folder.userId !== updateFolderInput.creatorId) {
-      throw new SnipcodeError(errors.CANT_EDIT_FOLDER(updateFolderInput.creatorId, folder.id), 'CANT_EDIT_FOLDER');
+      throw new AppError(errors.CANT_EDIT_FOLDER(updateFolderInput.creatorId, folder.id), 'CANT_EDIT_FOLDER');
     }
 
     if (!folder.parentId) {
-      throw new SnipcodeError(errors.CANT_RENAME_ROOT_FOLDER, 'CANT_RENAME_ROOT_FOLDER');
+      throw new AppError(errors.CANT_RENAME_ROOT_FOLDER, 'CANT_RENAME_ROOT_FOLDER');
     }
 
     const isFolderExist = await this.isFolderExistInParentFolder({
@@ -156,7 +156,7 @@ export class FolderService {
     });
 
     if (isFolderExist) {
-      throw new SnipcodeError(errors.FOLDER_ALREADY_EXIST(updateFolderInput.name), 'FOLDER_ALREADY_EXIST');
+      throw new AppError(errors.FOLDER_ALREADY_EXIST(updateFolderInput.name), 'FOLDER_ALREADY_EXIST');
     }
 
     const input = updateFolderInput.toFolder(folder);

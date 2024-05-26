@@ -1,11 +1,13 @@
 import * as Sentry from '@sentry/node';
 
+import { IS_DEV, IS_PROD } from '../utils/environment';
+
 const isSentryEnabled = () => {
   if (process.env.SENTRY_ENABLED !== 'true') {
     return false;
   }
 
-  return process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development';
+  return IS_PROD || IS_DEV;
 };
 
 Sentry.init({

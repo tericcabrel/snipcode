@@ -1,10 +1,18 @@
 export { DomainModule } from './src/domain.module';
 export { PrismaService } from './src/services/prisma.service';
 export { UserService } from './src/services/users/user.service';
+export { CreateUserInput } from './src/services/users/inputs/create-user-input';
 export { RoleService } from './src/services/roles/role.service';
 export { FolderService } from './src/services/folders/folder.service';
+export { CreateUserRootFolderInput } from './src/services/folders/inputs/create-user-root-folder-input';
+export { CreateFolderInput } from './src/services/folders/inputs/create-folder-input';
+export { UpdateFolderInput } from './src/services/folders/inputs/update-folder-input';
+export { CreateSnippetInput } from './src/services/snippets/inputs/create-snippet-input';
+export { UpdateSnippetInput } from './src/services/snippets/inputs/update-snippet-input';
+export { DeleteSnippetInput } from './src/services/snippets/inputs/delete-snippet-input';
 export { SnippetService } from './src/services/snippets/snippet.service';
 export { SessionService } from './src/services/sessions/session.service';
+export { CreateSessionInput } from './src/services/sessions/inputs/create-session-input';
 export { NewsletterService } from './src/services/newsletters/newsletter.service';
 export { Folder } from './src/services/folders/folder.entity';
 export { Role, RoleName } from './src/services/roles/role.entity';
