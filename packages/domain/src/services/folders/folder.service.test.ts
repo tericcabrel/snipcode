@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SnipcodeError, errors, generateRandomId } from '@snipcode/utils';
+import { AppError, errors, generateRandomId } from '@snipcode/utils';
 
 import { Folder } from './folder.entity';
 import { FolderService } from './folder.service';
@@ -97,7 +97,7 @@ describe('Test Folder service', () => {
     // WHEN
     // THEN
     await expect(() => folderService.create(createFolderInput)).rejects.toThrow(
-      new SnipcodeError(errors.FOLDER_ALREADY_EXIST(createFolderInput.name), 'FOLDER_ALREADY_EXIST'),
+      new AppError(errors.FOLDER_ALREADY_EXIST(createFolderInput.name), 'FOLDER_ALREADY_EXIST'),
     );
 
     await testHelper.deleteTestFoldersById([firstFolder.id, secondFolder.id, rootFolder.id]);
@@ -131,7 +131,7 @@ describe('Test Folder service', () => {
     // WHEN
     // THEN
     await expect(() => folderService.findUserRootFolder(user.id)).rejects.toThrow(
-      new SnipcodeError(errors.USER_ROOT_FOLDER_NOT_FOUND(user.id), 'USER_ROOT_FOLDER_NOT_FOUND'),
+      new AppError(errors.USER_ROOT_FOLDER_NOT_FOUND(user.id), 'USER_ROOT_FOLDER_NOT_FOUND'),
     );
 
     await testHelper.deleteTestUsersById([user.id]);
@@ -293,7 +293,7 @@ describe('Test Folder service', () => {
     // THEN
     await expect(async () => {
       await folderService.deleteMany([myGistFolder.id, rootFolder.id], user.id);
-    }).rejects.toThrow(new SnipcodeError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER'));
+    }).rejects.toThrow(new AppError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER'));
 
     await testHelper.deleteTestFoldersById([myGistFolder.id, rootFolder.id]);
     await testHelper.deleteTestUsersById([user.id]);
@@ -350,7 +350,7 @@ describe('Test Folder service', () => {
     // THEN
     await expect(async () => {
       await folderService.findById(folderId);
-    }).rejects.toThrow(new SnipcodeError(errors.FOLDER_NOT_FOUND(folderId), 'FOLDER_NOT_FOUND'));
+    }).rejects.toThrow(new AppError(errors.FOLDER_NOT_FOUND(folderId), 'FOLDER_NOT_FOUND'));
   });
 
   it('should update an existing folder in the specified folder', async () => {
@@ -408,7 +408,7 @@ describe('Test Folder service', () => {
     // THEN
     await expect(async () => {
       await folderService.update(updateFolderInput);
-    }).rejects.toThrow(new SnipcodeError(errors.FOLDER_ALREADY_EXIST(updateFolderInput.name), 'FOLDER_ALREADY_EXIST'));
+    }).rejects.toThrow(new AppError(errors.FOLDER_ALREADY_EXIST(updateFolderInput.name), 'FOLDER_ALREADY_EXIST'));
 
     await testHelper.deleteTestFoldersById([folder1.id, folder2.id]);
     await testHelper.deleteTestFoldersById([rootFolder.id]);
@@ -432,7 +432,7 @@ describe('Test Folder service', () => {
     await expect(async () => {
       await folderService.update(updateFolderInput);
     }).rejects.toThrow(
-      new SnipcodeError(errors.CANT_EDIT_FOLDER(updateFolderInput.creatorId, folderUser2.id), 'CANT_EDIT_FOLDER'),
+      new AppError(errors.CANT_EDIT_FOLDER(updateFolderInput.creatorId, folderUser2.id), 'CANT_EDIT_FOLDER'),
     );
 
     await testHelper.deleteTestFoldersById([folderUser2.id]);
@@ -454,7 +454,7 @@ describe('Test Folder service', () => {
     // THEN
     await expect(async () => {
       await folderService.update(updateFolderInput);
-    }).rejects.toThrow(new SnipcodeError(errors.CANT_RENAME_ROOT_FOLDER, 'CANT_RENAME_ROOT_FOLDER'));
+    }).rejects.toThrow(new AppError(errors.CANT_RENAME_ROOT_FOLDER, 'CANT_RENAME_ROOT_FOLDER'));
 
     await testHelper.deleteTestFoldersById([rootFolder.id]);
     await testHelper.deleteTestUsersById([user1.id]);

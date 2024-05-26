@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SnipcodeError, errors } from '@snipcode/utils';
+import { AppError, errors } from '@snipcode/utils';
 import bcrypt from 'bcryptjs';
 import { generateFromEmail } from 'unique-username-generator';
 
@@ -18,7 +18,7 @@ export class UserService {
     const user = await this.findByEmail(createUserInput.email);
 
     if (user) {
-      throw new SnipcodeError(errors.EMAIL_ALREADY_TAKEN, 'EMAIL_ALREADY_TAKEN');
+      throw new AppError(errors.EMAIL_ALREADY_TAKEN, 'EMAIL_ALREADY_TAKEN');
     }
 
     const username = await this.generateUsername(createUserInput.email, createUserInput.username);
@@ -123,17 +123,17 @@ export class UserService {
     const user = await this.findByEmail(email);
 
     if (!user) {
-      throw new SnipcodeError(errors.LOGIN_FAILED, 'LOGIN_FAILED');
+      throw new AppError(errors.LOGIN_FAILED, 'LOGIN_FAILED');
     }
 
     const isPasswordValid = user.password ? bcrypt.compareSync(password, user.password) : false;
 
     if (!isPasswordValid) {
-      throw new SnipcodeError(errors.LOGIN_FAILED, 'LOGIN_FAILED');
+      throw new AppError(errors.LOGIN_FAILED, 'LOGIN_FAILED');
     }
 
     if (!user.isEnabled) {
-      throw new SnipcodeError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED');
+      throw new AppError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED');
     }
 
     return user;

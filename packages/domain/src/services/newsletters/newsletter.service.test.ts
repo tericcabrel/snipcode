@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SnipcodeError } from '@snipcode/utils';
+import { AppError } from '@snipcode/utils';
 import nock from 'nock';
 
 import { NewsletterService } from './newsletter.service';
@@ -80,9 +80,7 @@ describe('Newsletter service', () => {
 
     await expect(async () => {
       await newsletterService.subscribe(emailToSubscribe, tags);
-    }).rejects.toThrow(
-      new SnipcodeError(JSON.stringify(caughtErrorsFormatted, null, 2), 'NEWSLETTER_SUBSCRIBE_FAILED'),
-    );
+    }).rejects.toThrow(new AppError(JSON.stringify(caughtErrorsFormatted, null, 2), 'NEWSLETTER_SUBSCRIBE_FAILED'));
 
     nock.cleanAll();
   });

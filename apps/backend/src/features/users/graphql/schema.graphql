@@ -1,0 +1,11 @@
+type SubscribeToNewsletterResult {
+  message: String!
+}
+
+type Mutation {
+  subscribeToNewsletter(email: String!): SubscribeToNewsletterResult!
+}
+
+type Query {
+  hello: String! @deprecated
+}

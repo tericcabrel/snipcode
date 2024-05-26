@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SnipcodeError, errors, generateRandomId } from '@snipcode/utils';
+import { AppError, errors, generateRandomId } from '@snipcode/utils';
 
 import { User } from './user.entity';
 import { UserService } from './user.service';
@@ -155,7 +155,7 @@ describe('Test User service', () => {
     // THEN
     await expect(async () => {
       await userService.create(createUserInput);
-    }).rejects.toThrow(new SnipcodeError(errors.EMAIL_ALREADY_TAKEN, 'EMAIL_ALREADY_TAKEN'));
+    }).rejects.toThrow(new AppError(errors.EMAIL_ALREADY_TAKEN, 'EMAIL_ALREADY_TAKEN'));
 
     await testHelper.deleteTestUsersById([user.id]);
   });
@@ -197,7 +197,7 @@ describe('Test User service', () => {
     // WHEN
     // THEN
     await expect(() => userService.login(userEmail, userPassword)).rejects.toThrow(
-      new SnipcodeError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
+      new AppError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
     );
   });
 
@@ -210,7 +210,7 @@ describe('Test User service', () => {
     // WHEN
     // THEN
     await expect(() => userService.login(user.email, userBadPassword)).rejects.toThrow(
-      new SnipcodeError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
+      new AppError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
     );
 
     await testHelper.deleteTestUsersById([user.id]);
@@ -224,7 +224,7 @@ describe('Test User service', () => {
     // WHEN
     // THEN
     await expect(() => userService.login(user.email, userPassword)).rejects.toThrow(
-      new SnipcodeError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED'),
+      new AppError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED'),
     );
 
     await testHelper.deleteTestUsersById([user.id]);

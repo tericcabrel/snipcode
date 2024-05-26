@@ -8,22 +8,27 @@
   "scripts": {
     "build": "nest build",
     "clean": "rm -rf .turbo dist build logs",
-    "dev": "nest start --watch",
+    "dev": "dotenv -e .env.local -- nest start --watch",
     "dev:debug": "nest start --debug --watch",
+    "gql:gen:types": "ts-node scripts/generate-graphql-types.ts",
+    "lint": "eslint \"{src,scripts}/**/*.ts\" --fix",
     "prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:it": "jest integration.spec.ts"
   },
   "dependencies": {
+    "@apollo/server": "4.10.4",
+    "@nestjs/apollo": "12.1.0",
     "@nestjs/common": "10.3.8",
     "@nestjs/config": "3.2.2",
     "@nestjs/core": "10.3.8",
+    "@nestjs/graphql": "12.1.1",
     "@nestjs/platform-express": "10.3.8",
     "@prisma/client": "5.14.0",
     "@sentry/node": "8.3.0",
+    "graphql": "16.8.1",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1",
     "zod": "3.23.8"
@@ -37,6 +42,7 @@
     "source-map-support": "0.5.21",
     "supertest": "7.0.0",
     "ts-loader": "9.5.1",
+    "ts-morph": "22.0.0",
     "ts-node": "10.9.2",
     "tsconfig-paths": "4.2.0"
   }

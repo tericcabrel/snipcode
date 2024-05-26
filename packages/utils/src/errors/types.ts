@@ -1,4 +1,4 @@
-export type ErrorCode =
+export type AppErrorCode =
   | 'INTERNAL_ERROR'
   | 'NEWSLETTER_SUBSCRIBE_FAILED'
   | 'NOT_AUTHENTICATED'
