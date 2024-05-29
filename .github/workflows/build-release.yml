@@ -132,17 +132,6 @@ jobs:
             echo "No Embed Release"
           fi
 
-      - name: Trigger Lambda Release
-        continue-on-error: true
-        run: |
-          LAMBDA_VERSION=$(jq -r '.releases[] | select(.name == "@snipcode/code-embed") | .newVersion' release.json)
-          if [ -n "$LAMBDA_VERSION" ]; then
-            echo "Ready to release Lambda version $LAMBDA_VERSION"
-            gh workflow run deploy-lambda.yml -r "${{ secrets.GH_BRANCH }}" -f version=$LAMBDA_VERSION
-          else
-            echo "No Lambda Release"
-          fi
-
       - name: Delete Release File
         if: ${{ success() }}
         env:
