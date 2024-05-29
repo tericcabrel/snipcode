@@ -15,9 +15,9 @@ Snipcode is an open-source code-sharing platform that makes it easy to create co
 
 ## Tech Stack
 * [Node.js](https://nodejs.org/en/)
-* [Typescript](https://www.typescriptlang.org/)
+* [TypeScript](https://www.typescriptlang.org/)
 * [GraphQL](https://graphql.org/)
-* [MySQL 8 through PlanetScale](https://planetscale.com/)
+* [MySQL 8 with PlanetScale](https://planetscale.com/)
 * [Prisma](https://www.prisma.io/)
 * [Tailwind CSS](https://tailwindcss.com/)
 * [AWS](https://aws.amazon.com)
@@ -26,9 +26,7 @@ Snipcode is an open-source code-sharing platform that makes it easy to create co
 ```text
 snipcode
 ├─ apps
-│  ├─ core
-│  ├─ functions
-│  │  ├─ code-embed
+│  ├─ backend
 │  ├─ web
 ├─ packages
 │  ├─ database

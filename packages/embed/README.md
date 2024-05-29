@@ -12,7 +12,7 @@ Make sure you have this tools installed before running the project
 * Node.js 18+
 * Yarn
 
-> **Note**: This repo requires a connection to the database; the command to setup the database is located in the **[database package](../database/README.md)**. 
+> **Note**: This repo requires a connection to the database; the command to set up the database is located in the **[domain package](../domain/README.md)**. 
 
 ## Set up the project
 Delete the existing folders output from build commands
@@ -84,7 +84,7 @@ npm config set //registry.npmjs.org/:_authToken <npm_token>
 npm publish --access=public
 ```
 
-Before publishing, make sure to upgrade the package version in the file [package.publish.json](./package.publish.json) . Check out the [Semantic versioning](https://docs.npmjs.com/about-semantic-versioning) to see how to define the version number.
+Before publishing, make sure to upgrade the package version in the file [package.publish.json](./package.publish.json). Check out the [Semantic versioning](https://docs.npmjs.com/about-semantic-versioning) to see how to define the version number.
 
 ## Build TS library
 This package also expose functions used in others packages or apps. Run the command below to build them 

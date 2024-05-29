@@ -20,11 +20,9 @@
     "packages/domain",
     "packages/embed",
     "packages/front",
-    "packages/logger",
     "packages/utils",
     "apps/backend",
-    "apps/web",
-    "apps/functions/**"
+    "apps/web"
   ],
   "lint-staged": {
     "**/*.ts?(x)": [
