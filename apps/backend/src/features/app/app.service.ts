@@ -17,10 +17,6 @@ export class AppService implements OnModuleInit {
 
     const adminRole = await this.roleService.findByName('admin');
 
-    if (!adminRole) {
-      throw new Error('[Data Loader]: Role administrator not found');
-    }
-
     const adminPassword = this.configService.get<string>('ADMIN_PASSWORD');
 
     await this.userService.loadAdminUser(adminRole, adminPassword);

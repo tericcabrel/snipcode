@@ -1,25 +1,53 @@
 #!/usr/bin/env zx
 
 import { $, sleep } from 'zx';
+import mysql from 'mysql2/promise';
 
-const MYSQL_DATABASE = 'snipcode';
 const CONTAINER_NAME = 'snipcode-test-db';
+const MYSQL_HOST = '127.0.0.1';
+const MYSQL_PORT = '3313';
+const MYSQL_USER = 'root';
+const MYSQL_PASSWORD = 'secret';
+const MYSQL_DATABASE = 'snipcode';
+
+const waitForMysql = async () => {
+  console.log('Waiting for database availability...');
+
+  while (true) {
+    try {
+      const connection = await mysql.createConnection({
+        host: MYSQL_HOST,
+        port: MYSQL_PORT,
+        user: MYSQL_USER,
+        password: MYSQL_PASSWORD,
+        database: MYSQL_DATABASE,
+      });
+
+      await connection.end();
+
+      console.log('The database is ready!!!');
+      break;
+    } catch (error) {
+      await sleep(1000);
+    }
+  }
+}
 
 if (!process.env.CI) {
-    console.log('Create the test database if necessary');
+  try {
+    await $`docker ps | grep ${CONTAINER_NAME}`;
+  } catch (error) {
+    console.log('Database container not found, creating...');
 
-    try {
-        await $`docker ps | grep ${CONTAINER_NAME}`;
-    } catch (error) {
-        // Container not found, creating a new one.
-        await $`docker run -d --rm --name ${CONTAINER_NAME} -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=${MYSQL_DATABASE} -p 3313:3306 mysql:8.0.34`;
+    await $`docker run -d --rm --name ${CONTAINER_NAME} -e MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} -e MYSQL_DATABASE=${MYSQL_DATABASE} -p ${MYSQL_PORT}:3306 mysql:8.0.34`;
 
-        await sleep(10000); // Wait for 9 seconds the container to initialize
-    }
+    await waitForMysql();
 
-    process.env.DATABASE_URL = `mysql://root:secret@127.0.0.1:3313/${MYSQL_DATABASE}`;
+    process.env.DATABASE_URL = `mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}`;
 
-    // Reset database and apply all migrations
-    await $`yarn prisma migrate reset --force`;
+    console.log('Applying database migrations...');
+
+    await $`yarn prisma migrate dev`;
+  }
 }
 
