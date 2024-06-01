@@ -17,7 +17,7 @@ describe('Test Snippet service', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         DomainModule.forRootAsync({
-          databaseUrl: process.env.TEST_DATABASE_URL,
+          databaseUrl: process.env.DATABASE_URL,
         }),
       ],
       providers: [RoleService, SnippetService],

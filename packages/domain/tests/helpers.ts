@@ -44,20 +44,6 @@ type CreateTestUserArgs = {
 export class TestHelper {
   constructor(private readonly prisma: PrismaService) {}
 
-  static generateTestId(): string {
-    return dbID.generate();
-  }
-
-  async findTestRole(name: RoleName): Promise<Role> {
-    const role = await this.prisma.role.findUnique({ where: { name } });
-
-    if (!role) {
-      throw new Error(`Role with the name "${name}" not found!`);
-    }
-
-    return role;
-  }
-
   static createTestUserInput({
     email,
     isEnabled,
@@ -82,38 +68,8 @@ export class TestHelper {
     return input;
   }
 
-  async createTestUser({
-    email,
-    isEnabled,
-    oauthProvider,
-    password,
-    roleName = 'user',
-    username,
-  }: CreateTestUserArgs): Promise<User> {
-    const role = await this.findTestRole(roleName);
-
-    const createUserInput = TestHelper.createTestUserInput({
-      email,
-      isEnabled,
-      oauthProvider,
-      password,
-      roleId: role.id,
-      username,
-    });
-
-    return this.prisma.user.create({ data: createUserInput.toUser() });
-  }
-
-  async deleteTestUsersById(userIds: Array<string | undefined>): Promise<void[]> {
-    const promises = userIds.map(async (userId) => {
-      if (!userId) {
-        return;
-      }
-
-      await this.prisma.user.delete({ where: { id: userId } });
-    });
-
-    return Promise.all(promises);
+  static generateTestId(): string {
+    return dbID.generate();
   }
 
   static updateTestUserInput(roleId: string): UpdateUserInput {
@@ -127,38 +83,6 @@ export class TestHelper {
       roleId,
       timezone: randTimeZone(),
     });
-  }
-
-  async deleteTestFoldersById(folderIds: Array<string | undefined>): Promise<void> {
-    for (const folderId of folderIds) {
-      if (!folderId) {
-        return;
-      }
-
-      // eslint-disable-next-line no-await-in-loop
-      await this.prisma.folder.delete({ where: { id: folderId } });
-    }
-  }
-
-  async createUserWithRootFolder(): Promise<[User, Folder]> {
-    const user = await this.createTestUser({});
-    const rootFolder = await this.prisma.folder.create({ data: new CreateUserRootFolderInput(user.id).toFolder() });
-
-    return [user, rootFolder];
-  }
-
-  async createManyTestFolders({ folderNames, parentId, userId }: CreateManyTestFoldersArgs): Promise<Folder[]> {
-    const promises = folderNames.map((name) => {
-      const createFolderInput = new CreateFolderInput({
-        name,
-        parentId,
-        userId,
-      });
-
-      return this.prisma.folder.create({ data: createFolderInput.toFolder() });
-    });
-
-    return Promise.all(promises);
   }
 
   static createTestFolderInput(args?: { name?: string; parentId?: string; userId?: string }): CreateFolderInput {
@@ -205,26 +129,6 @@ export class TestHelper {
     });
   }
 
-  async deleteTestSnippetsById(snippetIds: Array<string | undefined>): Promise<void[]> {
-    const promises = snippetIds.map(async (snippetId) => {
-      if (!snippetId) {
-        return;
-      }
-
-      await this.prisma.snippet.delete({ where: { id: snippetId } });
-    });
-
-    return Promise.all(promises);
-  }
-
-  async createTestSnippet(
-    args: { folderId?: string; name?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
-  ): Promise<Snippet> {
-    const createSnippetInput = TestHelper.createTestSnippetInput(args);
-
-    return this.prisma.snippet.create({ data: createSnippetInput.toSnippet() });
-  }
-
   static updateTestSnippetInput(
     args: { name?: string; snippetId?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
   ): UpdateSnippetInput {
@@ -263,6 +167,102 @@ export class TestHelper {
       expireDate: new Date(),
       userId,
     });
+  }
+
+  async findTestRole(name: RoleName): Promise<Role> {
+    const role = await this.prisma.role.findUnique({ where: { name } });
+
+    if (!role) {
+      throw new Error(`Role with the name "${name}" not found!`);
+    }
+
+    return role;
+  }
+
+  async createTestUser({
+    email,
+    isEnabled,
+    oauthProvider,
+    password,
+    roleName = 'user',
+    username,
+  }: CreateTestUserArgs): Promise<User> {
+    const role = await this.findTestRole(roleName);
+
+    const createUserInput = TestHelper.createTestUserInput({
+      email,
+      isEnabled,
+      oauthProvider,
+      password,
+      roleId: role.id,
+      username,
+    });
+
+    return this.prisma.user.create({ data: createUserInput.toUser() });
+  }
+
+  async deleteTestUsersById(userIds: Array<string | undefined>): Promise<void[]> {
+    const promises = userIds.map(async (userId) => {
+      if (!userId) {
+        return;
+      }
+
+      await this.prisma.user.delete({ where: { id: userId } });
+    });
+
+    return Promise.all(promises);
+  }
+
+  async deleteTestFoldersById(folderIds: Array<string | undefined>): Promise<void> {
+    for (const folderId of folderIds) {
+      if (!folderId) {
+        return;
+      }
+
+      // eslint-disable-next-line no-await-in-loop
+      await this.prisma.folder.delete({ where: { id: folderId } });
+    }
+  }
+
+  async createUserWithRootFolder(): Promise<[User, Folder]> {
+    const user = await this.createTestUser({});
+    const rootFolder = await this.prisma.folder.create({ data: new CreateUserRootFolderInput(user.id).toFolder() });
+
+    return [user, rootFolder];
+  }
+
+  async createManyTestFolders({ folderNames, parentId, userId }: CreateManyTestFoldersArgs): Promise<Folder[]> {
+    const promises = folderNames.map((name) => {
+      const createFolderInput = new CreateFolderInput({
+        name,
+        parentId,
+        userId,
+      });
+
+      return this.prisma.folder.create({ data: createFolderInput.toFolder() });
+    });
+
+    return Promise.all(promises);
+  }
+
+  async deleteTestSnippetsById(snippetIds: Array<string | undefined>): Promise<void[]> {
+    const promises = snippetIds.map(async (snippetId) => {
+      if (!snippetId) {
+        return;
+      }
+
+      await this.prisma.snippet.delete({ where: { id: snippetId } });
+    });
+
+    return Promise.all(promises);
+  }
+
+  async createTestSnippet(
+    args: { folderId?: string; name?: string; userId?: string; visibility?: SnippetVisibility } | undefined,
+  ): Promise<Snippet> {
+    const createSnippetInput = TestHelper.createTestSnippetInput(args);
+
+    return this.prisma.snippet.create({ data: createSnippetInput.toSnippet() });
   }
 
   async createTestSession(args: { userId: string }): Promise<Session> {
