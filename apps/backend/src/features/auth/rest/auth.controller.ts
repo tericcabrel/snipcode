@@ -44,7 +44,7 @@ export class AuthController {
 
     if (userExist) {
       const sessionInput = new CreateSessionInput({
-        expireDate: addDayToDate(sessionLifetime),
+        expireDate: addDayToDate(new Date(), sessionLifetime),
         userId: userExist.id,
       });
       const session = await this.sessionService.create(sessionInput);
@@ -76,7 +76,7 @@ export class AuthController {
     await this.folderService.createUserRootFolder(createUserRootFolderInput);
 
     const sessionInput = new CreateSessionInput({
-      expireDate: addDayToDate(sessionLifetime),
+      expireDate: addDayToDate(new Date(), sessionLifetime),
       userId: createdUser.id,
     });
 

@@ -11,6 +11,7 @@ const EnvironmentVariablesSchema = z.object({
   GITHUB_CLIENT_SECRET: z.string(),
   HOST: z.string(),
   INTROSPECTION_ENABLED: z.boolean({ coerce: true }),
+  JWT_SECRET: z.string(),
   NODE_ENV: z.union([z.literal('development'), z.literal('production'), z.literal('test')]),
   PORT: z.number({ coerce: true }).min(7000).max(8000),
   SENTRY_DSN: z.string(),

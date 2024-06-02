@@ -23,7 +23,7 @@ These packages are located in the folder `packages`, so you might need to change
 Here are the packages used in this project:
 
 * [@snipcode/domain](../../packages/domain)
-* [@snipcode/logger](../../packages/logger-old)
+* [@snipcode/embed](../../packages/embed)
 * [@snipcode/utils](../../packages/utils)
 
 ## Set up the project
@@ -67,6 +67,7 @@ nano .env.local
 | SENTRY_DSN               | Sentry DSN                                                                           |
 | SENTRY_ENABLED           | Enable/Disable Sentry                                                                |
 | SNIPPET_RENDERER_API_URL | Base URL of the API (the current one) for generating the html content from a snippet |
+| JWT_SECRET               | The secret code for decoding JWT token generated in the application                  |
 
 Start the application
 ```bash

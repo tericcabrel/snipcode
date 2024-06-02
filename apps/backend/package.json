@@ -13,7 +13,8 @@
     "gql:gen:types": "ts-node scripts/generate-graphql-types.ts",
     "lint": "eslint \"{src,scripts}/**/*.ts\" --fix",
     "prod": "node dist/main",
-    "test": "yarn workspace @snipcode/domain db:test && dotenv -e .env.test -- jest --watchAll --runInBand",
+    "test": "yarn workspace @snipcode/domain db:test && dotenv -e .env.test -- jest --runInBand",
+    "test:watch": "yarn workspace @snipcode/domain db:test && dotenv -e .env.test -- jest --watchAll --runInBand",
     "test:coverage": "yarn test --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:it": "yarn test integration.spec.ts"

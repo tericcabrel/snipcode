@@ -29,16 +29,6 @@ export class TestHelper {
     private readonly userService: UserService,
   ) {}
 
-  async findTestRole(name: RoleName): Promise<Role> {
-    const role = await this.roleService.findByName(name);
-
-    if (!role) {
-      throw new Error(`Role with the name "${name}" not found!`);
-    }
-
-    return role;
-  }
-
   static createTestUserInput(override: Partial<CreateUserInputArgs>): CreateUserInput {
     const input = new CreateUserInput({
       email: randEmail(),
@@ -57,6 +47,16 @@ export class TestHelper {
     return input;
   }
 
+  async findTestRole(name: RoleName): Promise<Role> {
+    const role = await this.roleService.findByName(name);
+
+    if (!role) {
+      throw new Error(`Role with the name "${name}" not found!`);
+    }
+
+    return role;
+  }
+
   async createTestUser(input: Partial<CreateUserInputArgs>): Promise<User> {
     const role = await this.findTestRole(input.role ?? 'user');
 
@@ -66,6 +66,9 @@ export class TestHelper {
   }
 
   async cleanDatabase(): Promise<void> {
+    await this.prismaService.snippet.deleteMany();
+    await this.prismaService.folder.deleteMany();
+    await this.prismaService.session.deleteMany();
     await this.prismaService.user.deleteMany();
   }
 }

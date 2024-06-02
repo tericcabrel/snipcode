@@ -16,4 +16,19 @@ export type AppErrorCode =
   | 'SNIPPET_NOT_FOUND'
   | 'CANT_EDIT_SNIPPET'
   | 'CANT_EDIT_FOLDER'
-  | 'CANT_RENAME_ROOT_FOLDER';
+  | 'CANT_RENAME_ROOT_FOLDER'
+  | 'INVALID_CONFIRMATION_TOKEN'
+  | 'USER_NOT_FOUND';
+
+export class AppError extends Error {
+  constructor(
+    public message: string,
+    public code: AppErrorCode = 'INTERNAL_ERROR',
+  ) {
+    super();
+  }
+}
+
+export const isAppError = (error: unknown): error is AppError => {
+  return error instanceof AppError;
+};

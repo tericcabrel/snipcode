@@ -13,12 +13,12 @@ import {
   User,
   UserService,
 } from '@snipcode/domain';
-import { addDayToDate } from '@snipcode/utils';
+import { AppError, addDayToDate, errors, verifyJwtToken } from '@snipcode/utils';
 
 import { AuthGuard, UserId } from '../../../configs/auth.guard';
 import { EnvironmentVariables } from '../../../configs/environment';
 import { GraphQLContext } from '../../../types/common';
-import { LoginResult, SignupUserInput, SignupUserResult } from '../../../types/graphql.schema';
+import { ConfirmUserResult, LoginResult, SignupUserInput, SignupUserResult } from '../../../types/graphql.schema';
 import { AUTH_USER_NOT_FOUND, AUTH_USER_NOT_FOUND_CODE } from '../../../utils/constants';
 import { GraphQLAppError } from '../../../utils/errors';
 
@@ -57,7 +57,7 @@ export class AuthResolvers {
     const sessionLifetime = this.configService.get<number>('SESSION_LIFETIME');
 
     const sessionInput = new CreateSessionInput({
-      expireDate: addDayToDate(sessionLifetime),
+      expireDate: addDayToDate(new Date(), sessionLifetime),
       userId: user.id,
     });
 
@@ -86,7 +86,7 @@ export class AuthResolvers {
 
     const role = await this.roleService.findByName('user');
 
-    const createUserDto = new CreateUserInput({
+    const createUserInput = new CreateUserInput({
       email,
       name,
       oauthProvider: 'email',
@@ -97,7 +97,7 @@ export class AuthResolvers {
       username: null,
     });
 
-    const user = await this.userService.create(createUserDto);
+    const user = await this.userService.create(createUserInput);
 
     const createUserRootFolderDto = new CreateUserRootFolderInput(user.id);
 
@@ -105,7 +105,26 @@ export class AuthResolvers {
 
     // TODO published user created event
 
-    return { message: 'Account created successfully!' };
+    return { message: 'Account created successfully!', userId: user.id };
+  }
+
+  @Mutation('confirmUser')
+  async confirmUser(@Args('token') token: string): Promise<ConfirmUserResult> {
+    const decodedToken = verifyJwtToken<{ userId: string }>({ secret: this.configService.get('JWT_SECRET'), token });
+
+    if (!decodedToken) {
+      throw new AppError(errors.INVALID_CONFIRMATION_TOKEN, 'INVALID_CONFIRMATION_TOKEN');
+    }
+
+    const user = await this.userService.findById(decodedToken.userId);
+
+    if (!user) {
+      throw new AppError(errors.USER_NOT_FOUND_FROM_TOKEN, 'USER_NOT_FOUND');
+    }
+
+    await this.userService.activate(user.id);
+
+    return { message: 'Email confirmed' };
   }
 
   @ResolveField()

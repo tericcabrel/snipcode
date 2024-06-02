@@ -10,6 +10,11 @@ input SignupUserInput {
 
 type SignupUserResult {
   message: String!
+  userId: String!
+}
+
+type ConfirmUserResult {
+  message: String!
 }
 
 type Query {
@@ -20,4 +25,5 @@ type Mutation {
   loginUser(email: String!, password: String!): LoginResult!
   logoutUser: Boolean!
   signupUser(input: SignupUserInput!): SignupUserResult!
+  confirmUser(token: String!): ConfirmUserResult!
 }
