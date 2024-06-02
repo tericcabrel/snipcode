@@ -9,6 +9,7 @@ export type EnvironmentVariables = {
   GITHUB_CLIENT_SECRET: string;
   HOST: string;
   INTROSPECTION_ENABLED: string;
+  JWT_SECRET: string;
   NODE_ENV: string;
   PORT: string;
   REQUEST_TIMEOUT: string;

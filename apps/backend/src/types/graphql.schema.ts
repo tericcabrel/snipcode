@@ -7,7 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type RoleName = 'user' | 'admin';
-export type OauthProvider = 'github' | 'stackoverflow' | 'twitter';
+export type OauthProvider = 'email' | 'github' | 'stackoverflow' | 'twitter';
 export type SnippetVisibility = 'public' | 'private';
 export type SnippetSortMethod = 'recently_created' | 'recently_updated';
 
@@ -64,6 +64,12 @@ export interface LoginResult {
 export interface SignupUserResult {
   __typename?: 'SignupUserResult';
   message: string;
+  userId: string;
+}
+
+export interface ConfirmUserResult {
+  __typename?: 'ConfirmUserResult';
+  message: string;
 }
 
 export interface IQuery {
@@ -84,6 +90,7 @@ export interface IMutation {
   loginUser(email: string, password: string): LoginResult | Promise<LoginResult>;
   logoutUser(): boolean | Promise<boolean>;
   signupUser(input: SignupUserInput): SignupUserResult | Promise<SignupUserResult>;
+  confirmUser(token: string): ConfirmUserResult | Promise<ConfirmUserResult>;
   createFolder(input: CreateFolderInput): Folder | Promise<Folder>;
   deleteFolders(folderIds: string[]): boolean | Promise<boolean>;
   updateFolder(id: string, input: UpdateFolderInput): Folder | Promise<Folder>;

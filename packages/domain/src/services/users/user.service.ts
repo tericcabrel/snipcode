@@ -139,6 +139,16 @@ export class UserService {
     return user;
   }
 
+  async activate(userId: string): Promise<User> {
+    return this.prisma.user.update({
+      data: {
+        isEnabled: true,
+        updatedAt: new Date(),
+      },
+      where: { id: userId },
+    });
+  }
+
   private async generateUsername(email: string, username: string | null): Promise<string> {
     if (!username) {
       return generateFromEmail(email, 3);

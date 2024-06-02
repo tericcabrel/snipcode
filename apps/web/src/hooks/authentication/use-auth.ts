@@ -14,7 +14,14 @@ const useAuth = () => {
   const { data, isLoading } = useAuthenticatedUser();
 
   const saveToken = (token: string) => {
-    setCookie(COOKIE_NAME, token, { expires: addDayToDate(90), path: '/', sameSite: 'none', secure: true });
+    const currentDate = new Date();
+
+    setCookie(COOKIE_NAME, token, {
+      expires: addDayToDate(currentDate, 90),
+      path: '/',
+      sameSite: 'none',
+      secure: true,
+    });
   };
 
   const deleteToken = async () => {

@@ -20,3 +20,5 @@ export const CANT_EDIT_SNIPPET = (userId: string, snippetId: string) =>
 export const CANT_EDIT_FOLDER = (userId: string, folderId: string) =>
   `The user with id ${userId} cannot edit the folder ${folderId}`;
 export const CANT_RENAME_ROOT_FOLDER = 'The root folder cannot be renamed.';
+export const INVALID_CONFIRMATION_TOKEN = 'Invalid confirmation token';
+export const USER_NOT_FOUND_FROM_TOKEN = 'No user associated with this token';

@@ -6,6 +6,7 @@ enum RoleName {
 }
 
 enum OauthProvider {
+  email
   github
   stackoverflow
   twitter
