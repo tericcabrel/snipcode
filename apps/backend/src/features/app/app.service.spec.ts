@@ -9,6 +9,8 @@ const prismaServiceMock = mock<PrismaService>();
 const roleServiceMock = mock<RoleService>();
 const userServiceMock = mock<UserService>();
 
+const { ADMIN_PASSWORD } = process.env;
+
 describe('Test App Service', () => {
   let appService: AppService;
   let roleService: RoleService;
@@ -46,6 +48,6 @@ describe('Test App Service', () => {
 
     expect(roleService.loadRoles).toHaveBeenCalledTimes(1);
     expect(userService.loadAdminUser).toHaveBeenCalledTimes(1);
-    expect(userService.loadAdminUser).toHaveBeenCalledWith(role, 'qwerty');
+    expect(userService.loadAdminUser).toHaveBeenCalledWith(role, ADMIN_PASSWORD);
   });
 });

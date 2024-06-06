@@ -1,5 +1,5 @@
-import { PrismaService, RoleService, SessionService, UserService } from '@snipcode/domain';
-import { generateJwtToken, isValidUUIDV4 } from '@snipcode/utils';
+import { SessionService } from '@snipcode/domain';
+import { isValidUUIDV4 } from '@snipcode/utils';
 import request from 'supertest';
 
 import { TestHelper } from '../../../utils/tests/helpers';
@@ -10,20 +10,14 @@ const graphqlEndpoint = '/graphql';
 describe('Test Authentication', () => {
   let server: TestServer;
   let testHelper: TestHelper;
-  let prismaService: PrismaService;
-  let roleService: RoleService;
   let sessionService: SessionService;
-  let userService: UserService;
 
   beforeAll(async () => {
     server = await startTestServer();
 
-    prismaService = server.app.get<PrismaService>(PrismaService);
-    roleService = server.app.get<RoleService>(RoleService);
-    userService = server.app.get<UserService>(UserService);
     sessionService = server.app.get<SessionService>(SessionService);
 
-    testHelper = new TestHelper(prismaService, roleService, userService);
+    testHelper = new TestHelper(server.app, graphqlEndpoint);
   });
 
   beforeEach(async () => {
@@ -81,7 +75,7 @@ describe('Test Authentication', () => {
       },
     };
 
-    await testHelper.createTestUser({ email: variables.input.email });
+    await testHelper.signupUser({ email: variables.input.email });
 
     const response = await request(server.app.getHttpServer())
       .post(graphqlEndpoint)
@@ -127,11 +121,10 @@ describe('Test Authentication', () => {
       }
     `;
 
-    await testHelper.createTestUser({
+    await testHelper.signupUser({
       email: 'jane.doe@snipcode.dev',
       isEnabled: true,
       password: 'password',
-      role: 'user',
     });
 
     const variables = {
@@ -163,11 +156,10 @@ describe('Test Authentication', () => {
       }
     `;
 
-    await testHelper.createTestUser({
+    await testHelper.signupUser({
       email: 'disabled.user@snipcode.dev',
       isEnabled: false,
       password: 'password',
-      role: 'user',
     });
 
     const variables = {
@@ -186,14 +178,14 @@ describe('Test Authentication', () => {
     expect(error.message).toEqual('Your account is disabled!');
   });
 
-  test('Returns when retrieving the authenticated user without an authentication token', async () => {
+  test('Returns an error when retrieving the authenticated user without an authentication token', async () => {
     const authenticatedUserQuery = `
-        query AuthenticatedUser {
-          authenticatedUser {
-            id
-          }
+      query AuthenticatedUser {
+        authenticatedUser {
+          id
         }
-      `;
+      }
+    `;
 
     const response = await request(server.app.getHttpServer())
       .post(graphqlEndpoint)
@@ -207,71 +199,13 @@ describe('Test Authentication', () => {
   });
 
   test('Retrieve the authenticated user', async () => {
-    const signUpQuery = `
-      mutation SignupUser($input: SignupUserInput!) {
-        signupUser(input: $input) {
-          __typename
-          message
-          userId
-        }
-      }
-    `;
-
-    const signUpVariables = {
-      input: {
-        email: 'jon.doe@snipcode.dev',
-        name: 'John Doe',
-        password: 'password',
-      },
+    const input = {
+      email: 'jon.doe@snipcode.dev',
+      name: 'John Doe',
+      password: 'password',
     };
 
-    const signUpResponse = await request(server.app.getHttpServer())
-      .post(graphqlEndpoint)
-      .send({ query: signUpQuery, variables: signUpVariables })
-      .expect(200);
-
-    const confirmationToken = generateJwtToken({
-      expiresIn: '1h',
-      payload: { userId: signUpResponse.body.data.signupUser.userId },
-      secret: process.env.JWT_SECRET,
-    });
-
-    const confirmUserQuery = `
-      mutation ConfirmUser($token: String!) {
-        confirmUser(token: $token) {
-          message
-        }
-      }
-    `;
-
-    const confirmUserVariables = {
-      token: confirmationToken,
-    };
-
-    await request(server.app.getHttpServer())
-      .post(graphqlEndpoint)
-      .send({ query: confirmUserQuery, variables: confirmUserVariables })
-      .expect(200);
-
-    const loginQuery = `
-      mutation LoginUser($email: String!, $password: String!) {
-        loginUser(email: $email, password: $password) {
-          token
-        }
-      }
-    `;
-
-    const loginVariables = {
-      email: signUpVariables.input.email,
-      password: signUpVariables.input.password,
-    };
-
-    const loginResponse = await request(server.app.getHttpServer())
-      .post(graphqlEndpoint)
-      .send({ query: loginQuery, variables: loginVariables })
-      .expect(200);
-
-    const authToken = loginResponse.body.data.loginUser.token;
+    const { authToken, userId } = await testHelper.createAuthenticatedUser({ ...input });
 
     const authenticatedUserQuery = `
       query AuthenticatedUser {
@@ -306,10 +240,10 @@ describe('Test Authentication', () => {
 
     expect(authenticatedUser).toMatchObject({
       createdAt: expect.any(Number),
-      email: loginVariables.email,
-      id: signUpResponse.body.data.signupUser.userId,
+      email: input.email,
+      id: userId,
       isEnabled: true,
-      name: signUpVariables.input.name,
+      name: input.name,
       oauthProvider: 'email',
       pictureUrl: null,
       role: {
@@ -325,71 +259,11 @@ describe('Test Authentication', () => {
   });
 
   test('Log out the authenticated user', async () => {
-    const signUpQuery = `
-      mutation SignupUser($input: SignupUserInput!) {
-        signupUser(input: $input) {
-          __typename
-          message
-          userId
-        }
-      }
-    `;
-
-    const signUpVariables = {
-      input: {
-        email: 'jane.doe@snipcode.dev',
-        name: 'Jane Doe',
-        password: 'password',
-      },
-    };
-
-    const signUpResponse = await request(server.app.getHttpServer())
-      .post(graphqlEndpoint)
-      .send({ query: signUpQuery, variables: signUpVariables })
-      .expect(200);
-
-    const confirmationToken = generateJwtToken({
-      expiresIn: '1h',
-      payload: { userId: signUpResponse.body.data.signupUser.userId },
-      secret: process.env.JWT_SECRET,
+    const { authToken, userId } = await testHelper.createAuthenticatedUser({
+      email: 'jane.doe@snipcode.dev',
+      name: 'Jane Doe',
+      password: 'password',
     });
-
-    const confirmUserQuery = `
-      mutation ConfirmUser($token: String!) {
-        confirmUser(token: $token) {
-          message
-        }
-      }
-    `;
-
-    const confirmUserVariables = {
-      token: confirmationToken,
-    };
-
-    await request(server.app.getHttpServer())
-      .post(graphqlEndpoint)
-      .send({ query: confirmUserQuery, variables: confirmUserVariables })
-      .expect(200);
-
-    const loginQuery = `
-      mutation LoginUser($email: String!, $password: String!) {
-        loginUser(email: $email, password: $password) {
-          token
-        }
-      }
-    `;
-
-    const loginVariables = {
-      email: signUpVariables.input.email,
-      password: signUpVariables.input.password,
-    };
-
-    const loginResponse = await request(server.app.getHttpServer())
-      .post(graphqlEndpoint)
-      .send({ query: loginQuery, variables: loginVariables })
-      .expect(200);
-
-    const authToken = loginResponse.body.data.loginUser.token;
 
     const authenticatedUserQuery = `
       query AuthenticatedUser {
@@ -407,7 +281,7 @@ describe('Test Authentication', () => {
 
     const { authenticatedUser } = response.body.data;
 
-    expect(authenticatedUser.id).toEqual(signUpResponse.body.data.signupUser.userId);
+    expect(authenticatedUser.id).toEqual(userId);
 
     const logoutQuery = `
       mutation LogoutUser {

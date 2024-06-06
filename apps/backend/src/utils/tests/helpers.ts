@@ -1,74 +1,106 @@
-import { randEmail, randFullName, randImg, randNumber, randPassword, randTimeZone, randUserName } from '@ngneat/falso';
-import {
-  CreateUserInput,
-  OauthProvider,
-  PrismaService,
-  Role,
-  RoleName,
-  RoleService,
-  User,
-  UserService,
-} from '@snipcode/domain';
+import { INestApplication } from '@nestjs/common';
+import { randEmail, randFullName, randPassword } from '@ngneat/falso';
+import { PrismaService, RoleName } from '@snipcode/domain';
+import { generateJwtToken } from '@snipcode/utils';
+import request from 'supertest';
 
 export type CreateUserInputArgs = {
   email: string;
   isEnabled: boolean;
   name: string;
-  oauthProvider: OauthProvider;
-  password?: string | null;
-  pictureUrl: string | null;
+  password: string | null;
   role: RoleName;
-  roleId: string;
-  timezone: string | null;
-  username: string | null;
 };
 export class TestHelper {
   constructor(
-    private readonly prismaService: PrismaService,
-    private readonly roleService: RoleService,
-    private readonly userService: UserService,
+    private readonly app: INestApplication,
+    private readonly graphqlEndpoint: string,
   ) {}
 
-  static createTestUserInput(override: Partial<CreateUserInputArgs>): CreateUserInput {
-    const input = new CreateUserInput({
-      email: randEmail(),
-      name: randFullName(),
-      oauthProvider: 'github',
-      password: randPassword(),
-      pictureUrl: randImg(),
-      roleId: 'roleId',
-      timezone: randTimeZone(),
-      username: randUserName(),
-      ...override,
-    });
+  async cleanDatabase(): Promise<void> {
+    const prismaService = this.app.get(PrismaService);
 
-    input.isEnabled = Boolean(override.isEnabled ?? randNumber({ max: 1, min: 0 }));
-
-    return input;
+    await prismaService.snippet.deleteMany();
+    await prismaService.folder.deleteMany();
+    await prismaService.session.deleteMany();
+    await prismaService.user.deleteMany();
   }
 
-  async findTestRole(name: RoleName): Promise<Role> {
-    const role = await this.roleService.findByName(name);
+  async signupUser(input: Partial<CreateUserInputArgs>): Promise<string> {
+    const query = `
+      mutation SignupUser($input: SignupUserInput!) {
+        signupUser(input: $input) {
+          __typename
+          message
+          userId
+        }
+      }
+    `;
+    const variables = {
+      input: {
+        email: input.email ?? randEmail(),
+        name: input.name ?? randFullName(),
+        password: input.password ?? randPassword(),
+      },
+    };
 
-    if (!role) {
-      throw new Error(`Role with the name "${name}" not found!`);
+    const response = await request(this.app.getHttpServer()).post(this.graphqlEndpoint).send({ query, variables });
+
+    if (input.isEnabled) {
+      const confirmationToken = generateJwtToken({
+        expiresIn: '1h',
+        payload: { userId: response.body.data.signupUser.userId },
+        secret: process.env.JWT_SECRET,
+      });
+
+      const confirmUserQuery = `
+        mutation ConfirmUser($token: String!) {
+          confirmUser(token: $token) {
+            message
+          }
+        }
+      `;
+
+      const confirmUserVariables = {
+        token: confirmationToken,
+      };
+
+      await request(this.app.getHttpServer())
+        .post(this.graphqlEndpoint)
+        .send({ query: confirmUserQuery, variables: confirmUserVariables });
     }
 
-    return role;
+    return response.body.data.signupUser.userId;
   }
 
-  async createTestUser(input: Partial<CreateUserInputArgs>): Promise<User> {
-    const role = await this.findTestRole(input.role ?? 'user');
+  async createAuthenticatedUser(input: Partial<CreateUserInputArgs>): Promise<{ authToken: string; userId: string }> {
+    const createUserInput: Partial<CreateUserInputArgs> = {
+      ...input,
+      email: input.email ?? randEmail(),
+      isEnabled: input.isEnabled ?? true,
+      password: input.password ?? randPassword(),
+    };
 
-    const createUserInput = TestHelper.createTestUserInput({ ...input, roleId: role.id });
+    const userId = await this.signupUser(createUserInput);
 
-    return this.userService.create(createUserInput);
-  }
+    const query = `
+      mutation LoginUser($email: String!, $password: String!) {
+        loginUser(email: $email, password: $password) {
+          token
+        }
+      }
+    `;
 
-  async cleanDatabase(): Promise<void> {
-    await this.prismaService.snippet.deleteMany();
-    await this.prismaService.folder.deleteMany();
-    await this.prismaService.session.deleteMany();
-    await this.prismaService.user.deleteMany();
+    const variables = {
+      email: createUserInput.email,
+      password: createUserInput.password,
+    };
+
+    const response = await request(this.app.getHttpServer()).post(this.graphqlEndpoint).send({ query, variables });
+
+    return {
+      authToken: response.body.data.loginUser.token,
+      userId,
+    };
   }
 }
