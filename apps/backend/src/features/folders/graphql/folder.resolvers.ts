@@ -93,8 +93,12 @@ export class FolderResolvers {
   }
 
   @ResolveField()
-  async parent(@Parent() folder: Folder): Promise<Folder> {
-    return this.folderService.findById(folder.id);
+  async parent(@Parent() folder: Folder): Promise<Folder | null> {
+    if (!folder.parentId) {
+      return null;
+    }
+
+    return this.folderService.findById(folder.parentId);
   }
 
   @ResolveField()

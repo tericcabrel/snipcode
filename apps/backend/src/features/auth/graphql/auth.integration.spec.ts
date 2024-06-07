@@ -205,7 +205,7 @@ describe('Test Authentication', () => {
       password: 'password',
     };
 
-    const { authToken, userId } = await testHelper.createAuthenticatedUser({ ...input });
+    const { authToken, user } = await testHelper.createAuthenticatedUser({ ...input });
 
     const authenticatedUserQuery = `
       query AuthenticatedUser {
@@ -241,7 +241,7 @@ describe('Test Authentication', () => {
     expect(authenticatedUser).toMatchObject({
       createdAt: expect.any(Number),
       email: input.email,
-      id: userId,
+      id: user.id,
       isEnabled: true,
       name: input.name,
       oauthProvider: 'email',
@@ -259,7 +259,7 @@ describe('Test Authentication', () => {
   });
 
   test('Log out the authenticated user', async () => {
-    const { authToken, userId } = await testHelper.createAuthenticatedUser({
+    const { authToken, user } = await testHelper.createAuthenticatedUser({
       email: 'jane.doe@snipcode.dev',
       name: 'Jane Doe',
       password: 'password',
@@ -281,7 +281,7 @@ describe('Test Authentication', () => {
 
     const { authenticatedUser } = response.body.data;
 
-    expect(authenticatedUser.id).toEqual(userId);
+    expect(authenticatedUser.id).toEqual(user.id);
 
     const logoutQuery = `
       mutation LogoutUser {
