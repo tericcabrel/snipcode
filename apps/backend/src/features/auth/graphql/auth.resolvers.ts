@@ -69,8 +69,6 @@ export class AuthResolvers {
   @Mutation('logoutUser')
   @UseGuards(AuthGuard)
   async logoutUser(@UserId() userId: string | undefined): Promise<boolean> {
-    console.log('user logged out', userId);
-
     if (!userId) {
       return false;
     }

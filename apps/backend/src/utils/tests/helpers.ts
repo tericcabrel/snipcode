@@ -1,16 +1,30 @@
 import { INestApplication } from '@nestjs/common';
-import { randEmail, randFullName, randPassword } from '@ngneat/falso';
+import { randEmail, randFullName, randPassword, randWord } from '@ngneat/falso';
 import { PrismaService, RoleName } from '@snipcode/domain';
 import { generateJwtToken } from '@snipcode/utils';
 import request from 'supertest';
 
-export type CreateUserInputArgs = {
+type CreateUserInputArgs = {
   email: string;
   isEnabled: boolean;
   name: string;
   password: string | null;
   role: RoleName;
 };
+
+type CreateAuthenticatedUserResult = {
+  authToken: string;
+  user: {
+    id: string;
+    rootFolderId: string;
+  };
+};
+
+type CreateFolderArgs = {
+  name: string;
+  parentId: string;
+};
+
 export class TestHelper {
   constructor(
     private readonly app: INestApplication,
@@ -21,8 +35,15 @@ export class TestHelper {
     const prismaService = this.app.get(PrismaService);
 
     await prismaService.snippet.deleteMany();
+
+    const childFolders = await prismaService.folder.findMany({ where: { NOT: { parent: null } } });
+
+    await prismaService.folder.deleteMany({ where: { id: { in: childFolders.map((folder) => folder.id) } } });
+
     await prismaService.folder.deleteMany();
+
     await prismaService.session.deleteMany();
+
     await prismaService.user.deleteMany();
   }
 
@@ -73,17 +94,17 @@ export class TestHelper {
     return response.body.data.signupUser.userId;
   }
 
-  async createAuthenticatedUser(input: Partial<CreateUserInputArgs>): Promise<{ authToken: string; userId: string }> {
+  async createAuthenticatedUser(args: Partial<CreateUserInputArgs>): Promise<CreateAuthenticatedUserResult> {
     const createUserInput: Partial<CreateUserInputArgs> = {
-      ...input,
-      email: input.email ?? randEmail(),
-      isEnabled: input.isEnabled ?? true,
-      password: input.password ?? randPassword(),
+      ...args,
+      email: args.email ?? randEmail(),
+      isEnabled: args.isEnabled ?? true,
+      password: args.password ?? randPassword(),
     };
 
-    const userId = await this.signupUser(createUserInput);
+    await this.signupUser(createUserInput);
 
-    const query = `
+    const loginQuery = `
       mutation LoginUser($email: String!, $password: String!) {
         loginUser(email: $email, password: $password) {
           token
@@ -96,11 +117,68 @@ export class TestHelper {
       password: createUserInput.password,
     };
 
-    const response = await request(this.app.getHttpServer()).post(this.graphqlEndpoint).send({ query, variables });
+    const loginResponse = await request(this.app.getHttpServer())
+      .post(this.graphqlEndpoint)
+      .send({ query: loginQuery, variables });
+
+    const authToken = loginResponse.body.data.loginUser.token;
+
+    const authenticatedUserQuery = `
+      query AuthenticatedUser {
+        authenticatedUser {
+          id
+          name
+          rootFolder {
+            id
+            name
+          }
+        }
+      }
+    `;
+
+    const authenticatedUserResponse = await request(this.app.getHttpServer())
+      .post(this.graphqlEndpoint)
+      .set('Authorization', authToken)
+      .send({ query: authenticatedUserQuery })
+      .expect(200);
+
+    const { authenticatedUser } = authenticatedUserResponse.body.data;
 
     return {
-      authToken: response.body.data.loginUser.token,
-      userId,
+      authToken,
+      user: {
+        id: authenticatedUser.id,
+        rootFolderId: authenticatedUser.rootFolder.id,
+      },
     };
+  }
+
+  async createFolder(authToken: string, args: Partial<CreateFolderArgs>): Promise<string> {
+    const createFolderInput: Partial<CreateFolderArgs> = {
+      ...args,
+      name: args.name ?? randWord(),
+    };
+
+    const query = `
+      mutation CreateFolder($input: CreateFolderInput!) {
+        createFolder(input: $input) {
+          id
+        }
+      }
+    `;
+
+    const variables = {
+      input: {
+        name: createFolderInput.name,
+        parentId: createFolderInput.parentId,
+      },
+    };
+
+    const response = await request(this.app.getHttpServer())
+      .post(this.graphqlEndpoint)
+      .set('Authorization', authToken)
+      .send({ query, variables });
+
+    return response.body.data.createFolder.id;
   }
 }
