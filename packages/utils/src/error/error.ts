@@ -26,7 +26,7 @@ export class AppError extends Error {
     public message: string,
     public code: AppErrorCode = 'INTERNAL_ERROR',
   ) {
-    super();
+    super(message);
   }
 }
 

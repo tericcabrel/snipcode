@@ -5,6 +5,7 @@ import { AuthController } from './rest/auth.controller';
 import { GithubService } from './services/github.service';
 
 @Module({
-  providers: [AuthResolvers, GithubService, AuthController],
+  controllers: [AuthController],
+  providers: [AuthResolvers, GithubService],
 })
 export class AuthFeatureModule {}

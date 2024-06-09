@@ -34,13 +34,11 @@ export class AuthController {
     const webAuthSuccessUrl = this.configService.get<string>('WEB_AUTH_SUCCESS_URL');
     const webAuthErrorUrl = this.configService.get<string>('WEB_AUTH_ERROR_URL');
 
-    const authResponse = await this.githubService.requestAccessTokenFromCode(requestToken);
+    const accessToken = await this.githubService.requestAccessTokenFromCode(requestToken);
 
-    const { access_token } = authResponse.data;
+    const githubUserData = await this.githubService.retrieveGitHubUserData(accessToken);
 
-    const userResponse = await this.githubService.retrieveGitHubUserData(access_token);
-
-    const userExist = await this.userService.findByEmail(userResponse.data.email);
+    const userExist = await this.userService.findByEmail(githubUserData.email);
 
     if (userExist) {
       const sessionInput = new CreateSessionInput({
@@ -49,7 +47,7 @@ export class AuthController {
       });
       const session = await this.sessionService.create(sessionInput);
 
-      const updateUserInput = this.githubService.generateUserUpdateInputFromGitHubData(userExist, userResponse.data);
+      const updateUserInput = this.githubService.generateUserUpdateInputFromGitHubData(userExist, githubUserData);
 
       await this.userService.update(userExist, updateUserInput);
 
@@ -64,10 +62,7 @@ export class AuthController {
       return res.redirect(webAuthErrorUrl);
     }
 
-    const createUserInput = this.githubService.generateUserRegistrationInputFromGitHubData(
-      userResponse.data,
-      roleUser.id,
-    );
+    const createUserInput = this.githubService.generateUserRegistrationInputFromGitHubData(githubUserData, roleUser.id);
 
     const createdUser = await this.userService.create(createUserInput);
 

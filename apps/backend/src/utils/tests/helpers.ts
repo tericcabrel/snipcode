@@ -32,10 +32,14 @@ type CreateSnippetArgs = {
 };
 
 export class TestHelper {
+  private graphqlEndpoint: string;
+
   constructor(
     private readonly app: INestApplication,
-    private readonly graphqlEndpoint: string,
-  ) {}
+    graphqlEndpoint?: string,
+  ) {
+    this.graphqlEndpoint = graphqlEndpoint ?? '/graphql';
+  }
 
   async cleanDatabase(): Promise<void> {
     const prismaService = this.app.get(PrismaService);
@@ -220,5 +224,31 @@ export class TestHelper {
       .send({ query, variables });
 
     return response.body.data.createSnippet.id;
+  }
+
+  async getAuthenticatedUser(authToken: string) {
+    const authenticatedUserQuery = `
+      query AuthenticatedUser {
+        authenticatedUser {
+          id
+          rootFolder {
+            id
+          }
+        }
+      }
+    `;
+
+    const authenticatedUserResponse = await request(this.app.getHttpServer())
+      .post(this.graphqlEndpoint)
+      .set('Authorization', authToken)
+      .send({ query: authenticatedUserQuery })
+      .expect(200);
+
+    const { authenticatedUser } = authenticatedUserResponse.body.data;
+
+    return {
+      id: authenticatedUser.id,
+      rootFolderId: authenticatedUser.rootFolder.id,
+    };
   }
 }
