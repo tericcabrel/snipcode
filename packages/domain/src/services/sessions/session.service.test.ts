@@ -26,36 +26,29 @@ describe('Test Session Service', function () {
     testHelper = new TestHelper(prismaService);
   });
 
-  it('should create a session', async () => {
-    // GIVEN
+  test('Create a session', async () => {
     const userId = TestHelper.generateTestId();
     const input = TestHelper.createTestSessionInput(userId);
 
-    // WHEN
     const sessionCreated = await sessionService.create(input);
 
-    // THEN
     expect(sessionCreated).toMatchObject<Session>(input.toSession());
 
     await testHelper.deleteTestUserSessions(sessionCreated.userId);
   });
 
-  it('should find a session by token', async () => {
-    // GIVEN
+  test('Retrieve a session by the token attached to it', async () => {
     const userId = TestHelper.generateTestId();
     const session = await testHelper.createTestSession({ userId });
 
-    // WHEN
     const sessionFound = await sessionService.findByToken(session.token);
 
-    // THEN
     expect(session).toEqual(sessionFound);
 
     await testHelper.deleteTestUserSessions(session.userId);
   });
 
-  it('should delete all session of a user', async () => {
-    // GIVEN
+  test('Delete all sessions of a user', async () => {
     const userId = TestHelper.generateTestId();
 
     const sessionsCreated = await Promise.all([
@@ -64,10 +57,8 @@ describe('Test Session Service', function () {
       testHelper.createTestSession({ userId }),
     ]);
 
-    // WHEN
     await sessionService.deleteUserSessions(userId);
 
-    // THEN
     const userSessions = await Promise.all(sessionsCreated.map(({ token }) => sessionService.findByToken(token)));
 
     expect(userSessions.every((session) => !session)).toBe(true);

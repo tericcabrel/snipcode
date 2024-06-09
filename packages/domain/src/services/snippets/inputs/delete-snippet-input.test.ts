@@ -6,14 +6,11 @@ describe('Test Delete Snippet Input', () => {
     const snippetId = TestHelper.generateTestId();
     const userId = TestHelper.generateTestId();
 
-    // GIVEN
     const input = new DeleteSnippetInput({
       creatorId: userId,
       snippetId,
     });
 
-    // WHEN
-    // THEN
     expect(input.snippetId).toEqual(snippetId);
     expect(input.creatorId).toEqual(userId);
   });

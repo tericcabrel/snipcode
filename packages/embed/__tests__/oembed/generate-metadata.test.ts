@@ -2,19 +2,16 @@ import { generateOembedMetadata } from '../../src/oembed';
 
 describe('Test Generate Oembed metadata', () => {
   it('should generate Oembed metadata for a code snippet', () => {
-    // GIVEN
     const snippet = { id: 'snippet_id', name: 'snippet-name.java' };
     const SNIPPET_RENDERER_URL = 'https://embed.snipcode.dev';
     const WEB_APP_URL = 'https://snipcode.dev';
 
-    // WHEN
     const result = generateOembedMetadata({
       snippet,
       snippetRendererURL: SNIPPET_RENDERER_URL,
       webAppURL: WEB_APP_URL,
     });
 
-    // THEN
     expect(result).toMatchInlineSnapshot(`
       {
         "height": 500,

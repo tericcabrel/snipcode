@@ -25,7 +25,7 @@
     "db:seed": "yarn env -- prisma db seed",
     "db:test": "zx tests/database.mjs",
     "db:test:stop": "docker container kill snipcode-test-db && docker container prune -f",
-    "test": "NODE_ENV=test yarn db:test && dotenv -e .env.test -- jest"
+    "test": "NODE_ENV=test yarn db:test && dotenv -e .env.test -- jest --runInBand"
   },
   "dependencies": {
     "@bugsnag/cuid": "3.1.1",

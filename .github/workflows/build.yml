@@ -22,7 +22,6 @@ jobs:
       MYSQL_DATABASE: test
       MYSQL_PORT: 3306
       DATABASE_URL: mysql://root:root@127.0.0.1:3306/test
-      TEST_DATABASE_URL: mysql://root:root@127.0.0.1:3306/test
       CONVERTKIT_API_KEY: api_key
       CONVERTKIT_FORM_ID: form_id
     outputs:

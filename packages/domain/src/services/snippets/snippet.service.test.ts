@@ -34,15 +34,12 @@ describe('Test Snippet service', () => {
     await roleService.loadRoles();
   });
 
-  it('should create a snippet in the specified folder', async () => {
-    // GIVEN
+  test('Create a snippet in a folder', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
     const createSnippetInput = TestHelper.createTestSnippetInput({ folderId: rootFolder.id, userId: user.id });
 
-    // WHEN
     const expectedSnippet = await snippetService.create(createSnippetInput);
 
-    // THEN
     expect(expectedSnippet).toMatchObject<Snippet>({
       content: createSnippetInput.toSnippet().content,
       contentHtml: createSnippetInput.toSnippet().contentHtml,
@@ -65,13 +62,10 @@ describe('Test Snippet service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should not create a snippet because the specified folder does not exist', async () => {
-    // GIVEN
+  test('Can not create a snippet because the specified folder does not exist', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
     const createSnippetInput = TestHelper.createTestSnippetInput({ folderId: generateRandomId(), userId: user.id });
 
-    // WHEN
-    // THEN
     await expect(async () => {
       await snippetService.create(createSnippetInput);
     }).rejects.toThrow(new AppError(errors.FOLDER_NOT_FOUND(createSnippetInput.folderId), 'FOLDER_NOT_FOUND'));
@@ -80,8 +74,7 @@ describe('Test Snippet service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should not create a snippet because it already exists in the specified folder', async () => {
-    // GIVEN
+  test('Can not create a snippet because it already exists in the specified folder', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
     const snippet = await testHelper.createTestSnippet({ folderId: rootFolder.id, name: 'app.tsx', userId: user.id });
 
@@ -91,8 +84,6 @@ describe('Test Snippet service', () => {
       userId: user.id,
     });
 
-    // WHEN
-    // THEN
     await expect(() => snippetService.create(sameCreateSnippetInput)).rejects.toThrow(
       new AppError(errors.SNIPPET_ALREADY_EXIST(sameCreateSnippetInput.name), 'SNIPPET_ALREADY_EXIST'),
     );
@@ -102,8 +93,7 @@ describe('Test Snippet service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should retrieve all public snippets', async () => {
-    // GIVEN
+  test('Retrieve all the public snippets', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
     const existingSnippets = await Promise.all([
       testHelper.createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'public' }),
@@ -114,21 +104,18 @@ describe('Test Snippet service', () => {
       testHelper.createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'public' }),
     ]);
 
-    // WHEN
     const publicSnippets = await snippetService.findPublicSnippet({ itemPerPage: 10 });
 
-    // THEN
-    await expect(publicSnippets.hasMore).toEqual(false);
-    await expect(publicSnippets.nextCursor).toEqual(null);
-    await expect(publicSnippets.items).toHaveLength(4);
+    expect(publicSnippets.hasMore).toEqual(false);
+    expect(publicSnippets.nextCursor).toEqual(null);
+    expect(publicSnippets.items).toHaveLength(4);
 
     await testHelper.deleteTestSnippetsById(existingSnippets.map((snippet) => snippet.id));
     await testHelper.deleteTestFoldersById([rootFolder.id]);
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should retrieve a subset of public snippets', async () => {
-    // GIVEN
+  test('Retrieve three public snippets per page', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
     const existingSnippets = await Promise.all([
       testHelper.createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'public' }),
@@ -139,21 +126,18 @@ describe('Test Snippet service', () => {
       testHelper.createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'public' }),
     ]);
 
-    // WHEN
     const publicSnippets = await snippetService.findPublicSnippet({ itemPerPage: 3 });
 
-    // THEN
-    await expect(publicSnippets.hasMore).toEqual(true);
-    await expect(publicSnippets.nextCursor).toEqual(expect.any(String));
-    await expect(publicSnippets.items).toHaveLength(3);
+    expect(publicSnippets.hasMore).toEqual(true);
+    expect(publicSnippets.nextCursor).toEqual(expect.any(String));
+    expect(publicSnippets.items).toHaveLength(3);
 
     await testHelper.deleteTestSnippetsById(existingSnippets.map((snippet) => snippet.id));
     await testHelper.deleteTestFoldersById([rootFolder.id]);
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should find all snippets of a user', async () => {
-    // GIVEN
+  test('Retrieve all snippets belonging to a user', async () => {
     const [user1, rootFolder1] = await testHelper.createUserWithRootFolder();
     const [user2, rootFolder2] = await testHelper.createUserWithRootFolder();
 
@@ -166,19 +150,16 @@ describe('Test Snippet service', () => {
       testHelper.createTestSnippet({ folderId: rootFolder2.id, userId: user2.id, visibility: 'private' }),
     ]);
 
-    // WHEN
     const userSnippets = await snippetService.findByUser(user2.id);
 
-    // THEN
-    await expect(userSnippets).toHaveLength(3);
+    expect(userSnippets).toHaveLength(3);
 
     await testHelper.deleteTestSnippetsById(existingSnippets.map((snippet) => snippet.id));
     await testHelper.deleteTestFoldersById([rootFolder1.id, rootFolder2.id]);
     await testHelper.deleteTestUsersById([user1.id, user2.id]);
   });
 
-  it('should retrieve a snippet by its ID', async () => {
-    // GIVEN
+  test('Retrieve a snippet by its ID', async () => {
     const [user1, rootFolder1] = await testHelper.createUserWithRootFolder();
 
     const snippet = await testHelper.createTestSnippet({
@@ -187,10 +168,8 @@ describe('Test Snippet service', () => {
       visibility: 'public',
     });
 
-    // WHEN
     const snippetFound = await snippetService.findById(snippet.id);
 
-    // THEN
     expect(snippetFound).toMatchObject({
       folderId: rootFolder1.id,
       id: snippet.id,
@@ -203,19 +182,15 @@ describe('Test Snippet service', () => {
     await testHelper.deleteTestUsersById([user1.id]);
   });
 
-  it('should found no snippet given the ID provided', async () => {
-    // GIVEN
+  test("Can not find a snippet by the ID because it doesn't exists", async () => {
     const snippetId = generateRandomId();
 
-    // WHEN
-    // THEN
     await expect(async () => {
       await snippetService.findById(snippetId);
     }).rejects.toThrow(new AppError(errors.SNIPPET_NOT_FOUND(snippetId), 'SNIPPET_NOT_FOUND'));
   });
 
-  it('should delete an existing snippet belonging to a user', async () => {
-    // GIVEN
+  test('Delete a snippet belonging to a user', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
 
     const [snippet1, snippet2] = await Promise.all([
@@ -223,12 +198,10 @@ describe('Test Snippet service', () => {
       testHelper.createTestSnippet({ folderId: rootFolder.id, userId: user.id, visibility: 'private' }),
     ]);
 
-    // WHEN
     const deleteSnippetInput = TestHelper.deleteTestSnippetInput({ snippetId: snippet1.id, userId: snippet1.userId });
 
     await snippetService.delete(deleteSnippetInput);
 
-    // THEN
     const folderSnippets = await snippetService.findByFolder(rootFolder.id);
 
     expect(folderSnippets).toHaveLength(1);
@@ -238,8 +211,7 @@ describe('Test Snippet service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should not delete an existing snippet because it belongs to other user', async () => {
-    // GIVEN
+  test('Can not delete a snippet belonging to other user', async () => {
     const [user1, rootFolder1] = await testHelper.createUserWithRootFolder();
     const [user2, rootFolder2] = await testHelper.createUserWithRootFolder();
 
@@ -249,10 +221,8 @@ describe('Test Snippet service', () => {
       testHelper.createTestSnippet({ folderId: rootFolder1.id, userId: user1.id, visibility: 'private' }),
     ]);
 
-    // WHEN
     const deleteSnippetInput = TestHelper.deleteTestSnippetInput({ snippetId: snippet1.id, userId: user2.id });
 
-    // THEN
     await expect(async () => {
       await snippetService.delete(deleteSnippetInput);
     }).rejects.toThrow(
@@ -270,8 +240,7 @@ describe('Test Snippet service', () => {
     await testHelper.deleteTestUsersById([user1.id, user2.id]);
   });
 
-  it('should update an existing snippet in the specified folder', async () => {
-    // GIVEN
+  test('Update a snippet in a folder', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
     const snippet = await testHelper.createTestSnippet({
       folderId: rootFolder.id,
@@ -281,10 +250,8 @@ describe('Test Snippet service', () => {
 
     const updateSnippetInput = TestHelper.updateTestSnippetInput({ snippetId: snippet.id, userId: user.id });
 
-    // WHEN
     const updatedSnippet = await snippetService.update(updateSnippetInput);
 
-    // THEN
     const snippetToUpdate = updateSnippetInput.toSnippet(snippet);
 
     expect(updatedSnippet).toMatchObject<Snippet>({
@@ -309,8 +276,7 @@ describe('Test Snippet service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should not update an existing snippet in the specified folder because another snippet with the updated name already exists in the folder', async () => {
-    // GIVEN
+  test('Can not update a snippet in a folder because another snippet with the updated name already exists inside', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
     const [snippet] = await Promise.all([
       testHelper.createTestSnippet({ folderId: rootFolder.id, name: 'snippet-one.java', userId: user.id }),
@@ -328,8 +294,6 @@ describe('Test Snippet service', () => {
       userId: user.id,
     });
 
-    // WHEN
-    // THEN
     await expect(async () => {
       await snippetService.update(updateSnippetInput);
     }).rejects.toThrow(new AppError(errors.SNIPPET_ALREADY_EXIST(updateSnippetInput.name), 'SNIPPET_ALREADY_EXIST'));
@@ -339,8 +303,7 @@ describe('Test Snippet service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should not update an existing snippet in the specified folder because because it belongs to other user', async () => {
-    // GIVEN
+  test('Can not update a snippet in a folder belonging to other user', async () => {
     const [user1, rootFolder1] = await testHelper.createUserWithRootFolder();
     const [user2, rootFolder2] = await testHelper.createUserWithRootFolder();
     const snippet = await testHelper.createTestSnippet({
@@ -351,8 +314,6 @@ describe('Test Snippet service', () => {
 
     const updateSnippetInput = TestHelper.updateTestSnippetInput({ snippetId: snippet.id, userId: user2.id });
 
-    // WHEN
-    // THEN
     await expect(async () => {
       await snippetService.update(updateSnippetInput);
     }).rejects.toThrow(

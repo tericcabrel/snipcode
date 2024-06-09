@@ -26,7 +26,6 @@ describe('Newsletter service', () => {
   });
 
   test('Add the email address to the newsletter subscribers', async () => {
-    // GIVEN
     const emailToSubscribe = 'user@email.com';
     const tags = ['snipcode'];
     const formId = 'formId';
@@ -43,17 +42,14 @@ describe('Newsletter service', () => {
         },
       });
 
-    // WHEN
     await newsletterService.subscribe(emailToSubscribe, tags);
 
-    // THEN
     expect(scope.isDone()).toBe(true);
 
     nock.cleanAll();
   });
 
   test('Handle HTTP error when the request to add the email address to the newsletter subscribers fails', async () => {
-    // GIVEN
     const emailToSubscribe = 'user@email.com';
     const tags = ['snipcode'];
     const formId = 'formId';
@@ -68,8 +64,6 @@ describe('Newsletter service', () => {
         message: 'Wrong api key provided!',
       });
 
-    // WHEN
-    // THEN
     const caughtErrorsFormatted = {
       data: {
         message: 'Wrong api key provided!',
