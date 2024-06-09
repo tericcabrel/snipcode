@@ -30,6 +30,7 @@ describe('Test Snippet service', () => {
 
     testHelper = new TestHelper(prismaService);
 
+    await testHelper.cleanDatabase();
     await roleService.loadRoles();
   });
 
@@ -60,6 +61,21 @@ describe('Test Snippet service', () => {
     });
 
     await testHelper.deleteTestSnippetsById([expectedSnippet.id]);
+    await testHelper.deleteTestFoldersById([rootFolder.id]);
+    await testHelper.deleteTestUsersById([user.id]);
+  });
+
+  it('should not create a snippet because the specified folder does not exist', async () => {
+    // GIVEN
+    const [user, rootFolder] = await testHelper.createUserWithRootFolder();
+    const createSnippetInput = TestHelper.createTestSnippetInput({ folderId: generateRandomId(), userId: user.id });
+
+    // WHEN
+    // THEN
+    await expect(async () => {
+      await snippetService.create(createSnippetInput);
+    }).rejects.toThrow(new AppError(errors.FOLDER_NOT_FOUND(createSnippetInput.folderId), 'FOLDER_NOT_FOUND'));
+
     await testHelper.deleteTestFoldersById([rootFolder.id]);
     await testHelper.deleteTestUsersById([user.id]);
   });

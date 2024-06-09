@@ -44,6 +44,20 @@ type CreateTestUserArgs = {
 export class TestHelper {
   constructor(private readonly prisma: PrismaService) {}
 
+  async cleanDatabase(): Promise<void> {
+    await this.prisma.snippet.deleteMany();
+
+    const childFolders = await this.prisma.folder.findMany({ where: { NOT: { parent: null } } });
+
+    await this.prisma.folder.deleteMany({ where: { id: { in: childFolders.map((folder) => folder.id) } } });
+
+    await this.prisma.folder.deleteMany();
+
+    await this.prisma.session.deleteMany();
+
+    await this.prisma.user.deleteMany();
+  }
+
   static createTestUserInput({
     email,
     isEnabled,

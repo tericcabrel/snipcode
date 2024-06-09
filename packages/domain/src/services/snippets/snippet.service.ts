@@ -19,6 +19,12 @@ export class SnippetService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createSnippetInput: CreateSnippetInput): Promise<Snippet> {
+    const folder = await this.prisma.folder.findUnique({ where: { id: createSnippetInput.folderId } });
+
+    if (!folder) {
+      throw new AppError(errors.FOLDER_NOT_FOUND(createSnippetInput.folderId), 'FOLDER_NOT_FOUND');
+    }
+
     const isSnippetExist = await this.isSnippetExistInFolder(createSnippetInput.folderId, createSnippetInput.name);
 
     if (isSnippetExist) {
