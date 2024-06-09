@@ -13,12 +13,12 @@ export const LOGIN_FAILED = 'Invalid email address or password.';
 export const EMAIL_ALREADY_TAKEN = 'The email address is already taken';
 export const USERNAME_ALREADY_TAKEN = 'The username is already taken';
 export const ACCOUNT_DISABLED = 'Your account is disabled!';
-export const FOLDER_NOT_FOUND = (folderId: string) => `The folder with the id ${folderId} not found`;
-export const SNIPPET_NOT_FOUND = (snippetId: string) => `The folder with the id ${snippetId} not found`;
+export const FOLDER_NOT_FOUND = (folderId: string) => `The folder with the id "${folderId}" not found`;
+export const SNIPPET_NOT_FOUND = (snippetId: string) => `The folder with the id "${snippetId}" not found`;
 export const CANT_EDIT_SNIPPET = (userId: string, snippetId: string) =>
-  `The user with id ${userId} cannot edit the snippet ${snippetId}`;
+  `The user with id "${userId}" cannot edit the snippet "${snippetId}"`;
 export const CANT_EDIT_FOLDER = (userId: string, folderId: string) =>
-  `The user with id ${userId} cannot edit the folder ${folderId}`;
+  `The user with id "${userId}" cannot edit the folder "${folderId}"`;
 export const CANT_RENAME_ROOT_FOLDER = 'The root folder cannot be renamed.';
 export const INVALID_CONFIRMATION_TOKEN = 'Invalid confirmation token';
 export const USER_NOT_FOUND_FROM_TOKEN = 'No user associated with this token';

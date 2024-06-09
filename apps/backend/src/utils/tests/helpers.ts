@@ -25,6 +25,12 @@ type CreateFolderArgs = {
   parentId: string;
 };
 
+type CreateSnippetArgs = {
+  folderId: string;
+  name: string;
+  visibility: 'public' | 'private';
+};
+
 export class TestHelper {
   constructor(
     private readonly app: INestApplication,
@@ -36,11 +42,8 @@ export class TestHelper {
 
     await prismaService.snippet.deleteMany();
 
-    const childFolders = await prismaService.folder.findMany({ where: { NOT: { parent: null } } });
-
-    await prismaService.folder.deleteMany({ where: { id: { in: childFolders.map((folder) => folder.id) } } });
-
-    await prismaService.folder.deleteMany();
+    // Recursive relationship between folders makes it hard to delete all folders using folder.deleteMany()
+    await prismaService.$executeRaw`TRUNCATE TABLE folders;`;
 
     await prismaService.session.deleteMany();
 
@@ -180,5 +183,42 @@ export class TestHelper {
       .send({ query, variables });
 
     return response.body.data.createFolder.id;
+  }
+
+  async createSnippet(authToken: string, args: Partial<CreateSnippetArgs>): Promise<string> {
+    const createSnippetInput: Partial<CreateSnippetArgs> = {
+      ...args,
+      name: args.name ?? randWord(),
+      visibility: args.visibility ?? 'public',
+    };
+
+    const query = `
+      mutation CreateSnippet($input: CreateSnippetInput!) {
+        createSnippet(input: $input) {
+          id
+        }
+      }
+    `;
+
+    const variables = {
+      input: {
+        content: 'const a = 1;',
+        contentHighlighted: '<span>const a = 1;</span>',
+        description: 'This is a description',
+        folderId: createSnippetInput.folderId,
+        language: 'javascript',
+        lineHighlight: '[]',
+        name: createSnippetInput.name,
+        theme: 'github-dark-dimmed',
+        visibility: createSnippetInput.visibility,
+      },
+    };
+
+    const response = await request(this.app.getHttpServer())
+      .post(this.graphqlEndpoint)
+      .set('Authorization', authToken)
+      .send({ query, variables });
+
+    return response.body.data.createSnippet.id;
   }
 }
