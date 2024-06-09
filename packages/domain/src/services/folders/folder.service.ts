@@ -26,6 +26,15 @@ export class FolderService {
   }
 
   async create(createFolderInput: CreateFolderInput): Promise<Folder> {
+    const parentFolder = await this.findById(createFolderInput.parentFolderId);
+
+    if (parentFolder.userId !== createFolderInput.user) {
+      throw new AppError(
+        errors.FOLDER_NOT_BELONGING_TO_USER(createFolderInput.parentFolderId),
+        'FOLDER_NOT_BELONGING_TO_USER',
+      );
+    }
+
     const isFolderExist = await this.isFolderExistInParentFolder({
       folderName: createFolderInput.name,
       parentFolderId: createFolderInput.parentFolderId,
@@ -37,8 +46,6 @@ export class FolderService {
     }
 
     const input = createFolderInput.toFolder();
-
-    const parentFolder = await this.findById(createFolderInput.parentFolderId);
 
     return this.prisma.folder.create({
       data: {

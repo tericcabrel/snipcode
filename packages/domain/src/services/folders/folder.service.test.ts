@@ -35,24 +35,20 @@ describe('Test Folder service', () => {
     await roleService.loadRoles();
   });
 
-  it('should create a root folder for a user', async () => {
-    // GIVEN
+  test('Create a root folder for a user', async () => {
     const user = await testHelper.createTestUser({});
 
     const creatUserRootFolderInput = new CreateUserRootFolderInput(user.id);
 
-    // WHEN
     const expectedFolder = await folderService.createUserRootFolder(creatUserRootFolderInput);
 
-    // THEN
     expect(expectedFolder?.id).toEqual(creatUserRootFolderInput.toFolder().id);
 
     await testHelper.deleteTestFoldersById([expectedFolder?.id]);
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should create folder for the specified user', async () => {
-    // GIVEN
+  test('Create folder for the specified user', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
 
     const createFolderInput = new CreateFolderInput({
@@ -61,10 +57,8 @@ describe('Test Folder service', () => {
       userId: user.id,
     });
 
-    // WHEN
     const expectedFolder = await folderService.create(createFolderInput);
 
-    // THEN
     expect(expectedFolder).toMatchObject({
       id: createFolderInput.toFolder().id,
       isFavorite: false,
@@ -78,8 +72,7 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should not create the folder cause it already exists', async () => {
-    // GIVEN
+  test('Can not create the folder because a folder with the same name already exists', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
 
     const [firstFolder, secondFolder] = await testHelper.createManyTestFolders({
@@ -94,8 +87,6 @@ describe('Test Folder service', () => {
       userId: user.id,
     });
 
-    // WHEN
-    // THEN
     await expect(() => folderService.create(createFolderInput)).rejects.toThrow(
       new AppError(errors.FOLDER_ALREADY_EXIST(createFolderInput.name), 'FOLDER_ALREADY_EXIST'),
     );
@@ -104,8 +95,25 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it("should find the user's root folder", async () => {
-    // GIVEN
+  test("Can not create a folder when the parent folder doesn't belong to the current creator", async () => {
+    const [user1] = await testHelper.createUserWithRootFolder();
+    const [, rootFolder2] = await testHelper.createUserWithRootFolder();
+
+    const createFolderInput = new CreateFolderInput({
+      name: 'My gist',
+      parentId: rootFolder2.id,
+      userId: user1.id,
+    });
+
+    await expect(() => folderService.create(createFolderInput)).rejects.toThrow(
+      new AppError(
+        errors.FOLDER_NOT_BELONGING_TO_USER(createFolderInput.parentFolderId),
+        'FOLDER_NOT_BELONGING_TO_USER',
+      ),
+    );
+  });
+
+  test("Retrieve the user's root folder", async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
 
     const [firstFolder, secondFolder] = await testHelper.createManyTestFolders({
@@ -114,22 +122,17 @@ describe('Test Folder service', () => {
       userId: user.id,
     });
 
-    // WHEN
     const userRootFolder = await folderService.findUserRootFolder(user.id);
 
-    // THEN
     expect(userRootFolder?.name).toEqual(`__${user.id}__`);
 
     await testHelper.deleteTestFoldersById([firstFolder.id, secondFolder.id, rootFolder.id]);
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it("should not find the user's root folder", async () => {
-    // GIVEN
+  test("Can not retrieve the user's root folder because it doesn't exist", async () => {
     const user = await testHelper.createTestUser({});
 
-    // WHEN
-    // THEN
     await expect(() => folderService.findUserRootFolder(user.id)).rejects.toThrow(
       new AppError(errors.USER_ROOT_FOLDER_NOT_FOUND(user.id), 'USER_ROOT_FOLDER_NOT_FOUND'),
     );
@@ -137,8 +140,7 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should find sub folders of the root user folder', async () => {
-    // GIVEN
+  test('Retrieve sub folders of the root user folder', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
 
     const [gistFolder, blogsFolder] = await testHelper.createManyTestFolders({
@@ -153,11 +155,9 @@ describe('Test Folder service', () => {
       userId: user.id,
     });
 
-    // WHEN
     const userRootFolders1 = await folderService.findSubFolders(user.id);
     const userRootFolders2 = await folderService.findSubFolders(user.id, rootFolder.id);
 
-    // THEN
     expect(userRootFolders1).toHaveLength(2);
     expect(userRootFolders1).toEqual(userRootFolders2);
 
@@ -171,8 +171,7 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should find the sub folders of a folder', async () => {
-    // GIVEN
+  test('Retrieve the sub folders of a folder', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
 
     const [firstFolder, secondFolder] = await testHelper.createManyTestFolders({
@@ -193,10 +192,8 @@ describe('Test Folder service', () => {
       userId: user.id,
     });
 
-    // WHEN
     const subFolders = await folderService.findSubFolders(user.id, firstFolder.id);
 
-    // THEN
     expect(subFolders).toHaveLength(2);
     expect(subFolders.map((folder) => folder.name)).toEqual(['java', 'node.js']);
 
@@ -212,8 +209,7 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should delete folders belonging to the user', async () => {
-    // GIVEN
+  test('Delete folders belonging to the user', async () => {
     const [user1, rootFolder1] = await testHelper.createUserWithRootFolder();
     const [myGistFolder, blogsFolder] = await testHelper.createManyTestFolders({
       folderNames: ['My gist', 'Blogs'],
@@ -228,11 +224,9 @@ describe('Test Folder service', () => {
       userId: user2.id,
     });
 
-    // WHEN
     await folderService.deleteMany([myGistFolder.id, blogsFolder.id], user1.id);
     const subFolders = await folderService.findSubFolders(user1.id);
 
-    // THEN
     expect(subFolders).toHaveLength(0);
 
     await testHelper.deleteTestFoldersById([projectFolder.id, snippetFolder.id, rootFolder1.id, rootFolder2.id]);
@@ -240,8 +234,7 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user2.id]);
   });
 
-  it('should delete folders belonging to the user - validation check', async () => {
-    // GIVEN
+  test('Delete folders belonging to the user - validation check', async () => {
     const [user1, rootFolder1] = await testHelper.createUserWithRootFolder();
     const [myGistFolder, blogsFolder] = await testHelper.createManyTestFolders({
       folderNames: ['My gist', 'Blogs'],
@@ -256,10 +249,8 @@ describe('Test Folder service', () => {
       userId: user2.id,
     });
 
-    // WHEN
     await folderService.deleteMany([myGistFolder.id, projectFolder.id], user1.id);
 
-    // THEN
     const user1SubFolders = await folderService.findSubFolders(user1.id);
     const user2SubFolders = await folderService.findSubFolders(user2.id);
 
@@ -280,8 +271,7 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user2.id]);
   });
 
-  it('should not delete folders because we cannot delete a root folder', async () => {
-    // GIVEN
+  test('Can not delete folders because one of them is a root folder and cannot be deleted', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
     const [myGistFolder] = await testHelper.createManyTestFolders({
       folderNames: ['My gist'],
@@ -289,8 +279,6 @@ describe('Test Folder service', () => {
       userId: user.id,
     });
 
-    // WHEN
-    // THEN
     await expect(async () => {
       await folderService.deleteMany([myGistFolder.id, rootFolder.id], user.id);
     }).rejects.toThrow(new AppError(errors.CANT_DELETE_ROOT_FOLDER, 'CANT_DELETE_ROOT_FOLDER'));
@@ -299,8 +287,7 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should generate the breadcrumb path of a folder', async () => {
-    // GIVEN
+  test('Generate the breadcrumb path of a folder', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
 
     const gistFolderInput = TestHelper.createTestFolderInput({
@@ -317,10 +304,8 @@ describe('Test Folder service', () => {
     });
     const nodeFolder = await folderService.create(nodeFolderInput);
 
-    // WHEN
     const subFolders = await folderService.generateBreadcrumb(nodeFolder.id);
 
-    // THEN
     expect(subFolders).toHaveLength(2);
     expect(subFolders.map((folder) => folder.name)).toEqual(['My gist', 'Node.js']);
 
@@ -328,33 +313,26 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should generate the breadcrumb path of the root folder', async () => {
-    // GIVEN
+  test('Generate the breadcrumb path of the root folder', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
 
-    // WHEN
     const subFolders = await folderService.generateBreadcrumb(rootFolder.id);
 
-    // THEN
     expect(subFolders).toHaveLength(0);
 
     await testHelper.deleteTestFoldersById([rootFolder.id]);
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should found no folder given the ID provided', async () => {
-    // GIVEN
+  test('Can not find a folder given the ID provided', async () => {
     const folderId = generateRandomId();
 
-    // WHEN
-    // THEN
     await expect(async () => {
       await folderService.findById(folderId);
     }).rejects.toThrow(new AppError(errors.FOLDER_NOT_FOUND(folderId), 'FOLDER_NOT_FOUND'));
   });
 
-  it('should update an existing folder in the specified folder', async () => {
-    // GIVEN
+  test('Update an existing folder in the specified folder', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
     const [folder] = await testHelper.createManyTestFolders({
       folderNames: ['My gist'],
@@ -368,10 +346,8 @@ describe('Test Folder service', () => {
       userId: user.id,
     });
 
-    // WHEN
     const updatedFolder = await folderService.update(updateFolderInput);
 
-    // THEN
     const folderToUpdate = updateFolderInput.toFolder(folder);
 
     expect(updatedFolder).toMatchObject<Folder>({
@@ -389,8 +365,7 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should not update an existing folder in the specified folder because another folder with the updated name already exists in the folder', async () => {
-    // GIVEN
+  test('Can not update an existing folder in the specified folder because another folder with the updated name already exists in the folder', async () => {
     const [user, rootFolder] = await testHelper.createUserWithRootFolder();
     const [folder1, folder2] = await testHelper.createManyTestFolders({
       folderNames: ['folder-one', 'folder-two'],
@@ -404,8 +379,6 @@ describe('Test Folder service', () => {
       userId: user.id,
     });
 
-    // WHEN
-    // THEN
     await expect(async () => {
       await folderService.update(updateFolderInput);
     }).rejects.toThrow(new AppError(errors.FOLDER_ALREADY_EXIST(updateFolderInput.name), 'FOLDER_ALREADY_EXIST'));
@@ -415,8 +388,7 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should not update an existing folder in the specified folder because it belongs to other user', async () => {
-    // GIVEN
+  test('Can not update an existing folder in the specified folder because it belongs to other user', async () => {
     const [user1, rootFolder1] = await testHelper.createUserWithRootFolder();
     const [user2, rootFolder2] = await testHelper.createUserWithRootFolder();
     const [folderUser2] = await testHelper.createManyTestFolders({
@@ -427,8 +399,6 @@ describe('Test Folder service', () => {
 
     const updateFolderInput = TestHelper.updateTestFolderInput({ folderId: folderUser2.id, userId: user1.id });
 
-    // WHEN
-    // THEN
     await expect(async () => {
       await folderService.update(updateFolderInput);
     }).rejects.toThrow(
@@ -440,8 +410,7 @@ describe('Test Folder service', () => {
     await testHelper.deleteTestUsersById([user1.id, user2.id]);
   });
 
-  it('should not update the user root folder', async () => {
-    // GIVEN
+  test('Can not not update the user root folder', async () => {
     const [user1, rootFolder] = await testHelper.createUserWithRootFolder();
 
     const updateFolderInput = TestHelper.updateTestFolderInput({
@@ -450,8 +419,6 @@ describe('Test Folder service', () => {
       userId: user1.id,
     });
 
-    // WHEN
-    // THEN
     await expect(async () => {
       await folderService.update(updateFolderInput);
     }).rejects.toThrow(new AppError(errors.CANT_RENAME_ROOT_FOLDER, 'CANT_RENAME_ROOT_FOLDER'));
