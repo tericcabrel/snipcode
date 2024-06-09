@@ -18,7 +18,8 @@ export type AppErrorCode =
   | 'CANT_EDIT_FOLDER'
   | 'CANT_RENAME_ROOT_FOLDER'
   | 'INVALID_CONFIRMATION_TOKEN'
-  | 'USER_NOT_FOUND';
+  | 'USER_NOT_FOUND'
+  | 'FOLDER_NOT_BELONGING_TO_USER';
 
 export class AppError extends Error {
   constructor(
