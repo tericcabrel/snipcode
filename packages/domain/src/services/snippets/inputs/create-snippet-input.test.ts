@@ -7,7 +7,6 @@ describe('Test Create Snippet Input', () => {
     const folderId = TestHelper.generateTestId();
     const userId = TestHelper.generateTestId();
 
-    // GIVEN
     const input = new CreateSnippetInput({
       content: 'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n};',
       contentHighlighted:
@@ -22,10 +21,8 @@ describe('Test Create Snippet Input', () => {
       visibility: 'public',
     });
 
-    // WHEN
     const folder = input.toSnippet();
 
-    // THEN
     expect(folder).toMatchObject<Snippet>({
       content: 'import React from "react";\n\nexport const App = () => {\n\n\treturn(\n\t\t<div>Hello</div>\n\t);\n};',
       contentHtml:

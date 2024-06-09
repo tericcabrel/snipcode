@@ -7,6 +7,7 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   clearMocks: true,
   maxWorkers: 1,
+  prettierPath: require.resolve('prettier-2'), // Waiting for the release of v30 to use Prettier 3
   snapshotFormat: {
     printBasicPrototype: false,
   },

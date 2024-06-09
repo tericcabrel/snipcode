@@ -7,8 +7,11 @@ jest.mock('../../../src/renderer/content/utils', () => {
 });
 
 describe('Test generateHTMLPreview()', () => {
+  afterAll(() => {
+    jest.clearAllMocks();
+  });
+
   it('should generates the html preview for a code snippet', () => {
-    // GIVEN
     const args: Args = {
       code:
         '<span class="line">export const hashPassword = (password: string): string => {</span>\n' +
@@ -23,16 +26,14 @@ describe('Test generateHTMLPreview()', () => {
         '\n' +
         '  return bcrypt.hashSync(password, SALT_ROUNDS);\n' +
         '};',
-      scriptUrl: 'https://cdn.com/sharigan/script.js',
-      styleUrl: 'https://cdn.com/sharigan/style.css',
+      scriptUrl: 'https://cdn.com/snipcode/script.js',
+      styleUrl: 'https://cdn.com/snipcode/style.css',
       title: 'helpers.ts',
       webAppUrl: 'https://snipcode.dev',
     };
 
-    // WHEN
     const result = generateHTMLPreview(args);
 
-    // THEN
     expect(result).toMatchInlineSnapshot(`
       "
           <!DOCTYPE html>
@@ -42,7 +43,7 @@ describe('Test generateHTMLPreview()', () => {
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <meta name="robots" content="noindex,nofollow">
               <title>Snipcode - helpers.ts</title>
-              <link rel="stylesheet" type="text/css" href="https://cdn.com/sharigan/style.css" />
+              <link rel="stylesheet" type="text/css" href="https://cdn.com/snipcode/style.css" />
           </head>
           <body data-id="random-id">
               <div class="ctner">
@@ -71,7 +72,7 @@ describe('Test generateHTMLPreview()', () => {
       <span class="line">};</span></pre>
                 </div>
               </div>
-              <script type="text/javascript" src="https://cdn.com/sharigan/script.js"></script>
+              <script type="text/javascript" src="https://cdn.com/snipcode/script.js"></script>
           </body>
           </html>
       "

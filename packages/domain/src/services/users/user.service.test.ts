@@ -33,9 +33,9 @@ describe('Test User service', () => {
     await roleService.loadRoles();
   });
 
-  it('should load users in the database', async () => {
+  test('Load users in the database', async () => {
     const [roleAdmin] = await roleService.findAll();
-    const adminPassword = 'VerStrongPassword';
+    const adminPassword = 'VeryStrongPassword';
 
     await userService.loadAdminUser(roleAdmin, adminPassword);
 
@@ -46,15 +46,12 @@ describe('Test User service', () => {
     await testHelper.deleteTestUsersById([adminUser?.id]);
   });
 
-  it('should create a user', async () => {
-    // GIVEN
+  test('Create a user', async () => {
     const role = await testHelper.findTestRole('user');
     const createUserInput = TestHelper.createTestUserInput({ roleId: role.id });
 
-    // WHEN
     const createdUser = await userService.create(createUserInput);
 
-    // THEN
     expect(createdUser).toMatchObject<User>({
       createdAt: expect.any(Date),
       email: createUserInput.email,
@@ -73,15 +70,12 @@ describe('Test User service', () => {
     await testHelper.deleteTestUsersById([createdUser.id]);
   });
 
-  it('should create a user with no username', async () => {
-    // GIVEN
+  test('Create a user with no username', async () => {
     const role = await testHelper.findTestRole('user');
     const createUserInput = TestHelper.createTestUserInput({ roleId: role.id, username: null });
 
-    // WHEN
     const createdUser = await userService.create(createUserInput);
 
-    // THEN
     expect(createdUser).toMatchObject<User>({
       createdAt: expect.any(Date),
       email: createUserInput.email,
@@ -100,33 +94,27 @@ describe('Test User service', () => {
     await testHelper.deleteTestUsersById([createdUser.id]);
   });
 
-  it('should create a user with a username that already exists', async () => {
-    // GIVEN
+  test('Create a user with a username that already exists will generate a new one for him', async () => {
     const role = await testHelper.findTestRole('user');
     const user = await testHelper.createTestUser({ username: 'roloto' });
 
-    const createUserInput = await TestHelper.createTestUserInput({ roleId: role.id, username: 'roloto' });
+    const createUserInput = TestHelper.createTestUserInput({ roleId: role.id, username: 'roloto' });
 
-    // WHEN
     const createdUser = await userService.create(createUserInput);
 
-    // THEN
     expect(createdUser.username).not.toEqual('roloto');
 
     await testHelper.deleteTestUsersById([user.id, createdUser.id]);
   });
 
-  it('should create a user - validation check', async () => {
-    // GIVEN
+  test('Create a user - validation check', async () => {
     const role = await testHelper.findTestRole('user');
     const createUserInput = TestHelper.createTestUserInput({ roleId: role.id });
 
     createUserInput.isEnabled = true;
 
-    // WHEN
     const createdUser = await userService.create(createUserInput);
 
-    // THEN
     expect(createdUser).toMatchObject<User>({
       createdAt: expect.any(Date),
       email: createUserInput.email,
@@ -145,14 +133,11 @@ describe('Test User service', () => {
     await testHelper.deleteTestUsersById([createdUser.id]);
   });
 
-  it('should fail create a user because the email address already exists', async () => {
-    // GIVEN
+  test('Can not create a user because the email address already exists', async () => {
     const user = await testHelper.createTestUser({ email: 'user@email.com' });
     const role = await testHelper.findTestRole('user');
     const createUserInput = TestHelper.createTestUserInput({ email: 'user@email.com', roleId: role.id });
 
-    // WHEN
-    // THEN
     await expect(async () => {
       await userService.create(createUserInput);
     }).rejects.toThrow(new AppError(errors.EMAIL_ALREADY_TAKEN, 'EMAIL_ALREADY_TAKEN'));
@@ -160,17 +145,14 @@ describe('Test User service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should update user information', async () => {
-    // GIVEN
+  test('Update user information', async () => {
     const currentUser = await testHelper.createTestUser({});
 
     const role = await testHelper.findTestRole('admin');
     const updateUserInput = TestHelper.updateTestUserInput(role.id);
 
-    // WHEN
     const updatedUser = await userService.update(currentUser, updateUserInput);
 
-    // THEN
     expect(updatedUser).toMatchObject<User>({
       createdAt: expect.any(Date),
       email: currentUser.email,
@@ -189,26 +171,20 @@ describe('Test User service', () => {
     await testHelper.deleteTestUsersById([currentUser.id]);
   });
 
-  it("should fail to authenticate the user because the email doesn't exists", async () => {
-    // GIVEN
+  test("Fail to authenticate the user because the email doesn't exists", async () => {
     const userEmail = 'email@test.com';
     const userPassword = 'strongPassword';
 
-    // WHEN
-    // THEN
     await expect(() => userService.login(userEmail, userPassword)).rejects.toThrow(
       new AppError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
     );
   });
 
-  it('should fail to authenticate the user because the password is not correct', async () => {
-    // GIVEN
+  test('Fail to authenticate the user because the password is not correct', async () => {
     const userPassword = 'strongPassword';
     const userBadPassword = 'badPassword';
     const user = await testHelper.createTestUser({ oauthProvider: 'email', password: userPassword });
 
-    // WHEN
-    // THEN
     await expect(() => userService.login(user.email, userBadPassword)).rejects.toThrow(
       new AppError(errors.LOGIN_FAILED, 'LOGIN_FAILED'),
     );
@@ -216,13 +192,10 @@ describe('Test User service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should fail to authenticate the user because the user is disabled', async () => {
-    // GIVEN
+  test('Fail to authenticate the user because the user is disabled', async () => {
     const userPassword = 'strongPassword';
     const user = await testHelper.createTestUser({ oauthProvider: 'email', password: userPassword });
 
-    // WHEN
-    // THEN
     await expect(() => userService.login(user.email, userPassword)).rejects.toThrow(
       new AppError(errors.ACCOUNT_DISABLED, 'ACCOUNT_DISABLED'),
     );
@@ -230,8 +203,7 @@ describe('Test User service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should successfully authenticate the user', async () => {
-    // GIVEN
+  test('Authenticate a user', async () => {
     const userPassword = 'strongPassword';
     const user = await testHelper.createTestUser({
       isEnabled: true,
@@ -239,10 +211,8 @@ describe('Test User service', () => {
       password: userPassword,
     });
 
-    // WHEN
     const authenticatedUser = await userService.login(user.email, userPassword);
 
-    // THEN
     expect(user).toMatchObject({
       email: authenticatedUser.email,
       id: authenticatedUser.id,
@@ -255,14 +225,11 @@ describe('Test User service', () => {
     await testHelper.deleteTestUsersById([user.id]);
   });
 
-  it('should found no user given the ID provided', async () => {
-    // GIVEN
+  test("Can not find the user by its ID because it doesn't exist", async () => {
     const snippetId = generateRandomId();
 
-    // WHEN
     const user = await userService.findById(snippetId);
 
-    // THEN
     expect(user).toBeNull();
   });
 });

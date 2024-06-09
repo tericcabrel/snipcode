@@ -18,7 +18,7 @@
         "dist/**"
       ]
     },
-    "@snipcode/core#build": {
+    "@snipcode/backend#build": {
       "dependsOn": [
         "^build"
       ],
@@ -35,13 +35,24 @@
       ],
       "env": [
         "NODE_ENV",
-        "DATABASE_URL"
+        "DATABASE_URL",
+        "SENTRY_ENABLED",
+        "SENTRY_DSN",
+        "APP_VERSION",
+        "ADMIN_PASSWORD",
+        "JWT_SECRET"
       ]
     },
     "@snipcode/domain#build": {
       "dependsOn": [
         "^build",
         "prebuild"
+      ],
+      "outputs": [
+        "dist/**"
+      ],
+      "env": [
+        "DATABASE_URL"
       ]
     },
     "@snipcode/web#build": {
@@ -66,7 +77,28 @@
       ],
       "env": [
         "NODE_ENV",
-        "NEXT_PUBLIC_SERVER_URL"
+        "NEXT_PUBLIC_SERVER_URL",
+        "NEXT_PUBLIC_APP_URL",
+        "NEXT_PUBLIC_APP_ENV"
+      ]
+    },
+    "@snipcode/embed#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ],
+      "env": [
+        "EMBED_JS_URL",
+        "EMBED_STYLE_URL",
+        "WEB_APP_URL",
+        "WEB_APP_SNIPPET_VIEW_URL"
+      ]
+    },
+    "@snipcode/backend#test": {
+      "dependsOn": [
+        "@snipcode/domain#test"
       ]
     },
     "test": {
