@@ -21,7 +21,6 @@ describe('Test Update Folder Input', () => {
       category: 'visible',
       createdAt: currentFolder.createdAt,
       id: currentFolder.id,
-      isFavorite: currentFolder.isFavorite,
       name: 'folder updated',
       parentId: currentFolder.parentId,
       path: currentFolder.path,
