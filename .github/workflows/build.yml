@@ -46,11 +46,11 @@ jobs:
           yarn prisma migrate dev --schema=packages/domain/prisma/schema.prisma
           yarn test -- --runInBand --coverage
 
-  preview-frontend:
+  should-preview-frontend:
     runs-on: ubuntu-latest
     environment: 'Preview'
-    needs:
-      - build
+#    needs:
+#      - build
     steps:
       - uses: actions/checkout@v4
 
@@ -64,8 +64,16 @@ jobs:
             packages:
               - packages/front/**
 
+  preview-frontend:
+    runs-on: ubuntu-latest
+    environment: 'Preview'
+    needs:
+      - should-preview-frontend
+    if: ${{ needs.should-preview-frontend.steps.frontend-changed.outputs.any_changed == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Install Yarn 4
-        if: steps.frontend-changed.outputs.any_changed == 'true'
         run: |
           corepack enable
           yarn set version 4.2.2
