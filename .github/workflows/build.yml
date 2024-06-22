@@ -54,7 +54,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check if frontend files changed
+        id: frontend-changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files_yaml: |
+            apps:
+              - apps/web/**
+            packages:
+              - packages/front/**
+
+      - name: Run step if any file(s) in the docs folder change
+        if: steps.frontend-changed.outputs.any_changed == 'true'
+        env:
+          ALL_CHANGED_FILES: ${{ steps.frontend-changed.outputs.all_changed_files }}
+        run: |
+          echo "One or more files in the docs folder has changed."
+          echo "List all the files that have changed: $ALL_CHANGED_FILES"
+
       - name: Install Yarn 4
+        if: steps.frontend-changed.outputs.any_changed == 'true'
         run: |
           corepack enable
           yarn set version 4.2.2

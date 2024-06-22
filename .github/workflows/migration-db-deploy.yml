@@ -20,7 +20,7 @@ jobs:
         uses: planetscale/setup-pscale-action@v1
 
       - name: Set database branch name
-        run: echo "PSCALE_BRANCH_NAME=$(echo ${{ github.head_ref }} | tr -cd '[:alnum:]-'| tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+        run: echo "PSCALE_BRANCH_NAME=$(echo ${{ github.ref_name }} | tr -cd '[:alnum:]-'| tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Get the deploy request number in development branch
         run: |
