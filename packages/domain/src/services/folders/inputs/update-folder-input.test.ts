@@ -18,6 +18,7 @@ describe('Test Update Folder Input', () => {
     const folderToUpdate = input.toFolder(currentFolder);
 
     const expectedFolder: Folder = {
+      category: 'visible',
       createdAt: currentFolder.createdAt,
       id: currentFolder.id,
       isFavorite: currentFolder.isFavorite,
