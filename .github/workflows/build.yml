@@ -24,8 +24,6 @@ jobs:
       DATABASE_URL: mysql://root:root@127.0.0.1:3306/test
       CONVERTKIT_API_KEY: api_key
       CONVERTKIT_FORM_ID: form_id
-    outputs:
-      releasedPackages: ${{ steps.releasedPackages.outputs.versions }}
     steps:
       - uses: actions/checkout@v4
 
@@ -46,11 +44,41 @@ jobs:
           yarn prisma migrate dev --schema=packages/domain/prisma/schema.prisma
           yarn test -- --runInBand --coverage
 
-  preview-frontend:
+
+  should-preview-frontend:
     runs-on: ubuntu-latest
     environment: 'Preview'
     needs:
       - build
+    outputs:
+      frontendChanged: ${{ steps.frontend-changed.outputs.any_changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check if frontend files changed
+        id: frontend-changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files_yaml: |
+            apps:
+              - apps/web/**
+            packages:
+              - packages/front/**
+
+      - name: Run step if test file(s) change
+        env:
+          ALL_CHANGED_FILES: ${{ steps.frontend-changed.outputs.all_changed_files }}
+        run: |
+          echo "Change state: ${{ steps.frontend-changed.outputs.any_changed }}"
+          echo "One or more test file(s) has changed."
+          echo "List all the files that have changed: $ALL_CHANGED_FILES"
+
+  preview-frontend:
+    runs-on: ubuntu-latest
+    environment: 'Preview'
+    needs:
+      - should-preview-frontend
+    if: ${{ needs.should-preview-frontend.frontendChanged == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -60,15 +88,19 @@ jobs:
           yarn set version 4.2.2
 
       - name: Install Vercel CLI
+        if: ${{ success() }}
         run: npm install --global vercel@latest
 
       - name: Pull Vercel Environment Information
+        if: ${{ success() }}
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
+        if: ${{ success() }}
         env:
           APP_VERSION:
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
+        if: ${{ success() }}
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
