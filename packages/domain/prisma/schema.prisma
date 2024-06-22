@@ -5,10 +5,10 @@ generator client {
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
-  relationMode         = "prisma"
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  relationMode      = "prisma"
 }
 
 enum RoleName {
@@ -26,6 +26,13 @@ enum OauthProvider {
 enum SnippetVisibility {
   public
   private
+}
+
+enum FolderCategory {
+  visible
+  favorite
+  archived
+  hidden
 }
 
 model Role {
@@ -64,24 +71,25 @@ model User {
 }
 
 model Folder {
-  id         String    @id @db.VarChar(50)
-  userId     String    @map("user_id") @db.VarChar(50)
-  parentId   String?   @map("parent_id")
-  name       String    @db.VarChar(255)
-  path       String?   @db.Text
-  isFavorite Boolean   @default(false) @map("is_favorite")
-  createdAt  DateTime  @default(now()) @map("created_at")
-  updatedAt  DateTime  @updatedAt @map("updated_at")
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  parent     Folder?   @relation(name: "parent_folder", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  subFolders Folder[]  @relation("parent_folder")
+  id         String         @id @db.VarChar(50)
+  userId     String         @map("user_id") @db.VarChar(50)
+  parentId   String?        @map("parent_id")
+  name       String         @db.VarChar(255)
+  path       String?        @db.Text
+  isFavorite Boolean        @default(false) @map("is_favorite")
+  category   FolderCategory @default(visible)
+  createdAt  DateTime       @default(now()) @map("created_at")
+  updatedAt  DateTime       @updatedAt @map("updated_at")
+  user       User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parent     Folder?        @relation(name: "parent_folder", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  subFolders Folder[]       @relation("parent_folder")
   snippets   Snippet[]
 
+  @@unique([userId, parentId, name], name: "folder_name_unique_constraint")
   @@index([name])
   @@index([isFavorite])
   @@index([userId])
   @@index([parentId])
-  @@unique([userId, parentId, name], name: "folder_name_unique_constraint")
   @@map("folders")
 }
 
@@ -91,12 +99,12 @@ model Snippet {
   folderId      String            @map("folder_id")
   name          String            @db.VarChar(255)
   content       String            @db.Text
-  contentHtml   String?           @db.Text @map("content_html")
+  contentHtml   String?           @map("content_html") @db.Text
   language      String            @db.VarChar(20)
   size          Int               @default(0) @db.Int
   visibility    SnippetVisibility @default(public)
   description   String?           @db.Text
-  lineHighlight String?           @db.Text @map("line_highlight")
+  lineHighlight String?           @map("line_highlight") @db.Text
   theme         String            @db.VarChar(20)
   createdAt     DateTime          @default(now()) @map("created_at")
   updatedAt     DateTime          @updatedAt @map("updated_at")
@@ -112,11 +120,11 @@ model Snippet {
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  token        String   @unique
-  userId       String   @map("user_id")
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id      String   @id @default(cuid())
+  token   String   @unique
+  userId  String   @map("user_id")
+  expires DateTime
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("sessions")

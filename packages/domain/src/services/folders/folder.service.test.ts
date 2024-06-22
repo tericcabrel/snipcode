@@ -351,6 +351,7 @@ describe('Test Folder service', () => {
     const folderToUpdate = updateFolderInput.toFolder(folder);
 
     expect(updatedFolder).toMatchObject<Folder>({
+      category: 'visible',
       createdAt: expect.any(Date),
       id: folder.id,
       isFavorite: false,

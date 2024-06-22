@@ -10,6 +10,7 @@ export class CreateUserRootFolderInput {
 
   toFolder(): Folder {
     return {
+      category: 'visible',
       createdAt: new Date(),
       id: this.folderId,
       isFavorite: false,

@@ -1,0 +1,84 @@
+name: Deploy database migration
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'packages/domain/prisma/migrations/**'
+
+env:
+  PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
+  PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
+
+jobs:
+  apply-migration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pscale
+        uses: planetscale/setup-pscale-action@v1
+
+      - name: Set database branch name
+        run: echo "PSCALE_BRANCH_NAME=$(echo ${{ github.head_ref }} | tr -cd '[:alnum:]-'| tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Get the deploy request number in development branch
+        run: |
+          DEV_DEPLOY_REQUEST_NUMBER=$(pscale deploy-request show ${{ secrets.PLANETSCALE_DATABASE_NAME }} ${{ env.PSCALE_BRANCH_NAME }} --org ${{ secrets.PLANETSCALE_ORG_NAME }} -f json | jq -r '.number')
+          echo "DEV_DEPLOY_REQUEST_NUMBER=$DEV_DEPLOY_REQUEST_NUMBER" >> $GITHUB_ENV
+
+      - name: Check deployment state
+        continue-on-error: false
+        run: |
+          for i in {1..10}; do
+            DEPLOYMENT_STATE=$(pscale deploy-request show ${{ secrets.PLANETSCALE_DATABASE_NAME }} ${{ env.DEV_DEPLOY_REQUEST_NUMBER }} --org ${{ secrets.PLANETSCALE_ORG_NAME }} -f json | jq -r '.deployment_state')
+            echo "Deployment State: $DEPLOYMENT_STATE"
+
+            if [ "$DEPLOYMENT_STATE" = "ready" ]; then
+              echo "Deployment state is ready. Continuing."
+              echo "DEPLOY_REQUEST_OPENED=true" >> $GITHUB_ENV
+              break
+            fi
+
+            echo "Deployment state is not ready. Waiting 2 seconds before checking again."
+            sleep 2
+          done
+
+      - name: Deploy schema migration in the development branch
+        continue-on-error: false
+        run: |
+          pscale deploy-request deploy ${{ secrets.PLANETSCALE_DATABASE_NAME }} ${{ env.DEV_DEPLOY_REQUEST_NUMBER }} --org ${{ secrets.PLANETSCALE_ORG_NAME }} --wait
+
+      - name: Deploy schema migration in the production branch
+        if: ${{ success() }}
+        continue-on-error: false
+        run: |
+          pscale deploy-request create ${{ secrets.PLANETSCALE_DATABASE_NAME }} ${{ env.PSCALE_BRANCH_NAME }} \
+          --org ${{ secrets.PLANETSCALE_ORG_NAME }} \
+          --into main \
+          --notes "Apply changes to the production branch"
+
+          PROD_DEPLOY_REQUEST_NUMBER=$(pscale deploy-request show ${{ secrets.PLANETSCALE_DATABASE_NAME }} ${{ env.PSCALE_BRANCH_NAME }} --org ${{ secrets.PLANETSCALE_ORG_NAME }} -f json | jq -r '.number')
+
+          for i in {1..10}; do
+            DEPLOYMENT_STATE=$(pscale deploy-request show ${{ secrets.PLANETSCALE_DATABASE_NAME }} $PROD_DEPLOY_REQUEST_NUMBER --org ${{ secrets.PLANETSCALE_ORG_NAME }} -f json | jq -r '.deployment_state')
+            echo "Deployment State: $DEPLOYMENT_STATE"
+
+            if [ "$DEPLOYMENT_STATE" = "ready" ]; then
+              echo "Deployment state is ready. Continuing."
+              break
+            fi
+
+            echo "Deployment state is not ready. Waiting 2 seconds before checking again."
+            sleep 2
+          done
+
+          pscale deploy-request deploy ${{ secrets.PLANETSCALE_DATABASE_NAME }} $PROD_DEPLOY_REQUEST_NUMBER --org ${{ secrets.PLANETSCALE_ORG_NAME }} --wait
+
+      - name: Delete the database branch
+        if: ${{ success() }}
+        run: |
+          PROD_DEPLOY_REQUEST_NUMBER=$(pscale deploy-request show ${{ secrets.PLANETSCALE_DATABASE_NAME }} ${{ env.PSCALE_BRANCH_NAME }} --org ${{ secrets.PLANETSCALE_ORG_NAME }} -f json | jq -r '.number')
+          pscale deploy-request skip-revert ${{ secrets.PLANETSCALE_DATABASE_NAME }} $PROD_DEPLOY_REQUEST_NUMBER --org ${{ secrets.PLANETSCALE_ORG_NAME }}
+          pscale branch delete ${{ secrets.PLANETSCALE_DATABASE_NAME }} ${{ env.PSCALE_BRANCH_NAME }} --org ${{ secrets.PLANETSCALE_ORG_NAME }} --force
+          echo "The branch \"${{ env.PSCALE_BRANCH_NAME }}\" has been successfully."

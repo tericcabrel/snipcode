@@ -8,6 +8,7 @@ describe('Test Create User Root Folder Input', () => {
     const folder = input.toFolder();
 
     expect(folder).toMatchObject<Folder>({
+      category: 'visible',
       createdAt: expect.any(Date),
       id: expect.any(String),
       isFavorite: false,

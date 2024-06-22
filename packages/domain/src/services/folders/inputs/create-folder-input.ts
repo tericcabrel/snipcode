@@ -28,6 +28,7 @@ export class CreateFolderInput {
 
   toFolder(): Folder {
     return {
+      category: 'visible',
       createdAt: new Date(),
       id: this.folderId,
       isFavorite: false,
