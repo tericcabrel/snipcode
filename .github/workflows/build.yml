@@ -64,14 +64,6 @@ jobs:
             packages:
               - packages/front/**
 
-      - name: Run step if any file(s) in the docs folder change
-        if: steps.frontend-changed.outputs.any_changed == 'true'
-        env:
-          ALL_CHANGED_FILES: ${{ steps.frontend-changed.outputs.all_changed_files }}
-        run: |
-          echo "One or more files in the docs folder has changed."
-          echo "List all the files that have changed: $ALL_CHANGED_FILES"
-
       - name: Install Yarn 4
         if: steps.frontend-changed.outputs.any_changed == 'true'
         run: |
@@ -79,15 +71,19 @@ jobs:
           yarn set version 4.2.2
 
       - name: Install Vercel CLI
+        if: ${{ success() }}
         run: npm install --global vercel@latest
 
       - name: Pull Vercel Environment Information
+        if: ${{ success() }}
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
+        if: ${{ success() }}
         env:
           APP_VERSION:
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
+        if: ${{ success() }}
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
