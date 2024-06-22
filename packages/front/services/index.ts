@@ -8,8 +8,6 @@ import { useLoginUser } from './users/login-user';
 import { useLogoutUser } from './users/logout-user';
 import { useSignupUser } from './users/signup-user';
 
-console.log('test');
-
 export {
   formatPublicSnippetsResult,
   useAuthenticatedUser,

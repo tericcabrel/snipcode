@@ -24,8 +24,6 @@ jobs:
       DATABASE_URL: mysql://root:root@127.0.0.1:3306/test
       CONVERTKIT_API_KEY: api_key
       CONVERTKIT_FORM_ID: form_id
-    outputs:
-      releasedPackages: ${{ steps.releasedPackages.outputs.versions }}
     steps:
       - uses: actions/checkout@v4
 
@@ -46,11 +44,14 @@ jobs:
           yarn prisma migrate dev --schema=packages/domain/prisma/schema.prisma
           yarn test -- --runInBand --coverage
 
+
   should-preview-frontend:
     runs-on: ubuntu-latest
     environment: 'Preview'
-#    needs:
-#      - build
+    needs:
+      - build
+    outputs:
+      frontendChanged: ${{ steps.frontend-changed.outputs.any_changed }}
     steps:
       - uses: actions/checkout@v4
 
@@ -64,12 +65,20 @@ jobs:
             packages:
               - packages/front/**
 
+      - name: Run step if test file(s) change
+        env:
+          ALL_CHANGED_FILES: ${{ steps.frontend-changed.outputs.all_changed_files }}
+        run: |
+          echo "Change state: ${{ steps.frontend-changed.outputs.any_changed }}"
+          echo "One or more test file(s) has changed."
+          echo "List all the files that have changed: $ALL_CHANGED_FILES"
+
   preview-frontend:
     runs-on: ubuntu-latest
     environment: 'Preview'
     needs:
       - should-preview-frontend
-    if: ${{ needs.should-preview-frontend.steps.frontend-changed.outputs.any_changed == 'true' }}
+    if: ${{ needs.should-preview-frontend.frontendChanged == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
