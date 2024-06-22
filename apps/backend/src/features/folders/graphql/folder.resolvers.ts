@@ -118,4 +118,9 @@ export class FolderResolvers {
 
     return folders.length + snippets.length;
   }
+
+  @ResolveField()
+  async isFavorite(@Parent() _folder: Folder): Promise<boolean> {
+    return false;
+  }
 }

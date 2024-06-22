@@ -31,7 +31,6 @@ export class CreateFolderInput {
       category: 'visible',
       createdAt: new Date(),
       id: this.folderId,
-      isFavorite: false,
       name: this._input.name,
       parentId: this._input.parentId,
       path: null,

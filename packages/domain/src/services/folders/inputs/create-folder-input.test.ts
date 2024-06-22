@@ -15,7 +15,6 @@ describe('Test Create Folder Input', () => {
       category: 'visible',
       createdAt: expect.any(Date),
       id: expect.any(String),
-      isFavorite: false,
       name: 'blogs',
       parentId: 'cl23rzwe5000002czaedc8sll',
       path: null,
