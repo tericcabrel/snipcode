@@ -17,7 +17,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     # Defined in .github/workflows/build-release.yml at the "Create Release Pull Request" step
-    if: ${{ github.event.pull_request.title == 'update release versions' }}
+    if: ${{ github.event.pull_request.title != 'update release versions' }}
     env:
       NODE_ENV: test
       MYSQL_ROOT_PASSWORD: root
