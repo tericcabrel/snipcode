@@ -1,0 +1,45 @@
+{
+  "changesets": [
+    {
+      "releases": [
+        {
+          "name": "@snipcode/domain",
+          "type": "patch"
+        },
+        {
+          "name": "@snipcode/backend",
+          "type": "patch"
+        }
+      ],
+      "summary": "Change folder status in the database end exposes them in the through the api",
+      "id": "breezy-guests-leave"
+    }
+  ],
+  "releases": [
+    {
+      "name": "@snipcode/domain",
+      "type": "patch",
+      "oldVersion": "1.1.0",
+      "changesets": [
+        "breezy-guests-leave"
+      ],
+      "newVersion": "1.1.1"
+    },
+    {
+      "name": "@snipcode/backend",
+      "type": "patch",
+      "oldVersion": "1.1.0",
+      "changesets": [
+        "breezy-guests-leave"
+      ],
+      "newVersion": "1.1.1"
+    },
+    {
+      "name": "@snipcode/embed",
+      "type": "none",
+      "oldVersion": "1.1.4",
+      "changesets": [],
+      "newVersion": "1.1.4"
+    }
+  ]
+}
