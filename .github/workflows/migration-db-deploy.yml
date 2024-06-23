@@ -5,32 +5,13 @@ on:
       - 'main'
     paths:
       - 'packages/domain/prisma/migrations/**'
-  pull_request:
-    branches:
-      - 'main'
-    paths:
-      - 'packages/domain/prisma/migrations/**'
 
 env:
   PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
   PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
 
 jobs:
-  print-branch-name:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Print pull request branch
-        if: github.event_name == 'pull_request'
-        run: |
-          echo "Pull Request Branch: ${{ github.event.pull_request.head.ref }}"
-
   apply-migration:
-    # run only the push event on the main branch
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -38,18 +19,18 @@ jobs:
       - name: Setup pscale
         uses: planetscale/setup-pscale-action@v1
 
-      - name: Set database branch name
+      - name: Get the deploy request number and branch name in development branch
         run: |
-          echo "Name 1: ${{ github.ref }}"
-          echo "Name 2: ${{ github.ref_name }}"
-          echo "Name 3: ${{ github.ref_type }}"
-          echo "Name 4: ${{ github }}"
-          echo "PSCALE_BRANCH_NAME=$(echo ${{ github.event.pull_request.base.ref }} | tr -cd '[:alnum:]-'| tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          DEPLOYER_REQUEST_LIST=$(pscale deploy-request list ${{ secrets.PLANETSCALE_DATABASE_NAME }} --org ${{ secrets.PLANETSCALE_ORG_NAME }} -f json)
+          DEV_DEPLOY_REQUEST_NUMBER=$(echo "$DEPLOYER_REQUEST_LIST" | jq -r '.[] | select(.into_branch == "dev" and .state == "open") | .number')
+          PSCALE_BRANCH_NAME=$(echo "$DEPLOYER_REQUEST_LIST" | jq -r '.[] | select(.into_branch == "dev" and .state == "open") | .branch')
 
-      - name: Get the deploy request number in development branch
-        run: |
-          DEV_DEPLOY_REQUEST_NUMBER=$(pscale deploy-request show ${{ secrets.PLANETSCALE_DATABASE_NAME }} ${{ env.PSCALE_BRANCH_NAME }} --org ${{ secrets.PLANETSCALE_ORG_NAME }} -f json | jq -r '.number')
+          if [ -z "$DEV_DEPLOY_REQUEST_NUMBER" ]; then
+            echo "No open deploy request found in the development branch."
+            exit 1
+          fi
           echo "DEV_DEPLOY_REQUEST_NUMBER=$DEV_DEPLOY_REQUEST_NUMBER" >> $GITHUB_ENV
+          echo "PSCALE_BRANCH_NAME=$PSCALE_BRANCH_NAME" >> $GITHUB_ENV
 
       - name: Check deployment state
         continue-on-error: false
