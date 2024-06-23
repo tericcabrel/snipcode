@@ -53,6 +53,7 @@ jobs:
         continue-on-error: false
         run: |
           pscale deploy-request deploy ${{ secrets.PLANETSCALE_DATABASE_NAME }} ${{ env.DEV_DEPLOY_REQUEST_NUMBER }} --org ${{ secrets.PLANETSCALE_ORG_NAME }} --wait
+          pscale deploy-request skip-revert ${{ secrets.PLANETSCALE_DATABASE_NAME }} ${{ env.DEV_DEPLOY_REQUEST_NUMBER }} --org ${{ secrets.PLANETSCALE_ORG_NAME }}
 
       - name: Deploy schema migration in the production branch
         if: ${{ success() }}

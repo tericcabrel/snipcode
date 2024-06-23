@@ -87,7 +87,6 @@ model Folder {
   @@unique([userId, parentId, name], name: "folder_name_unique_constraint")
   @@index([name])
   @@index([category])
-  @@index([userId])
   @@index([parentId])
   @@map("folders")
 }
