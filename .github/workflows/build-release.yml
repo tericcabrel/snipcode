@@ -65,7 +65,9 @@ jobs:
 
       - name: Print Released Packages
         id: releasedPackages
-        run: yarn changeset status --output=release.json
+        run: |
+          yarn changeset status --output=release.json
+          cat release.json
 
       - name: Upload Release File
         uses: actions/upload-artifact@v4

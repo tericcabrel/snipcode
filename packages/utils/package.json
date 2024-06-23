@@ -14,13 +14,13 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "dayjs": "1.11.10",
+    "dayjs": "1.11.11",
     "jsonwebtoken": "9.0.2",
     "lodash": "4.17.21",
-    "uuid": "9.0.1"
+    "uuid": "10.0.0"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "9.0.6",
-    "@types/uuid": "9.0.8"
+    "@types/uuid": "10.0.0"
   }
 }

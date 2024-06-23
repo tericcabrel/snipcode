@@ -36,7 +36,9 @@ jobs:
         run: yarn lint
 
       - name: Build the projects
-        run: yarn build
+        run: |
+          yarn workspace @snipcode/domain db:generate
+          yarn build
 
       - name: Start MySQL server
         run: sudo systemctl start mysql.service
@@ -75,7 +77,7 @@ jobs:
       - name: Install Yarn 4
         run: |
           corepack enable
-          yarn set version 4.2.2
+          yarn set version 4.3.1
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest

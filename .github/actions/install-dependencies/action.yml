@@ -24,7 +24,7 @@ runs:
       shell: bash
       run: |
         corepack enable
-        yarn set version 4.2.2
+        yarn set version 4.3.1
 
     - name: Install projects dependencies
       shell: bash
