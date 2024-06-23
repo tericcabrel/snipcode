@@ -60,8 +60,8 @@ describe('Test Folder service', () => {
     const expectedFolder = await folderService.create(createFolderInput);
 
     expect(expectedFolder).toMatchObject({
+      category: 'visible',
       id: createFolderInput.toFolder().id,
-      isFavorite: false,
       name: createFolderInput.name,
       parentId: rootFolder.id,
       userId: user.id,
@@ -354,7 +354,6 @@ describe('Test Folder service', () => {
       category: 'visible',
       createdAt: expect.any(Date),
       id: folder.id,
-      isFavorite: false,
       name: folderToUpdate.name,
       parentId: rootFolder.id,
       path: folder.path,

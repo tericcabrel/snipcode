@@ -13,7 +13,6 @@ export class CreateUserRootFolderInput {
       category: 'visible',
       createdAt: new Date(),
       id: this.folderId,
-      isFavorite: false,
       name: `__${this._userId}__`,
       parentId: null,
       path: null,

@@ -11,7 +11,6 @@ describe('Test Create User Root Folder Input', () => {
       category: 'visible',
       createdAt: expect.any(Date),
       id: expect.any(String),
-      isFavorite: false,
       name: '__dm34saxf6111113dabfed9tmm__',
       parentId: null,
       path: null,

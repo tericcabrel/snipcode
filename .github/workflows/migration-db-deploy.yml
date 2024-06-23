@@ -19,13 +19,18 @@ jobs:
       - name: Setup pscale
         uses: planetscale/setup-pscale-action@v1
 
-      - name: Set database branch name
-        run: echo "PSCALE_BRANCH_NAME=$(echo ${{ github.head_ref }} | tr -cd '[:alnum:]-'| tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-
-      - name: Get the deploy request number in development branch
+      - name: Get the deploy request number and branch name in development branch
         run: |
-          DEV_DEPLOY_REQUEST_NUMBER=$(pscale deploy-request show ${{ secrets.PLANETSCALE_DATABASE_NAME }} ${{ env.PSCALE_BRANCH_NAME }} --org ${{ secrets.PLANETSCALE_ORG_NAME }} -f json | jq -r '.number')
+          DEPLOYER_REQUEST_LIST=$(pscale deploy-request list ${{ secrets.PLANETSCALE_DATABASE_NAME }} --org ${{ secrets.PLANETSCALE_ORG_NAME }} -f json)
+          DEV_DEPLOY_REQUEST_NUMBER=$(echo "$DEPLOYER_REQUEST_LIST" | jq -r '.[] | select(.into_branch == "dev" and .state == "open") | .number')
+          PSCALE_BRANCH_NAME=$(echo "$DEPLOYER_REQUEST_LIST" | jq -r '.[] | select(.into_branch == "dev" and .state == "open") | .branch')
+
+          if [ -z "$DEV_DEPLOY_REQUEST_NUMBER" ]; then
+            echo "No open deploy request found in the development branch."
+            exit 1
+          fi
           echo "DEV_DEPLOY_REQUEST_NUMBER=$DEV_DEPLOY_REQUEST_NUMBER" >> $GITHUB_ENV
+          echo "PSCALE_BRANCH_NAME=$PSCALE_BRANCH_NAME" >> $GITHUB_ENV
 
       - name: Check deployment state
         continue-on-error: false
