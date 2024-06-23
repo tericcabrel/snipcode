@@ -1,5 +1,11 @@
 # @snipcode/domain
 
+## 1.1.1
+
+### Patch Changes
+
+- 424abe8: Change folder status in the database end exposes them in the through the api
+
 ## 1.1.0
 
 ### Minor Changes
