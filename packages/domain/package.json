@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --project tsconfig.prod.json",
+    "prebuild": "yarn db:generate",
     "clean": "rm -rf .turbo dist coverage",
     "lint": "eslint --fix",
     "env": "dotenv -e .env.local",
