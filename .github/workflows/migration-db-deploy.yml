@@ -5,13 +5,32 @@ on:
       - 'main'
     paths:
       - 'packages/domain/prisma/migrations/**'
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - 'packages/domain/prisma/migrations/**'
 
 env:
   PLANETSCALE_SERVICE_TOKEN_ID: ${{ secrets.PLANETSCALE_SERVICE_TOKEN_ID }}
   PLANETSCALE_SERVICE_TOKEN: ${{ secrets.PLANETSCALE_SERVICE_TOKEN }}
 
 jobs:
+  print-branch-name:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Print pull request branch
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "Pull Request Branch: ${{ github.event.pull_request.head.ref }}"
+
   apply-migration:
+    # run only the push event on the main branch
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,9 +41,9 @@ jobs:
       - name: Set database branch name
         run: |
           echo "Name 1: ${{ github.ref }}"
-          echo "Name 2: ${{ github.head_ref }}"
-          echo "Name 3: ${{ github.base_ref }}"
-          echo "Name 4: ${{ github.event.pull_request }}"
+          echo "Name 2: ${{ github.ref_name }}"
+          echo "Name 3: ${{ github.ref_type }}"
+          echo "Name 4: ${{ github }}"
           echo "PSCALE_BRANCH_NAME=$(echo ${{ github.event.pull_request.base.ref }} | tr -cd '[:alnum:]-'| tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Get the deploy request number in development branch
