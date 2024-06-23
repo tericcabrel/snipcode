@@ -131,6 +131,8 @@ describe('Test Folder Feature', () => {
           id
           name
           isFavorite
+          isArchived
+          isHidden
           subFolders {
             id
           }
@@ -163,7 +165,9 @@ describe('Test Folder Feature', () => {
     expect(createFolder).toMatchObject({
       __typename: 'Folder',
       id: expect.any(String),
+      isArchived: false,
       isFavorite: false,
+      isHidden: false,
       name: 'My First Folder',
       parent: { id: user.rootFolderId },
       subFolders: [],
