@@ -36,16 +36,14 @@ jobs:
         run: yarn lint
 
       - name: Build the projects
-        run: |
-          yarn workspace @snipcode/domain db:generate
-          yarn build
+        run: yarn build
 
       - name: Start MySQL server
         run: sudo systemctl start mysql.service
 
       - name: Run tests
         run: |
-          yarn prisma migrate dev --schema=packages/domain/prisma/schema.prisma
+          yarn workspace @snipcode/domain db:migrate
           yarn test -- --runInBand --coverage
 
   should-preview-frontend:
