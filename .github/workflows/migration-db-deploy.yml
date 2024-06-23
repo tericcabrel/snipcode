@@ -21,7 +21,10 @@ jobs:
 
       - name: Set database branch name
         run: |
-          echo "${{ github.event.pull_request.base.ref }}"
+          echo "Name 1: ${{ github.ref }}"
+          echo "Name 2: ${{ github.head_ref }}"
+          echo "Name 3: ${{ github.base_ref }}"
+          echo "Name 4: ${{ github.event.pull_request }}"
           echo "PSCALE_BRANCH_NAME=$(echo ${{ github.event.pull_request.base.ref }} | tr -cd '[:alnum:]-'| tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Get the deploy request number in development branch
