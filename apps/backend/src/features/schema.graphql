@@ -46,6 +46,8 @@ type Folder {
   id: ID!
   name: String!
   isFavorite: Boolean!
+  isArchived: Boolean!
+  isHidden: Boolean!
   createdAt: Date!
   updatedAt: Date!
   user: User!

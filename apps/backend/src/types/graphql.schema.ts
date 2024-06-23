@@ -139,6 +139,8 @@ export interface Folder {
   id: string;
   name: string;
   isFavorite: boolean;
+  isArchived: boolean;
+  isHidden: boolean;
   createdAt: Date;
   updatedAt: Date;
   user: User;
