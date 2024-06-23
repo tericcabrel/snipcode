@@ -48,8 +48,8 @@ jobs:
   should-preview-frontend:
     runs-on: ubuntu-latest
     environment: 'Preview'
-    needs:
-      - build
+#    needs:
+#      - build
     outputs:
       frontendChanged: ${{ steps.frontend-changed.outputs.any_changed }}
     steps:
@@ -59,11 +59,9 @@ jobs:
         id: frontend-changed
         uses: tj-actions/changed-files@v44
         with:
-          files_yaml: |
-            apps:
-              - apps/web/**
-            packages:
-              - packages/front/**
+          files: |
+            apps/web/**
+            packages/front/**
 
       - name: Run step if test file(s) change
         env:
@@ -78,7 +76,7 @@ jobs:
     environment: 'Preview'
     needs:
       - should-preview-frontend
-    if: ${{ needs.should-preview-frontend.frontendChanged == 'true' }}
+    if: ${{ needs.should-preview-frontend.outputs.frontendChanged == 'true' }}
     steps:
       - uses: actions/checkout@v4
 

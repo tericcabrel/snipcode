@@ -120,7 +120,17 @@ export class FolderResolvers {
   }
 
   @ResolveField()
-  async isFavorite(@Parent() _folder: Folder): Promise<boolean> {
-    return false;
+  async isFavorite(@Parent() folder: Folder): Promise<boolean> {
+    return folder.category === 'favorite';
+  }
+
+  @ResolveField()
+  async isArchived(@Parent() folder: Folder): Promise<boolean> {
+    return folder.category === 'archived';
+  }
+
+  @ResolveField()
+  async isHidden(@Parent() folder: Folder): Promise<boolean> {
+    return folder.category === 'hidden';
   }
 }
