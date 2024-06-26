@@ -3,6 +3,7 @@ import { AppError } from '@snipcode/utils';
 import nock from 'nock';
 
 import { NewsletterService } from './newsletter.service';
+import { DomainModule } from '../../domain.module';
 
 const apiBaseURL = 'https://api.convertkit.com/v3';
 
@@ -11,15 +12,20 @@ describe('Newsletter service', () => {
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        {
-          provide: NewsletterService,
-          useValue: new NewsletterService({
-            apiKey: 'apiKey',
-            formId: 'formId',
-          }),
-        },
+      imports: [
+        DomainModule.forRootAsync({
+          useFactory: () => {
+            return {
+              convertKit: {
+                apiKey: 'apiKey',
+                formId: 'formId',
+              },
+              databaseUrl: process.env.DATABASE_URL,
+            };
+          },
+        }),
       ],
+      providers: [NewsletterService],
     }).compile();
 
     newsletterService = module.get<NewsletterService>(NewsletterService);

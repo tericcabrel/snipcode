@@ -1,6 +1,6 @@
-import { DynamicModule, Module, Provider } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 
-import { DOMAIN_SERVICES_OPTIONS } from './constants';
+import { MODULE_OPTIONS, NEWSLETTER_SERVICE_OPTIONS } from './constants';
 import { FolderService } from './services/folders/folder.service';
 import { NewsletterService } from './services/newsletters/newsletter.service';
 import { PrismaService } from './services/prisma.service';
@@ -9,7 +9,7 @@ import { SessionService } from './services/sessions/session.service';
 import { SnippetService } from './services/snippets/snippet.service';
 import { UserService } from './services/users/user.service';
 
-type DomainModuleServicesOptions = {
+export type ModuleOptions = {
   convertKit: {
     apiKey: string;
     formId: string;
@@ -17,89 +17,65 @@ type DomainModuleServicesOptions = {
   databaseUrl: string;
 };
 
-type DomainModuleConfig = {
+type ModuleConfig = {
+  imports?: any[];
   inject?: any[];
   isGlobal?: boolean;
-  useFactory?: (...args: any[]) => Promise<DomainModuleServicesOptions> | DomainModuleServicesOptions;
-} & Partial<DomainModuleServicesOptions>;
+  useFactory: (...args: any[]) => Promise<ModuleOptions> | ModuleOptions;
+};
 
-@Module({
-  exports: [PrismaService, UserService, RoleService, FolderService, SnippetService, SessionService, NewsletterService],
-  providers: [
-    PrismaService,
-    UserService,
-    RoleService,
-    FolderService,
-    SnippetService,
-    SessionService,
-    NewsletterService,
-  ],
-})
+@Module({})
 export class DomainModule {
-  static forRootAsync(config: DomainModuleConfig = { isGlobal: false }): DynamicModule {
-    const asyncProviders = this.createAsyncProviders(config);
-
-    const prismaService = {
-      inject: [DOMAIN_SERVICES_OPTIONS],
-      provide: PrismaService,
-      useFactory: (options: DomainModuleServicesOptions) => {
-        return new PrismaService({
-          datasources: {
-            db: {
-              url: options.databaseUrl,
-            },
-          },
-          log: [],
-        });
-      },
-    };
-
-    const newsletterService = {
-      inject: [DOMAIN_SERVICES_OPTIONS],
-      provide: NewsletterService,
-      useFactory: (domainConfig: DomainModuleConfig) => {
-        const { convertKit } = domainConfig;
-
-        if (!convertKit) {
-          // throw new Error('Parameters are required: apiKey and formId');
-          return null;
-        }
-
-        return new NewsletterService({
-          apiKey: convertKit.apiKey,
-          formId: convertKit.formId,
-        });
-      },
-    };
-
+  static forRootAsync(config: ModuleConfig): DynamicModule {
     return {
-      exports: [...asyncProviders, PrismaService, NewsletterService],
+      exports: [
+        PrismaService,
+        UserService,
+        RoleService,
+        FolderService,
+        SnippetService,
+        SessionService,
+        NewsletterService,
+        NEWSLETTER_SERVICE_OPTIONS,
+      ],
       global: config.isGlobal,
+      imports: config.imports ? [...config.imports] : [],
       module: DomainModule,
-      providers: [...asyncProviders, prismaService, newsletterService],
-    };
-  }
-
-  private static createAsyncProviders(config: DomainModuleConfig): Provider[] {
-    if (config.useFactory) {
-      return [
+      providers: [
         {
-          inject: config.inject ?? [],
-          provide: DOMAIN_SERVICES_OPTIONS,
+          inject: config.inject ? [...config.inject] : [],
+          provide: MODULE_OPTIONS,
           useFactory: config.useFactory,
         },
-      ];
-    }
-
-    if (config.databaseUrl ?? config.convertKit) {
-      return [
         {
-          provide: DOMAIN_SERVICES_OPTIONS,
-          useValue: config,
+          inject: [MODULE_OPTIONS],
+          provide: NEWSLETTER_SERVICE_OPTIONS,
+          useFactory: (options: ModuleOptions) => ({
+            apiKey: options.convertKit.apiKey,
+            formId: options.convertKit.formId,
+          }),
         },
-      ];
-    }
-
-    return [];
+        {
+          inject: [MODULE_OPTIONS],
+          provide: PrismaService,
+          useFactory: (options: ModuleOptions) => {
+            return new PrismaService({
+              datasources: {
+                db: {
+                  url: options.databaseUrl,
+                },
+              },
+              log: [],
+            });
+          },
+        },
+        UserService,
+        RoleService,
+        FolderService,
+        SnippetService,
+        SessionService,
+        NewsletterService,
+      ],
+    };
   }
 }

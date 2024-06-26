@@ -1,13 +1,15 @@
+import { Inject, Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
 
 import { NewsletterOption, SubscribeData, SubscribeInput } from './types';
 import { handleRequestError } from '../../utils/axios-error';
 
+@Injectable()
 export class NewsletterService {
   private httpClient: AxiosInstance = axios.create();
   private readonly options: NewsletterOption;
 
-  constructor(options: NewsletterOption) {
+  constructor(@Inject('NEWSLETTER_SERVICE_OPTIONS') options: NewsletterOption) {
     this.options = options;
 
     this.initClient();

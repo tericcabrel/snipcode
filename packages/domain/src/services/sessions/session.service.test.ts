@@ -14,7 +14,15 @@ describe('Test Session Service', function () {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         DomainModule.forRootAsync({
-          databaseUrl: process.env.DATABASE_URL,
+          useFactory: () => {
+            return {
+              convertKit: {
+                apiKey: 'apiKey',
+                formId: 'formId',
+              },
+              databaseUrl: process.env.DATABASE_URL,
+            };
+          },
         }),
       ],
       providers: [SessionService],
