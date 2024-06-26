@@ -40,7 +40,9 @@
         "SENTRY_DSN",
         "APP_VERSION",
         "ADMIN_PASSWORD",
-        "JWT_SECRET"
+        "JWT_SECRET",
+        "CONVERTKIT_API_KEY",
+        "CONVERTKIT_FORM_ID"
       ]
     },
     "@snipcode/domain#build": {
@@ -104,6 +106,9 @@
     "test": {
       "dependsOn": [
         "^build"
+      ],
+      "env": [
+        "DATABASE_URL"
       ],
       "outputs": []
     },

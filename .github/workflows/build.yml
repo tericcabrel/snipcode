@@ -43,7 +43,6 @@ jobs:
 
       - name: Run tests
         run: |
-          echo "$DATABASE_URL" > packages/domain/.env.test
           yarn workspace @snipcode/domain db:migrate
           yarn test -- --runInBand --coverage
 
