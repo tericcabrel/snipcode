@@ -42,6 +42,8 @@ jobs:
         run: sudo systemctl start mysql.service
 
       - name: Run tests
+        env:
+          DATABASE_URL: mysql://root:root@127.0.0.1:3306/test
         run: |
           yarn workspace @snipcode/domain db:migrate
           yarn test -- --runInBand --coverage
