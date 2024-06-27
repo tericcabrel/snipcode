@@ -33,7 +33,6 @@ const waitForMysql = async () => {
   }
 }
 
-// if (!process.env.CI) {
 try {
   await $`docker ps | grep ${CONTAINER_NAME}`;
 } catch (error) {
@@ -49,5 +48,4 @@ try {
 
   await $`yarn prisma migrate dev`;
 }
-//}
 
