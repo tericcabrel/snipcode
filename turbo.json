@@ -73,7 +73,7 @@
         "*.ts",
         "next.config.js",
         "*.json",
-        "public/**",
+        "public/**"
       ],
       "env": [
         "NODE_ENV",
