@@ -21,20 +21,14 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: test
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test
-      MYSQL_PORT: 3306
-      DATABASE_URL: mysql://root:root@127.0.0.1:3306/test
-      ADMIN_PASSWORD: admin_password
-      CONVERTKIT_API_KEY: api_key
-      CONVERTKIT_FORM_ID: form_id
     steps:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
+
+      - name: Start MySQL database
+        run: yarn workspace @snipcode/domain db:test
 
       - name: Lint the projects
         run: yarn lint
@@ -46,9 +40,7 @@ jobs:
         run: sudo systemctl start mysql.service
 
       - name: Run tests
-        run: |
-          yarn prisma migrate dev --schema=packages/domain/prisma/schema.prisma
-          yarn test
+        run: yarn test -- --runInBand
 
   version:
     runs-on: ubuntu-latest
