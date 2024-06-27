@@ -6,7 +6,7 @@
     ".eslintrc.json",
     ".eslintignore"
   ],
-  "pipeline": {
+  "tasks": {
     "prebuild": {
       "outputs": []
     },
@@ -20,7 +20,8 @@
     },
     "@snipcode/backend#build": {
       "dependsOn": [
-        "^build"
+        "^build",
+        "@snipcode/domain#build"
       ],
       "outputs": [
         "dist/**"
@@ -29,8 +30,6 @@
         "src/**/*.tsx",
         "src/**/*.ts",
         "*.ts",
-        "codegen.yml",
-        ".eslintignore",
         "*.json"
       ],
       "env": [
@@ -40,7 +39,9 @@
         "SENTRY_DSN",
         "APP_VERSION",
         "ADMIN_PASSWORD",
-        "JWT_SECRET"
+        "JWT_SECRET",
+        "CONVERTKIT_API_KEY",
+        "CONVERTKIT_FORM_ID"
       ]
     },
     "@snipcode/domain#build": {
@@ -71,15 +72,16 @@
         "__mocks__/**/*.js",
         "*.ts",
         "next.config.js",
-        "codegen.yml",
-        ".eslintignore",
-        "*.json"
+        "*.json",
+        "public/**"
       ],
       "env": [
         "NODE_ENV",
         "NEXT_PUBLIC_SERVER_URL",
         "NEXT_PUBLIC_APP_URL",
-        "NEXT_PUBLIC_APP_ENV"
+        "NEXT_PUBLIC_APP_ENV",
+        "NEXT_PUBLIC_GITHUB_CLIENT_ID",
+        "NEXT_PUBLIC_SENTRY_DSN"
       ]
     },
     "@snipcode/embed#build": {
@@ -105,6 +107,9 @@
       "dependsOn": [
         "^build"
       ],
+      "env": [
+        "DATABASE_URL"
+      ],
       "outputs": []
     },
     "build:prod": {
@@ -122,6 +127,7 @@
       "outputs": []
     },
     "dev": {
+      "persistent": true,
       "cache": false
     }
   }

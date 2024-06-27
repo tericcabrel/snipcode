@@ -16,10 +16,20 @@ describe('Test Folder service', () => {
   let testHelper: TestHelper;
 
   beforeAll(async () => {
+    console.log('Environment Variables:', process.env);
+
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         DomainModule.forRootAsync({
-          databaseUrl: process.env.DATABASE_URL,
+          useFactory: () => {
+            return {
+              convertKit: {
+                apiKey: 'apiKey',
+                formId: 'formId',
+              },
+              databaseUrl: process.env.DATABASE_URL,
+            };
+          },
         }),
       ],
       providers: [RoleService, FolderService],
