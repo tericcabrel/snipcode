@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
 
+      - name: Start MySQL database
+        run: yarn workspace @snipcode/domain db:test
+
       - name: Lint the projects
         run: yarn lint
 
@@ -42,9 +45,7 @@ jobs:
 #        run: sudo systemctl start mysql.service
 
       - name: Run tests
-        run: |
-          yarn workspace @snipcode/domain db:test
-          yarn test -- --runInBand --coverage
+        run: yarn test -- --runInBand --coverage
 
   should-preview-frontend:
     runs-on: ubuntu-latest

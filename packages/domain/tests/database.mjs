@@ -33,21 +33,21 @@ const waitForMysql = async () => {
   }
 }
 
-if (!process.env.CI) {
-  try {
-    await $`docker ps | grep ${CONTAINER_NAME}`;
-  } catch (error) {
-    console.log('Database container not found, creating...');
+// if (!process.env.CI) {
+try {
+  await $`docker ps | grep ${CONTAINER_NAME}`;
+} catch (error) {
+  console.log('Database container not found, creating...');
 
-    await $`docker run -d --rm --name ${CONTAINER_NAME} -e MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} -e MYSQL_DATABASE=${MYSQL_DATABASE} -p ${MYSQL_PORT}:3306 mysql:8.0.34`;
+  await $`docker run -d --rm --name ${CONTAINER_NAME} -e MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} -e MYSQL_DATABASE=${MYSQL_DATABASE} -p ${MYSQL_PORT}:3306 mysql:8.0.34`;
 
-    await waitForMysql();
+  await waitForMysql();
 
-    process.env.DATABASE_URL = `mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}`;
+  process.env.DATABASE_URL = `mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}`;
 
-    console.log('Applying database migrations...');
+  console.log('Applying database migrations...');
 
-    await $`yarn prisma migrate dev`;
-  }
+  await $`yarn prisma migrate dev`;
 }
+//}
 
