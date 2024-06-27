@@ -20,12 +20,12 @@ jobs:
     if: ${{ github.event.pull_request.title != 'update release versions' }}
     env:
       NODE_ENV: test
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: snipcode
-      MYSQL_PORT: 3313
-      DATABASE_URL: mysql://root:secret@127.0.0.1:3313/snipcode
-      CONVERTKIT_API_KEY: api_key
-      CONVERTKIT_FORM_ID: form_id
+#      MYSQL_ROOT_PASSWORD: secret
+#      MYSQL_DATABASE: snipcode
+#      MYSQL_PORT: 3313
+#      DATABASE_URL: mysql://root:secret@127.0.0.1:3313/snipcode
+#      CONVERTKIT_API_KEY: api_key
+#      CONVERTKIT_FORM_ID: form_id
     steps:
       - uses: actions/checkout@v4
 
@@ -38,12 +38,12 @@ jobs:
       - name: Build the projects
         run: yarn build
 
-      - name: Start MySQL server
-        run: sudo systemctl start mysql.service
+#      - name: Start MySQL server
+#        run: sudo systemctl start mysql.service
 
       - name: Run tests
         run: |
-          yarn workspace @snipcode/domain db:migrate
+          yarn workspace @snipcode/domain db:test
           yarn test -- --runInBand --coverage
 
   should-preview-frontend:
