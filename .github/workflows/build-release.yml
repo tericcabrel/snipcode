@@ -96,7 +96,7 @@ jobs:
 
       - name: Trigger Backend Release
         run: |
-          BACKEND_VERSION=$(jq -r '.releases[] | select(.name == "@snipcode/core") | .newVersion' release.json)
+          BACKEND_VERSION=$(jq -r '.releases[] | select(.name == "@snipcode/backend") | .newVersion' release.json)
           if [ -n "$BACKEND_VERSION" ]; then
             echo "Ready to release Backend version $BACKEND_VERSION"
             gh workflow run deploy-backend.yml -r "${{ secrets.GH_BRANCH }}" -f version=$BACKEND_VERSION
