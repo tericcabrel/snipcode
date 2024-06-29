@@ -29,20 +29,34 @@ Create the .env file from the template. This file is useful for test executions,
 cp .env.template .env
 ```
 
+Create git branch for your feature; there is no convention for the branch name.
+```shell
+git checkout -b your-feature-name
+```
+
 ### Connect to the local database locally
 This project uses PlanetScale as the database.<br>
 To connect to the database locally, you must authenticate first (Ask the credentials to [@tericcabrel](https://github.com/tericcabrel)).<br>
-Once authenticated from the terminal, execute the commands below on two separate terminals.
+Once authenticated from the terminal, execute the commands below to create a database branch for your feature and create local tunnel to it.
 ```shell
-# On a first terminal
-yarn db:dev
-# On a second terminal (only necessary if you update the prisma schema)
+yarn db:branch:dev
+yarn db:branch:connect
+```
+Open a second terminal and run the command below to start the shadow database; 
+this is only necessary to run generate or execute database migrations with prisma schema
+```shell
 yarn db:shadow
 ```
 
 The shadow database runs on Docker, you can stop it when you don't need it
 ```shell
 yarn db:shadow:stop
+```
+
+### Connect to the development database
+The development database is used to beta test features. Execute the command below to connect to it
+```shell
+yarn db:dev:connect
 ```
 
 ### Run the database migration, generate Prisma types and seed the database with default data

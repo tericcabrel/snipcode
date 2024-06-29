@@ -17,20 +17,13 @@ const PublicSnippet = ({ snippet }: Props) => {
         <div className="flex items-center">
           <div>
             <Link href={`/users/${user.username}`}>
-              <a>
-                <UserAvatar name={user?.username} url={user?.pictureUrl} />
-              </a>
+              <UserAvatar name={user?.username} url={user?.pictureUrl} />
             </Link>
           </div>
           <div className="ml-2">
             <div className="font-bold">
-              <Link href={`/users/${user.username}`}>
-                <a>{user.username}</a>
-              </Link>{' '}
-              /{' '}
-              <Link href={`/snippets/${snippet.id}`}>
-                <a>{snippet.name}</a>
-              </Link>
+              <Link href={`/users/${user.username}`}>{user.username}</Link> /{' '}
+              <Link href={`/snippets/${snippet.id}`}>{snippet.name}</Link>
             </div>
             <div className="text-xs text-gray-400">{snippet.createdAt}</div>
           </div>

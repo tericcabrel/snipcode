@@ -47,18 +47,18 @@ const Header = () => {
                 </div>
                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                   {navigation.map((item) => (
-                    <Link href={item.href} key={item.name}>
-                      <a
-                        aria-current={isActive(pathname, item.href) ? 'page' : undefined}
-                        className={classNames(
-                          isActive(pathname, item.href)
-                            ? 'border-gray-900 text-gray-900'
-                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-                          'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium',
-                        )}
-                      >
-                        {item.name}
-                      </a>
+                    <Link
+                      aria-current={isActive(pathname, item.href) ? 'page' : undefined}
+                      className={classNames(
+                        isActive(pathname, item.href)
+                          ? 'border-gray-900 text-gray-900'
+                          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+                        'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium',
+                      )}
+                      href={item.href}
+                      key={item.name}
+                    >
+                      {item.name}
                     </Link>
                   ))}
                 </div>
@@ -81,10 +81,11 @@ const Header = () => {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <Link href="/app/profile">
-                        <a className="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800 hover:bg-gray-100">
-                          Profile
-                        </a>
+                      <Link
+                        className="block px-4 py-2 text-sm text-gray-700 hover:text-gray-800 hover:bg-gray-100"
+                        href="/app/profile"
+                      >
+                        Profile
                       </Link>
                       <Menu.Item>
                         <button
@@ -142,10 +143,11 @@ const Header = () => {
                 </div>
               </div>
               <div className="mt-3 space-y-1">
-                <Link href="/app/profile">
-                  <a className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
-                    Profile
-                  </a>
+                <Link
+                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                  href="/app/profile"
+                >
+                  Profile
                 </Link>
                 <Disclosure.Button
                   className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
