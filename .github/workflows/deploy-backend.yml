@@ -4,8 +4,8 @@ on:
     branches:
       - dev
     paths:
-      - 'apps/core/src/**'
-      - 'apps/core/Dockerfile'
+      - 'apps/backend/src/**'
+      - 'apps/backend/Dockerfile'
 
   workflow_dispatch:
     inputs:
@@ -32,7 +32,7 @@ jobs:
         uses: ./.github/actions/install-dependencies
 
       - name: Generate sourcemaps from build
-        run: yarn build:prod --filter=...@snipcode/core
+        run: yarn build:prod --filter=...@snipcode/backend
 
       - name: Create a Sentry release
         env:
@@ -43,7 +43,7 @@ jobs:
         run: |
           curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.2.0" bash
           sentry-cli releases new "$VERSION"
-          sentry-cli releases files "$VERSION" upload-sourcemaps ./apps/core/build
+          sentry-cli releases files "$VERSION" upload-sourcemaps ./apps/backend/build
           sentry-cli releases finalize "$VERSION"
 
   package:
@@ -51,8 +51,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Copy the core Dockerfile in the root repository
-        run: cp apps/core/Dockerfile .
+      - name: Copy the backend Dockerfile in the root repository
+        run: cp apps/backend/Dockerfile .
 
       - name: Build, tag, and push docker image to Amazon ECR
         env:
