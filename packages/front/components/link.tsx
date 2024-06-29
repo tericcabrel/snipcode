@@ -1,7 +1,7 @@
 import NextLink, { LinkProps } from 'next/link';
 import { PropsWithChildren } from 'react';
 
-type Props = PropsWithChildren<LinkProps & { className?: string }>;
+type Props = PropsWithChildren<LinkProps & { className?: string; title?: string }>;
 
 const Link = ({ children, ...props }: Props) => {
   if (props.href.toString().startsWith('/')) {

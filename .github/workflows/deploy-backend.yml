@@ -19,6 +19,7 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+  RELEASE_VERSION: ${{ github.event.inputs.version }}
 
 jobs:
   sourcemaps:
@@ -61,7 +62,7 @@ jobs:
           IMAGE_TAG: ${{ inputs.version }}
         run: |
           aws ecr-public get-login-password --region $REGION | docker login --username AWS --password-stdin $REGISTRY
-          docker build -t $REPOSITORY:$IMAGE_TAG .
+          docker build -t $REPOSITORY:$IMAGE_TAG --build-arg APP_VERSION=$IMAGE_TAG .
           docker tag $REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:$IMAGE_TAG
           docker tag $REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:latest
           docker push --all-tags $REGISTRY/$REPOSITORY

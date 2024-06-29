@@ -8,6 +8,7 @@ env:
   TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.head_ref || github.run_id }}"
@@ -75,7 +76,8 @@ jobs:
 
       - name: Build Project Artifacts
         env:
-          APP_VERSION: ${{ github.sha }}
+          APP_VERSION: $(git rev-parse --short ${{ github.sha }})
+          SENTRY_RELEASE: $(git rev-parse --short ${{ github.sha }})
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel

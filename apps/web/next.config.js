@@ -9,12 +9,12 @@ const nextConfigOptions = {
   transpilePackages: ['@snipcode/front'],
 };
 
-// For all available options, see: https://github.com/getsentry/sentry-webpack-plugin#options.
-const sentryWebpackPluginOptions = {
-  dryRun: true,
-  silent: true,
-};
-
-// Make sure adding Sentry options is the last code to run before exporting, to
-// ensure that your source maps include changes from all other Webpack plugins
-module.exports = withSentryConfig(nextConfigOptions, sentryWebpackPluginOptions, { hideSourceMaps: true });
+module.exports = withSentryConfig(nextConfigOptions, {
+  hideSourceMaps: true,
+  org: 'snipcode',
+  project: 'frontend',
+  // release: "my-project-name@2.3.12",
+  authToken: process.env.SENTRY_AUTH_TOKEN, // An auth token is required for uploading source maps.
+  silent: false,
+  telemetry: false,
+});
