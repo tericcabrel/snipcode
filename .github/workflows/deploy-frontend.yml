@@ -11,6 +11,7 @@ on:
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
 jobs:
   deploy:
@@ -30,9 +31,14 @@ jobs:
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
+      - name: Generate Application Version
+        run: |
+          RELEASE_VERSION="${{ inputs.version }}-$(git rev-parse --short ${{ github.sha }})"
+          echo "APP_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+
       - name: Build Project Artifacts
         env:
-          APP_VERSION: $(git rev-parse --short ${{ github.sha }})
+          SENTRY_RELEASE: ${{ env.APP_VERSION }}
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel

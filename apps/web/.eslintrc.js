@@ -16,6 +16,7 @@ module.exports = {
     'next-sitemap.js',
     'sentry.client.config.js',
     'sentry.server.config.js',
+    'sentry.edge.config.js',
     '.eslintrc.js',
   ],
   parserOptions: {

@@ -1,5 +1,11 @@
 import { useState } from 'react';
 
+import { BreadCrumb } from './breadcrumb';
+import { EmptyFolder } from './folders/empty';
+import { Folder } from './folders/folder';
+import { EditFolderContainer } from './folders/form/edit-folder';
+import { CreateSnippetContainer } from './snippets/form/create-snippet';
+import { Snippet } from './snippets/snippet';
 import { useBooleanState } from '../../hooks';
 import { useDeleteFolders } from '../../services/folders/delete-folders';
 import { useListDirectory } from '../../services/folders/list-directory';
@@ -9,12 +15,6 @@ import { displayItemLabel } from '../../utils/text';
 import { ConfirmDialog } from '../dialog/confirm-dialog';
 import { MenuAction } from '../menu-action';
 import { useToast } from '../toast/provider';
-import { BreadCrumb } from './breadcrumb';
-import { EmptyFolder } from './folders/empty';
-import { Folder } from './folders/folder';
-import { EditFolderContainer } from './folders/form/edit-folder';
-import { CreateSnippetContainer } from './snippets/form/create-snippet';
-import { Snippet } from './snippets/snippet';
 
 type Props = {
   folderId: string;
@@ -210,13 +210,15 @@ const Directory = ({
         />
       )}
       <CreateSnippetContainer open={isNewSnippetOpened} closeModal={closeNewSnippetModal} folderId={folderId} />
-      <ConfirmDialog
-        isLoading={isDeleteSnippetLoading || isDeleteFolderLoading}
-        open={isConfirmDialogOpen}
-        onConfirmButtonClick={handleConfirmDialogClick}
-        onCancelButtonClick={closeConfirmDialog}
-        messageText={generateConfirmDialogMessage(itemToDelete, folders)}
-      />
+      {isConfirmDialogOpen && (
+        <ConfirmDialog
+          isLoading={isDeleteSnippetLoading || isDeleteFolderLoading}
+          open={isConfirmDialogOpen}
+          onConfirmButtonClick={handleConfirmDialogClick}
+          onCancelButtonClick={closeConfirmDialog}
+          messageText={generateConfirmDialogMessage(itemToDelete, folders)}
+        />
+      )}
     </>
   );
 };
