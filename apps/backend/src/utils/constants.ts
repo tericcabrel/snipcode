@@ -11,3 +11,5 @@ export const AUTH_USER_NOT_FOUND_CODE = 'AUTH_USER_NOT_FOUND';
 export const AUTH_SUCCESS_URL = (webAuthSuccessUrl: string, sessionToken: string): string => {
   return `${webAuthSuccessUrl}?token=${sessionToken}`;
 };
+
+export const INTERNAL_SERVER_ERROR = 'An internal error occurred, please try again later.';
