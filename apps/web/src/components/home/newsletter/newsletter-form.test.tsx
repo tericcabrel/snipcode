@@ -8,8 +8,6 @@ import { NewsletterForm } from './newsletter-form';
 
 jest.mock('next/router', () => require('next-router-mock'));
 
-// TODO - to be refactored soon
-// eslint-disable-next-line jest/no-disabled-tests
 describe('Newsletter Form', () => {
   beforeEach(() => {
     // IntersectionObserver isn't available in test environment

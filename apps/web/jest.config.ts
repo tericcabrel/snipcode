@@ -2,6 +2,9 @@ import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
   collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}', '!**/*.d.ts', '!**/node_modules/**'],
+  detectOpenHandles: true,
+  forceExit: true,
+  logHeapUsage: true,
   moduleNameMapper: {
     '\\.(css|less)$': '<rootDir>/tests/mocks/styleMock.js',
     '^.+\\.(jpg|jpeg|png|gif|webp|avif|svg)$': '<rootDir>/tests/mocks/fileMock.js',
