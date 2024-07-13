@@ -1,5 +1,11 @@
 # @snipcode/backend
 
+## 1.1.3
+
+### Patch Changes
+
+- f445b89: Catch Prisma technical error and return user friendly message
+
 ## 1.1.2
 
 ### Patch Changes
