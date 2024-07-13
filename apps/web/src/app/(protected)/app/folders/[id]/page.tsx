@@ -1,6 +1,6 @@
-import { ViewFolderContainer } from './container';
-
 import { generatePageMetadata } from '@/lib/seo';
+
+import { ViewFolderContainer } from './container';
 
 export const metadata = generatePageMetadata({
   noIndex: true,

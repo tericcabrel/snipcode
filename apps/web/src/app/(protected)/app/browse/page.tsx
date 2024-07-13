@@ -1,7 +1,7 @@
+import { generatePageMetadata } from '@/lib/seo';
+
 import { BrowseContainer } from './container';
 import { fetchSnippets } from './lib/fetch-snippets';
-
-import { generatePageMetadata } from '@/lib/seo';
 
 export const dynamic = 'force-dynamic';
 

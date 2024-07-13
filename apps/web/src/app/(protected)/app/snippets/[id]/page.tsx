@@ -1,6 +1,6 @@
-import { ViewSnippetContainer } from './container';
-
 import { generatePageMetadata } from '@/lib/seo';
+
+import { ViewSnippetContainer } from './container';
 
 export const metadata = generatePageMetadata({
   noIndex: true,

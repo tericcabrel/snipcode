@@ -1,6 +1,6 @@
-import { ProfileContainer } from './container';
-
 import { generatePageMetadata } from '@/lib/seo';
+
+import { ProfileContainer } from './container';
 
 export const metadata = generatePageMetadata({
   noIndex: true,

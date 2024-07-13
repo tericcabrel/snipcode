@@ -1,10 +1,10 @@
 import React, { PropsWithChildren } from 'react';
 
-import { PublicFooter } from './layout/footer';
-import { PublicHeader } from './layout/header';
-
 import { ApolloWrapper } from '@/lib/apollo/client';
 import { generatePageMetadata } from '@/lib/seo';
+
+import { PublicFooter } from './layout/footer';
+import { PublicHeader } from './layout/header';
 
 import '@/styles/globals.css';
 

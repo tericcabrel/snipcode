@@ -1,9 +1,9 @@
 import { Suspense } from 'react';
 
-import { AuthSuccessContainer } from './container';
-
 import { ApolloWrapper } from '@/lib/apollo/client';
 import { generatePageMetadata } from '@/lib/seo';
+
+import { AuthSuccessContainer } from './container';
 
 export const metadata = generatePageMetadata({
   description: 'You have been authenticated successfully.',

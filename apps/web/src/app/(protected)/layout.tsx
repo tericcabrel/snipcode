@@ -1,10 +1,10 @@
 import { ToastProvider } from '@snipcode/front/components/toast/provider';
 import React, { PropsWithChildren } from 'react';
 
-import { AuthenticatedLayout } from './layout/content';
-
 import { ApolloWrapper } from '@/lib/apollo/client';
 import { generatePageMetadata } from '@/lib/seo';
+
+import { AuthenticatedLayout } from './layout/content';
 
 import '@/styles/globals.css';
 

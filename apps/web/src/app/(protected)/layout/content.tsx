@@ -3,10 +3,10 @@
 import { useAuthenticatedUser } from '@snipcode/front/services';
 import { ReactNode } from 'react';
 
-import { Header } from './header';
-
 import { Loader } from '@/components/common/loader';
 import { Redirect } from '@/components/common/redirect';
+
+import { Header } from './header';
 
 type Props = {
   children?: ReactNode;
