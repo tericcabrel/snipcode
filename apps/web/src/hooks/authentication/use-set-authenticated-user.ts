@@ -1,21 +1,19 @@
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 import { useAuth } from '@/hooks/authentication/use-auth';
 
-const useSetAuthenticatedUser = () => {
-  const router = useRouter();
+export const useSetAuthenticatedUser = () => {
+  const queryParams = useSearchParams();
   const { redirectToDashboard, saveToken } = useAuth();
 
   useEffect(() => {
-    const { token } = router.query;
+    const token = queryParams.get('token');
 
     if (token) {
       saveToken(token as string);
     }
 
     void redirectToDashboard();
-  }, [redirectToDashboard, router.query, saveToken]);
+  }, [redirectToDashboard, queryParams, saveToken]);
 };
-
-export { useSetAuthenticatedUser };

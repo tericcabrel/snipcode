@@ -9,12 +9,12 @@ type FindPublicSnippetsArgs = {
     nextToken?: string | null;
     sortMethod: 'recently_updated' | 'recently_created';
   };
-  onCompleted: (result?: PublicSnippetResult) => void;
+  onCompleted: (result: PublicSnippetResult | null) => void;
 };
 
-export const formatPublicSnippetsResult = (data?: PublicSnippetsQuery): PublicSnippetResult | undefined => {
+export const formatPublicSnippetsResult = (data?: PublicSnippetsQuery): PublicSnippetResult | null => {
   if (!data?.publicSnippets) {
-    return;
+    return null;
   }
 
   const { hasMore, itemPerPage, items, nextToken } = data.publicSnippets;

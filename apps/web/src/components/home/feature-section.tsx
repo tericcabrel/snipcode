@@ -46,7 +46,7 @@ const features = [
   },
 ];
 
-const FeatureSection = () => {
+export const FeatureSection = () => {
   return (
     <div className="relative from-gray-50 to-gray-100">
       <div className="px-4 py-16 mx-auto sm:pt-48 sm:pb-24 lg:max-w-7xl lg:pt-48">
@@ -72,5 +72,3 @@ const FeatureSection = () => {
     </div>
   );
 };
-
-export { FeatureSection };

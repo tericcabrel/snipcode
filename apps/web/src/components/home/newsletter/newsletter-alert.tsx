@@ -33,7 +33,7 @@ const alertContentMap: Record<Props['state'], Content> = {
   },
 };
 
-const NewsletterAlert = ({ handleClose, state = 'failure' }: Props) => {
+export const NewsletterAlert = ({ handleClose, state = 'failure' }: Props) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const titleClasses = classNames('flex flex-col items-center text-2xl mb-6', {
@@ -101,5 +101,3 @@ const NewsletterAlert = ({ handleClose, state = 'failure' }: Props) => {
     </Transition>
   );
 };
-
-export { NewsletterAlert };

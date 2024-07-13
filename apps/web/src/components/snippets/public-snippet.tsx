@@ -6,7 +6,7 @@ type Props = {
   snippet: PublicSnippetResult['items'][number];
 };
 
-const PublicSnippet = ({ snippet }: Props) => {
+export const PublicSnippet = ({ snippet }: Props) => {
   const { user } = snippet;
 
   const htmlCode = snippet.content;
@@ -39,5 +39,3 @@ const PublicSnippet = ({ snippet }: Props) => {
     </div>
   );
 };
-
-export { PublicSnippet };

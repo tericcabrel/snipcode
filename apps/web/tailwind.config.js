@@ -2,10 +2,9 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx}",
-    "./src/components/**/*.{js,ts,jsx,tsx}",
-    "./src/containers/**/*.{js,ts,jsx,tsx}",
-    "../../packages/front/**/*.{js,ts,jsx,tsx}",
+    './src/app/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}',
+    '../../packages/front/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'class',
   theme: {
@@ -22,9 +21,9 @@ module.exports = {
       },
     },
     screens: {
-      'xs': {'max': '639px'},
+      xs: { max: '639px' },
       ...defaultTheme.screens,
-    }
+    },
   },
   plugins: [require('@tailwindcss/forms')],
-}
+};

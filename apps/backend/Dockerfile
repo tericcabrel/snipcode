@@ -52,9 +52,6 @@ COPY --chown=node:node --from=builder /app/packages/utils/dist ./packages/utils/
 COPY --chown=node:node --from=builder /app/packages/embed/package.json ./packages/embed/package.json
 COPY --chown=node:node --from=builder /app/packages/embed/dist ./packages/embed/dist
 
-COPY --chown=node:node --from=builder /app/packages/logger/package.json ./packages/logger/package.json
-COPY --chown=node:node --from=builder /app/packages/logger/dist ./packages/logger/dist
-
 RUN yarn workspaces focus --all --production && yarn cache clean --all
 
 COPY --chown=node:node --from=schema-builder  /app/node_modules/.prisma/client ./node_modules/.prisma/client

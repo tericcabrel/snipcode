@@ -1,13 +1,13 @@
 import { useApolloClient } from '@apollo/client';
 import { useAuthenticatedUser } from '@snipcode/front/services';
 import { addDayToDate } from '@snipcode/utils';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie';
 
-import { COOKIE_NAME } from '@/utils/constants';
+import { AUTH_COOKIE_NAME } from '@/lib/constants';
 
-const useAuth = () => {
-  const [, setCookie, removeCookie] = useCookies([COOKIE_NAME]);
+export const useAuth = () => {
+  const [, setCookie, removeCookie] = useCookies([AUTH_COOKIE_NAME]);
   const apolloClient = useApolloClient();
   const router = useRouter();
 
@@ -16,7 +16,7 @@ const useAuth = () => {
   const saveToken = (token: string) => {
     const currentDate = new Date();
 
-    setCookie(COOKIE_NAME, token, {
+    setCookie(AUTH_COOKIE_NAME, token, {
       expires: addDayToDate(currentDate, 90),
       path: '/',
       sameSite: 'none',
@@ -27,7 +27,7 @@ const useAuth = () => {
   const deleteToken = async () => {
     await apolloClient.clearStore();
 
-    removeCookie(COOKIE_NAME, { path: '/' });
+    removeCookie(AUTH_COOKIE_NAME, { path: '/' });
   };
 
   const redirectToDashboard = () => router.push('/app/home');
@@ -49,5 +49,3 @@ const useAuth = () => {
     user: data,
   };
 };
-
-export { useAuth };

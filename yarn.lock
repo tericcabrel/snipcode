@@ -93,6 +93,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@apollo/client-react-streaming@npm:0.11.2":
+  version: 0.11.2
+  resolution: "@apollo/client-react-streaming@npm:0.11.2"
+  dependencies:
+    ts-invariant: "npm:^0.10.3"
+  peerDependencies:
+    "@apollo/client": ^3.10.4
+    react: ^18
+  checksum: 10/cfd5cf18416359e1cf79471d9609e9c1ceddb156a4887f1db60079f0bea36e256c416d2cd7cc1e1f5bdda76296b1c818600d2a468236fe22b7c26f60d3d287dc
+  languageName: node
+  linkType: hard
+
 "@apollo/client@npm:3.10.6":
   version: 3.10.6
   resolution: "@apollo/client@npm:3.10.6"
@@ -127,6 +139,19 @@ __metadata:
     subscriptions-transport-ws:
       optional: true
   checksum: 10/15ccdd7fab632f467a0a5ea381a4129fcf6d3cad37e3f9b95b53651cfc8bfb6ff0b1aec8acb3e2c7cd82b76ede5da5c5152a27efb511f0e777b6aa40df8db288
+  languageName: node
+  linkType: hard
+
+"@apollo/experimental-nextjs-app-support@npm:0.11.2":
+  version: 0.11.2
+  resolution: "@apollo/experimental-nextjs-app-support@npm:0.11.2"
+  dependencies:
+    "@apollo/client-react-streaming": "npm:0.11.2"
+  peerDependencies:
+    "@apollo/client": ^3.10.4
+    next: ^13.4.1 || ^14.0.0 || 15.0.0-rc.0
+    react: ^18
+  checksum: 10/c243ca09b6b8ecff785128d7e45f735bfc0a6b99f044c9c0851c6799c12e67a61f4e13fc29c86ca0843b52643d40ff57da4596e820d21a6a3782e123749b302c
   languageName: node
   linkType: hard
 
@@ -1962,13 +1987,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@corex/deepmerge@npm:^4.0.43":
-  version: 4.0.43
-  resolution: "@corex/deepmerge@npm:4.0.43"
-  checksum: 10/c9ac6163e982e81e3216a9fc7c68cd60b9788ad3b23d7387c9e9741b0274b42dfc332ae74b993e550c95e4256be5ce68045fc55d363aa083344392dc95b50d8b
-  languageName: node
-  linkType: hard
-
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -3715,13 +3733,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:^13.4.3":
-  version: 13.5.6
-  resolution: "@next/env@npm:13.5.6"
-  checksum: 10/c81bd6052db366407da701e4e431becbc80ef36a88bec7883b0266cdfeb45a7da959d37c38e1a816006cd2da287e5ff5b928bdb71025e3d4aa59e07dea3edd59
-  languageName: node
-  linkType: hard
-
 "@next/eslint-plugin-next@npm:14.2.4":
   version: 14.2.4
   resolution: "@next/eslint-plugin-next@npm:14.2.4"
@@ -5203,6 +5214,7 @@ __metadata:
   resolution: "@snipcode/web@workspace:apps/web"
   dependencies:
     "@apollo/client": "npm:3.10.6"
+    "@apollo/experimental-nextjs-app-support": "npm:0.11.2"
     "@headlessui/react": "npm:2.1.0"
     "@hookform/resolvers": "npm:3.6.0"
     "@sentry/nextjs": "npm:8.11.0"
@@ -5225,7 +5237,6 @@ __metadata:
     next: "npm:14.2.4"
     next-router-mock: "npm:0.9.13"
     next-seo: "npm:6.5.0"
-    next-sitemap: "npm:4.2.3"
     postcss: "npm:8.4.38"
     react: "npm:18.3.1"
     react-cookie: "npm:7.1.4"
@@ -9942,7 +9953,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:3.3.2, fast-glob@npm:^3.2.12, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1, fast-glob@npm:^3.3.2":
+"fast-glob@npm:3.3.2, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1, fast-glob@npm:^3.3.2":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -13659,23 +13670,6 @@ __metadata:
     react: ">=16.0.0"
     react-dom: ">=16.0.0"
   checksum: 10/e86e9056305379a03aeb9b4368db79870ed91dbb0e2463574f34ec2557e8257c614c006d83c5a5f19c7f91916ed6da91700de06ba491ff86ae647ab8988b354e
-  languageName: node
-  linkType: hard
-
-"next-sitemap@npm:4.2.3":
-  version: 4.2.3
-  resolution: "next-sitemap@npm:4.2.3"
-  dependencies:
-    "@corex/deepmerge": "npm:^4.0.43"
-    "@next/env": "npm:^13.4.3"
-    fast-glob: "npm:^3.2.12"
-    minimist: "npm:^1.2.8"
-  peerDependencies:
-    next: "*"
-  bin:
-    next-sitemap: bin/next-sitemap.mjs
-    next-sitemap-cjs: bin/next-sitemap.cjs
-  checksum: 10/8e88c941b5e487584abaa21a31a94d888c8d37e95892cd6b5bdbc121f49435f75c279e97508a7a99d3de0010e833f3769d0c2d0888d9228be4dbd48e031b831c
   languageName: node
   linkType: hard
 

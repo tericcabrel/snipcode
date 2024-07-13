@@ -1,6 +1,10 @@
-import { NewsletterForm } from '@/components/home/newsletter/newsletter-form';
+import React from 'react';
 
-const NewsletterSection = () => {
+type Props = {
+  newsletterFormElement: React.ReactNode;
+};
+
+export const NewsletterSection = ({ newsletterFormElement }: Props) => {
   return (
     <section className="py-12 bg-gray-50 sm:py-16 lg:py-20" id="early-access">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -21,7 +25,7 @@ const NewsletterSection = () => {
               }}
             />
           </div>
-          <NewsletterForm />
+          {newsletterFormElement}
         </div>
 
         <p className="mt-6 text-sm font-normal text-center text-gray-500 font-pj">
@@ -31,5 +35,3 @@ const NewsletterSection = () => {
     </section>
   );
 };
-
-export { NewsletterSection };
