@@ -1,5 +1,11 @@
 # @snipcode/backend
 
+## 1.1.6
+
+### Patch Changes
+
+- 8b5bf34: Include graphql schema files in the build folder
+
 ## 1.1.5
 
 ### Patch Changes
