@@ -1,4 +1,4 @@
-import { classNames } from '../utils/classnames';
+import { classNames } from '../lib/classnames';
 
 type AlertType = 'success' | 'error' | 'info';
 

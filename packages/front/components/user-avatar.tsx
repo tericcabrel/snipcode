@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { COLORS } from '../utils/constants';
+import { COLORS } from '../lib/constants';
 
 type Props = {
   name?: string | null;

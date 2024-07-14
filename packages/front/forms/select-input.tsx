@@ -2,8 +2,8 @@ import { Listbox, Transition } from '@headlessui/react';
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { Fragment, forwardRef } from 'react';
 
+import { classNames } from '../lib/classnames';
 import { SelectOption } from '../typings/components';
-import { classNames } from '../utils/classnames';
 
 type Props = {
   className?: string;

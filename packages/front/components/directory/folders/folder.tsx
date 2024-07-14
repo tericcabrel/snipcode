@@ -1,8 +1,8 @@
 import { FolderIcon, FolderOpenIcon, PencilIcon, TrashIcon } from '@heroicons/react/20/solid';
 
 import { useHover } from '../../../hooks/use-hover';
+import { displayItemLabel, truncate } from '../../../lib/text';
 import { FolderItem, MenuItemAction } from '../../../typings/components';
-import { displayItemLabel, truncate } from '../../../utils/text';
 import { DotMenu } from '../../menus/dot-menu';
 
 type Props = {

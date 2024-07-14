@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
+import { FORM_ERRORS } from '../../../../lib/constants';
 import { EditorFormValues } from '../../../../typings/snippet-form';
-import { FORM_ERRORS } from '../../../../utils/constants';
 
 const MIN_NAME_LENGTH = 1;
 const MAX_NAME_LENGTH = 100;

@@ -6,7 +6,8 @@ module.exports = {
     "tailwind.config.js",
     "jest.config.ts",
     "generated.ts",
-    '.eslintrc.js'
+    '.eslintrc.js',
+    'tailwind.config.ts'
   ],
   "parserOptions": {
     "ecmaVersion": 2023,

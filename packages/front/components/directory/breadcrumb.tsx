@@ -1,7 +1,7 @@
 import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid';
 
+import { classNames } from '../../lib/classnames';
 import { FilePath } from '../../typings/components';
-import { classNames } from '../../utils/classnames';
 
 type Props = {
   current: string;

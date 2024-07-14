@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { getInputErrorMessage } from '../utils/forms';
+import { getInputErrorMessage } from '../lib/forms';
 
 type Props = {
   groupClassName?: string;

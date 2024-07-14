@@ -2,8 +2,8 @@ import { Menu, Transition } from '@headlessui/react';
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid';
 import React, { Fragment } from 'react';
 
+import { classNames } from '../../lib/classnames';
 import { MenuItemAction } from '../../typings/components';
-import { classNames } from '../../utils/classnames';
 
 type MenuItemProps = {
   icon?: React.ReactNode;

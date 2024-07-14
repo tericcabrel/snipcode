@@ -10,10 +10,10 @@ import React from 'react';
 
 import { useCopyToClipboard } from '../../../hooks/use-copy-to-clipboard';
 import { useHover } from '../../../hooks/use-hover';
+import { COLORS } from '../../../lib/constants';
+import { generateEmbeddableLink, generateShareableLink } from '../../../lib/snippets';
+import { truncate } from '../../../lib/text';
 import { MenuItemAction, SnippetItem } from '../../../typings/components';
-import { COLORS } from '../../../utils/constants';
-import { generateEmbeddableLink, generateShareableLink } from '../../../utils/snippets';
-import { truncate } from '../../../utils/text';
 import { DotMenu } from '../../menus/dot-menu';
 
 type Props = {

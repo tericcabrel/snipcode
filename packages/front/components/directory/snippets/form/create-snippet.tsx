@@ -8,9 +8,9 @@ import { SnippetFormValues, formSchema } from './form-schema';
 import { generateSnippetLanguageOptions } from './utils';
 import { Button } from '../../../../forms/button';
 import { useCodeHighlighter } from '../../../../hooks';
+import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../lib/constants';
+import { extractLanguageFromName, lineHighlightToString } from '../../../../lib/snippets';
 import { useCreateSnippet } from '../../../../services/snippets/create-snippet';
-import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../utils/constants';
-import { extractLanguageFromName, lineHighlightToString } from '../../../../utils/snippets';
 import { useToast } from '../../../toast/provider';
 
 type Props = {

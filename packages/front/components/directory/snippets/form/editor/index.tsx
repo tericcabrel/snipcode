@@ -2,13 +2,13 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Editor from 'react-simple-code-editor';
 import { Highlighter } from 'shiki';
 
+import { useFormEditor } from './hooks/use-form-editor';
 import { SelectInput } from '../../../../../forms/select-input';
 import { SwitchInput } from '../../../../../forms/switch-input';
 import { TextInput } from '../../../../../forms/text-input';
+import { THEME_BACKGROUND_COLOR_MAP } from '../../../../../lib/constants';
 import { SelectOption } from '../../../../../typings/components';
 import { EditorFormValues } from '../../../../../typings/snippet-form';
-import { THEME_BACKGROUND_COLOR_MAP } from '../../../../../utils/constants';
-import { useFormEditor } from './hooks/use-form-editor';
 
 type Props = {
   codeHighlightOptions: SelectOption[];
@@ -75,7 +75,6 @@ const SnippetTextEditor = ({ codeHighlightOptions, highlighter, languageOptions,
             />
           </div>
         </div>
-        {/* @ts-ignore */}
         <Editor
           value={code}
           onValueChange={(code) => setValue('code', code)}

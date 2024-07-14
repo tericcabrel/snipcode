@@ -6,10 +6,10 @@ import * as yup from 'yup';
 
 import { Button } from '../../../../forms/button';
 import { TextInput } from '../../../../forms/text-input';
+import { FOLDER_NAME_REGEX, FORM_ERRORS } from '../../../../lib/constants';
 import { useCreateFolder } from '../../../../services/folders/create-folder';
 import { useUpdateFolder } from '../../../../services/folders/update-folder';
 import { FolderItem } from '../../../../typings/components';
-import { FOLDER_NAME_REGEX, FORM_ERRORS } from '../../../../utils/constants';
 import { useToast } from '../../../toast/provider';
 
 type Props = {

@@ -17,6 +17,7 @@ module.exports = {
     'sentry.edge.config.js',
     '.eslintrc.js',
     'vitest.config.ts',
+    'tailwind.config.ts',
   ],
   parserOptions: {
     ecmaVersion: 2023,

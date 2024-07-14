@@ -1,7 +1,7 @@
 import { Switch } from '@headlessui/react';
 import { forwardRef, useState } from 'react';
 
-import { classNames } from '../utils/classnames';
+import { classNames } from '../lib/classnames';
 
 type Props = {
   className?: string;

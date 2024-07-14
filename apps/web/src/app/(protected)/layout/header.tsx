@@ -4,8 +4,8 @@ import { Disclosure, Menu, Transition } from '@snipcode/front';
 import { Link } from '@snipcode/front/components/link';
 import { UserAvatar } from '@snipcode/front/components/user-avatar';
 import { LogoIcon, LogoLightIcon, MenuIcon, XIcon } from '@snipcode/front/icons';
+import { classNames } from '@snipcode/front/lib/classnames';
 import { useLogoutUser } from '@snipcode/front/services';
-import { classNames } from '@snipcode/front/utils/classnames';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
 
