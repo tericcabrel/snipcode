@@ -1,5 +1,16 @@
 # @snipcode/web
 
+## 1.1.0
+
+### Minor Changes
+
+- 7349e92: migrate to next.js app router
+
+### Patch Changes
+
+- Updated dependencies [7349e92]
+  - @snipcode/front@1.1.0
+
 ## 1.0.1
 
 ### Patch Changes

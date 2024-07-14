@@ -1,6 +1,6 @@
 {
   "name": "@snipcode/backend",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "private": true,
   "description": "Core backend of the application",
   "main": "dist/src/main.js",

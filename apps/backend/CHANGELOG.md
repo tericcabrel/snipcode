@@ -1,5 +1,11 @@
 # @snipcode/backend
 
+## 1.1.4
+
+### Patch Changes
+
+- 7349e92: migrate to next.js app router
+
 ## 1.1.3
 
 ### Patch Changes
