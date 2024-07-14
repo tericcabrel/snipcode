@@ -5396,6 +5396,9 @@ __metadata:
     "@ngneat/falso": "npm:7.2.0"
     "@prisma/client": "npm:5.14.0"
     "@sentry/node": "npm:8.11.0"
+    "@snipcode/domain": "workspace:*"
+    "@snipcode/embed": "workspace:*"
+    "@snipcode/utils": "workspace:*"
     "@types/express": "npm:4.17.21"
     "@types/supertest": "npm:6.0.2"
     dotenv-cli: "npm:7.4.2"
@@ -5434,7 +5437,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@snipcode/embed@workspace:packages/embed":
+"@snipcode/embed@workspace:*, @snipcode/embed@workspace:packages/embed":
   version: 0.0.0-use.local
   resolution: "@snipcode/embed@workspace:packages/embed"
   dependencies:
