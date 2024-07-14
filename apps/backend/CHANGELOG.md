@@ -1,5 +1,11 @@
 # @snipcode/backend
 
+## 1.1.7
+
+### Patch Changes
+
+- 5b95598: Fix graphql schema loading
+
 ## 1.1.6
 
 ### Patch Changes
