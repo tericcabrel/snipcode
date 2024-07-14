@@ -37,7 +37,7 @@ jobs:
         run: yarn build
 
       - name: Run tests
-        run: yarn test -- --runInBand --coverage
+        run: yarn test -- --coverage
 
   should-preview-frontend:
     runs-on: ubuntu-latest

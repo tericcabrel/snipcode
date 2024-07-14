@@ -11,7 +11,7 @@ export default defineConfig({
     include: ['./src/**/*.test.(ts|tsx)'],
     exclude: ['./.next/', './node_modules/'],
     coverage: {
-      provider: 'istanbul', // or 'c8'
+      provider: 'v8',
       include: ['**/*.{js,jsx,ts,tsx}', '!**/*.d.ts', '!**/node_modules/**'],
       exclude: ['./.next/', './node_modules/'],
     },

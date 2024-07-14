@@ -40,7 +40,7 @@ jobs:
         run: sudo systemctl start mysql.service
 
       - name: Run tests
-        run: yarn test -- --runInBand
+        run: yarn test
 
   version:
     runs-on: ubuntu-latest
