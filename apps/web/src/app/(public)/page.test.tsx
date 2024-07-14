@@ -19,8 +19,6 @@ const mocks = [
   },
 ];
 
-jest.mock('next/router', () => require('next-router-mock'));
-
 describe('Home Page', () => {
   test('Render the home page', () => {
     render(

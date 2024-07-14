@@ -6,27 +6,7 @@ import React, { act } from 'react';
 
 import { NewsletterForm } from './newsletter-form';
 
-jest.mock('next/router', () => require('next-router-mock'));
-
 describe('Newsletter Form', () => {
-  beforeEach(() => {
-    // IntersectionObserver isn't available in test environment
-    const mockIntersectionObserver = jest.fn();
-
-    mockIntersectionObserver.mockReturnValue({
-      disconnect: jest.fn().mockReturnValue(null),
-      observe: jest.fn().mockReturnValue(null),
-      unobserve: jest.fn().mockReturnValue(null),
-    });
-    window.IntersectionObserver = mockIntersectionObserver;
-
-    global.ResizeObserver = class MockedResizeObserver {
-      observe = jest.fn();
-      unobserve = jest.fn();
-      disconnect = jest.fn();
-    };
-  });
-
   test('Subscribe successfully to the newsletter', async () => {
     const mocks = [
       {
