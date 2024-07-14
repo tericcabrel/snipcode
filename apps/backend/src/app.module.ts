@@ -50,7 +50,7 @@ const explorerPlugin: ApolloServerPlugin[] = IS_DEV ? [ApolloServerPluginLanding
           nodeEnv: configService.get('NODE_ENV'),
           playground: false,
           plugins: [...explorerPlugin],
-          typePaths: ['./src/features/**/*.graphql'],
+          typePaths: ['./**/*.graphql'],
         };
       },
     }),
