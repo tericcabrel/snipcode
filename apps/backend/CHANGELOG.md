@@ -1,5 +1,11 @@
 # @snipcode/backend
 
+## 1.1.5
+
+### Patch Changes
+
+- 0c6f56c: Fix backend docker build
+
 ## 1.1.4
 
 ### Patch Changes
