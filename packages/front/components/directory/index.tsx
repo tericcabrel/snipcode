@@ -19,11 +19,13 @@ import { MenuAction } from '../menu-action';
 import { useToast } from '../toast/provider';
 
 type Props = {
+  embeddableHostUrl: string;
   folderId: string;
   onBreadcrumbPathClick: (folderId: string, path: string) => Promise<void>;
   onNavigateToFolder: (folderId: string) => void;
   onSnippetClick: (snippetId: string) => void;
   rootFolderId: string;
+  shareableHostUrl: string;
   title: string;
 };
 
@@ -54,12 +56,14 @@ const generateConfirmDialogMessage = (item: ItemToDelete | null, folders: Folder
   return `This folder has ${displayItemLabel(folderItem.fileCount, 'item')}; are you sure you want to delete it?`;
 };
 
-const Directory = ({
+export const Directory = ({
+  embeddableHostUrl,
   folderId,
   onBreadcrumbPathClick,
   onNavigateToFolder,
   onSnippetClick,
   rootFolderId,
+  shareableHostUrl,
   title,
 }: Props) => {
   const [isNewFolderOpened, openNewFolderModal, closeNewFolderModal] = useBooleanState(false);
@@ -197,7 +201,14 @@ const Directory = ({
               <div className="my-8 text-md font-bold text-gray-500">Files</div>
               <div className="mt-6 grid grid-cols-4 gap-4">
                 {snippets.map((snippet) => (
-                  <Snippet item={snippet} key={snippet.id} onClick={openSnippet} onDeleteClick={onDeleteSnippet} />
+                  <Snippet
+                    embeddableHostUrl={embeddableHostUrl}
+                    item={snippet}
+                    key={snippet.id}
+                    shareableHostUrl={shareableHostUrl}
+                    onClick={openSnippet}
+                    onDeleteClick={onDeleteSnippet}
+                  />
                 ))}
               </div>
             </div>
@@ -224,5 +235,3 @@ const Directory = ({
     </>
   );
 };
-
-export { Directory };

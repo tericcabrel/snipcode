@@ -11,33 +11,34 @@ import React from 'react';
 import { useCopyToClipboard } from '../../../hooks/use-copy-to-clipboard';
 import { useHover } from '../../../hooks/use-hover';
 import { COLORS } from '../../../lib/constants';
-import { generateEmbeddableLink, generateShareableLink } from '../../../lib/snippets';
 import { truncate } from '../../../lib/text';
 import { MenuItemAction, SnippetItem } from '../../../typings/components';
 import { DotMenu } from '../../menus/dot-menu';
 
 type Props = {
+  embeddableHostUrl: string;
   item: SnippetItem;
   onClick: (snippet: SnippetItem) => void;
   onDeleteClick: (snippet: SnippetItem) => void;
+  shareableHostUrl: string;
 };
 
 const FILE_NAME_MAX_LENGTH = 30;
 
-const Snippet = ({ item, onClick, onDeleteClick }: Props) => {
+export const Snippet = ({ embeddableHostUrl, item, onClick, onDeleteClick, shareableHostUrl }: Props) => {
   const [hoverRef, isHovered] = useHover<HTMLDivElement>();
   const [, copyToClipboard] = useCopyToClipboard();
   const charIndex = item.language.charCodeAt(0) - 65;
   const colorIndex = charIndex % COLORS.length;
 
   const handleCopyShareableLink = async () => {
-    const link = generateShareableLink(item.id);
+    const link = `${shareableHostUrl}/snippets/${item.id}`;
 
     await copyToClipboard(link);
   };
 
   const handleEmbeddableLink = async () => {
-    const link = generateEmbeddableLink(item.id);
+    const link = `${embeddableHostUrl}/${item.id}`;
 
     await copyToClipboard(link);
   };
@@ -94,5 +95,3 @@ const Snippet = ({ item, onClick, onDeleteClick }: Props) => {
     </div>
   );
 };
-
-export { Snippet };

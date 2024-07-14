@@ -5,6 +5,7 @@ import { useFindFolder } from '@snipcode/front/services';
 import { useParams } from 'next/navigation';
 
 import { useFolderDirectory } from '@/hooks/use-folder-directory';
+import { EMBEDDABLE_HOST_URL, SHAREABLE_HOST_URL } from '@/lib/constants';
 
 export const ViewFolderContainer = () => {
   const queryParams = useParams<{ id: string }>();
@@ -20,8 +21,10 @@ export const ViewFolderContainer = () => {
     <div className="py-10">
       {isFolderFound && (
         <Directory
+          embeddableHostUrl={EMBEDDABLE_HOST_URL}
           folderId={folderId}
           rootFolderId={rootFolderId}
+          shareableHostUrl={SHAREABLE_HOST_URL}
           title={data?.name ?? '-----'}
           onBreadcrumbPathClick={handleBreadcrumbClick}
           onNavigateToFolder={navigateToFolder}
