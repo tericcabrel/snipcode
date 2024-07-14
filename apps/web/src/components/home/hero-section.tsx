@@ -1,4 +1,4 @@
-const HeroSection = () => {
+export const HeroSection = () => {
   return (
     <section className="relative py-12 sm:py-16 lg:pt-20 xl:pb-0">
       <div className="relative px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
@@ -58,5 +58,3 @@ const HeroSection = () => {
     </section>
   );
 };
-
-export { HeroSection };

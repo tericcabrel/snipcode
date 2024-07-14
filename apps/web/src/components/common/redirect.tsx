@@ -1,18 +1,18 @@
-import { useRouter } from 'next/router';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const useRedirectToPath = (path: string) => {
   const router = useRouter();
 
   useEffect(() => {
-    void router.push(path);
+    router.push(path);
   }, [path, router]);
 };
 
-const Redirect = ({ path }: { path: string }) => {
+export const Redirect = ({ path }: { path: string }) => {
   useRedirectToPath(path);
 
   return <></>;
 };
-
-export { Redirect };

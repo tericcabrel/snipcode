@@ -8,16 +8,15 @@ module.exports = {
     },
   },
   ignorePatterns: [
-    'jest.config.ts',
-    '__mocks__',
+    'mocks',
     'next.config.js',
     'tailwind.config.js',
     'postcss.config.js',
-    'next-sitemap.js',
     'sentry.client.config.js',
     'sentry.server.config.js',
     'sentry.edge.config.js',
     '.eslintrc.js',
+    'vitest.config.ts',
   ],
   parserOptions: {
     ecmaVersion: 2023,

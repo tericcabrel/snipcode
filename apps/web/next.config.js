@@ -15,6 +15,6 @@ module.exports = withSentryConfig(nextConfigOptions, {
   project: 'frontend',
   // release: "my-project-name@2.3.12",
   authToken: process.env.SENTRY_AUTH_TOKEN, // An auth token is required for uploading source maps.
-  silent: false,
+  silent: true,
   telemetry: false,
 });

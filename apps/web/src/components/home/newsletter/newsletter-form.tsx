@@ -1,14 +1,17 @@
+'use client';
+
 import { SpinnerIcon } from '@snipcode/front/icons';
 import { useSubscribeToNewsletter } from '@snipcode/front/services';
 import { useState } from 'react';
 
-import { NewsletterAlert } from '@/components/home/newsletter/newsletter-alert';
 import { useBooleanState } from '@/hooks/use-boolean-state';
-import { REGEX_EMAIL } from '@/utils/constants';
+import { REGEX_EMAIL } from '@/lib/constants';
+
+import { NewsletterAlert } from './newsletter-alert';
 
 const isEmailValid = (email: string) => REGEX_EMAIL.test(email);
 
-const NewsletterForm = () => {
+export const NewsletterForm = () => {
   const [email, setEmail] = useState<string>('');
   const [subscriptionState, setSubscriptionState] = useState<'success' | 'failure' | undefined>();
   const [isAlertOpened, openAlert, closeAlert] = useBooleanState(false);
@@ -62,5 +65,3 @@ const NewsletterForm = () => {
     </div>
   );
 };
-
-export { NewsletterForm };

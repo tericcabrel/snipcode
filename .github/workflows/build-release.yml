@@ -34,13 +34,15 @@ jobs:
         run: yarn lint
 
       - name: Build the projects
+        env:
+          NEXT_PUBLIC_APP_URL: http://localhost:7500 # Required for the frontend build
         run: yarn build
 
       - name: Start MySQL server
         run: sudo systemctl start mysql.service
 
       - name: Run tests
-        run: yarn test -- --runInBand
+        run: yarn test
 
   version:
     runs-on: ubuntu-latest

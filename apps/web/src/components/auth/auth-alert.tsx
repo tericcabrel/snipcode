@@ -8,7 +8,7 @@ type Props = {
   title: string;
 };
 
-const AuthAlert = ({ ctaLabel, descriptionElement, redirectLink, title }: Props) => {
+export const AuthAlert = ({ ctaLabel, descriptionElement, redirectLink, title }: Props) => {
   return (
     <div className="relative mx-auto max-w-7xl flex justify-center items-center auth-alert-container">
       <div className="text-center">
@@ -30,5 +30,3 @@ const AuthAlert = ({ ctaLabel, descriptionElement, redirectLink, title }: Props)
     </div>
   );
 };
-
-export { AuthAlert };

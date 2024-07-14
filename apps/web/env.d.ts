@@ -9,7 +9,8 @@ export type EnvironmentVariables = {
 
 declare global {
   namespace NodeJS {
-    type ProcessEnv = EnvironmentVariables;
+    // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+    interface ProcessEnv extends EnvironmentVariables {}
   }
 }
 

@@ -5,7 +5,7 @@ import { MutableRefObject, useEffect } from 'react';
  * @param ref
  * @param handler
  */
-const useClickOutside = (ref: MutableRefObject<any>, handler: (event: any) => void) => {
+export const useClickOutside = (ref: MutableRefObject<any>, handler: (event: any) => void) => {
   useEffect(() => {
     const listener = (event: any) => {
       // Do nothing if clicking ref's element or descendent elements
@@ -25,5 +25,3 @@ const useClickOutside = (ref: MutableRefObject<any>, handler: (event: any) => vo
     };
   }, [ref, handler]);
 };
-
-export { useClickOutside };
