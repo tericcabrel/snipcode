@@ -11,7 +11,7 @@ on:
 env:
   TF_API_TOKEN: "${{ secrets.TERRAFORM_API_TOKEN }}"
   TF_CLOUD_ORGANIZATION: ${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}
-  TF_VAR_organization: "${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}"
+  TF_VAR_organization: "\"${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}\""
   TF_WORKSPACE: 'snipcode-backend-compute-prod'
 
 jobs:
@@ -46,8 +46,6 @@ jobs:
       - name: Create Plan Run
         uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
         id: plan-run
-        env:
-          TF_VAR_organization: "${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}"
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
