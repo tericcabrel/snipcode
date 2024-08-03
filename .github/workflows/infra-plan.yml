@@ -63,7 +63,7 @@ jobs:
         with:
           APP_NAME: 'App Global'
           TF_DIRECTORY: '_infra/global'
-          TF_WORKSPACE: 'snipcode-global'
+          TF_WORKSPACE: 'snipcode-global-prod'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   plan-backend-storage:
