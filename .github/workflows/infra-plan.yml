@@ -23,8 +23,9 @@ jobs:
         directory:
          #- '_infra/credentials'
          #- '_infra/global'
-         - 'apps/backend/_infra/prod/storage'
+         #- 'apps/backend/_infra/prod/storage'
          #- 'apps/backend/_infra/prod/compute'
+          - packages/utils/**
 
     outputs:
       infraChanged: ${{ steps.infra-changed.outputs.any_changed }}
