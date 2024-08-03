@@ -12,7 +12,7 @@ env:
   TF_API_TOKEN: "${{ secrets.TERRAFORM_API_TOKEN }}"
   TF_CLOUD_ORGANIZATION: ${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}
   TF_VAR_organization: "\"${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}\""
-  TF_WORKSPACE: 'snipcode-backend-compute-prod'
+  TF_WORKSPACE: 'snipcode-backend-storage-prod'
 
 jobs:
   terraform-plan:
@@ -23,8 +23,8 @@ jobs:
         directory:
          #- '_infra/credentials'
          #- '_infra/global'
-         #- 'apps/backend/_infra/prod/storage'
-         - 'apps/backend/_infra/prod/compute'
+         - 'apps/backend/_infra/prod/storage'
+         #- 'apps/backend/_infra/prod/compute'
 
     outputs:
       infraChanged: ${{ steps.infra-changed.outputs.any_changed }}
