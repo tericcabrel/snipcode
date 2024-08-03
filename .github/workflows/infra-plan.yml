@@ -76,7 +76,7 @@ jobs:
             \`\`\`
             Plan: ${{ steps.plan-output.outputs.add }} to add, ${{ steps.plan-output.outputs.change }} to change, ${{ steps.plan-output.outputs.destroy }} to destroy.
             \`\`\`
-            [View the plan detail](${{ steps.plan-run.outputs.run_link }})
+            [View changes in detail](${{ steps.plan-run.outputs.run_link }})
             `;
             // 3. Delete previous comment so PR timeline makes sense
             if (botComment) {
