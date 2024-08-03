@@ -48,7 +48,7 @@ jobs:
           terraform_version: 1.9.2
 
       - name: Upload Configuration
-        if: ${{ success() }}
+        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
         id: plan-upload
         with:
@@ -57,6 +57,7 @@ jobs:
           speculative: true
 
       - name: Create Plan Run
+        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
         uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
         id: plan-run
         with:
@@ -65,12 +66,14 @@ jobs:
           plan_only: true
 
       - name: Get Plan Output
+        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
         uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
         id: plan-output
         with:
           plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
 
       - name: Update Pull Request
+        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
         uses: actions/github-script@v6
         id: plan-comment
         with:
