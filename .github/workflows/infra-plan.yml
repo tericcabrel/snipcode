@@ -38,6 +38,7 @@ jobs:
           APP_NAME: 'App Credentials'
           TF_DIRECTORY: '_infra/credentials'
           TF_WORKSPACE: 'snipcode-credentials'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   plan-global:
     runs-on: ubuntu-latest
@@ -63,6 +64,7 @@ jobs:
           APP_NAME: 'App Global'
           TF_DIRECTORY: '_infra/global'
           TF_WORKSPACE: 'snipcode-global'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   plan-backend-storage:
     runs-on: ubuntu-latest
@@ -88,6 +90,7 @@ jobs:
           APP_NAME: 'Backend Storage'
           TF_DIRECTORY: 'apps/backend/_infra/prod/storage'
           TF_WORKSPACE: 'snipcode-backend-storage-prod'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   plan-backend-compute:
     runs-on: ubuntu-latest
@@ -113,3 +116,4 @@ jobs:
           APP_NAME: 'Backend Compute'
           TF_DIRECTORY: 'apps/backend/_infra/prod/compute'
           TF_WORKSPACE: 'snipcode-backend-compute-prod'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

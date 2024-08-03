@@ -10,6 +10,9 @@ inputs:
   TF_WORKSPACE:
     required: true
     description: 'The Terraform workspace to use'
+  GITHUB_TOKEN:
+    required: true
+    description: 'The GitHub token to use'
 
 runs:
   using: 'composite'
@@ -45,7 +48,7 @@ runs:
       uses: actions/github-script@v6
       id: plan-comment
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ inputs.GITHUB_TOKEN }}
         script: |
           const { data: comments } = await github.rest.issues.listComments({
             owner: context.repo.owner,
