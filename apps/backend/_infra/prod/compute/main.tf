@@ -201,5 +201,5 @@ resource "ovh_domain_zone_record" "api_domain_dns_record" {
   subdomain = var.api_subdomain_name
   fieldtype = "CNAME"
   ttl       = 60
-  target    = aws_apprunner_service.api_service.service_url
+  target    = "${aws_apprunner_service.api_service.service_url}."
 }
