@@ -3,16 +3,15 @@ name: Infrastructure Plan
 on:
   pull_request:
     paths:
-      #- '_infra/credentials/**/*.tf'
-      #- '_infra/global/**/*.tf'
-      #- 'apps/backend/_infra/prod/storage/**/*.tf'
+      - '_infra/credentials/**/*.tf'
+      - '_infra/global/**/*.tf'
+      - 'apps/backend/_infra/prod/storage/**/*.tf'
       - 'apps/backend/_infra/prod/compute/**/*.tf'
 
 env:
   TF_API_TOKEN: "${{ secrets.TERRAFORM_API_TOKEN }}"
   TF_CLOUD_ORGANIZATION: ${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}
   TF_VAR_organization: "\"${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}\""
-  TF_WORKSPACE: 'snipcode-backend-storage-prod'
 
 jobs:
   terraform-plan:
@@ -21,11 +20,10 @@ jobs:
     strategy:
       matrix:
         directory:
-         #- '_infra/credentials'
-         #- '_infra/global'
-         #- 'apps/backend/_infra/prod/storage'
-         #- 'apps/backend/_infra/prod/compute'
-          - 'packages/utils'
+          - 'credentials'
+          - 'global'
+          - 'backend-storage'
+          - 'backend-compute'
 
     outputs:
       infraChanged: ${{ steps.infra-changed.outputs.any_changed }}
@@ -34,12 +32,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set Terraform workspace configuration
+        run: |
+          if [[ "${{ matrix.directory }}" == "credentials" ]]; then
+            echo "INFRA_DIR=_infra/credentials" >> $GITHUB_ENV
+            echo "TF_WORKSPACE=snipcode-credentials" >> $GITHUB_ENV
+          elif [[ "${{ matrix.directory }}" == "global" ]]; then
+            echo "INFRA_DIR=_infra/global" >> $GITHUB_ENV
+            echo "TF_WORKSPACE=snipcode-global" >> $GITHUB_ENV
+          elif [[ "${{ matrix.directory }}" == "backend-storage" ]]; then
+            echo "INFRA_DIR=apps/backend/_infra/prod/storage" >> $GITHUB_ENV
+            echo "TF_WORKSPACE=snipcode-backend-storage-prod" >> $GITHUB_ENV
+          elif [[ "${{ matrix.directory }}" == "backend-compute" ]]; then
+            echo "INFRA_DIR=apps/backend/_infra/prod/compute" >> $GITHUB_ENV
+            echo "TF_WORKSPACE=snipcode-backend-compute-prod" >> $GITHUB_ENV
+          fi
+
       - name: Check if infra files changed
         id: infra-changed
         uses: tj-actions/changed-files@v44
         with:
           files: |
-            ${{ matrix.directory }}/**/*.tf
+            ${{ env.INFRA_DIR }}/**/*.tf
 
       - name: Setup Terraform
         if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
@@ -87,7 +101,7 @@ jobs:
             const botComment = comments.find(comment => {
               return comment.user.type === 'Bot' && comment.body.includes('HCP Terraform Plan Output')
             });
-            const output = `#### HCP Terraform Plan Output
+            const output = `#### ${{ matrix.directory }} - HCP Terraform Plan Output
             \`\`\`
             Plan: ${{ steps.plan-output.outputs.add }} to add, ${{ steps.plan-output.outputs.change }} to change, ${{ steps.plan-output.outputs.destroy }} to destroy.
             \`\`\`
