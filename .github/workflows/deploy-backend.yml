@@ -58,7 +58,7 @@ jobs:
         env:
           REGISTRY: public.ecr.aws/x9y5g9l2
           REGION: us-east-1 # Public ECR aren't region specific
-          REPOSITORY: ${{ (github.ref == 'refs/heads/main' && 'snipcode') || 'snipcode-dev' }}
+          REPOSITORY: ${{ (github.ref == 'refs/heads/main' && 'snipcode-backend-prod') || 'snipcode-backend-dev' }}
           IMAGE_TAG: ${{ inputs.version }}
         run: |
           aws ecr-public get-login-password --region $REGION | docker login --username AWS --password-stdin $REGISTRY
@@ -76,6 +76,4 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Deploy the application
-        run: |
-          touch file.json && echo '${{ secrets.CORE_APP_ARN }}' > file.json
-          aws apprunner start-deployment --region $AWS_DEFAULT_REGION --cli-input-json file://file.json
+        run: aws apprunner start-deployment --region $AWS_DEFAULT_REGION --service-arn ${{ secrets.CORE_APP_ARN }}

@@ -1,0 +1,94 @@
+name: Infrastructure Plan
+
+on:
+  pull_request:
+    paths:
+      #- '_infra/credentials/**/*.tf'
+      #- '_infra/global/**/*.tf'
+      #- 'apps/backend/_infra/prod/storage/**/*.tf'
+      - 'apps/backend/_infra/prod/compute/**/*.tf'
+
+env:
+  TF_API_TOKEN: "${{ secrets.TERRAFORM_API_TOKEN }}"
+  TF_CLOUD_ORGANIZATION: ${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}
+  TF_VAR_organization: ${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}
+  TF_WORKSPACE: 'snipcode-backend-compute-prod'
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        directory:
+         #- '_infra/credentials'
+         #- '_infra/global'
+         #- 'apps/backend/_infra/prod/storage'
+         - 'apps/backend/_infra/prod/compute'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.0  # Specify your Terraform version
+
+      - name: Upload Configuration
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
+        id: plan-upload
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          directory: ${{ matrix.directory }}
+          speculative: true
+
+      - name: Create Plan Run
+        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
+        id: plan-run
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
+          plan_only: true
+
+      - name: Get Plan Output
+        uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
+        id: plan-output
+        with:
+          plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
+
+      - name: Update Pull Request
+        uses: actions/github-script@v6
+        id: plan-comment
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // 1. Retrieve existing bot comments for the PR
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const botComment = comments.find(comment => {
+              return comment.user.type === 'Bot' && comment.body.includes('HCP Terraform Plan Output')
+            });
+            const output = `#### HCP Terraform Plan Output
+                \`\`\`
+                Plan: ${{ steps.plan-output.outputs.add }} to add, ${{ steps.plan-output.outputs.change }} to change, ${{ steps.plan-output.outputs.destroy }} to destroy.
+                \`\`\`
+                [HCP Terraform Plan](${{ steps.plan-run.outputs.run_link }})
+                `;
+            // 3. Delete previous comment so PR timeline makes sense
+            if (botComment) {
+              github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+              });
+            }
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            });
