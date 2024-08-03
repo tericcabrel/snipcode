@@ -14,16 +14,8 @@ env:
   TF_VAR_organization: "\"${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}\""
 
 jobs:
-  terraform-plan:
+  plan-credentials:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        directory:
-          - 'credentials'
-          - 'global'
-          - 'backend-storage'
-          - 'backend-compute'
 
     outputs:
       infraChanged: ${{ steps.infra-changed.outputs.any_changed }}
@@ -32,91 +24,92 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set Terraform workspace configuration
-        run: |
-          if [[ "${{ matrix.directory }}" == "credentials" ]]; then
-            echo "INFRA_DIR=_infra/credentials" >> $GITHUB_ENV
-            echo "TF_WORKSPACE=snipcode-credentials" >> $GITHUB_ENV
-          elif [[ "${{ matrix.directory }}" == "global" ]]; then
-            echo "INFRA_DIR=_infra/global" >> $GITHUB_ENV
-            echo "TF_WORKSPACE=snipcode-global" >> $GITHUB_ENV
-          elif [[ "${{ matrix.directory }}" == "backend-storage" ]]; then
-            echo "INFRA_DIR=apps/backend/_infra/prod/storage" >> $GITHUB_ENV
-            echo "TF_WORKSPACE=snipcode-backend-storage-prod" >> $GITHUB_ENV
-          elif [[ "${{ matrix.directory }}" == "backend-compute" ]]; then
-            echo "INFRA_DIR=apps/backend/_infra/prod/compute" >> $GITHUB_ENV
-            echo "TF_WORKSPACE=snipcode-backend-compute-prod" >> $GITHUB_ENV
-          fi
+      - name: Check if infra files changed
+        id: infra-changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            _infra/credentials/**/*.tf
+
+      - name: Run terraform plan
+        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
+        uses: ./.github/actions/terraform-plan
+        with:
+          APP_NAME: 'App Credentials'
+          TF_DIRECTORY: '_infra/credentials'
+          TF_WORKSPACE: 'snipcode-credentials'
+
+  plan-global:
+    runs-on: ubuntu-latest
+
+    outputs:
+      infraChanged: ${{ steps.infra-changed.outputs.any_changed }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Check if infra files changed
         id: infra-changed
         uses: tj-actions/changed-files@v44
         with:
           files: |
-            ${{ env.INFRA_DIR }}/**/*.tf
+            _infra/global/**/*.tf
 
-      - name: Setup Terraform
+      - name: Run terraform plan
         if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
-        uses: hashicorp/setup-terraform@v3
+        uses: ./.github/actions/terraform-plan
         with:
-          terraform_version: 1.9.2
+          APP_NAME: 'App Global'
+          TF_DIRECTORY: '_infra/global'
+          TF_WORKSPACE: 'snipcode-global'
 
-      - name: Upload Configuration
-        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
-        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
-        id: plan-upload
-        with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          directory: ${{ matrix.directory }}
-          speculative: true
+  plan-backend-storage:
+    runs-on: ubuntu-latest
 
-      - name: Create Plan Run
-        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
-        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
-        id: plan-run
-        with:
-          workspace: ${{ env.TF_WORKSPACE }}
-          configuration_version: ${{ steps.plan-upload.outputs.configuration_version_id }}
-          plan_only: true
+    outputs:
+      infraChanged: ${{ steps.infra-changed.outputs.any_changed }}
 
-      - name: Get Plan Output
-        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
-        uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.0.0
-        id: plan-output
-        with:
-          plan: ${{ fromJSON(steps.plan-run.outputs.payload).data.relationships.plan.data.id }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Update Pull Request
-        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
-        uses: actions/github-script@v6
-        id: plan-comment
+      - name: Check if infra files changed
+        id: infra-changed
+        uses: tj-actions/changed-files@v44
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
-            const botComment = comments.find(comment => {
-              return comment.user.type === 'Bot' && comment.body.includes('HCP Terraform Plan Output')
-            });
-            const output = `#### ${{ matrix.directory }} - HCP Terraform Plan Output
-            \`\`\`
-            Plan: ${{ steps.plan-output.outputs.add }} to add, ${{ steps.plan-output.outputs.change }} to change, ${{ steps.plan-output.outputs.destroy }} to destroy.
-            \`\`\`
-            [View changes in detail](${{ steps.plan-run.outputs.run_link }})
-            `;
-            if (botComment) {
-              github.rest.issues.deleteComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-              });
-            }
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            });
+          files: |
+            apps/backend/_infra/prod/storage/**/*.tf
+
+      - name: Run terraform plan
+        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
+        uses: ./.github/actions/terraform-plan
+        with:
+          APP_NAME: 'Backend Storage'
+          TF_DIRECTORY: 'apps/backend/_infra/prod/storage'
+          TF_WORKSPACE: 'snipcode-backend-storage-prod'
+
+  plan-backend-compute:
+    runs-on: ubuntu-latest
+
+    outputs:
+      infraChanged: ${{ steps.infra-changed.outputs.any_changed }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check if infra files changed
+        id: infra-changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            apps/backend/_infra/prod/compute/**/*.tf
+
+      - name: Run terraform plan
+        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
+        uses: ./.github/actions/terraform-plan
+        with:
+          APP_NAME: 'Backend Compute'
+          TF_DIRECTORY: 'apps/backend/_infra/prod/compute'
+          TF_WORKSPACE: 'snipcode-backend-compute-prod'
