@@ -1,13 +1,15 @@
+import { join } from 'path';
+
 import { ApolloServerPlugin } from '@apollo/server';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { DomainModule } from '@snipcode/domain';
 
 import { EnvironmentVariables, validate } from './configs/environment';
-import { AppController } from './features/app/app.controller';
 import { AppService } from './features/app/app.service';
 import { AuthFeatureModule } from './features/auth/auth.module';
 import { FolderFeatureModule } from './features/folders/folder.module';
@@ -19,7 +21,7 @@ import { DateScalar } from './utils/graphql/date-scalar';
 const explorerPlugin: ApolloServerPlugin[] = IS_DEV ? [ApolloServerPluginLandingPageLocalDefault({ embed: true })] : [];
 
 @Module({
-  controllers: [AppController],
+  controllers: [],
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['.env.local', '.env.test'],
@@ -53,6 +55,12 @@ const explorerPlugin: ApolloServerPlugin[] = IS_DEV ? [ApolloServerPluginLanding
           typePaths: ['./**/*.graphql'],
         };
       },
+    }),
+    ServeStaticModule.forRoot({
+      exclude: ['/graphql', '/auth*', '/snippets*'],
+      renderPath: '/',
+      rootPath: join(__dirname, 'assets'),
+      serveRoot: '/',
     }),
     AuthFeatureModule,
     FolderFeatureModule,

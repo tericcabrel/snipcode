@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN corepack enable && yarn set version berry
+RUN corepack enable && yarn set version 4.4.0
 
 RUN yarn install
 
@@ -35,19 +35,13 @@ ENV APP_VERSION=${APP_VERSION}
 
 WORKDIR /app
 
-RUN corepack enable && yarn set version berry
+RUN corepack enable && yarn set version 4.4.0
 
 COPY --chown=node:node --from=builder /app/package.json .
 COPY --chown=node:node --from=builder /app/.yarnrc.yml .
 
 COPY --chown=node:node --from=builder /app/apps/backend/dist/src ./apps/backend/src
 COPY --chown=node:node --from=builder /app/apps/backend/package.json ./apps/backend
-
-COPY --chown=node:node --from=builder /app/apps/backend/src/features/schema.graphql ./apps/backend/src/features/schema.graphql
-COPY --chown=node:node --from=builder /app/apps/backend/src/features/users/graphql/schema.graphql ./apps/backend/src/features/users/graphql/schema.graphql
-COPY --chown=node:node --from=builder /app/apps/backend/src/features/snippets/graphql/schema.graphql ./apps/backend/src/features/snippets/graphql/schema.graphql
-COPY --chown=node:node --from=builder /app/apps/backend/src/features/folders/graphql/schema.graphql ./apps/backend/src/features/folders/graphql/schema.graphql
-COPY --chown=node:node --from=builder /app/apps/backend/src/features/auth/graphql/schema.graphql ./apps/backend/src/features/auth/graphql/schema.graphql
 
 COPY --chown=node:node --from=builder /app/packages/domain/package.json ./packages/domain/package.json
 COPY --chown=node:node --from=builder /app/packages/domain/dist ./packages/domain/dist

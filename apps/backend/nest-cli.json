@@ -3,6 +3,14 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "assets": [
+      { "include": "assets", "outDir": "dist/src", "watchAssets": true },
+      { "include": "features/schema.graphql", "outDir": "dist/src", "watchAssets": true },
+      { "include": "features/auth/graphql/schema.graphql", "outDir": "dist/src", "watchAssets": true },
+      { "include": "features/folders/graphql/schema.graphql", "outDir": "dist/src", "watchAssets": true },
+      { "include": "features/snippets/graphql/schema.graphql", "outDir": "dist/src", "watchAssets": true },
+      { "include": "features/users/graphql/schema.graphql", "outDir": "dist/src", "watchAssets": true }
+    ]
   }
 }
