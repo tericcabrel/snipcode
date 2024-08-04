@@ -30,7 +30,7 @@ runs:
       uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.1
       id: apply-run
       with:
-        workspace: ${{ env.TF_WORKSPACE }}
+        workspace: ${{ inputs.TF_WORKSPACE }}
         configuration_version: ${{ steps.apply-upload.outputs.configuration_version_id }}
 
     - name: Apply
