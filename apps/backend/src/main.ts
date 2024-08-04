@@ -17,7 +17,7 @@ const bootstrap = async () => {
   const host = configService.get<string>('HOST');
 
   await app.listen(port, () => {
-    logger.log(`Application ready at ${host}:${port}/graphql`);
+    logger.log(`Application ready at ${host}:${port}`);
   });
 };
 

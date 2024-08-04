@@ -5,7 +5,7 @@ const config: Config.InitialOptions = {
   maxWorkers: 1,
   moduleFileExtensions: ['js', 'json', 'ts'],
   preset: 'ts-jest',
-  roots: ['.'],
+  roots: ['src'],
   snapshotFormat: {
     printBasicPrototype: false,
   },

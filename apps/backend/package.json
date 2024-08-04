@@ -8,8 +8,8 @@
   "scripts": {
     "build": "nest build",
     "clean": "rm -rf .turbo dist build logs",
-    "dev": "dotenv -e .env.local -- nest start --watch",
-    "dev:debug": "nest start --debug --watch",
+    "dev": "dotenv -e .env.local -- nest start --watch --watchAssets",
+    "dev:debug": "dotenv -e .env.local -- nest start --debug --watch",
     "gql:gen:types": "ts-node scripts/generate-graphql-types.ts",
     "lint": "eslint \"{src,scripts}/**/*.ts\" --fix",
     "prod": "node dist/main",
@@ -27,6 +27,7 @@
     "@nestjs/core": "10.3.9",
     "@nestjs/graphql": "12.1.1",
     "@nestjs/platform-express": "10.3.9",
+    "@nestjs/serve-static": "4.0.2",
     "@prisma/client": "5.14.0",
     "@sentry/node": "8.11.0",
     "@snipcode/domain": "workspace:*",
