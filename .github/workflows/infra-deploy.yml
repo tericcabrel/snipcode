@@ -1,0 +1,117 @@
+name: Infrastructure Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '_infra/credentials/**/*.tf'
+      - '_infra/global/**/*.tf'
+      - 'apps/backend/_infra/prod/storage/**/*.tf'
+      - 'apps/backend/_infra/prod/compute/**/*.tf'
+
+env:
+  TF_API_TOKEN: "${{ secrets.TERRAFORM_API_TOKEN }}"
+  TF_CLOUD_ORGANIZATION: ${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}
+  TF_VAR_organization: "\"${{ secrets.TERRAFORM_CLOUD_ORGANIZATION }}\""
+
+jobs:
+  apply-credentials:
+    runs-on: ubuntu-latest
+
+    outputs:
+      infraChanged: ${{ steps.infra-changed.outputs.any_changed }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check if infra files changed
+        id: infra-changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            _infra/credentials/**/*.tf
+
+      - name: Run terraform apply
+        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
+        uses: ./.github/actions/terraform-apply
+        with:
+          APP_NAME: 'App Credentials'
+          TF_DIRECTORY: '_infra/credentials'
+          TF_WORKSPACE: 'snipcode-credentials'
+
+  apply-global:
+    runs-on: ubuntu-latest
+
+    outputs:
+      infraChanged: ${{ steps.infra-changed.outputs.any_changed }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check if infra files changed
+        id: infra-changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            _infra/global/**/*.tf
+
+      - name: Run terraform apply
+        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
+        uses: ./.github/actions/terraform-apply
+        with:
+          APP_NAME: 'App Global'
+          TF_DIRECTORY: '_infra/global'
+          TF_WORKSPACE: 'snipcode-global-prod'
+
+  apply-backend-storage:
+    runs-on: ubuntu-latest
+
+    outputs:
+      infraChanged: ${{ steps.infra-changed.outputs.any_changed }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check if infra files changed
+        id: infra-changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            apps/backend/_infra/prod/storage/**/*.tf
+
+      - name: Run terraform apply
+        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
+        uses: ./.github/actions/terraform-apply
+        with:
+          APP_NAME: 'Backend Storage'
+          TF_DIRECTORY: 'apps/backend/_infra/prod/storage'
+          TF_WORKSPACE: 'snipcode-backend-storage-prod'
+
+  apply-backend-compute:
+    runs-on: ubuntu-latest
+
+    outputs:
+      infraChanged: ${{ steps.infra-changed.outputs.any_changed }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check if infra files changed
+        id: infra-changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            apps/backend/_infra/prod/compute/**/*.tf
+
+      - name: Run terraform apply
+        if: ${{ steps.infra-changed.outputs.any_changed == 'true' }}
+        uses: ./.github/actions/terraform-apply
+        with:
+          APP_NAME: 'Backend Compute'
+          TF_DIRECTORY: 'apps/backend/_infra/prod/compute'
+          TF_WORKSPACE: 'snipcode-backend-compute-prod'
