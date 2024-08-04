@@ -10,7 +10,7 @@ This is the backend of Snipcode, containing the business logics related to  .
 * Prisma
 
 ## Prerequisites
-Make sure you have this tools installed before running the project
+Make sure you have these tools installed before running the project
 * Node.js 20+
 * NPM or Yarn
 * Docker

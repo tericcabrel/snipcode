@@ -1,0 +1,42 @@
+name: Run Terraform apply on every applicable directory
+description: 'Terraform apply'
+inputs:
+  APP_NAME:
+    required: true
+    description: 'The name of the application'
+  TF_DIRECTORY:
+    required: true
+    description: 'The directory to run Terraform apply on'
+  TF_WORKSPACE:
+    required: true
+    description: 'The Terraform workspace to use'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.9.2
+
+    - name: Upload Configuration
+      uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.3.1
+      id: apply-upload
+      with:
+        workspace: ${{ inputs.TF_WORKSPACE }}
+        directory: ${{ inputs.TF_DIRECTORY }}
+
+    - name: Create Apply Run
+      uses: hashicorp/tfc-workflows-github/actions/create-run@v1.3.1
+      id: apply-run
+      with:
+        workspace: ${{ env.TF_WORKSPACE }}
+        configuration_version: ${{ steps.apply-upload.outputs.configuration_version_id }}
+
+    - name: Apply
+      uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.3.1
+      if: fromJSON(steps.apply-run.outputs.payload).data.attributes.actions.IsConfirmable
+      id: apply
+      with:
+        run: ${{ steps.apply-run.outputs.run_id }}
+        comment: "Apply Run from GitHub Actions CI ${{ github.sha }}"
