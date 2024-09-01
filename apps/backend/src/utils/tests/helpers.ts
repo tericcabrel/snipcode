@@ -47,7 +47,9 @@ export class TestHelper {
     await prismaService.snippet.deleteMany();
 
     // Recursive relationship between folders makes it hard to delete all folders using folder.deleteMany()
+    await prismaService.$executeRaw`SET FOREIGN_KEY_CHECKS=0;`;
     await prismaService.$executeRaw`TRUNCATE TABLE folders;`;
+    await prismaService.$executeRaw`SET FOREIGN_KEY_CHECKS=1;`;
 
     await prismaService.session.deleteMany();
 

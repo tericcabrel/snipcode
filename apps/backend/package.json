@@ -28,7 +28,7 @@
     "@nestjs/graphql": "12.1.1",
     "@nestjs/platform-express": "10.3.9",
     "@nestjs/serve-static": "4.0.2",
-    "@prisma/client": "5.14.0",
+    "@prisma/client": "5.19.0",
     "@sentry/node": "8.11.0",
     "@snipcode/domain": "workspace:*",
     "@snipcode/embed": "workspace:*",
