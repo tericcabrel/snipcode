@@ -24,6 +24,7 @@ variable "database_prod_secrets_map" {
     "ADMIN_PASSWORD" = "",
     "DATABASE_NAME" = "",
     "PORT" = "3306"
+    "CONNECTION_STRING" = ""
   }
 }
 

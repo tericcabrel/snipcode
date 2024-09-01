@@ -1,7 +1,7 @@
 #!/usr/bin/env zx
 
-import { $, sleep } from 'zx';
 import mysql from 'mysql2/promise';
+import { $, sleep } from 'zx';
 
 const CONTAINER_NAME = 'snipcode-test-db';
 const MYSQL_HOST = '127.0.0.1';
@@ -16,11 +16,11 @@ const waitForMysql = async () => {
   while (true) {
     try {
       const connection = await mysql.createConnection({
+        database: MYSQL_DATABASE,
         host: MYSQL_HOST,
+        password: MYSQL_PASSWORD,
         port: MYSQL_PORT,
         user: MYSQL_USER,
-        password: MYSQL_PASSWORD,
-        database: MYSQL_DATABASE,
       });
 
       await connection.end();
@@ -31,14 +31,14 @@ const waitForMysql = async () => {
       await sleep(1000);
     }
   }
-}
+};
 
 try {
   await $`docker ps | grep ${CONTAINER_NAME}`;
 } catch (error) {
   console.log('Database container not found, creating...');
 
-  await $`docker run -d --rm --name ${CONTAINER_NAME} -e MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} -e MYSQL_DATABASE=${MYSQL_DATABASE} -p ${MYSQL_PORT}:3306 mysql:8.0.34`;
+  await $`docker run -d --rm --name ${CONTAINER_NAME} -e MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} -e MYSQL_DATABASE=${MYSQL_DATABASE} -p ${MYSQL_PORT}:3306 mysql:8.0.39`;
 
   await waitForMysql();
 
@@ -48,4 +48,3 @@ try {
 
   await $`yarn prisma migrate dev`;
 }
-

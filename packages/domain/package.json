@@ -12,14 +12,11 @@
     "clean": "rm -rf .turbo dist coverage",
     "lint": "eslint --fix",
     "env": "dotenv -e .env.local",
-    "db:branch:create": "pscale branch create core-db $(git rev-parse --abbrev-ref HEAD)",
-    "db:branch:connect": "pscale connect core-db $(git rev-parse --abbrev-ref HEAD) --port 3311",
-    "db:dev:connect": "pscale connect core-db dev --port 3311",
-    "db:shadow": "docker run -d --rm -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=snipcode --name snipcode-shadow-db -p 3312:3306 mysql:8.0.34",
-    "db:shadow:stop": "docker kill snipcode-shadow-db && docker container prune -f",
-    "db:deploy:create": "pscale deploy-request create core-db dev",
+    "db:local": "docker run -d --rm -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=snipcode --name snipcode-local-db -p 3311:3306 mysql:8.0.39",
+    "db:local:stop": "docker kill snipcode-local-db && docker container prune -f",
     "db:generate": "yarn env -- prisma generate",
     "db:migrate": "yarn env -- prisma migrate dev",
+    "db:deploy": "yarn env -- prisma migrate deploy",
     "db:reset": "yarn env -- prisma migrate reset --skip-seed --force",
     "db:reset:seed": "yarn env -- prisma migrate reset",
     "db:view": "yarn env -- prisma studio",
@@ -31,7 +28,7 @@
   },
   "dependencies": {
     "@bugsnag/cuid": "3.1.1",
-    "@prisma/client": "5.14.0",
+    "@prisma/client": "5.19.0",
     "@snipcode/utils": "workspace:*",
     "axios": "1.7.2",
     "bcryptjs": "2.4.3",
@@ -45,7 +42,7 @@
     "dotenv-cli": "7.4.2",
     "mysql2": "3.10.1",
     "nock": "13.5.4",
-    "prisma": "5.14.0",
+    "prisma": "5.19.0",
     "zx": "8.1.3"
   }
 }
