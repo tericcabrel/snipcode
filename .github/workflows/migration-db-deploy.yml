@@ -16,7 +16,7 @@ jobs:
         uses: ./.github/actions/install-dependencies
 
       - name: Install Doppler CLI
-        run: curl -Ls https://cli.doppler.com/install.sh | sh
+        uses: dopplerhq/cli-action@v3
 
       - name: Retrieve and export the database URL
         run: echo "DATABASE_URL=$(doppler secrets get CONNECTION_STRING --plain)" >> $GITHUB_ENV
