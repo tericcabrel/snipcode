@@ -62,6 +62,7 @@ resource "aws_db_instance" "database" {
   password                              = data.doppler_secrets.prod.map.ADMIN_PASSWORD
   db_subnet_group_name                  = aws_db_subnet_group.default.name
   vpc_security_group_ids                = [aws_security_group.rds_sg.id]
+  multi_az                              = false
   publicly_accessible                   = true
   performance_insights_enabled          = true
   performance_insights_retention_period = 7 ## 7 days to stay in the free tier
