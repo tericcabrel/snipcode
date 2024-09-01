@@ -36,7 +36,6 @@ jobs:
 
       - name: Collect the migration diff
         continue-on-error: false
-        if: ${{ env.DEPLOY_REQUEST_OPENED }}
         run: |
           echo "The following migration will be applied to the production database:" > migration-message.txt
           echo "" >> migration-message.txt
