@@ -35,8 +35,8 @@ describe('Test Session Service', function () {
   });
 
   test('Create a session', async () => {
-    const userId = TestHelper.generateTestId();
-    const input = TestHelper.createTestSessionInput(userId);
+    const user = await testHelper.createTestUser({});
+    const input = TestHelper.createTestSessionInput(user.id);
 
     const sessionCreated = await sessionService.create(input);
 
@@ -46,8 +46,8 @@ describe('Test Session Service', function () {
   });
 
   test('Retrieve a session by the token attached to it', async () => {
-    const userId = TestHelper.generateTestId();
-    const session = await testHelper.createTestSession({ userId });
+    const user = await testHelper.createTestUser({});
+    const session = await testHelper.createTestSession({ userId: user.id });
 
     const sessionFound = await sessionService.findByToken(session.token);
 
@@ -57,15 +57,15 @@ describe('Test Session Service', function () {
   });
 
   test('Delete all sessions of a user', async () => {
-    const userId = TestHelper.generateTestId();
+    const user = await testHelper.createTestUser({});
 
     const sessionsCreated = await Promise.all([
-      testHelper.createTestSession({ userId }),
-      testHelper.createTestSession({ userId }),
-      testHelper.createTestSession({ userId }),
+      testHelper.createTestSession({ userId: user.id }),
+      testHelper.createTestSession({ userId: user.id }),
+      testHelper.createTestSession({ userId: user.id }),
     ]);
 
-    await sessionService.deleteUserSessions(userId);
+    await sessionService.deleteUserSessions(user.id);
 
     const userSessions = await Promise.all(sessionsCreated.map(({ token }) => sessionService.findByToken(token)));
 
