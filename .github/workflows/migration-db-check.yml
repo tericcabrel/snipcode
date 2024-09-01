@@ -27,7 +27,7 @@ jobs:
         run: yarn workspace @snipcode/domain db:migrate
 
       - name: Install Doppler CLI
-        run: curl -Ls https://cli.doppler.com/install.sh | sh
+        uses: dopplerhq/cli-action@v3
 
       - name: Retrieve and export the production database URL
         run: echo "PROD_DATABASE_URL=$(doppler secrets get CONNECTION_STRING --plain)" >> $GITHUB_ENV
