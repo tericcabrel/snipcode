@@ -11,7 +11,6 @@ Make sure you have this tools installed before running the project
 * Node.js 20+
 * Yarn 4
 * Docker
-* [The PlanetScale CLI](https://planetscale.com/cli)
 
 ## Set up the project
 Delete the existing folders output from build commands
@@ -29,42 +28,23 @@ Create the .env file from the template. This file is useful for test executions,
 cp .env.template .env
 ```
 
-Create git branch for your feature; there is no convention for the branch name.
+### Start the local database and run the migrations
 ```shell
-git checkout -b your-feature-name
+yarn db:local
+yarn db:migrate
 ```
 
-### Connect to the local database locally
-This project uses PlanetScale as the database.<br>
-To connect to the database locally, you must authenticate first (Ask the credentials to [@tericcabrel](https://github.com/tericcabrel)).<br>
-Once authenticated from the terminal, execute the commands below to create a database branch for your feature and create local tunnel to it.
-```shell
-yarn db:branch:dev
-yarn db:branch:connect
-```
-Open a second terminal and run the command below to start the shadow database; 
-this is only necessary to run generate or execute database migrations with prisma schema
-```shell
-yarn db:shadow
-```
-
-The shadow database runs on Docker, you can stop it when you don't need it
-```shell
-yarn db:shadow:stop
-```
-
-### Connect to the development database
-The development database is used to beta test features. Execute the command below to connect to it
-```shell
-yarn db:dev:connect
-```
-
-### Run the database migration, generate Prisma types and seed the database with default data
+### Generate Prisma types and seed the database with default data
 ```shell
 yarn db:generate
-yarn db:migrate
 yarn db:seed
 ```
+
+To stop the local database run the command below:
+```shell
+yarn db:local:stop
+```
+
 
 ### Generate a database migration
 To create a database migration that generate the SQL file, run the command below:
@@ -78,13 +58,7 @@ yarn db:migrate --name <migration-name>
 - Open Prisma Studio to browse your database: `db:view`
 - Lint the Prisma schema file: `db:format`
 
-### Create a deployment request
-To publish the database schema changes in production, you must create a deployment request. Run the command below to do that
-```shell
-yarn db:deploy:create
-```
-
-Build the package to generate types declaration required to provide autocompletion while using the functions in the core or Lambda functions
+Build the package to generate types declaration required to provide autocompletion while using the functions in the backend application
 ```bash
 yarn build
 ```

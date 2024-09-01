@@ -1,4 +1,4 @@
-# Snipcode Core
+# Snipcode Backend
 
 This is the backend of Snipcode, containing the business logics related to  . 
 
@@ -15,7 +15,7 @@ Make sure you have these tools installed before running the project
 * NPM or Yarn
 * Docker
 * AWS CLI v2
-* MySQL 8 on PlanetScale
+* MySQL 8.0
 
 ## Packages dependencies
 We use Yarn workspace to create packages we can share with other applications.

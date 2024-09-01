@@ -49,11 +49,6 @@ jobs:
           echo "" >> migration-message.txt
           echo "Please ensure your schema changes are compatible with the application code currently running in production." >> migration-message.txt
 
-#      - name: Comment pull request with the migration diff
-#        uses: thollander/actions-comment-pull-request@v2
-#        with:
-#          filePath: packages/domain/migration-message.txt
-
       - name: Create or update the pull request with the migration diff
         uses: actions/github-script@v6
         id: plan-comment
