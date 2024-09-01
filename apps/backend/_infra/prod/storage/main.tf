@@ -2,9 +2,14 @@ provider "aws" {
   region = var.aws_region
 }
 
+provider "aws" {
+  region = "us-east-1"
+  alias = "us_east_1"
+}
+
 # Create ECR Public Repository
 resource "aws_ecrpublic_repository" "app_container_repository" {
-  # provider = aws.us_east_1
+  provider = aws.us_east_1
 
   repository_name = "${var.project_name}-backend-${var.environment}"
 

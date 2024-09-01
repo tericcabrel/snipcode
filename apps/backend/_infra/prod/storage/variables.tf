@@ -1,6 +1,6 @@
 variable "aws_region" {
   description = "The region in which the resources will be created"
-  default     = "us-east-1"
+  default     = "eu-west-1"
 }
 
 variable "project_name" {
@@ -13,4 +13,9 @@ variable "domain_name" {
 
 variable "environment" {
   default = "prod"
+}
+
+variable "doppler_database_prod_token" {
+  default   = ""
+  sensitive = true
 }
