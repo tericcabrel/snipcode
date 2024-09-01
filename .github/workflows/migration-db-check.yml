@@ -51,4 +51,4 @@ jobs:
       - name: Comment pull request with the migration diff
         uses: thollander/actions-comment-pull-request@v2
         with:
-          filePath: migration-message.txt
+          filePath: packages/domain/migration-message.txt
