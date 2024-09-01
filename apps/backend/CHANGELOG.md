@@ -1,5 +1,11 @@
 # @snipcode/backend
 
+## 1.1.8
+
+### Patch Changes
+
+- 53cf5b5: Build the backend API homepage
+
 ## 1.1.7
 
 ### Patch Changes
