@@ -36,9 +36,10 @@ jobs:
 
       - name: Collect the migration diff
         continue-on-error: false
+        working-directory: packages/domain
         run: |
           set -e
-          yarn prisma migrate diff --from-url "$PROD_DATABASE_URL" --to-url "mysql://root:root@127.0.0.1:3306/db" --script
+          yarn prisma migrate diff --from-url "$PROD_DATABASE_URL" --to-url "$DATABASE_URL" --script
 #          echo "The following migration will be applied to the production database:" >> migration-message.txt
 #          echo "" >> migration-message.txt
 #          echo "\`\`\`sql" >> migration-message.txt
