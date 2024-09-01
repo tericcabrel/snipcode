@@ -58,7 +58,7 @@ jobs:
         uses: actions/github-script@v6
         id: plan-comment
         with:
-          github-token: ${{ inputs.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
