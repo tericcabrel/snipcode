@@ -42,7 +42,7 @@ jobs:
           echo "The following migration will be applied to the production database:" >> migration-message.txt
           echo "" >> migration-message.txt
           echo "\`\`\`sql" >> migration-message.txt
-          yarn prisma migrate diff --from-url "$PROD_DATABASE_URL" --to-url "$DATABASE_URL" --script
+          yarn prisma migrate diff --from-url "$PROD_DATABASE_URL" --to-url "$DATABASE_URL" --script >> migration-message.txt
           echo "\`\`\`" >> migration-message.txt
           echo "" >> migration-message.txt
           echo "" >> migration-message.txt
