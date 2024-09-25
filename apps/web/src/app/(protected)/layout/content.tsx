@@ -3,10 +3,9 @@
 import { useAuthenticatedUser } from '@snipcode/front/services';
 import { ReactNode } from 'react';
 
+import { Header } from '@/app/(protected)/layout/header';
 import { Loader } from '@/components/common/loader';
 import { Redirect } from '@/components/common/redirect';
-
-import { Header } from './header';
 
 type Props = {
   children?: ReactNode;
@@ -28,7 +27,7 @@ export const AuthenticatedLayout = ({ children }: Props) => {
   }
 
   return (
-    <div className="relative w-full min-h-screen bg-gray-50 flex-grow">
+    <div className="relative w-full min-h-screen bg-white flex-grow">
       <Header />
       {children}
     </div>
