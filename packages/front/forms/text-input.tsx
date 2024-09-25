@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
 import { getInputErrorMessage } from '../lib/forms';
 
 type Props = {
@@ -18,22 +20,19 @@ const TextInput = (props: Props) => {
   const { className, groupClassName = '', isRequired, label, ...inputProps } = props;
   const errorMessage = getInputErrorMessage(errors, inputProps.name);
 
-  const inputClasses = classNames(
-    'block w-full px-4 py-2 text-gray-900 placeholder-gray-600 bg-white border border-gray-300 rounded-lg caret-gray-900 placeholder:text-xs placeholder:font-normal',
-    className,
-  );
+  const inputClasses = classNames('block w-full', className);
   const inputLabel = label ? `${label}${isRequired ? '*' : ''}` : undefined;
   const formGroupClasses = classNames(inputLabel ? 'mb-4' : '', groupClassName);
 
   return (
     <div className={formGroupClasses}>
       {inputLabel && (
-        <label htmlFor={inputProps.name} className="text-base font-medium text-gray-900">
+        <Label htmlFor={inputProps.name} className="text-base font-medium text-gray-900">
           {inputLabel}
-        </label>
+        </Label>
       )}
       <div className="mt-1">
-        <input
+        <Input
           autoComplete="off"
           id={inputProps.name}
           className={inputClasses}
