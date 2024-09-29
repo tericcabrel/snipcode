@@ -7,6 +7,7 @@ import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ServeStaticModule } from '@nestjs/serve-static';
+
 import { DomainModule } from '@snipcode/domain';
 
 import { EnvironmentVariables, validate } from './configs/environment';

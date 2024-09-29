@@ -1,5 +1,5 @@
 import { listDirectoryQueryDocument } from '../../graphql/folders/queries/list-directory';
-import useDeleteSnippetMutation from '../../graphql/snippets/mutations/delete-snippet';
+import { useDeleteSnippetMutation } from '../../graphql/snippets/mutations/delete-snippet';
 
 type MutationArgs = {
   id: string;

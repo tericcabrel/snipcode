@@ -17,6 +17,7 @@ module.exports = {
     'sentry.edge.config.js',
     '.eslintrc.js',
     'vitest.config.ts',
+    'tailwind.config.ts',
   ],
   parserOptions: {
     ecmaVersion: 2023,
@@ -27,9 +28,11 @@ module.exports = {
   rules: {
     camelcase: 'off',
     'import/prefer-default-export': 'off',
-    'react/jsx-filename-extension': 'off',
     'react/jsx-props-no-spreading': 'off',
-    'react/no-unused-prop-types': 'off',
+    'react/boolean-prop-naming': 'error',
+    'react/jsx-no-leaked-render': 'error',
+    'react/no-unused-prop-types': 'error',
+    'react/destructuring-assignment': 'error',
     'react/require-default-props': 'off',
     'import/extensions': 'off',
     quotes: 'off',

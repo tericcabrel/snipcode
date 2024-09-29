@@ -1,6 +1,6 @@
 import { useLazyListDirectoryQuery, useListDirectoryQuery } from '../../graphql/folders/queries/list-directory';
 import { ListDirectoryQuery } from '../../graphql/generated';
-import { DirectoryList } from '../../typings/queries';
+import { DirectoryList } from '../../types/queries';
 
 const formatListDirectoryResult = (folderId: string, data?: ListDirectoryQuery): DirectoryList | undefined => {
   if (!data?.listDirectory) {

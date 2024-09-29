@@ -1,8 +1,9 @@
 'use client';
 
-import { LogoIcon } from '@snipcode/front/icons';
 import Link from 'next/link';
 import { MouseEvent, useState } from 'react';
+
+import { LogoIcon } from '@snipcode/front/icons';
 
 import { useAuth } from '@/hooks/authentication/use-auth';
 
@@ -61,7 +62,7 @@ const PublicHeader = () => {
                 </span>
               )}
 
-              {isExpanded && (
+              {isExpanded ? (
                 <span aria-hidden="true">
                   <svg
                     className="w-7 h-7"
@@ -73,7 +74,7 @@ const PublicHeader = () => {
                     <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
                   </svg>
                 </span>
-              )}
+              ) : null}
             </button>
           </div>
 
@@ -110,7 +111,6 @@ const PublicHeader = () => {
               title="Sign in"
               onClick={redirectToSignInIfAuthenticated}
             >
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               Sign in
             </Link>
 
@@ -120,13 +120,12 @@ const PublicHeader = () => {
               title="Get started"
               onClick={redirectToSignupIfAuthenticated}
             >
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               Get started
             </Link>
           </nav>
         </div>
 
-        {isExpanded && (
+        {isExpanded ? (
           <nav>
             <div className="px-1 py-8">
               <div className="grid gap-y-7">
@@ -176,7 +175,7 @@ const PublicHeader = () => {
               </div>
             </div>
           </nav>
-        )}
+        ) : null}
       </div>
     </header>
   );

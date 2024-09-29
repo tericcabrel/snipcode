@@ -1,5 +1,5 @@
-import useLoginUserMutation from '../../graphql/users/mutations/login-user';
-import { LoginInput } from '../../typings/queries';
+import { useLoginUserMutation } from '../../graphql/users/mutations/login-user';
+import { LoginInput } from '../../types/queries';
 
 type MutationArgs = {
   input: LoginInput;

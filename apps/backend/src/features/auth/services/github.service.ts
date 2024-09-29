@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+
 import { CreateUserInput, UpdateUserInput, User } from '@snipcode/domain';
 import { AppError } from '@snipcode/utils';
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 import { EnvironmentVariables } from '../../../configs/environment';
 import { GitHubUserResponse } from '../types';

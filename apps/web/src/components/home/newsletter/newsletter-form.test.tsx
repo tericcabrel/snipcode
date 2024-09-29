@@ -1,8 +1,9 @@
 import { MockedProvider } from '@apollo/client/testing';
-import { subscribeNewsletterMutation } from '@snipcode/front/graphql';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React, { act } from 'react';
+
+import { subscribeNewsletterMutation } from '@snipcode/front/graphql';
 
 import { NewsletterForm } from './newsletter-form';
 
@@ -42,7 +43,7 @@ describe('Newsletter Form', () => {
     });
 
     await waitFor(() => {
-      const dialog = screen.getByRole('dialog');
+      const dialog = screen.getByRole('alertdialog');
 
       expect(dialog).toBeInTheDocument();
 
@@ -85,7 +86,7 @@ describe('Newsletter Form', () => {
     });
 
     await waitFor(() => {
-      const dialog = screen.getByRole('dialog');
+      const dialog = screen.getByRole('alertdialog');
 
       expect(dialog).toBeInTheDocument();
 

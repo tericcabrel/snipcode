@@ -26,8 +26,8 @@
     "./hooks/**/*",
     "./icons/**/*",
     "./services/**/*",
-    "./typings/**/*",
-    "./utils/**/*",
+    "./types/**/*",
+    "./lib/**/*"
   ],
   "exclude": ["dist", "build", "node_modules"]
 }

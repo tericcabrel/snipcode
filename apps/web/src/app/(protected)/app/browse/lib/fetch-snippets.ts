@@ -1,8 +1,9 @@
+import { cookies } from 'next/headers';
+
 import { findPublicSnippetsQuery } from '@snipcode/front/graphql';
 import { PublicSnippetsQuery } from '@snipcode/front/graphql/generated';
+import { SNIPPET_ITEM_PER_PAGE } from '@snipcode/front/lib/constants';
 import { formatPublicSnippetsResult } from '@snipcode/front/services';
-import { SNIPPET_ITEM_PER_PAGE } from '@snipcode/front/utils/constants';
-import { cookies } from 'next/headers';
 
 import { getApolloClient } from '@/lib/apollo/server';
 import { AUTH_COOKIE_NAME } from '@/lib/constants';

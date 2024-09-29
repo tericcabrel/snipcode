@@ -3,8 +3,8 @@ import { useFormContext } from 'react-hook-form';
 import { Highlighter } from 'shiki';
 
 import { useEditor } from './use-editor';
-import { EditorFormValues } from '../../../../../../typings/snippet-form';
-import { CODE_HIGHLIGHT_OPTIONS } from '../../../../../../utils/constants';
+import { CODE_HIGHLIGHT_OPTIONS } from '../../../../../../lib/constants';
+import { EditorFormValues } from '../../../../../../types/snippet-form';
 
 export const useFormEditor = () => {
   const { setValue, watch } = useFormContext<EditorFormValues>();
@@ -23,7 +23,6 @@ export const useFormEditor = () => {
   const language = watch('language');
   const lineHighlight = watch('lineHighlight');
   const codeHighlight = watch('codeHighlight');
-  const isSnippetPrivate = watch('isPrivate');
 
   const codeLanguage = language?.id ?? getLanguageFromExtension(name);
 
@@ -70,7 +69,6 @@ export const useFormEditor = () => {
     code,
     handleEditorSelect,
     highlightSnippet,
-    isSnippetPrivate,
     language,
     name,
     onHighlight,

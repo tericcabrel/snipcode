@@ -1,4 +1,4 @@
-const ProductHuntIcon = () => {
+export const ProductHuntIcon = () => {
   return (
     <svg className="w-6 h-6" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <title>Product Hunt</title>
@@ -6,5 +6,3 @@ const ProductHuntIcon = () => {
     </svg>
   );
 };
-
-export default ProductHuntIcon;

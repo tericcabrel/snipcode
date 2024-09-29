@@ -1,6 +1,6 @@
-import { IconProps } from '../typings/components';
+import { IconProps } from '../types/components';
 
-const LogoIcon = ({ className, height = 32, width = 160 }: IconProps) => {
+export const LogoIcon = ({ className, height = 32, width = 160 }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -32,5 +32,3 @@ const LogoIcon = ({ className, height = 32, width = 160 }: IconProps) => {
     </svg>
   );
 };
-
-export default LogoIcon;

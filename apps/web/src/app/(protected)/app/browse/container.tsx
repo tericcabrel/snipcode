@@ -1,12 +1,13 @@
 'use client';
 
-import { Button } from '@snipcode/front/forms/button';
-import { SelectInput } from '@snipcode/front/forms/select-input';
-import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, SearchIcon } from '@snipcode/front/icons';
-import { usePublicSnippets } from '@snipcode/front/services';
-import { SelectOption } from '@snipcode/front/typings/components';
-import { PublicSnippetItem, PublicSnippetResult } from '@snipcode/front/typings/queries';
 import { useState } from 'react';
+
+import { Button } from '@snipcode/front/components/ui/button';
+import { SelectInput } from '@snipcode/front/forms/select-input';
+import { ChevronsLeftIcon, ChevronsRightIcon, SearchIcon } from '@snipcode/front/icons';
+import { usePublicSnippets } from '@snipcode/front/services';
+import { SelectOption } from '@snipcode/front/types/components';
+import { PublicSnippetItem, PublicSnippetResult } from '@snipcode/front/types/queries';
 
 import { PublicSnippet } from '@/components/snippets/public-snippet';
 import { usePaginationToken } from '@/hooks/use-pagination-token';
@@ -124,23 +125,13 @@ export const BrowseContainer = ({ data }: Props) => {
               ))}
             </div>
             <div className="w-full flex justify-center mt-10 space-x-4">
-              <Button
-                className="bg-gray-200 w-auto items-center"
-                color="white-gray"
-                disabled={!canGoBack}
-                onClick={onPreviousItemClick}
-              >
-                <ChevronDoubleLeftIcon className="w-6 h-4" />
+              <Button className="w-32" disabled={!canGoBack} onClick={onPreviousItemClick}>
+                <ChevronsLeftIcon />
                 Previous
               </Button>
-              <Button
-                className="bg-gray-200 w-auto items-center"
-                color="white-gray"
-                disabled={!canGoForward}
-                onClick={onNextItemClick}
-              >
+              <Button className="w-32" disabled={!canGoForward} onClick={onNextItemClick}>
                 Next
-                <ChevronDoubleRightIcon className="w-6 h-4" />
+                <ChevronsRightIcon />
               </Button>
             </div>
           </div>

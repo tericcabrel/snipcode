@@ -47,6 +47,14 @@
           "index", // <- index imports
           "unknown" // <- unknown
         ],
+        "pathGroups": [
+          {
+            "pattern": "@snipcode/**",
+            "group": "external",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
         "newlines-between": "always",
         "alphabetize": {
           "order": "asc",

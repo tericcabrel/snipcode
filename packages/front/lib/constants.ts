@@ -1,4 +1,4 @@
-import { SelectOption } from '../typings/components';
+import { SelectOption } from '../types/components';
 
 export const REGEX_EMAIL = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 export const FOLDER_NAME_REGEX = /^((\w)+\s?\-*)+$/;

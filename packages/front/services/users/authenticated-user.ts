@@ -1,6 +1,6 @@
 import { AuthenticatedUserQuery } from '../../graphql/generated';
 import { useAuthenticatedUserQuery } from '../../graphql/users/queries/authenticated-user';
-import { AuthenticatedUser } from '../../typings/queries';
+import { AuthenticatedUser } from '../../types/queries';
 
 const formatAuthenticatedUserResult = (data?: AuthenticatedUserQuery): AuthenticatedUser | undefined => {
   if (!data?.authenticatedUser) {

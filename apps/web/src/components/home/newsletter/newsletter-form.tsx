@@ -1,8 +1,9 @@
 'use client';
 
-import { SpinnerIcon } from '@snipcode/front/icons';
-import { useSubscribeToNewsletter } from '@snipcode/front/services';
 import { useState } from 'react';
+
+import { LoaderIcon } from '@snipcode/front/icons';
+import { useSubscribeToNewsletter } from '@snipcode/front/services';
 
 import { useBooleanState } from '@/hooks/use-boolean-state';
 import { REGEX_EMAIL } from '@/lib/constants';
@@ -41,7 +42,7 @@ export const NewsletterForm = () => {
 
   return (
     <div className="relative">
-      {isAlertOpened && <NewsletterAlert handleClose={closeAlert} state={subscriptionState ?? 'success'} />}
+      {isAlertOpened ? <NewsletterAlert handleClose={closeAlert} state={subscriptionState ?? 'success'} /> : null}
       <input
         className="block w-full px-5 py-6 text-base font-normal text-black placeholder-gray-600 bg-white border border-gray-300 rounded-xl focus:border-black focus:ring-1 focus:ring-black font-pj focus:outline-none"
         disabled={isLoading}
@@ -58,7 +59,7 @@ export const NewsletterForm = () => {
           className="inline-flex items-center justify-center w-full px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent sm:w-auto sm:py-3 hover:bg-opacity-90 rounded-xl"
           onClick={handleSubscribe}
         >
-          {isLoading && <SpinnerIcon />}
+          {isLoading ? <LoaderIcon className="mr-2 animate-spin" /> : null}
           Get updates
         </button>
       </div>

@@ -1,5 +1,6 @@
-import { Snippet } from '@snipcode/domain';
 import { Lang } from 'shiki';
+
+import { Snippet } from '@snipcode/domain';
 
 import { generateLineHighlightOptions, parseHTMLSnippetCode } from './utils';
 import { Shiki } from '../types';

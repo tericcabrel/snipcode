@@ -1,6 +1,7 @@
+import request from 'supertest';
+
 import { SessionService } from '@snipcode/domain';
 import { isValidUUIDV4 } from '@snipcode/utils';
-import request from 'supertest';
 
 import { TestHelper } from '../../../utils/tests/helpers';
 import { TestServer, startTestServer } from '../../../utils/tests/server';

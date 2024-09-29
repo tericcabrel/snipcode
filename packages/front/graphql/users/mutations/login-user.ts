@@ -11,8 +11,6 @@ const queryDocument = gql`
   }
 `;
 
-const useLoginUserMutation = () => {
+export const useLoginUserMutation = () => {
   return useMutation<LoginUserMutation, LoginUserMutationVariables>(queryDocument);
 };
-
-export default useLoginUserMutation;

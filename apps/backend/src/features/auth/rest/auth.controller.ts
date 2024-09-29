@@ -1,5 +1,7 @@
 import { Controller, Get, Logger, Query, Res } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { Response } from 'express';
+
 import {
   CreateSessionInput,
   CreateUserRootFolderInput,
@@ -9,7 +11,6 @@ import {
   UserService,
 } from '@snipcode/domain';
 import { addDayToDate, errors } from '@snipcode/utils';
-import { Response } from 'express';
 
 import { EnvironmentVariables } from '../../../configs/environment';
 import { AUTH_SUCCESS_URL } from '../../../utils/constants';

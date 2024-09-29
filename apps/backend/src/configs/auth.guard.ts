@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException, createParamDecorator } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+
 import { SessionService } from '@snipcode/domain';
 import { errors } from '@snipcode/utils';
 

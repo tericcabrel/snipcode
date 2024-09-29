@@ -1,7 +1,8 @@
 import { CustomScalar, Scalar } from '@nestjs/graphql';
-import { errors } from '@snipcode/utils';
 import { Kind, ValueNode } from 'graphql';
 import { GraphQLError } from 'graphql';
+
+import { errors } from '@snipcode/utils';
 
 import { DATE_REGEX } from '../constants';
 

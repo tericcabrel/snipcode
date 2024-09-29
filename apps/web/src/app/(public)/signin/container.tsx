@@ -1,15 +1,16 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert } from '@snipcode/front/components/alert';
-import { Button } from '@snipcode/front/forms/button';
-import { TextInput } from '@snipcode/front/forms/text-input';
-import { GithubIcon, GoogleIcon } from '@snipcode/front/icons';
-import { useLoginUser } from '@snipcode/front/services';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
+
+import { Alert } from '@snipcode/front/components/alert';
+import { Button } from '@snipcode/front/components/ui/button';
+import { TextInput } from '@snipcode/front/forms/text-input';
+import { GithubIcon, GoogleIcon, LoaderIcon } from '@snipcode/front/icons';
+import { useLoginUser } from '@snipcode/front/services';
 
 import { useAuth } from '@/hooks/authentication/use-auth';
 import { FORM_ERRORS } from '@/lib/constants';
@@ -65,15 +66,15 @@ export const SignInContainer = () => {
           <div className="relative overflow-hidden bg-white rounded-2xl lg:rounded-3xl">
             <div className="px-8 py-8">
               <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-900">Sign in for Snipcode</h1>
+                <h1 className="text-2xl font-bold text-gray-900">Sign in to Snipcode</h1>
 
-                <div className="flex justify-between">
-                  <Button className="w-[45%]" color="white-gray">
+                <div className="grid grid-cols-2 mt-8 gap-4">
+                  <Button variant="secondary">
                     <GithubIcon />
                     <span className="ml-4">GitHub</span>
                   </Button>
 
-                  <Button className="w-[45%]" color="white-gray">
+                  <Button variant="secondary">
                     <GoogleIcon />
                     <span className="ml-4">Google</span>
                   </Button>
@@ -84,13 +85,14 @@ export const SignInContainer = () => {
 
               <FormProvider {...formMethods}>
                 <form className="mt-8" onSubmit={formMethods.handleSubmit(handleLogin)}>
-                  {loginError && <Alert message={loginError} type="error" />}
+                  {loginError ? <Alert message={loginError} type="destructive" /> : null}
 
                   <TextInput label="Email" name="email" placeholder="teco@email.com" type="email" />
 
                   <TextInput label="Password" name="password" type="password" />
 
-                  <Button className="mt-10 py-3" isLoading={isLoading} type="submit">
+                  <Button className="mt-10 py-3 w-full" type="submit">
+                    {isLoading ? <LoaderIcon className="mr-2 h-4 w-4 animate-spin" /> : null}
                     Sign in
                   </Button>
                 </form>
@@ -99,7 +101,7 @@ export const SignInContainer = () => {
               <p className="mt-5 text-base font-normal text-center text-gray-900">
                 Don&apos;t have an account?{' '}
                 <Link className="font-bold rounded hover:underline" href="/signup" title="Sign in">
-                  Create an account now
+                  Sign up now
                 </Link>
               </p>
             </div>

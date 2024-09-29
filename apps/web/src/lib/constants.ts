@@ -14,3 +14,5 @@ export const FORM_ERRORS = {
 export const BAD_LOGIN_MESSAGE = 'The email or password is invalid.';
 
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
+export const SHAREABLE_HOST_URL = 'https://snipcode.dev';
+export const EMBEDDABLE_HOST_URL = 'https://api.snipcode.dev';

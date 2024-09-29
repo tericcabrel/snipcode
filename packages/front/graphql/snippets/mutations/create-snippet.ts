@@ -10,8 +10,6 @@ const mutationDocument = gql`
   }
 `;
 
-const useCreateSnippetMutation = () => {
+export const useCreateSnippetMutation = () => {
   return useMutation<CreateSnippetMutation, CreateSnippetMutationVariables>(mutationDocument);
 };
-
-export default useCreateSnippetMutation;

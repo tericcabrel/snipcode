@@ -1,4 +1,4 @@
-import useSubscribeToNewsletterMutation from '../../graphql/newsletters/mutations/subscribe-newsletter';
+import { useSubscribeToNewsletterMutation } from '../../graphql/newsletters/mutations/subscribe-newsletter';
 
 type MutationArgs = {
   input: { email: string };

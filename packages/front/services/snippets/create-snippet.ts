@@ -1,6 +1,6 @@
 import { listDirectoryQueryDocument } from '../../graphql/folders/queries/list-directory';
 import { CreateSnippetInput } from '../../graphql/generated';
-import useCreateSnippetMutation from '../../graphql/snippets/mutations/create-snippet';
+import { useCreateSnippetMutation } from '../../graphql/snippets/mutations/create-snippet';
 
 type MutationArgs = {
   input: CreateSnippetInput;

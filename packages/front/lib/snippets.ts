@@ -11,11 +11,3 @@ export const extractLanguageFromName = (name: string): string => {
 
   return nameArrayPart[nameArrayPart.length - 1];
 };
-
-export const generateShareableLink = (snippetId: string): string => {
-  return `${process.env.SHAREABLE_HOST}/snippets/${snippetId}`;
-};
-
-export const generateEmbeddableLink = (snippetId: string): string => {
-  return `${process.env.EMBEDDABLE_HOST}/${snippetId}`;
-};

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BUNDLED_LANGUAGES } from 'shiki';
 
-import { HighLightOption, HighlightSnippetArgs, TextSelection } from '../../../../../../typings/snippet-form';
+import { HighLightOption, HighlightSnippetArgs, TextSelection } from '../../../../../../types/snippet-form';
 
 const languageNames = BUNDLED_LANGUAGES.map((language) => [language.id].concat(language.aliases ?? [])).flat();
 
@@ -60,7 +60,7 @@ export const useEditor = () => {
   const getLanguageFromExtension = (fileName?: string) => {
     const DEFAULT_LANGUAGE = 'txt';
 
-    if (!fileName || !fileName.includes('.')) {
+    if (!fileName?.includes('.')) {
       return DEFAULT_LANGUAGE;
     }
 

@@ -3,27 +3,29 @@
 import { useState } from 'react';
 
 import { BreadCrumb } from './breadcrumb';
-import { EmptyFolder } from './folders/empty';
 import { Folder } from './folders/folder';
-import { EditFolderContainer } from './folders/form/edit-folder';
+import { EmptyFolder } from './folders/folder-empty';
+import { FolderFormContainer } from './folders/folder-form';
 import { CreateSnippetContainer } from './snippets/form/create-snippet';
 import { Snippet } from './snippets/snippet';
-import { useBooleanState } from '../../hooks';
+import { useBooleanState } from '../../hooks/use-boolean-state';
+import { useToast } from '../../hooks/use-toast';
+import { displayItemLabel } from '../../lib/text';
 import { useDeleteFolders } from '../../services/folders/delete-folders';
 import { useListDirectory } from '../../services/folders/list-directory';
 import { useDeleteSnippet } from '../../services/snippets/delete-snippet';
-import { FolderItem, SnippetItem } from '../../typings/components';
-import { displayItemLabel } from '../../utils/text';
+import { FolderItem, SnippetItem } from '../../types/components';
 import { ConfirmDialog } from '../dialog/confirm-dialog';
 import { MenuAction } from '../menu-action';
-import { useToast } from '../toast/provider';
 
 type Props = {
+  embeddableHostUrl: string;
   folderId: string;
   onBreadcrumbPathClick: (folderId: string, path: string) => Promise<void>;
   onNavigateToFolder: (folderId: string) => void;
   onSnippetClick: (snippetId: string) => void;
   rootFolderId: string;
+  shareableHostUrl: string;
   title: string;
 };
 
@@ -54,12 +56,14 @@ const generateConfirmDialogMessage = (item: ItemToDelete | null, folders: Folder
   return `This folder has ${displayItemLabel(folderItem.fileCount, 'item')}; are you sure you want to delete it?`;
 };
 
-const Directory = ({
+export const Directory = ({
+  embeddableHostUrl,
   folderId,
   onBreadcrumbPathClick,
   onNavigateToFolder,
   onSnippetClick,
   rootFolderId,
+  shareableHostUrl,
   title,
 }: Props) => {
   const [isNewFolderOpened, openNewFolderModal, closeNewFolderModal] = useBooleanState(false);
@@ -101,10 +105,10 @@ const Directory = ({
     await deleteSnippet({
       id: itemToDelete.id,
       onError: (message) => {
-        toastError({ message: `Failed to delete: ${message}` });
+        toastError(`Failed to delete: ${message}`);
       },
       onSuccess: () => {
-        toastSuccess({ message: 'Snippet deleted!' });
+        toastSuccess('Snippet deleted!');
 
         closeConfirmDialog();
         setItemToDelete(null);
@@ -132,10 +136,10 @@ const Directory = ({
     await deleteFolders({
       ids: [itemToDelete.id],
       onError: (message) => {
-        toastError({ message: `Failed to delete: ${message}` });
+        toastError(`Failed to delete: ${message}`);
       },
       onSuccess: () => {
-        toastSuccess({ message: 'Folder deleted!' });
+        toastSuccess('Folder deleted!');
 
         closeConfirmDialog();
         setItemToDelete(null);
@@ -197,7 +201,14 @@ const Directory = ({
               <div className="my-8 text-md font-bold text-gray-500">Files</div>
               <div className="mt-6 grid grid-cols-4 gap-4">
                 {snippets.map((snippet) => (
-                  <Snippet item={snippet} key={snippet.id} onClick={openSnippet} onDeleteClick={onDeleteSnippet} />
+                  <Snippet
+                    embeddableHostUrl={embeddableHostUrl}
+                    item={snippet}
+                    key={snippet.id}
+                    shareableHostUrl={shareableHostUrl}
+                    onClick={openSnippet}
+                    onDeleteClick={onDeleteSnippet}
+                  />
                 ))}
               </div>
             </div>
@@ -205,7 +216,7 @@ const Directory = ({
         </div>
       </main>
       {isNewFolderOpened && (
-        <EditFolderContainer
+        <FolderFormContainer
           closeModal={closeNewFolderModal}
           currentFolder={selectedFolder}
           parentFolderId={folderId}
@@ -224,5 +235,3 @@ const Directory = ({
     </>
   );
 };
-
-export { Directory };

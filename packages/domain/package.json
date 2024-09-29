@@ -12,7 +12,7 @@
     "clean": "rm -rf .turbo dist coverage",
     "lint": "eslint --fix",
     "env": "dotenv -e .env.local",
-    "db:local": "docker run -d --rm -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=snipcode --name snipcode-local-db -p 3311:3306 mysql:8.0.39",
+    "db:local": "docker run -d --rm -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=snipcode -v ./dbdata/snipcode:/var/lib/mysql --name snipcode-local-db -p 3311:3306 mysql:8.0.39",
     "db:local:stop": "docker kill snipcode-local-db && docker container prune -f",
     "db:generate": "yarn env -- prisma generate",
     "db:migrate": "yarn env -- prisma migrate dev",

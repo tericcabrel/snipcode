@@ -8,8 +8,6 @@ const mutationDocument = gql`
   }
 `;
 
-const useDeleteSnippetMutation = () => {
+export const useDeleteSnippetMutation = () => {
   return useMutation<DeleteSnippetMutation, DeleteSnippetMutationVariables>(mutationDocument);
 };
-
-export default useDeleteSnippetMutation;

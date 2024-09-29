@@ -1,6 +1,6 @@
 import { FindSnippetQuery } from '../../graphql/generated';
 import { useFindSnippetQuery } from '../../graphql/snippets/queries/find-snippet';
-import { SnippetInfo } from '../../typings/queries';
+import { SnippetInfo } from '../../types/queries';
 
 const formatFindSnippetResult = (data?: FindSnippetQuery): SnippetInfo | undefined => {
   if (!data?.findSnippet) {

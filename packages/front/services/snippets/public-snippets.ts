@@ -1,6 +1,6 @@
 import { PublicSnippetsQuery } from '../../graphql/generated';
 import { useLazyPublicSnippetsQuery } from '../../graphql/snippets/queries/public-snippets';
-import { PublicSnippetResult } from '../../typings/queries';
+import { PublicSnippetResult } from '../../types/queries';
 
 type FindPublicSnippetsArgs = {
   input: {

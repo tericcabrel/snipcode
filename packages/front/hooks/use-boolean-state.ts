@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-const useBooleanState = (initialState = false) => {
+export const useBooleanState = (initialState = false) => {
   const [boolean, setBoolean] = useState(initialState);
 
   const setToTrue = useCallback(() => setBoolean(true), []);
@@ -9,5 +9,3 @@ const useBooleanState = (initialState = false) => {
 
   return [boolean, setToTrue, setToFalse] as const;
 };
-
-export default useBooleanState;

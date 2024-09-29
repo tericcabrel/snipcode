@@ -8,8 +8,6 @@ const mutationDocument = gql`
   }
 `;
 
-const useDeleteFoldersMutation = () => {
+export const useDeleteFoldersMutation = () => {
   return useMutation<DeleteFoldersMutation, DeleteFoldersMutationVariables>(mutationDocument);
 };
-
-export default useDeleteFoldersMutation;
