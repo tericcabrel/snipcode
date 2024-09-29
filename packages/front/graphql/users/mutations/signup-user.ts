@@ -10,8 +10,6 @@ const queryDocument = gql`
   }
 `;
 
-const useSignupUserMutation = () => {
+export const useSignupUserMutation = () => {
   return useMutation<SignupUserMutation, SignupUserMutationVariables>(queryDocument);
 };
-
-export default useSignupUserMutation;

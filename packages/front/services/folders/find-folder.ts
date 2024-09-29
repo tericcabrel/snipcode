@@ -1,6 +1,6 @@
 import { useFindFolderQuery } from '../../graphql/folders/queries/find-folder';
 import { FindFolderQuery } from '../../graphql/generated';
-import { FindFolderData } from '../../typings/queries';
+import { FindFolderData } from '../../types/queries';
 
 const formatFindFolderResult = (data?: FindFolderQuery): FindFolderData | undefined => {
   if (!data?.findFolder) {

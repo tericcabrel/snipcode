@@ -6,8 +6,8 @@ import { useFormEditor } from './hooks/use-form-editor';
 import { SelectInput } from '../../../../../forms/select-input';
 import { TextInput } from '../../../../../forms/text-input';
 import { THEME_BACKGROUND_COLOR_MAP } from '../../../../../lib/constants';
-import { SelectOption } from '../../../../../typings/components';
-import { EditorFormValues } from '../../../../../typings/snippet-form';
+import { SelectOption } from '../../../../../types/components';
+import { EditorFormValues } from '../../../../../types/snippet-form';
 import { Label } from '../../../../ui/label';
 import { Switch } from '../../../../ui/switch';
 

@@ -2,7 +2,7 @@ import { EllipsisVerticalIcon } from 'lucide-react';
 import React, { Fragment } from 'react';
 
 import { cn } from '../../lib/utils';
-import { MenuItemAction } from '../../typings/components';
+import { MenuItemAction } from '../../types/components';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -17,7 +17,7 @@ type Props = {
   data: MenuItemAction[];
 };
 
-const DotMenu = ({ className, data }: Props) => {
+export const DotMenu = ({ className, data }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -38,5 +38,3 @@ const DotMenu = ({ className, data }: Props) => {
     </DropdownMenu>
   );
 };
-
-export { DotMenu };

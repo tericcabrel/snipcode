@@ -1,3 +1,6 @@
+import classNames from 'classnames';
+import React from 'react';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,8 +11,6 @@ import {
   AlertDialogTitle,
 } from '@snipcode/front/components/ui/alert-dialog';
 import { CircleCheckIcon, CircleXIcon } from '@snipcode/front/icons';
-import classNames from 'classnames';
-import React from 'react';
 
 type Props = {
   handleClose: () => void;

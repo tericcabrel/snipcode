@@ -12,7 +12,7 @@ type Props = {
   label?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
-const TextInput = (props: Props) => {
+export const TextInput = (props: Props) => {
   const {
     formState: { errors },
     register,
@@ -44,5 +44,3 @@ const TextInput = (props: Props) => {
     </div>
   );
 };
-
-export { TextInput };

@@ -5,7 +5,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { SnippetTextEditor } from './editor';
 import { SnippetFormValues, formSchema } from './form-schema';
 import { generateSnippetLanguageOptions } from './utils';
-import { useCodeHighlighter } from '../../../../hooks';
+import { useCodeHighlighter } from '../../../../hooks/use-code-highlighter';
 import { useToast } from '../../../../hooks/use-toast';
 import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../lib/constants';
 import { extractLanguageFromName, lineHighlightToString } from '../../../../lib/snippets';

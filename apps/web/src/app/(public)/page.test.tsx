@@ -1,7 +1,8 @@
 import { MockedProvider } from '@apollo/client/testing';
-import { authenticatedUserQuery } from '@snipcode/front/graphql/users/queries/authenticated-user';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
+
+import { authenticatedUserQuery } from '@snipcode/front/graphql/users/queries/authenticated-user';
 
 import Home from './page';
 

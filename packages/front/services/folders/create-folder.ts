@@ -1,4 +1,4 @@
-import useCreateFolderMutation from '../../graphql/folders/mutations/create-folder';
+import { useCreateFolderMutation } from '../../graphql/folders/mutations/create-folder';
 import { listDirectoryQueryDocument } from '../../graphql/folders/queries/list-directory';
 import { CreateFolderInput } from '../../graphql/generated';
 

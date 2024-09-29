@@ -1,16 +1,17 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+
 import { Alert } from '@snipcode/front/components/alert';
 import { Link } from '@snipcode/front/components/link';
 import { Button } from '@snipcode/front/components/ui/button';
 import { TextInput } from '@snipcode/front/forms/text-input';
 import { GithubIcon, GoogleIcon, LoaderIcon } from '@snipcode/front/icons';
 import { useSignupUser } from '@snipcode/front/services';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import * as yup from 'yup';
 
 import { FORM_ERRORS } from '@/lib/constants';
 
@@ -94,7 +95,7 @@ export const SignupContainer = () => {
 
               <FormProvider {...formMethods}>
                 <form className="mt-8" onSubmit={formMethods.handleSubmit(handleSignup)}>
-                  {signupError && <Alert message={signupError} type="destructive" />}
+                  {signupError ? <Alert message={signupError} type="destructive" /> : null}
 
                   <TextInput label="Name" name="name" placeholder="John Doe" type="text" />
 
@@ -115,7 +116,7 @@ export const SignupContainer = () => {
                   />
 
                   <Button className="mt-10 py-3 w-full" type="submit">
-                    {isLoading && <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />}
+                    {isLoading ? <LoaderIcon className="mr-2 h-4 w-4 animate-spin" /> : null}
                     Sign up
                   </Button>
                 </form>

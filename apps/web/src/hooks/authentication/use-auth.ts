@@ -1,8 +1,9 @@
 import { useApolloClient } from '@apollo/client';
-import { useAuthenticatedUser } from '@snipcode/front/services';
-import { addDayToDate } from '@snipcode/utils';
 import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie';
+
+import { useAuthenticatedUser } from '@snipcode/front/services';
+import { addDayToDate } from '@snipcode/utils';
 
 import { AUTH_COOKIE_NAME } from '@/lib/constants';
 

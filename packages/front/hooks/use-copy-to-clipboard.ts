@@ -6,7 +6,7 @@ type CopyFn = (text: string) => Promise<boolean>;
 /**
  * @link https://usehooks-ts.com/react-hook/use-copy-to-clipboard
  */
-const useCopyToClipboard = (): [CopiedValue, CopyFn] => {
+export const useCopyToClipboard = (): [CopiedValue, CopyFn] => {
   const [copiedText, setCopiedText] = useState<CopiedValue>(null);
 
   const copy: CopyFn = async (text) => {
@@ -31,5 +31,3 @@ const useCopyToClipboard = (): [CopiedValue, CopyFn] => {
 
   return [copiedText, copy];
 };
-
-export { useCopyToClipboard };

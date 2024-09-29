@@ -1,5 +1,6 @@
-import { LogoIcon } from '@snipcode/front/icons';
 import Link from 'next/link';
+
+import { LogoIcon } from '@snipcode/front/icons';
 
 export const PageNotFound = () => {
   return (

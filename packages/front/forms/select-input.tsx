@@ -1,5 +1,5 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { SelectOption } from '../typings/components';
+import { SelectOption } from '../types/components';
 
 type Props = {
   className?: string;

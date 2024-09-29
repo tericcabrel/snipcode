@@ -1,4 +1,4 @@
-import useUpdateFolderMutation from '../../graphql/folders/mutations/update-folder';
+import { useUpdateFolderMutation } from '../../graphql/folders/mutations/update-folder';
 import { findFolderQueryDocument } from '../../graphql/folders/queries/find-folder';
 import { listDirectoryQueryDocument } from '../../graphql/folders/queries/list-directory';
 import { UpdateFolderInput } from '../../graphql/generated';

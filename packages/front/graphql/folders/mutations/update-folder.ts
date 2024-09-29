@@ -13,8 +13,6 @@ const mutationDocument = gql`
   }
 `;
 
-const useUpdateFolderMutation = () => {
+export const useUpdateFolderMutation = () => {
   return useMutation<UpdateFolderMutation, UpdateFolderMutationVariables>(mutationDocument);
 };
-
-export default useUpdateFolderMutation;

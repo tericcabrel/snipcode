@@ -4,7 +4,7 @@ import React from 'react';
 import { useCopyToClipboard } from '../../../hooks/use-copy-to-clipboard';
 // import { useHover } from '../../../hooks/use-hover';
 import { truncate } from '../../../lib/text';
-import { MenuItemAction, SnippetItem } from '../../../typings/components';
+import { MenuItemAction, SnippetItem } from '../../../types/components';
 import { DotMenu } from '../../menus/dot-menu';
 
 type Props = {

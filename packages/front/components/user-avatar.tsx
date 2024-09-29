@@ -24,7 +24,7 @@ const generateInitials = (name?: string | null) => {
   return initials.toUpperCase();
 };
 
-const UserAvatar = ({ name, url }: Props) => {
+export const UserAvatar = ({ name, url }: Props) => {
   if (url) {
     return <Image className="h-8 w-8 rounded-full" src={url} alt="User picture" width={40} height={40} />;
   }
@@ -43,5 +43,3 @@ const UserAvatar = ({ name, url }: Props) => {
     </span>
   );
 };
-
-export { UserAvatar };

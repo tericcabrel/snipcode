@@ -4,7 +4,7 @@ import { Highlighter } from 'shiki';
 
 import { useEditor } from './use-editor';
 import { CODE_HIGHLIGHT_OPTIONS } from '../../../../../../lib/constants';
-import { EditorFormValues } from '../../../../../../typings/snippet-form';
+import { EditorFormValues } from '../../../../../../types/snippet-form';
 
 export const useFormEditor = () => {
   const { setValue, watch } = useFormContext<EditorFormValues>();

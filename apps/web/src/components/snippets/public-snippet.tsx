@@ -1,6 +1,6 @@
 import { Link } from '@snipcode/front/components/link';
 import { UserAvatar } from '@snipcode/front/components/user-avatar';
-import { PublicSnippetResult } from '@snipcode/front/typings/queries';
+import { PublicSnippetResult } from '@snipcode/front/types/queries';
 
 type Props = {
   snippet: PublicSnippetResult['items'][number];
@@ -12,7 +12,7 @@ export const PublicSnippet = ({ snippet }: Props) => {
   const htmlCode = snippet.content;
 
   return (
-    <div className="rounded-md border border-gray-300 shadow-sm rounded p-3 bg-gray-50">
+    <div className="rounded border border-gray-300 shadow-sm p-3 bg-gray-50">
       <div className="flex justify-between w-full">
         <div className="flex items-center">
           <div>

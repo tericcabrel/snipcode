@@ -3,18 +3,18 @@
 import { useState } from 'react';
 
 import { BreadCrumb } from './breadcrumb';
-import { EmptyFolder } from './folders/empty';
 import { Folder } from './folders/folder';
-import { EditFolderContainer } from './folders/form/edit-folder';
+import { EmptyFolder } from './folders/folder-empty';
+import { FolderFormContainer } from './folders/folder-form';
 import { CreateSnippetContainer } from './snippets/form/create-snippet';
 import { Snippet } from './snippets/snippet';
-import { useBooleanState } from '../../hooks';
+import { useBooleanState } from '../../hooks/use-boolean-state';
 import { useToast } from '../../hooks/use-toast';
 import { displayItemLabel } from '../../lib/text';
 import { useDeleteFolders } from '../../services/folders/delete-folders';
 import { useListDirectory } from '../../services/folders/list-directory';
 import { useDeleteSnippet } from '../../services/snippets/delete-snippet';
-import { FolderItem, SnippetItem } from '../../typings/components';
+import { FolderItem, SnippetItem } from '../../types/components';
 import { ConfirmDialog } from '../dialog/confirm-dialog';
 import { MenuAction } from '../menu-action';
 
@@ -216,7 +216,7 @@ export const Directory = ({
         </div>
       </main>
       {isNewFolderOpened && (
-        <EditFolderContainer
+        <FolderFormContainer
           closeModal={closeNewFolderModal}
           currentFolder={selectedFolder}
           parentFolderId={folderId}

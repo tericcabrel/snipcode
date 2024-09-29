@@ -1,8 +1,9 @@
 import { MockedProvider } from '@apollo/client/testing';
-import { subscribeNewsletterMutation } from '@snipcode/front/graphql';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React, { act } from 'react';
+
+import { subscribeNewsletterMutation } from '@snipcode/front/graphql';
 
 import { NewsletterForm } from './newsletter-form';
 

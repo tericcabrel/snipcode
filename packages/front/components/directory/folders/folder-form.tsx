@@ -5,12 +5,12 @@ import { Loader2 } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import { TextInput } from '../../../../forms/text-input';
-import { useToast } from '../../../../hooks/use-toast';
-import { FOLDER_NAME_REGEX, FORM_ERRORS } from '../../../../lib/constants';
-import { useCreateFolder } from '../../../../services/folders/create-folder';
-import { useUpdateFolder } from '../../../../services/folders/update-folder';
-import { FolderItem } from '../../../../typings/components';
+import { TextInput } from '../../../forms/text-input';
+import { useToast } from '../../../hooks/use-toast';
+import { FOLDER_NAME_REGEX, FORM_ERRORS } from '../../../lib/constants';
+import { useCreateFolder } from '../../../services/folders/create-folder';
+import { useUpdateFolder } from '../../../services/folders/update-folder';
+import { FolderItem } from '../../../types/components';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,7 +20,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '../../../ui/alert-dialog';
+} from '../../ui/alert-dialog';
 
 type Props = {
   closeModal: () => void;
@@ -41,7 +41,7 @@ const formSchema = yup.object().shape({
 
 type FormValues = { name: string };
 
-const EditFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Props) => {
+export const FolderFormContainer = ({ closeModal, currentFolder, parentFolderId }: Props) => {
   const { toastError, toastSuccess } = useToast();
   const { createFolder, isLoading: isCreateFolderLoading } = useCreateFolder();
   const { isLoading: isUpdateFolderLoading, updateFolder } = useUpdateFolder(parentFolderId);
@@ -121,5 +121,3 @@ const EditFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Prop
     </AlertDialog>
   );
 };
-
-export { EditFolderContainer };

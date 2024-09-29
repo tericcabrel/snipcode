@@ -1,5 +1,6 @@
-import { useAuthenticatedUser, useLazyListDirectory } from '@snipcode/front/services';
 import { useRouter } from 'next/navigation';
+
+import { useAuthenticatedUser, useLazyListDirectory } from '@snipcode/front/services';
 
 export const useFolderDirectory = () => {
   const router = useRouter();

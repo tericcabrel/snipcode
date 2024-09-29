@@ -5,13 +5,13 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { SnippetTextEditor } from './editor';
 import { SnippetFormValues, formSchema } from './form-schema';
 import { generateSnippetLanguageOptions } from './utils';
-import { useCodeHighlighter } from '../../../../hooks';
+import { useCodeHighlighter } from '../../../../hooks/use-code-highlighter';
 import { useToast } from '../../../../hooks/use-toast';
 import { CODE_HIGHLIGHT_OPTIONS, THEME_OPTIONS } from '../../../../lib/constants';
 import { extractLanguageFromName, lineHighlightToString } from '../../../../lib/snippets';
 import { useUpdateSnippet } from '../../../../services/snippets/update-snippet';
-import { SelectOption } from '../../../../typings/components';
-import { SnippetItem } from '../../../../typings/queries';
+import { SelectOption } from '../../../../types/components';
+import { SnippetItem } from '../../../../types/queries';
 import { Button } from '../../../ui/button';
 
 type Props = {
@@ -28,7 +28,7 @@ const selectLanguageOptionValue = (options: SelectOption[], language: string) =>
   return options.find((option) => option.id === language);
 };
 
-const ViewSnippet = ({ snippet }: Props) => {
+export const ViewSnippet = ({ snippet }: Props) => {
   const { highlighter } = useCodeHighlighter();
   const { toastError, toastSuccess } = useToast();
 
@@ -91,5 +91,3 @@ const ViewSnippet = ({ snippet }: Props) => {
     </div>
   );
 };
-
-export { ViewSnippet };

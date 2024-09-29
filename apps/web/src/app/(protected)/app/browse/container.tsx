@@ -1,12 +1,13 @@
 'use client';
 
+import { useState } from 'react';
+
 import { Button } from '@snipcode/front/components/ui/button';
 import { SelectInput } from '@snipcode/front/forms/select-input';
 import { ChevronsLeftIcon, ChevronsRightIcon, SearchIcon } from '@snipcode/front/icons';
 import { usePublicSnippets } from '@snipcode/front/services';
-import { SelectOption } from '@snipcode/front/typings/components';
-import { PublicSnippetItem, PublicSnippetResult } from '@snipcode/front/typings/queries';
-import { useState } from 'react';
+import { SelectOption } from '@snipcode/front/types/components';
+import { PublicSnippetItem, PublicSnippetResult } from '@snipcode/front/types/queries';
 
 import { PublicSnippet } from '@/components/snippets/public-snippet';
 import { usePaginationToken } from '@/hooks/use-pagination-token';

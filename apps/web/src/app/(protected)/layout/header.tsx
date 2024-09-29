@@ -1,3 +1,6 @@
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@snipcode/front/components/ui/avatar';
 import { Button } from '@snipcode/front/components/ui/button';
 import {
@@ -13,8 +16,6 @@ import { LogoIcon, LogoLightIcon } from '@snipcode/front/icons';
 import { classNames } from '@snipcode/front/lib/classnames';
 import { COLORS } from '@snipcode/front/lib/constants';
 import { useLogoutUser } from '@snipcode/front/services';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import { useAuth } from '@/hooks/authentication/use-auth';
 import { generateInitials } from '@/lib/utils';

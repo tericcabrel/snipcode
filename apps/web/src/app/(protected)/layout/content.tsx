@@ -1,7 +1,8 @@
 'use client';
 
-import { useAuthenticatedUser } from '@snipcode/front/services';
 import { ReactNode } from 'react';
+
+import { useAuthenticatedUser } from '@snipcode/front/services';
 
 import { Header } from '@/app/(protected)/layout/header';
 import { Loader } from '@/components/common/loader';

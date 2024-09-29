@@ -1,8 +1,9 @@
 'use client';
 
+import { useParams } from 'next/navigation';
+
 import { Directory } from '@snipcode/front/components/directory';
 import { useFindFolder } from '@snipcode/front/services';
-import { useParams } from 'next/navigation';
 
 import { useFolderDirectory } from '@/hooks/use-folder-directory';
 import { EMBEDDABLE_HOST_URL, SHAREABLE_HOST_URL } from '@/lib/constants';
@@ -19,7 +20,7 @@ export const ViewFolderContainer = () => {
 
   return (
     <div className="py-10">
-      {isFolderFound && (
+      {isFolderFound ? (
         <Directory
           embeddableHostUrl={EMBEDDABLE_HOST_URL}
           folderId={folderId}
@@ -30,7 +31,7 @@ export const ViewFolderContainer = () => {
           onNavigateToFolder={navigateToFolder}
           onSnippetClick={openSnippet}
         />
-      )}
+      ) : null}
     </div>
   );
 };

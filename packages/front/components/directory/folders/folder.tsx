@@ -2,7 +2,7 @@ import { FolderIcon, FolderOpenIcon, PencilIcon, TrashIcon } from 'lucide-react'
 
 // import { useHover } from '../../../hooks/use-hover';
 import { displayItemLabel, truncate } from '../../../lib/text';
-import { FolderItem, MenuItemAction } from '../../../typings/components';
+import { FolderItem, MenuItemAction } from '../../../types/components';
 import { DotMenu } from '../../menus/dot-menu';
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 
 const FOLDER_NAME_MAX_LENGTH = 20;
 
-const Folder = ({ item, onDeleteClick, onNavigate, onRenameClick }: Props) => {
+export const Folder = ({ item, onDeleteClick, onNavigate, onRenameClick }: Props) => {
   /*const [hoverRef, isHovered] = useHover<HTMLDivElement>();*/
 
   const handleDoubleClick = () => {
@@ -58,5 +58,3 @@ const Folder = ({ item, onDeleteClick, onNavigate, onRenameClick }: Props) => {
     </div>
   );
 };
-
-export { Folder };

@@ -10,8 +10,6 @@ const mutationDocument = gql`
   }
 `;
 
-const useCreateFolderMutation = () => {
+export const useCreateFolderMutation = () => {
   return useMutation<CreateFolderMutation, CreateFolderMutationVariables>(mutationDocument);
 };
-
-export default useCreateFolderMutation;

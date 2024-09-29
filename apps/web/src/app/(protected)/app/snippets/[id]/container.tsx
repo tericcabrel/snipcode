@@ -1,9 +1,10 @@
 'use client';
 
+import { useParams } from 'next/navigation';
+
 import { BreadCrumb } from '@snipcode/front/components/directory/breadcrumb';
 import { ViewSnippet } from '@snipcode/front/components/directory/snippets/form/view-snippet';
 import { useFindSnippet } from '@snipcode/front/services';
-import { useParams } from 'next/navigation';
 
 import { useFolderDirectory } from '@/hooks/use-folder-directory';
 
@@ -19,7 +20,7 @@ export const ViewSnippetContainer = () => {
 
   return (
     <div className="py-10">
-      {isSnippetFound && (
+      {isSnippetFound ? (
         <div className="max-w-7xl py-8 mx-auto sm:px-6 lg:px-8">
           <BreadCrumb
             current={data.snippet.id}
@@ -31,7 +32,7 @@ export const ViewSnippetContainer = () => {
             <ViewSnippet snippet={data.snippet} />
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

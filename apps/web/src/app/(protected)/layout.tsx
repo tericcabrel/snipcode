@@ -1,8 +1,9 @@
 import '@/styles/globals.css';
 
-import { Toaster } from '@snipcode/front/components/ui/toaster';
 import { Inter as FontSans } from 'next/font/google';
 import React, { PropsWithChildren } from 'react';
+
+import { Toaster } from '@snipcode/front/components/ui/toaster';
 
 import { AuthenticatedLayout } from './layout/content';
 

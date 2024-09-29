@@ -1,7 +1,7 @@
 const DEFAULT_MAX_LENGTH = 15;
 const DOT_COUNT = 3;
 
-const truncate = (text: string, maxLength: number = DEFAULT_MAX_LENGTH) => {
+export const truncate = (text: string, maxLength: number = DEFAULT_MAX_LENGTH) => {
   if (text.length <= maxLength) {
     return text;
   }
@@ -19,10 +19,8 @@ const numberToString = (value: number): string => {
   return value < 10 ? `0${value}` : value.toString();
 };
 
-const displayItemLabel = (itemCount: number, itemLabel: string) => {
+export const displayItemLabel = (itemCount: number, itemLabel: string) => {
   const label = itemCount < 2 ? itemLabel : `${itemLabel}s`;
 
   return `${numberToString(itemCount)} ${label}`;
 };
-
-export { truncate, displayItemLabel };

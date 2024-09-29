@@ -1,7 +1,7 @@
 import { ChevronRightIcon, HomeIcon } from 'lucide-react';
 
 import { classNames } from '../../lib/classnames';
-import { FilePath } from '../../typings/components';
+import { FilePath } from '../../types/components';
 
 type Props = {
   current: string;
@@ -37,7 +37,7 @@ const BreadcrumbItem = ({ isCurrent, isHome, label }: BreadcrumbItemProps) => {
   );
 };
 
-const BreadCrumb = ({ current, onPathClick, paths, rootFolderId }: Props) => {
+export const BreadCrumb = ({ current, onPathClick, paths, rootFolderId }: Props) => {
   const onItemClick = async (folderId: string, path?: string) => {
     if (!path || current === folderId) {
       return;
@@ -61,5 +61,3 @@ const BreadCrumb = ({ current, onPathClick, paths, rootFolderId }: Props) => {
     </nav>
   );
 };
-
-export { BreadCrumb };

@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<LinkProps & { className?: string; title?: string }>;
 
-const Link = ({ children, ...props }: Props) => {
+export const Link = ({ children, ...props }: Props) => {
   if (props.href.toString().startsWith('/')) {
     return <NextLink {...props}>{children}</NextLink>;
   }
@@ -14,5 +14,3 @@ const Link = ({ children, ...props }: Props) => {
     </a>
   );
 };
-
-export { Link };

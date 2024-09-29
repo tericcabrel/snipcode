@@ -13,12 +13,12 @@ import {
   SlidersVerticalIcon,
 } from 'lucide-react';
 
-import GithubIcon from './github';
-import GoogleIcon from './google';
-import LogoIcon from './logo';
-import LogoLightIcon from './logo-light';
-import ProductHuntIcon from './product-hunt';
-import TwitterIcon from './twitter';
+import { GithubIcon } from './github';
+import { GoogleIcon } from './google';
+import { LogoIcon } from './logo';
+import { LogoLightIcon } from './logo-light';
+import { ProductHuntIcon } from './product-hunt';
+import { TwitterIcon } from './twitter';
 
 export {
   CircleCheckIcon,

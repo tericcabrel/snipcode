@@ -1,4 +1,4 @@
-import useDeleteFoldersMutation from '../../graphql/folders/mutations/delete-folders';
+import { useDeleteFoldersMutation } from '../../graphql/folders/mutations/delete-folders';
 import { listDirectoryQueryDocument } from '../../graphql/folders/queries/list-directory';
 
 type MutationArgs = {
