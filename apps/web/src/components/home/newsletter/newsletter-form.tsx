@@ -1,13 +1,13 @@
 'use client';
 
-import { SpinnerIcon } from '@snipcode/front/icons';
+import { LoaderIcon } from '@snipcode/front/icons';
 import { useSubscribeToNewsletter } from '@snipcode/front/services';
 import { useState } from 'react';
 
+import { NewsletterAlert } from './newsletter-alert';
+
 import { useBooleanState } from '@/hooks/use-boolean-state';
 import { REGEX_EMAIL } from '@/lib/constants';
-
-import { NewsletterAlert } from './newsletter-alert';
 
 const isEmailValid = (email: string) => REGEX_EMAIL.test(email);
 
@@ -58,7 +58,7 @@ export const NewsletterForm = () => {
           className="inline-flex items-center justify-center w-full px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent sm:w-auto sm:py-3 hover:bg-opacity-90 rounded-xl"
           onClick={handleSubscribe}
         >
-          {isLoading && <SpinnerIcon />}
+          {isLoading && <LoaderIcon className="mr-2 animate-spin" />}
           Get updates
         </button>
       </div>

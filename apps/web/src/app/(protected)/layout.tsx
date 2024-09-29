@@ -1,14 +1,14 @@
 import '@/styles/globals.css';
 
-import { ToastProvider } from '@snipcode/front/components/toast/provider';
+import { Toaster } from '@snipcode/front/components/ui/toaster';
 import { Inter as FontSans } from 'next/font/google';
 import React, { PropsWithChildren } from 'react';
+
+import { AuthenticatedLayout } from './layout/content';
 
 import { ApolloWrapper } from '@/lib/apollo/client';
 import { generatePageMetadata } from '@/lib/seo';
 import { cn } from '@/lib/utils';
-
-import { AuthenticatedLayout } from './layout/content';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -25,9 +25,8 @@ const AppLayout = ({ children }: PropsWithChildren) => {
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
         <div>
           <ApolloWrapper>
-            <ToastProvider>
-              <AuthenticatedLayout>{children}</AuthenticatedLayout>
-            </ToastProvider>
+            <Toaster />
+            <AuthenticatedLayout>{children}</AuthenticatedLayout>
           </ApolloWrapper>
         </div>
       </body>

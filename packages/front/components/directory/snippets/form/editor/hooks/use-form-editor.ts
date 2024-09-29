@@ -23,7 +23,6 @@ export const useFormEditor = () => {
   const language = watch('language');
   const lineHighlight = watch('lineHighlight');
   const codeHighlight = watch('codeHighlight');
-  const isSnippetPrivate = watch('isPrivate');
 
   const codeLanguage = language?.id ?? getLanguageFromExtension(name);
 
@@ -70,7 +69,6 @@ export const useFormEditor = () => {
     code,
     handleEditorSelect,
     highlightSnippet,
-    isSnippetPrivate,
     language,
     name,
     onHighlight,

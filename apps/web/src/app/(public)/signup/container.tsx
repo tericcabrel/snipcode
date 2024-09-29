@@ -3,9 +3,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Alert } from '@snipcode/front/components/alert';
 import { Link } from '@snipcode/front/components/link';
-import { Button } from '@snipcode/front/forms/button';
+import { Button } from '@snipcode/front/components/ui/button';
 import { TextInput } from '@snipcode/front/forms/text-input';
-import { GithubIcon, GoogleIcon } from '@snipcode/front/icons';
+import { GithubIcon, GoogleIcon, LoaderIcon } from '@snipcode/front/icons';
 import { useSignupUser } from '@snipcode/front/services';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -41,8 +41,6 @@ export const SignupContainer = () => {
   });
 
   const handleSignup = async (values: FormValues) => {
-    console.log(values);
-
     setSignupError(null);
 
     await signupUser({
@@ -77,15 +75,15 @@ export const SignupContainer = () => {
           <div className="relative overflow-hidden bg-white rounded-2xl lg:rounded-3xl">
             <div className="px-8 py-8">
               <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-900 font-pj">Sign up for Snipcode</h1>
+                <h1 className="text-2xl font-bold text-gray-900 font-pj">Sign up to Snipcode</h1>
 
-                <div className="flex justify-between">
-                  <Button className="w-[47%]" color="white-gray">
+                <div className="grid grid-cols-2 mt-8 gap-4">
+                  <Button variant="secondary">
                     <GithubIcon />
                     <span className="ml-4">GitHub</span>
                   </Button>
 
-                  <Button className="w-[47%]" color="white-gray">
+                  <Button variant="secondary">
                     <GoogleIcon />
                     <span className="ml-4">Google</span>
                   </Button>
@@ -96,7 +94,7 @@ export const SignupContainer = () => {
 
               <FormProvider {...formMethods}>
                 <form className="mt-8" onSubmit={formMethods.handleSubmit(handleSignup)}>
-                  {signupError && <Alert message={signupError} type="error" />}
+                  {signupError && <Alert message={signupError} type="destructive" />}
 
                   <TextInput label="Name" name="name" placeholder="John Doe" type="text" />
 
@@ -116,7 +114,8 @@ export const SignupContainer = () => {
                     type="password"
                   />
 
-                  <Button className="mt-10 py-3" isLoading={isLoading} type="submit">
+                  <Button className="mt-10 py-3 w-full" type="submit">
+                    {isLoading && <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />}
                     Sign up
                   </Button>
                 </form>

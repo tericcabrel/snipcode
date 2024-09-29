@@ -4,11 +4,12 @@ import { Highlighter } from 'shiki';
 
 import { useFormEditor } from './hooks/use-form-editor';
 import { SelectInput } from '../../../../../forms/select-input';
-import { SwitchInput } from '../../../../../forms/switch-input';
 import { TextInput } from '../../../../../forms/text-input';
 import { THEME_BACKGROUND_COLOR_MAP } from '../../../../../lib/constants';
 import { SelectOption } from '../../../../../typings/components';
 import { EditorFormValues } from '../../../../../typings/snippet-form';
+import { Label } from '../../../../ui/label';
+import { Switch } from '../../../../ui/switch';
 
 type Props = {
   codeHighlightOptions: SelectOption[];
@@ -17,9 +18,9 @@ type Props = {
   themeOptions: SelectOption[];
 };
 
-const SnippetTextEditor = ({ codeHighlightOptions, highlighter, languageOptions, themeOptions }: Props) => {
+export const SnippetTextEditor = ({ codeHighlightOptions, highlighter, languageOptions, themeOptions }: Props) => {
   const { control, setValue } = useFormContext<EditorFormValues>();
-  const { code, handleEditorSelect, isSnippetPrivate, onHighlight, theme } = useFormEditor();
+  const { code, handleEditorSelect, onHighlight, theme } = useFormEditor();
 
   const handleCodeHighlight = (codeToHighlight: string) => {
     const highlightedCode = onHighlight(highlighter)(codeToHighlight);
@@ -36,7 +37,12 @@ const SnippetTextEditor = ({ codeHighlightOptions, highlighter, languageOptions,
           name="isPrivate"
           control={control}
           render={({ field }) => (
-            <SwitchInput className="w-1/5 mt-2" defaultValue={isSnippetPrivate} label="Make private?" {...field} />
+            <div className="w-1/5 mt-2 flex items-center">
+              <Label htmlFor="isPrivate" className="mr-2">
+                Make private?
+              </Label>
+              <Switch id="isPrivate" checked={field.value} onCheckedChange={field.onChange} />
+            </div>
           )}
         />
         <TextInput
@@ -60,18 +66,22 @@ const SnippetTextEditor = ({ codeHighlightOptions, highlighter, languageOptions,
               name="language"
               control={control}
               render={({ field }) => (
-                <SelectInput className="w-36" options={languageOptions} placeholder="Language" {...field} />
+                <SelectInput className="w-40" options={languageOptions} placeholder="Language" {...field} />
               )}
             />
             <Controller
               name="codeHighlight"
               control={control}
-              render={({ field }) => <SelectInput className="w-36" options={codeHighlightOptions} {...field} />}
+              render={({ field }) => (
+                <SelectInput className="w-36" options={codeHighlightOptions} placeholder="Code style" {...field} />
+              )}
             />
             <Controller
               name="theme"
               control={control}
-              render={({ field }) => <SelectInput className="w-36" options={themeOptions} {...field} />}
+              render={({ field }) => (
+                <SelectInput className="w-36" options={themeOptions} placeholder="Theme" {...field} />
+              )}
             />
           </div>
         </div>
@@ -97,5 +107,3 @@ const SnippetTextEditor = ({ codeHighlightOptions, highlighter, languageOptions,
     </div>
   );
 };
-
-export { SnippetTextEditor };

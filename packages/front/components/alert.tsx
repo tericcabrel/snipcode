@@ -1,34 +1,26 @@
-import { classNames } from '../lib/classnames';
+import { AlertCircle } from 'lucide-react';
 
-type AlertType = 'success' | 'error' | 'info';
+import { AlertDescription, Alert as AlertRoot, AlertTitle } from './ui/alert';
+
+type AlertType = 'destructive' | 'info' | 'success';
 
 type Props = {
   message: string;
-  title?: string;
   type?: AlertType;
 };
 
-const alertTypeMapToString: Record<AlertType, string> = {
-  error: 'Error',
+const alertTypeMap: Record<AlertType, string> = {
+  destructive: 'Error',
   info: 'Info',
   success: 'Success',
 };
 
-const alertStyleMap: Record<AlertType, string> = {
-  error: 'bg-red-200 border-red-600 text-red-600',
-  info: 'bg-blue-200 border-blue-600 text-blue-600',
-  success: 'bg-green-200 border-green-600 text-green-600',
-};
-
-const Alert = ({ message, title, type = 'info' }: Props) => {
-  const classes = classNames('border-l-4 p-4 mb-8', alertStyleMap[type]);
-
+export const Alert = ({ message, type = 'info' }: Props) => {
   return (
-    <div className={classes} role="alert">
-      <p className="font-bold">{title ?? alertTypeMapToString[type]}</p>
-      <p>{message}</p>
-    </div>
+    <AlertRoot variant={type} className="mb-8">
+      <AlertCircle className="h-4 w-4" />
+      <AlertTitle>{alertTypeMap[type]}</AlertTitle>
+      <AlertDescription>{message}</AlertDescription>
+    </AlertRoot>
   );
 };
-
-export { Alert };

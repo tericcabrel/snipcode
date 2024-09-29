@@ -1,64 +1,42 @@
 import {
-  CalendarIcon,
-  ChartBarIcon,
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
-  ChevronDownIcon,
-  DocumentPlusIcon as DocumentAddIcon,
-  FolderPlusIcon as FolderAddIcon,
-  FolderIcon,
-  HomeIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+  CircleCheckIcon,
+  CircleXIcon,
+  CloudDownloadIcon,
+  FileSearch2Icon,
+  GalleryVerticalEndIcon,
   InboxIcon,
-  Bars3Icon as MenuIcon,
-  MagnifyingGlassIcon as SearchIcon,
-  UsersIcon,
-  XMarkIcon as XIcon,
-} from '@heroicons/react/24/outline';
+  Loader2 as LoaderIcon,
+  SearchIcon,
+  Share2Icon,
+  SlidersVerticalIcon,
+} from 'lucide-react';
 
-import CheckIcon from './check';
-import CollectionIcon from './collection';
-import CrossIcon from './cross';
-import DocumentSearchIcon from './document-search';
-import EmbedIcon from './embed';
-import ExtensionIcon from './extension';
 import GithubIcon from './github';
 import GoogleIcon from './google';
-import ImportIcon from './import';
 import LogoIcon from './logo';
 import LogoLightIcon from './logo-light';
 import ProductHuntIcon from './product-hunt';
-import ShareIcon from './share';
-import SpinnerIcon from './spinner';
 import TwitterIcon from './twitter';
 
 export {
-  CalendarIcon,
-  ChartBarIcon,
-  CheckIcon,
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
-  ChevronDownIcon,
-  CollectionIcon,
-  CrossIcon,
-  DocumentAddIcon,
-  DocumentSearchIcon,
-  EmbedIcon,
-  ExtensionIcon,
-  FolderIcon,
-  FolderAddIcon,
+  CircleCheckIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+  GalleryVerticalEndIcon,
+  CircleXIcon,
+  InboxIcon,
+  SlidersVerticalIcon,
+  FileSearch2Icon,
   GithubIcon,
   GoogleIcon,
-  HomeIcon,
-  ImportIcon,
-  InboxIcon,
+  CloudDownloadIcon,
+  LoaderIcon,
   LogoIcon,
   LogoLightIcon,
-  MenuIcon,
   ProductHuntIcon,
   SearchIcon,
-  ShareIcon,
-  SpinnerIcon,
+  Share2Icon,
   TwitterIcon,
-  UsersIcon,
-  XIcon,
 };

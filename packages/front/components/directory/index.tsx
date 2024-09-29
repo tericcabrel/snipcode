@@ -9,6 +9,7 @@ import { EditFolderContainer } from './folders/form/edit-folder';
 import { CreateSnippetContainer } from './snippets/form/create-snippet';
 import { Snippet } from './snippets/snippet';
 import { useBooleanState } from '../../hooks';
+import { useToast } from '../../hooks/use-toast';
 import { displayItemLabel } from '../../lib/text';
 import { useDeleteFolders } from '../../services/folders/delete-folders';
 import { useListDirectory } from '../../services/folders/list-directory';
@@ -16,7 +17,6 @@ import { useDeleteSnippet } from '../../services/snippets/delete-snippet';
 import { FolderItem, SnippetItem } from '../../typings/components';
 import { ConfirmDialog } from '../dialog/confirm-dialog';
 import { MenuAction } from '../menu-action';
-import { useToast } from '../toast/provider';
 
 type Props = {
   embeddableHostUrl: string;
@@ -105,10 +105,10 @@ export const Directory = ({
     await deleteSnippet({
       id: itemToDelete.id,
       onError: (message) => {
-        toastError({ message: `Failed to delete: ${message}` });
+        toastError(`Failed to delete: ${message}`);
       },
       onSuccess: () => {
-        toastSuccess({ message: 'Snippet deleted!' });
+        toastSuccess('Snippet deleted!');
 
         closeConfirmDialog();
         setItemToDelete(null);
@@ -136,10 +136,10 @@ export const Directory = ({
     await deleteFolders({
       ids: [itemToDelete.id],
       onError: (message) => {
-        toastError({ message: `Failed to delete: ${message}` });
+        toastError(`Failed to delete: ${message}`);
       },
       onSuccess: () => {
-        toastSuccess({ message: 'Folder deleted!' });
+        toastSuccess('Folder deleted!');
 
         closeConfirmDialog();
         setItemToDelete(null);

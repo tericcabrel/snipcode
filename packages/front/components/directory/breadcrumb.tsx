@@ -1,4 +1,4 @@
-import { ChevronRightIcon, HomeIcon } from '@heroicons/react/20/solid';
+import { ChevronRightIcon, HomeIcon } from 'lucide-react';
 
 import { classNames } from '../../lib/classnames';
 import { FilePath } from '../../typings/components';
@@ -50,7 +50,7 @@ const BreadCrumb = ({ current, onPathClick, paths, rootFolderId }: Props) => {
     <nav className="flex" aria-label="Breadcrumb">
       <ol role="list" className="flex items-center space-x-4">
         <li onClick={() => onItemClick(rootFolderId, '/app/home')}>
-          <BreadcrumbItem isCurrent={current === rootFolderId} isHome label="Home" />
+          <BreadcrumbItem isCurrent={current === rootFolderId} label="Home" isHome={true} />
         </li>
         {paths.map((path) => (
           <li key={path.id} onClick={() => onItemClick(path.id, `/app/folders/${path.id}`)}>

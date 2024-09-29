@@ -1,13 +1,16 @@
+'use client';
+
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Loader2 } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import { TextInput } from '../../../../forms/text-input';
+import { useToast } from '../../../../hooks/use-toast';
 import { FOLDER_NAME_REGEX, FORM_ERRORS } from '../../../../lib/constants';
 import { useCreateFolder } from '../../../../services/folders/create-folder';
 import { useUpdateFolder } from '../../../../services/folders/update-folder';
 import { FolderItem } from '../../../../typings/components';
-import { useToast } from '../../../toast/provider';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -59,10 +62,10 @@ const EditFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Prop
         parentId: parentFolderId,
       },
       onError: (message) => {
-        toastError({ message: `Failed to create: ${message}` });
+        toastError(`Failed to create: ${message}`);
       },
       onSuccess: () => {
-        toastSuccess({ message: 'Folder created!' });
+        toastSuccess('Folder created!');
         closeModal();
       },
     });
@@ -79,10 +82,10 @@ const EditFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Prop
         name: values.name,
       },
       onError: (message) => {
-        toastError({ message: `Failed to update: ${message}` });
+        toastError(`Failed to update: ${message}`);
       },
       onSuccess: () => {
-        toastSuccess({ message: 'Folder updated!' });
+        toastSuccess('Folder updated!');
 
         closeModal();
       },
@@ -102,15 +105,15 @@ const EditFolderContainer = ({ closeModal, currentFolder, parentFolderId }: Prop
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{currentFolder ? 'Rename folder' : 'Create a new folder'}</AlertDialogTitle>
-          <AlertDialogDescription>
-            <FormProvider {...formMethods}>
-              <TextInput className="mt-6 w-full" type="text" name="name" />
-            </FormProvider>
-          </AlertDialogDescription>
+          <AlertDialogDescription />
+          <FormProvider {...formMethods}>
+            <TextInput className="mt-6 w-full" type="text" name="name" />
+          </FormProvider>
         </AlertDialogHeader>
         <AlertDialogFooter className="mt-4">
           <AlertDialogCancel onClick={closeModal}>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={formMethods.handleSubmit(handleSubmit)} disabled={isLoading}>
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {currentFolder ? 'Update' : 'Create'}
           </AlertDialogAction>
         </AlertDialogFooter>

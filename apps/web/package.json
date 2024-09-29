@@ -13,7 +13,6 @@
   "dependencies": {
     "@apollo/client": "3.10.6",
     "@apollo/experimental-nextjs-app-support": "0.11.2",
-    "@headlessui/react": "2.1.0",
     "@hookform/resolvers": "3.6.0",
     "@radix-ui/react-slot": "1.1.0",
     "@sentry/nextjs": "8.11.0",
@@ -23,7 +22,6 @@
     "classnames": "2.5.1",
     "clsx": "2.1.1",
     "graphql": "16.9.0",
-    "lucide-react": "0.408.0",
     "next": "14.2.4",
     "next-seo": "6.5.0",
     "react": "18.3.1",
