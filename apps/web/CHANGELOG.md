@@ -1,5 +1,16 @@
 # @snipcode/web
 
+## 1.2.0
+
+### Minor Changes
+
+- 25631bd: Use shadcn ui for web design page
+
+### Patch Changes
+
+- Updated dependencies [25631bd]
+  - @snipcode/front@1.2.0
+
 ## 1.1.0
 
 ### Minor Changes
