@@ -5,10 +5,10 @@ import { useState } from 'react';
 import { LoaderIcon } from '@snipcode/front/icons';
 import { useSubscribeToNewsletter } from '@snipcode/front/services';
 
-import { NewsletterAlert } from './newsletter-alert';
-
 import { useBooleanState } from '@/hooks/use-boolean-state';
 import { REGEX_EMAIL } from '@/lib/constants';
+
+import { NewsletterAlert } from './newsletter-alert';
 
 const isEmailValid = (email: string) => REGEX_EMAIL.test(email);
 

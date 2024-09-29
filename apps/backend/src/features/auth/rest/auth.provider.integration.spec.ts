@@ -1,9 +1,10 @@
 import * as url from 'node:url';
 
-import { SessionService } from '@snipcode/domain';
 import { HttpResponse, http } from 'msw';
 import { setupServer } from 'msw/node';
 import request from 'supertest';
+
+import { SessionService } from '@snipcode/domain';
 
 import { TestHelper } from '../../../utils/tests/helpers';
 import { TestServer, startTestServer } from '../../../utils/tests/server';

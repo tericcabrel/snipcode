@@ -1,8 +1,9 @@
 import { INestApplication } from '@nestjs/common';
 import { randEmail, randFullName, randPassword, randWord } from '@ngneat/falso';
+import request from 'supertest';
+
 import { PrismaService, RoleName } from '@snipcode/domain';
 import { generateJwtToken } from '@snipcode/utils';
-import request from 'supertest';
 
 type CreateUserInputArgs = {
   email: string;

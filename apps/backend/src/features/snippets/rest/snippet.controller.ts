@@ -1,5 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+
 import { SnippetService } from '@snipcode/domain';
 import { OEmbedResult, generateOembedMetadata } from '@snipcode/embed';
 

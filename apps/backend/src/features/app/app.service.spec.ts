@@ -1,7 +1,8 @@
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaService, RoleService, UserService } from '@snipcode/domain';
 import { mock } from 'jest-mock-extended';
+
+import { PrismaService, RoleService, UserService } from '@snipcode/domain';
 
 import { AppService } from './app.service';
 

@@ -5,11 +5,11 @@ import React, { PropsWithChildren } from 'react';
 
 import { Toaster } from '@snipcode/front/components/ui/toaster';
 
-import { AuthenticatedLayout } from './layout/content';
-
 import { ApolloWrapper } from '@/lib/apollo/client';
 import { generatePageMetadata } from '@/lib/seo';
 import { cn } from '@/lib/utils';
+
+import { AuthenticatedLayout } from './layout/content';
 
 const fontSans = FontSans({
   subsets: ['latin'],

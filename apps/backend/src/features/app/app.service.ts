@@ -1,5 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+
 import { RoleService, UserService } from '@snipcode/domain';
 
 import { EnvironmentVariables } from '../../configs/environment';

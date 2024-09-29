@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
+
 import { NewsletterService } from '@snipcode/domain';
 
 import { EnvironmentVariables } from '../../../configs/environment';

@@ -1,8 +1,9 @@
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { User } from '@snipcode/domain';
 import { HttpResponse, http } from 'msw';
 import { setupServer } from 'msw/node';
+
+import { User } from '@snipcode/domain';
 
 import { GithubService } from './github.service';
 import { GitHubUserResponse } from '../types';

@@ -8,9 +8,10 @@ import {
   PrismaClientUnknownRequestError,
   PrismaClientValidationError,
 } from '@prisma/client/runtime/library';
-import { isAppError } from '@snipcode/utils';
 import { Response } from 'express';
 import { GraphQLError } from 'graphql';
+
+import { isAppError } from '@snipcode/utils';
 
 import { INTERNAL_SERVER_ERROR } from '../utils/constants';
 
