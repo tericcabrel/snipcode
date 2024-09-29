@@ -43,7 +43,7 @@ describe('Newsletter Form', () => {
     });
 
     await waitFor(() => {
-      const dialog = screen.getByRole('dialog');
+      const dialog = screen.getByRole('alertdialog');
 
       expect(dialog).toBeInTheDocument();
 
@@ -86,7 +86,7 @@ describe('Newsletter Form', () => {
     });
 
     await waitFor(() => {
-      const dialog = screen.getByRole('dialog');
+      const dialog = screen.getByRole('alertdialog');
 
       expect(dialog).toBeInTheDocument();
 
