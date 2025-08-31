@@ -87,7 +87,7 @@ resource "aws_db_instance" "database" {
   identifier                  = "${var.project_name}-backend-${var.environment}"
   allocated_storage           = 20
   engine                      = "mysql"
-  engine_version              = "8.0.39"
+  engine_version              = "8.0.43"
   instance_class              = "db.t3.micro"
   db_name                     = data.doppler_secrets.prod.map.DATABASE_NAME
   username                    = data.doppler_secrets.prod.map.ADMIN_USER
